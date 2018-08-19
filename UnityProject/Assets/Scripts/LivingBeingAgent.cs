@@ -12,24 +12,19 @@ public abstract class LivingBeingAgent : Agent
 
     protected RayPerception rayPer;
     protected Rigidbody agentRB;
-    protected LivingBeing livingBeing;
+    public LivingBeing LivingBeing { get; protected set; }
     protected float previousLife;
 
     protected int amountActions = 0;
 
     public bool useVectorObs; // Use vector observation or visual (pixels, camera) ?
 
-    public T getLivingBeing<T>()
-    {
-        return default(T);
-    }
-
     public override void InitializeAgent()
     {
         rayPer = GetComponent<RayPerception>();
         // Cache the agent rigidbody
         agentRB = GetComponent<Rigidbody>();
-        previousLife = livingBeing.Life + 1; // +1 to push the agent to survive
+        previousLife = LivingBeing.Life + 1; // +1 to push the agent to survive
     }
 
 
@@ -39,7 +34,7 @@ public abstract class LivingBeingAgent : Agent
         {
             var rayDistance = 5f;
             float[] rayAngles = { 0f, 45f, 90f, 135f, 180f, 110f, 70f };
-            var detectableObjects = new[] { "" };
+            var detectableObjects = new[] { "Untagged" };
             AddVectorObs(rayPer.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f));
             AddVectorObs(gameObject.transform.rotation.z);
             AddVectorObs(gameObject.transform.rotation.x);
@@ -62,7 +57,7 @@ public abstract class LivingBeingAgent : Agent
 
 
         if (amountActions > 10) // After a certain amount of actions
-            previousLife = livingBeing.Life;
+            previousLife = LivingBeing.Life;
 
         amountActions++;
     }
@@ -76,8 +71,8 @@ public abstract class LivingBeingAgent : Agent
     {
         transform.position = new Vector3(Random.Range(-3f, 3f), 0.05f, Random.Range(-3f, 3f));
         transform.rotation = new Quaternion(0, 0, 0, 0);
-        livingBeing.Satiety = 99;
-        livingBeing.Life = 99;
+        LivingBeing.Satiety = 99;
+        LivingBeing.Life = 99;
         previousLife = 99;
     }
 }

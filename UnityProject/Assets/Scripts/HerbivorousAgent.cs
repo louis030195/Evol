@@ -9,16 +9,10 @@ using MLAgents;
 /// </summary>
 public class HerbivorousAgent : LivingBeingAgent
 {
-
-    public Herbivorous getLivingBeing()
-    {
-        return (Herbivorous)livingBeing;
-    }
-
     public override void InitializeAgent()
     {
+        LivingBeing = new Herbivorous(99, 0, 20, 99, 0);
         base.InitializeAgent();
-        livingBeing = new Herbivorous(99, 0, 20, 99, 0);
     }
 
     public override void CollectObservations()
@@ -37,7 +31,7 @@ public class HerbivorousAgent : LivingBeingAgent
 
     public override void AgentAction(float[] vectorAction, string textAction)
     {
-        // AddReward(-0.01f);
+        AddReward(-0.01f);
 
 
         // Reset every 1000 actions or when the agent fell
@@ -50,18 +44,28 @@ public class HerbivorousAgent : LivingBeingAgent
         transform.Rotate(new Vector3(0, Mathf.Clamp(vectorAction[1], -1f, 1f), 0), Time.fixedDeltaTime * 500);
         transform.Translate(new Vector3(0, 0, 0.1f) * Mathf.Clamp(vectorAction[0], 0f , 2f));
         
-        if (livingBeing.Life == 0) // Dead
+        if (LivingBeing.Life == 0) // Dead
         {
-
             AddReward(-10f);
             Done();
         }
-        else
-            AddReward(0.01f);
            
         if(amountActions > 10) // After a certain amount of actions
-            previousLife = livingBeing.Life;
+            previousLife = LivingBeing.Life;
 
         amountActions++;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        if (collision.collider.GetComponent<HerbivorousAgent>() != null)
+        {
+            print("Hit by HerbivorousAgent");
+            HerbivorousAgent herbivorousAgent = collision.collider.GetComponent<HerbivorousAgent>();
+            // herbivorousAgent.LivingBeing.Satiety += 100;
+            herbivorousAgent.AddReward(50f);
+            herbivorousAgent.Done();
+        }
     }
 }

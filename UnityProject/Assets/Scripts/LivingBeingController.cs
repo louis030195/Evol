@@ -15,7 +15,7 @@ public abstract class LivingBeingController : MonoBehaviour {
 	// Use this for initialization
 	protected virtual void Start () {
         livingBeingAgent = GetComponent<LivingBeingAgent>();
-        livingBeing = livingBeingAgent.getLivingBeing<LivingBeing>();
+        livingBeing = livingBeingAgent.LivingBeing;
 	}
 
     // Update is called once per frame

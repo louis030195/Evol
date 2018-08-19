@@ -9,16 +9,10 @@ using MLAgents;
 /// </summary>
 public class CarnivorousAgent : LivingBeingAgent
 {
-
-    public Carnivorous getLivingBeing()
-    {
-        return (Carnivorous)livingBeing;
-    }
-
     public override void InitializeAgent()
     {
+        LivingBeing = new Carnivorous(99, 0, 20, 99, 0);
         base.InitializeAgent();
-        livingBeing = new Carnivorous(99, 0, 20, 99, 0);
     }
 
     public override void AgentAction(float[] vectorAction, string textAction)
@@ -32,6 +26,7 @@ public class CarnivorousAgent : LivingBeingAgent
         if (collision.collider.GetComponent<HerbivorousAgent>() != null)
         {
             print("Hit HerbivorousAgent");
+            collision.collider.GetComponent<HerbivorousAgent>().LivingBeing.Life -= 50;
             AddReward(50f);
             Done();
         }

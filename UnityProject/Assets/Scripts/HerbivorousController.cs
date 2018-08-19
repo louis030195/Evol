@@ -7,11 +7,7 @@ public class HerbivorousController : LivingBeingController
     // Use this for initialization
     protected override void Start()
     {
-        livingBeing = livingBeingAgent.getLivingBeing<Herbivorous>();
-    }
-
-    protected override void Update()
-    {
-        base.Update();
+        livingBeingAgent = GetComponent<HerbivorousAgent>();
+        livingBeing = livingBeingAgent.LivingBeing;
     }
 }

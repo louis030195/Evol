@@ -59,6 +59,7 @@ public class GameController : MonoBehaviour {
 
     void SpawnHerbs()
     {
+        
         // To avoid having to many herbs
         if(amountOfHerbs == maxHerbs)
         {

@@ -14,14 +14,8 @@ public class Herb : MonoBehaviour {
         
         if(collision.collider.GetComponent<HerbivorousAgent>() != null)
         {
-            print("Hit by HerbivorousAgent");
-            HerbivorousAgent herbivorousAgent = collision.collider.GetComponent<HerbivorousAgent>();
-            herbivorousAgent.getLivingBeing().Satiety += 100;
-            // herbivorousAgent.AddReward(50f);
-            herbivorousAgent.Done();
-            
-            // transform.position = new Vector3(Random.Range(-3f, 3f), 0.5f, Random.Range(-3f, 3f));
-            //Destroy(transform.gameObject, 1.0f);
+            // Destroy it ?
+            // Destroy(transform.gameObject);
         }
     }
     
