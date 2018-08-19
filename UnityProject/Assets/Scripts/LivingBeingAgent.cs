@@ -14,6 +14,7 @@ public abstract class LivingBeingAgent : Agent
     protected Rigidbody agentRB;
     public LivingBeing LivingBeing { get; protected set; }
     protected float previousLife;
+    public System.Action action;
 
     protected int amountActions = 0;
 
@@ -44,6 +45,7 @@ public abstract class LivingBeingAgent : Agent
 
     public override void AgentAction(float[] vectorAction, string textAction)
     {
+        action(); 
         // Reset every 1000 actions or when the agent fell
         if (amountActions > 1000 || transform.position.y < 0)
         {
@@ -54,10 +56,7 @@ public abstract class LivingBeingAgent : Agent
         // Move
         transform.Rotate(new Vector3(0, Mathf.Clamp(vectorAction[1], -1f, 1f), 0), Time.fixedDeltaTime * 500);
         transform.Translate(new Vector3(0, 0, 0.1f) * Mathf.Clamp(vectorAction[0], 0f, 2f));
-
-
-        if (amountActions > 10) // After a certain amount of actions
-            previousLife = LivingBeing.Life;
+        
 
         amountActions++;
     }
@@ -71,7 +70,7 @@ public abstract class LivingBeingAgent : Agent
     {
         transform.position = new Vector3(Random.Range(-3f, 3f), 0.05f, Random.Range(-3f, 3f));
         transform.rotation = new Quaternion(0, 0, 0, 0);
-        LivingBeing.Satiety = 99;
+        LivingBeing.Satiety = 49;
         LivingBeing.Life = 99;
         previousLife = 99;
     }

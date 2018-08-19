@@ -9,6 +9,7 @@ public class CarnivorousController : LivingBeingController
     {
         livingBeingAgent = GetComponent<CarnivorousAgent>();
         livingBeing = livingBeingAgent.LivingBeing;
+        livingBeingAgent.action = DoAction;
     }
 
 }

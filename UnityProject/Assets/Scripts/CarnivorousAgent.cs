@@ -17,6 +17,7 @@ public class CarnivorousAgent : LivingBeingAgent
 
     public override void AgentAction(float[] vectorAction, string textAction)
     {
+        action();
         AddReward(-0.01f);
         base.AgentAction(vectorAction, textAction);
     }

@@ -32,6 +32,9 @@ public class GameController : MonoBehaviour {
         if (herbivorousBrain.brainType == BrainType.Player)
             amountOfHerbivorousAgents = 1; // Only spawn 1 agent if player mode
 
+        SpawnHerbs();
+        //InvokeRepeating("SpawnHerbs", 0, 2f); // Maybe use frame instead of second
+
         // If we need the same amount of herbi / carni agents, could simplify with only 1 loop and a List of prefabs
         for (int i = 0; i < amountOfHerbivorousAgents; i++)
         {
@@ -48,8 +51,6 @@ public class GameController : MonoBehaviour {
             agent.GiveBrain(carnivorousBrain); // We need to give brain at runtime when dynamically spawning agent
                                                // https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Design-Agents.md#instantiating-an-agent-at-runtime
         }
-
-        InvokeRepeating("SpawnHerbs", 0, 2f); // Maybe use frame instead of second
     }
 	
 	// Update is called once per frame
@@ -66,7 +67,7 @@ public class GameController : MonoBehaviour {
             Destroy(herbsObj[herbsObj.Count - 1]); // Destroy the first herb GameObject instanciated
             amountOfHerbs--;
         }
-        herbsObj.Add(Instantiate(herbPrefab, new Vector3(Random.Range(-5f, 5f), 0.05f, Random.Range(-5f, 5f)), new Quaternion(0, Random.Range(0, 360), 0, 0)));
+        herbsObj.Add(Instantiate(herbPrefab, new Vector3(Random.Range(-4f, 4f), 0.05f, Random.Range(-4f, 4f)), new Quaternion(0, Random.Range(0, 360), 0, 0)));
         amountOfHerbs++;
     }
 }

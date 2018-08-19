@@ -9,5 +9,6 @@ public class HerbivorousController : LivingBeingController
     {
         livingBeingAgent = GetComponent<HerbivorousAgent>();
         livingBeing = livingBeingAgent.LivingBeing;
+        livingBeingAgent.action = DoAction;
     }
 }
