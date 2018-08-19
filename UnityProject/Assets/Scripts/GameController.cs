@@ -63,7 +63,6 @@ public class GameController : MonoBehaviour {
     void FixedUpdate()
     {
         nbActions++;
-        print("this is the print " + nbActions);
         if (nbActions % 10000 == 0)
             SpawnHerbs();
     }
