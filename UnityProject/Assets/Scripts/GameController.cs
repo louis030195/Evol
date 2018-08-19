@@ -19,12 +19,13 @@ public class GameController : MonoBehaviour {
 
 
     int amountOfHerbs = 0;
-    List<GameObject> herbsObj;
+    GameObject[] herbsObj;
+    private int nbActions = 0;
 
 	// Use this for initialization
 	void Start () {
 
-        herbsObj = new List<GameObject>();
+        herbsObj = new GameObject[maxHerbs];
 
 
         // Spawn at random position on the map and random rotation
@@ -51,6 +52,7 @@ public class GameController : MonoBehaviour {
             agent.GiveBrain(carnivorousBrain); // We need to give brain at runtime when dynamically spawning agent
                                                // https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Design-Agents.md#instantiating-an-agent-at-runtime
         }
+
     }
 	
 	// Update is called once per frame
@@ -58,16 +60,21 @@ public class GameController : MonoBehaviour {
 		
 	}
 
+    void FixedUpdate()
+    {
+        nbActions++;
+        print("this is the print " + nbActions);
+        if (nbActions % 10000 == 0)
+            SpawnHerbs();
+    }
+
     void SpawnHerbs()
     {
-        
-        // To avoid having to many herbs
-        if(amountOfHerbs == maxHerbs)
+        for(int i = 0;i < maxHerbs; i++)
         {
-            Destroy(herbsObj[herbsObj.Count - 1]); // Destroy the first herb GameObject instanciated
-            amountOfHerbs--;
+            if(amountOfHerbs == maxHerbs) Destroy(herbsObj[i]);
+            herbsObj[i] = Instantiate(herbPrefab, new Vector3(Random.Range(-4f, 4f), 0.05f, Random.Range(-4f, 4f)), new Quaternion(0, Random.Range(0, 360), 0, 0));
         }
-        herbsObj.Add(Instantiate(herbPrefab, new Vector3(Random.Range(-4f, 4f), 0.05f, Random.Range(-4f, 4f)), new Quaternion(0, Random.Range(0, 360), 0, 0)));
-        amountOfHerbs++;
+        amountOfHerbs = maxHerbs;
     }
 }
