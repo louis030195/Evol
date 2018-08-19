@@ -316,10 +316,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 1806418237423212, guid: 2bc194de44edfb545bd76f8e9937fd22, type: 2}
-      propertyPath: m_TagString
-      value: wall
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2bc194de44edfb545bd76f8e9937fd22, type: 2}
   m_IsPrefabAsset: 0
@@ -597,7 +593,7 @@ Prefab:
     - target: {fileID: 114859714832689094, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
         type: 2}
       propertyPath: brainParameters.vectorObservationSize
-      value: 22
+      value: 29
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a233e8e6c6be3dc4aa8847cfad7cb193, type: 2}

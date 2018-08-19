@@ -29,7 +29,7 @@ public class HerbivorousAgent : LivingBeingAgent
         {
             var rayDistance = 5f;
             float[] rayAngles = { 0f, 45f, 90f, 135f, 180f, 110f, 70f };
-            var detectableObjects = new[] { "food" };
+            var detectableObjects = new[] { "food", "wall" };
             AddVectorObs(rayPer.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f));
             AddVectorObs(gameObject.transform.rotation.y);
         }
@@ -73,6 +73,7 @@ public class HerbivorousAgent : LivingBeingAgent
             else if (transform.position.y < 0)
             {
                 print("I jumped from the board after " + amountActions + " actions");
+                AddReward(-10f);
                 amountActions = 0;
                 Done();
             }
