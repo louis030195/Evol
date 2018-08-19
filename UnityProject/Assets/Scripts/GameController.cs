@@ -8,11 +8,14 @@ using UnityEngine;
 /// </summary>
 public class GameController : MonoBehaviour {
 
-    public Brain brain;
+    public Brain herbivorousBrain;
+    public Brain carnivorousBrain;
     public GameObject herbPrefab;
     public int maxHerbs = 20;
-    public GameObject agentPrefab;
-    public int amountOfAgents = 10;
+    public GameObject herbivorousAgentPrefab;
+    public int amountOfHerbivorousAgents = 10;
+    public GameObject CarnivorousAgentPrefab;
+    public int amountOfCarnivorousAgents = 10;
 
 
     int amountOfHerbs = 0;
@@ -26,14 +29,24 @@ public class GameController : MonoBehaviour {
 
         // Spawn at random position on the map and random rotation
         // TODO : check if the random position doesn't collide with another gameobject (RayCast)
-        if (brain.brainType == BrainType.Player)
-            amountOfAgents = 1; // Only spawn 1 agent if player mode
-        for (int i = 0; i < amountOfAgents; i++)
+        if (herbivorousBrain.brainType == BrainType.Player)
+            amountOfHerbivorousAgents = 1; // Only spawn 1 agent if player mode
+
+        // If we need the same amount of herbi / carni agents, could simplify with only 1 loop and a List of prefabs
+        for (int i = 0; i < amountOfHerbivorousAgents; i++)
         {
-            GameObject agentObj = Instantiate(agentPrefab, new Vector3(Random.Range(-3f, 3f), 0.05f, Random.Range(-3f, 3f)), new Quaternion(0, Random.Range(0, 360), 0, 0));
+            GameObject agentObj = Instantiate(herbivorousAgentPrefab, new Vector3(Random.Range(-3f, 3f), 0.05f, Random.Range(-3f, 3f)), new Quaternion(0, Random.Range(0, 360), 0, 0));
             Agent agent = agentObj.GetComponent<Agent>();
-            agent.GiveBrain(brain); // We need to give brain at runtime when dynamically spawning agent
-                                    // https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Design-Agents.md#instantiating-an-agent-at-runtime
+            agent.GiveBrain(herbivorousBrain); // We need to give brain at runtime when dynamically spawning agent
+                                               // https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Design-Agents.md#instantiating-an-agent-at-runtime
+        }
+
+        for (int i = 0; i < amountOfCarnivorousAgents; i++)
+        {
+            GameObject agentObj = Instantiate(CarnivorousAgentPrefab, new Vector3(Random.Range(-3f, 3f), 0.05f, Random.Range(-3f, 3f)), new Quaternion(0, Random.Range(0, 360), 0, 0));
+            Agent agent = agentObj.GetComponent<Agent>();
+            agent.GiveBrain(carnivorousBrain); // We need to give brain at runtime when dynamically spawning agent
+                                               // https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Design-Agents.md#instantiating-an-agent-at-runtime
         }
 
         InvokeRepeating("SpawnHerbs", 0, 2f); // Maybe use frame instead of second

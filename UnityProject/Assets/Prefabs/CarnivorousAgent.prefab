@@ -41,10 +41,10 @@ GameObject:
   - component: {fileID: 65300748052955044}
   - component: {fileID: 54414743442681844}
   - component: {fileID: 114339147593499368}
-  - component: {fileID: 114367076263685582}
-  - component: {fileID: 114351358060082174}
+  - component: {fileID: 114363232033165048}
+  - component: {fileID: 114698542734820688}
   m_Layer: 0
-  m_Name: HerbivorousAgent
+  m_Name: CarnivorousAgent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -204,7 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb172294dbbcc408286b156a2c4b553c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114351358060082174
+--- !u!114 &114363232033165048
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -212,26 +212,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1592921145049348}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3eee03c7d0ec64b4b82df7a48caab040, type: 3}
+  m_Script: {fileID: 11500000, guid: 541f5b206ee342c4c89f5b65891d79ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114367076263685582
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1592921145049348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d4bc678217f2524da91a422725d21a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  brain: {fileID: 114859714832689094, guid: a233e8e6c6be3dc4aa8847cfad7cb193, type: 2}
+  brain: {fileID: 114094034598838896, guid: a233e8e6c6be3dc4aa8847cfad7cb193, type: 2}
   agentParameters:
     agentCameras:
     - {fileID: 20372248799594432}
-    maxStep: 10000000
+    maxStep: 1000000
     resetOnDone: 1
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   useVectorObs: 1
+--- !u!114 &114698542734820688
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1592921145049348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea89a7ca77154cf4a959c1123ebea54f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
