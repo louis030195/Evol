@@ -21,7 +21,7 @@ public abstract class LivingBeingController : MonoBehaviour {
     // Update is called once per frame
     protected virtual void Update () {
         livingBeing.Life += livingBeing.Satiety >= 50 ? 1f : -1f;
-        livingBeing.Satiety -= 10f;
+        livingBeing.Satiety -= 15f;
 
         livingBeing.Life = livingBeing.Life > 100 ?
             100 : livingBeing.Life < 0 ?

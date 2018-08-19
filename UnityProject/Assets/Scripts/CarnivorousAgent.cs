@@ -26,7 +26,8 @@ public class CarnivorousAgent : LivingBeingAgent
         if (collision.collider.GetComponent<HerbivorousAgent>() != null)
         {
             print("Hit HerbivorousAgent");
-            collision.collider.GetComponent<HerbivorousAgent>().LivingBeing.Life -= 50;
+            LivingBeing.Life += 10;
+            collision.collider.GetComponent<HerbivorousAgent>().LivingBeing.Life -= 25;
             AddReward(50f);
             Done();
         }

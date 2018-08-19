@@ -31,7 +31,7 @@ public class HerbivorousAgent : LivingBeingAgent
 
     public override void AgentAction(float[] vectorAction, string textAction)
     {
-        AddReward(-0.01f);
+        // AddReward(-0.01f);
 
 
         // Reset every 1000 actions or when the agent fell
@@ -55,17 +55,14 @@ public class HerbivorousAgent : LivingBeingAgent
 
         amountActions++;
     }
-
+    
     private void OnCollisionEnter(Collision collision)
     {
-
-        if (collision.collider.GetComponent<HerbivorousAgent>() != null)
+        if (collision.collider.GetComponent<Herb>() != null)
         {
-            print("Hit by HerbivorousAgent");
-            HerbivorousAgent herbivorousAgent = collision.collider.GetComponent<HerbivorousAgent>();
-            // herbivorousAgent.LivingBeing.Satiety += 100;
-            herbivorousAgent.AddReward(50f);
-            herbivorousAgent.Done();
+            LivingBeing.Satiety += 100;
+            //herbivorousAgent.AddReward(50f);
+            Done();
         }
     }
 }
