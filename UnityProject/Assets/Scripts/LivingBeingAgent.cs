@@ -20,6 +20,14 @@ public abstract class LivingBeingAgent : Agent
 
     public bool useVectorObs; // Use vector observation or visual (pixels, camera) ?
 
+    public enum RewardMode
+    {
+        Sparse, // very high level reward : harder
+        Dense // hand written reward
+    }
+
+    public RewardMode rewardMode = RewardMode.Dense;
+
     public override void InitializeAgent()
     {
         rayPer = GetComponent<RayPerception>();

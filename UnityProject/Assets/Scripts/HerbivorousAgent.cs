@@ -9,13 +9,7 @@ using MLAgents;
 /// </summary>
 public class HerbivorousAgent : LivingBeingAgent
 {
-    enum RewardMode
-    {
-        Sparse, // very high level reward : harder
-        Dense // hand written reward
-    }
 
-    static readonly RewardMode rewardMode = RewardMode.Dense;
 
     public override void InitializeAgent()
     {
@@ -29,7 +23,7 @@ public class HerbivorousAgent : LivingBeingAgent
         {
             var rayDistance = 5f;
             float[] rayAngles = { 0f, 45f, 90f, 135f, 180f, 110f, 70f };
-            var detectableObjects = new[] { "food" };
+            var detectableObjects = new[] { "food", "carnivorous" };
             AddVectorObs(rayPer.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f));
             AddVectorObs(gameObject.transform.rotation.y);
         }
@@ -73,7 +67,7 @@ public class HerbivorousAgent : LivingBeingAgent
             else if (transform.position.y < 0)
             {
                 print("I jumped from the board after " + amountActions + " actions");
-                //AddReward(-10f);
+                AddReward(-10f);
                 amountActions = 0;
                 Done();
             }
@@ -94,7 +88,16 @@ public class HerbivorousAgent : LivingBeingAgent
             if (rewardMode == RewardMode.Dense)
             {
                 print("I ate something");
-                AddReward(50f);
+                AddReward(20f);
+                Done();
+            }
+        }
+
+        if (collision.collider.GetComponent<CarnivorousAgent>() != null)
+        {
+            if (rewardMode == RewardMode.Dense)
+            {
+                AddReward(-1f);
                 Done();
             }
         }

@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 114351358060082174}
   m_Layer: 0
   m_Name: HerbivorousAgent
-  m_TagString: Untagged
+  m_TagString: herbivorous
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -235,3 +235,4 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   useVectorObs: 1
+  rewardMode: 1

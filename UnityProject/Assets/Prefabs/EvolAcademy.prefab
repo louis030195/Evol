@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 23
+    vectorObservationSize: 22
     numStackedVectorObservations: 1
     vectorActionSize: 2
     cameraResolutions: []
@@ -128,7 +128,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: 13932
+  instanceID: 14402
 --- !u!114 &114830505798622882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -169,7 +169,7 @@ MonoBehaviour:
   herbivorousBrain: {fileID: 114859714832689094}
   carnivorousBrain: {fileID: 114094034598838896}
   herbPrefab: {fileID: 1879075460785134, guid: 946becfa29c68964a8dd7e0332c7613e, type: 2}
-  maxHerbs: 20
+  maxHerbs: 1
   herbivorousAgentPrefab: {fileID: 1592921145049348, guid: 85937eb0de212944c9f4fdb9a66cde4f,
     type: 2}
   amountOfHerbivorousAgents: 10
@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 23
+    vectorObservationSize: 29
     numStackedVectorObservations: 1
     vectorActionSize: 2
     cameraResolutions: []
@@ -203,4 +203,4 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: 13966
+  instanceID: -2016
