@@ -247,7 +247,7 @@ BrainHerbivorous:
     normalize: false
     num_epoch: 3
     num_layers: 2
-    time_horizon: 64
+    time_horizon: 1000
     sequence_length: 64
     summary_freq: 1000
     use_recurrent: false
@@ -270,7 +270,7 @@ BrainCarnivorous:
     normalize: false
     num_epoch: 3
     num_layers: 2
-    time_horizon: 64
+    time_horizon: 1000
     sequence_length: 64
     summary_freq: 1000
     use_recurrent: false
