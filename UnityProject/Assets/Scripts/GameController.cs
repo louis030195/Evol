@@ -42,7 +42,7 @@ public class GameController : MonoBehaviour {
 
         float groundSize = groundPrefab.GetComponent<MeshRenderer>().bounds.size.x;
 
-        for (int w = 0; w < amountOfWorkers; w++)
+        for (int w = 1; w <= amountOfWorkers; w++)
         {
             Instantiate(groundPrefab, new Vector3(2 * groundSize * w, 0, 0), new Quaternion(0, 0, 0, 0));
             GameObject herbObj = Instantiate(herbPrefab, new Vector3(Random.Range(-5f, 5f) + 2 * groundSize * w, 0.05f, Random.Range(-5f, 5f)), new Quaternion(0, Random.Range(0, 360), 0, 0));
@@ -52,7 +52,8 @@ public class GameController : MonoBehaviour {
             for (int i = 0; i < amountOfHerbivorousAgents; i++)
             {
                 GameObject agentObj = Instantiate(herbivorousAgentPrefab, new Vector3(Random.Range(-5f, 5f) + 2 * groundSize * w, 0.05f, Random.Range(-5f, 5f)), new Quaternion(0, Random.Range(0, 360), 0, 0));
-                Agent agent = agentObj.GetComponent<Agent>();
+                LivingBeingAgent agent = agentObj.GetComponent<LivingBeingAgent>();
+                agent.OffsetX = 2 * groundSize * w;
                 agent.GiveBrain(herbivorousBrain); // We need to give brain at runtime when dynamically spawning agent
                                                    // https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Design-Agents.md#instantiating-an-agent-at-runtime
             }
@@ -60,7 +61,8 @@ public class GameController : MonoBehaviour {
             for (int i = 0; i < amountOfCarnivorousAgents; i++)
             {
                 GameObject agentObj = Instantiate(CarnivorousAgentPrefab, new Vector3(Random.Range(-5f, 5f) + 2 * groundSize * w, 0.05f, Random.Range(-5f, 5f)), new Quaternion(0, Random.Range(0, 360), 0, 0));
-                Agent agent = agentObj.GetComponent<Agent>();
+                LivingBeingAgent agent = agentObj.GetComponent<LivingBeingAgent>();
+                agent.OffsetX = 2 * groundSize * w;
                 agent.GiveBrain(carnivorousBrain); // We need to give brain at runtime when dynamically spawning agent
                                                    // https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Design-Agents.md#instantiating-an-agent-at-runtime
             }

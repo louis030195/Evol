@@ -13,6 +13,7 @@ public abstract class LivingBeingAgent : Agent
     protected RayPerception rayPer;
     protected Rigidbody agentRB;
     public LivingBeing LivingBeing { get; protected set; }
+    public float OffsetX { get; set; }
     protected float previousLife;
     public System.Action action;
 
@@ -76,7 +77,7 @@ public abstract class LivingBeingAgent : Agent
     /// </summary>
     public override void AgentReset()
     {
-        transform.position = new Vector3(Random.Range(-3f, 3f), 0.05f, Random.Range(-3f, 3f));
+        transform.position = new Vector3(Random.Range(-5f, 5f) + OffsetX, 0.05f, Random.Range(-5f, 5f));
         transform.rotation = new Quaternion(0, 0, 0, 0);
         LivingBeing.Satiety = 49;
         LivingBeing.Life = 99;
