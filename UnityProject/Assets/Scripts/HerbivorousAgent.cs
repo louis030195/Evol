@@ -98,7 +98,7 @@ public class HerbivorousAgent : LivingBeingAgent
             if (rewardMode == RewardMode.Dense)
             {
                 AddReward(-1f);
-                Done();
+                //Done();
             }
         }
     }
