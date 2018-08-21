@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 114698542734820688}
   m_Layer: 0
   m_Name: CarnivorousAgent
-  m_TagString: Untagged
+  m_TagString: carnivorous
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -224,6 +224,7 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   useVectorObs: 1
+  rewardMode: 1
 --- !u!114 &114698542734820688
 MonoBehaviour:
   m_ObjectHideFlags: 1

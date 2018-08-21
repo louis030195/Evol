@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// This class handle the behaviour of the herb gameobject
 /// </summary>
 public class Herb : MonoBehaviour {
 
+    public float OffsetX { get; set; }
+    public float OffsetZ { get; set; }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -16,6 +15,7 @@ public class Herb : MonoBehaviour {
         {
             // Destroy it ?
             // Destroy(transform.gameObject);
+            transform.position = new Vector3(Random.Range(-5f, 5f) + OffsetX, transform.position.y, Random.Range(-5f, 5f));
         }
     }
     
