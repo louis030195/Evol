@@ -6,7 +6,6 @@
 public class Herb : MonoBehaviour {
 
     public float OffsetX { get; set; }
-    public float OffsetZ { get; set; }
 
     private void OnCollisionEnter(Collision collision)
     {

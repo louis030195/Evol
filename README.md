@@ -1,6 +1,8 @@
 # Goal
 Build an ecosystem filled with AIs trained with reinforcement learning and possibly using genetics
 
+![v0.2 - multiagent](Screenshots/multiagent.gif)
+
 [First version](https://www.youtube.com/watch?v=LrkpRfSFAaI&feature=youtu.be)
 
 [Second version](https://www.youtube.com/watch?v=Fb50cKx8ia8&feature=youtu.be)
