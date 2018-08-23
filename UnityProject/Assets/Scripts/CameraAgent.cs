@@ -12,7 +12,6 @@ public class CameraAgent : Agent
 
     private Camera cam;
     private Plane[] planes;
-    private int thingsSaw;
     private int amountActions = 0;
 
     public override void InitializeAgent()
@@ -33,9 +32,9 @@ public class CameraAgent : Agent
 
     public override void AgentAction(float[] vectorAction, string textAction)
     {
-        
+        int thingsSaw = 0;
         foreach (GameObject thingToWatch in ThingsToWatch) {
-            if (GeometryUtility.TestPlanesAABB(planes, thingToWatch.GetComponent<Collider>().bounds))
+            if (GeometryUtility.TestPlanesAABB(planes, thingToWatch.GetComponentInChildren<Collider>().bounds))
             {
                 thingsSaw++;
                 //Debug.Log("thingToWatch has been detected!");
@@ -54,7 +53,7 @@ public class CameraAgent : Agent
             Done();
         }
 
-        if (ThingsToWatch.Count - thingsSaw > ThingsToWatch.Count)
+        if (thingsSaw > 0)
             AddReward(1f);
 
         RaycastHit hit;

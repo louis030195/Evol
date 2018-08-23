@@ -152,13 +152,13 @@ MonoBehaviour:
     - 
     vectorActionSpaceType: 1
     vectorObservationSpaceType: 1
-  brainType: 3
+  brainType: 2
   CoreBrains:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: -1420
+  instanceID: -1056
 --- !u!114 &114747797302771448
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -171,9 +171,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 6
+    vectorObservationSize: 7
     numStackedVectorObservations: 1
-    vectorActionSize: 6
+    vectorActionSize: 8
     cameraResolutions: []
     vectorActionDescriptions:
     - 
@@ -182,15 +182,17 @@ MonoBehaviour:
     - 
     - 
     - 
+    - 
+    - 
     vectorActionSpaceType: 1
     vectorObservationSpaceType: 1
-  brainType: 0
+  brainType: 2
   CoreBrains:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: -32868
+  instanceID: 13738
 --- !u!114 &114830505798622882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -202,7 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2629a1097955374ba445e916c614087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSteps: 10000000
+  maxSteps: 0
   trainingConfiguration:
     width: 300
     height: 300
@@ -228,21 +230,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86645e398866ce140a294c3976cd5714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMode: 1
-  herbivorousBrain: {fileID: 114859714832689094}
-  carnivorousBrain: {fileID: 114094034598838896}
-  herbPrefab: {fileID: 1879075460785134, guid: 946becfa29c68964a8dd7e0332c7613e, type: 2}
-  maxHerbs: 1
   herbivorousAgentPrefab: {fileID: 1592921145049348, guid: 85937eb0de212944c9f4fdb9a66cde4f,
     type: 2}
+  herbivorousBrain: {fileID: 114859714832689094}
   amountOfHerbivorousAgents: 1
   CarnivorousAgentPrefab: {fileID: 1592921145049348, guid: 5bd61245a87d69e4db6e6a25d15a7432,
     type: 2}
+  carnivorousBrain: {fileID: 114094034598838896}
   amountOfCarnivorousAgents: 1
+  camPrefab: {fileID: 1076389815045292, guid: 5ffb5b0870b820a4cb27ca9d99b52438, type: 2}
+  cameraBrain: {fileID: 114747797302771448}
+  gameMode: 0
   groundPrefab: {fileID: 1895891338971484, guid: 129c30dad65218743941e70e0de4caf1,
     type: 2}
-  amountOfWorkers: 1
-  cam: {fileID: 0}
+  amountOfWorkers: 30
+  herbPrefab: {fileID: 1879075460785134, guid: 946becfa29c68964a8dd7e0332c7613e, type: 2}
+  maxHerbs: 1
 --- !u!114 &114859714832689094
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -264,10 +267,10 @@ MonoBehaviour:
     - 
     vectorActionSpaceType: 1
     vectorObservationSpaceType: 1
-  brainType: 3
+  brainType: 2
   CoreBrains:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: -1434
+  instanceID: -1054

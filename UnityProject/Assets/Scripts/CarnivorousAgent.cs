@@ -5,7 +5,6 @@ using MLAgents;
 
 /// <summary>
 /// This class handles the behaviour of the carnivorous agent
-/// TODO : possibility that we can regroup the common code of multiple agents into a mother abstract class
 /// </summary>
 public class CarnivorousAgent : LivingBeingAgent
 {
@@ -17,14 +16,14 @@ public class CarnivorousAgent : LivingBeingAgent
 
     public override void CollectObservations()
     {
-        if (useVectorObs)
-        {
-            var rayDistance = 5f;
-            float[] rayAngles = { 0f, 45f, 90f, 135f, 180f, 110f, 70f };
-            var detectableObjects = new[] { "herbivorous", "food" };
-            AddVectorObs(rayPer.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f));
-            AddVectorObs(gameObject.transform.rotation.y);
-        }
+        base.CollectObservations();
+
+        var rayDistance = 5f;
+        float[] rayAngles = { 0f, 45f, 90f, 135f, 180f, 110f, 70f };
+        var detectableObjects = new[] { "herbivorous", "food" };
+        AddVectorObs(rayPer.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f));
+        AddVectorObs(gameObject.transform.rotation.y);
+        
     }
 
     public override void AgentAction(float[] vectorAction, string textAction)
@@ -71,8 +70,9 @@ public class CarnivorousAgent : LivingBeingAgent
         }
 
         // Move
-        transform.Rotate(new Vector3(0, 1f, 0), Time.fixedDeltaTime * 500 * Mathf.Clamp(vectorAction[1], -1f, 1f));
-        transform.Translate(new Vector3(0, 0, 0.1f) * Mathf.Clamp(vectorAction[0], 0f, 2f));
+        base.AgentAction(vectorAction, textAction);
+        //transform.Rotate(new Vector3(0, 1f, 0), Time.fixedDeltaTime * 500 * Mathf.Clamp(vectorAction[1], -1f, 1f));
+        //transform.Translate(new Vector3(0, 0, 0.1f) * Mathf.Clamp(vectorAction[0], 0f, 2f));
 
         amountActions++;
     }
