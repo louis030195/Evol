@@ -21,7 +21,7 @@ public class CarnivorousAgent : LivingBeingAgent
         {
             var rayDistance = 5f;
             float[] rayAngles = { 0f, 45f, 90f, 135f, 180f, 110f, 70f };
-            var detectableObjects = new[] { "herbivorous" };
+            var detectableObjects = new[] { "herbivorous", "food" };
             AddVectorObs(rayPer.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f));
             AddVectorObs(gameObject.transform.rotation.y);
         }

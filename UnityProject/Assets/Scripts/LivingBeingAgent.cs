@@ -78,7 +78,8 @@ public abstract class LivingBeingAgent : Agent
     public override void AgentReset()
     {
         transform.position = new Vector3(Random.Range(-5f, 5f) + OffsetX, 0.05f, Random.Range(-5f, 5f));
-        transform.rotation = new Quaternion(0, 0, 0, 0);
+        transform.rotation = new Quaternion(0, Random.Range(0, 360), 0, 0);
+
         LivingBeing.Satiety = 49;
         LivingBeing.Life = 99;
         previousLife = 99;
