@@ -40,7 +40,7 @@ public class CarnivorousAgent : LivingBeingAgent
                 Done();
             }
 
-            if (LivingBeing.Life == 0 || transform.position.y < 0) // Dead
+            if (LivingBeing.Life == 0 || transform.GetChild(0).position.y < 0) // Strange, the parent y position doesn't change but the child, so we check child pos
             {
                 AddReward(-10f);
                 amountActions = 0;
@@ -51,7 +51,7 @@ public class CarnivorousAgent : LivingBeingAgent
 
         else if (rewardMode == RewardMode.Dense)
         {
-            AddReward(-0.01f);
+            // AddReward(-0.01f);
             // Reset every 1000 actions or when the agent fell
             if (amountActions >= 1000)
             {
@@ -60,7 +60,7 @@ public class CarnivorousAgent : LivingBeingAgent
                 amountActions = 0;
                 Done();
             }
-            else if (transform.position.y < 0)
+            else if (transform.GetChild(0).position.y < 0)
             {
                 print("I jumped from the board after " + amountActions + " actions");
                 AddReward(-10f);

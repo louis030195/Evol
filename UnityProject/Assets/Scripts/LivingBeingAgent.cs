@@ -219,7 +219,7 @@ public abstract class LivingBeingAgent : Agent
         isNewDecisionStep = true;
         currentDecisionStep = 1;
         
-        transform.position = new Vector3(Random.Range(-groundSize / 2, groundSize / 2) + OffsetX, 1, Random.Range(-groundSize / 2, groundSize / 2));
+        transform.position = new Vector3(Random.Range(-groundSize / 4, groundSize / 4) + OffsetX, 1, Random.Range(-groundSize / 4, groundSize / 4));
         transform.rotation = new Quaternion(0, Random.Range(0, 360), 0, 0);
 
         LivingBeing.Satiety = 49;
