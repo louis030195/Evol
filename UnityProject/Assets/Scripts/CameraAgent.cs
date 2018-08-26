@@ -55,6 +55,8 @@ public class CameraAgent : Agent
         
         AddReward(1f * thingsSaw);
 
+        //if (transform.rotation.z > 150)
+
         if(Vector3.Distance(transform.position, new Vector3(OffsetX, 0, 0)) > 20)
             AddReward(-1f);
         /*
@@ -70,12 +72,12 @@ public class CameraAgent : Agent
         // Move
         transform.Rotate(new Vector3(Mathf.Clamp(vectorAction[0], 0f, 1f),
             Mathf.Clamp(vectorAction[1], 0f, 1f),
-            Mathf.Clamp(vectorAction[2], 0f, 1f)),
-            Time.fixedDeltaTime * 500 * Mathf.Clamp(vectorAction[3], -1f, 1f));
+            0),
+            Time.fixedDeltaTime * 500 * Mathf.Clamp(vectorAction[2], -1f, 1f));
 
-        transform.Translate(new Vector3(Mathf.Clamp(vectorAction[4], 0f, 2f),
-            Mathf.Clamp(vectorAction[5], 0f, 2f),
-            Mathf.Clamp(vectorAction[6], 0f, 2f)));
+        transform.Translate(new Vector3(Mathf.Clamp(vectorAction[3], 0f, 2f),
+            Mathf.Clamp(vectorAction[4], 0f, 2f),
+            Mathf.Clamp(vectorAction[5], 0f, 2f)));
 
         amountActions++;
     }

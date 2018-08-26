@@ -14,9 +14,11 @@ public class GameController : MonoBehaviour {
         Test // Other modes ? Like real video game ?
     }
 
-    
-
-
+    [Header("JointAgent")]
+    [Space(10)]
+    public GameObject jointAgentPrefab;
+    public Brain jointBrain;
+    public int amountOfJointAgents = 1;
 
     [Header("HerbivorousAgent")]
     [Space(10)]
@@ -26,7 +28,7 @@ public class GameController : MonoBehaviour {
 
     [Header("CarnivorousAgent")]
     [Space(10)]
-    public GameObject CarnivorousAgentPrefab;
+    public GameObject carnivorousAgentPrefab;
     public Brain carnivorousBrain;
     public int amountOfCarnivorousAgents = 1;
 
@@ -38,24 +40,19 @@ public class GameController : MonoBehaviour {
     [Header("Misc")]
     [Space(10)]
     public GameMode gameMode = GameMode.Test;
-    public GameObject groundPrefab;
     public int amountOfWorkers = 10;
+    public GameObject groundPrefab;
     public GameObject herbPrefab;
     public int maxHerbs = 1;
 
-    int amountOfHerbs = 0;
-    GameObject[] herbsObj;
-    List<GameObject> groundsObj; // List > Array
+    
+    private int amountOfHerbs = 0;
+    private GameObject[] herbsObj;
     private int nbActions = 0;
-    float groundSize;
+    private float groundSize;
 
 	// Use this for initialization
 	void Start () {
-        groundsObj = new List<GameObject>();
-        
-
-        if (herbivorousBrain.brainType == BrainType.Player)
-            amountOfHerbivorousAgents = 1; // Only spawn 1 agent if player mode
 
         groundSize = groundPrefab.GetComponent<MeshRenderer>().bounds.size.x;
         float offsetX;
@@ -63,28 +60,24 @@ public class GameController : MonoBehaviour {
         switch (gameMode)
         {
             case GameMode.Train:
-                for (int w = 0; w <= amountOfWorkers; w++)
+                for (int w = 0; w < amountOfWorkers; w++)
                 {
                     offsetX = 2 * groundSize * w;
-
-                    groundsObj.Add(Instantiate(groundPrefab,
-                        new Vector3(2 * groundSize * w, 0, 0),
-                        new Quaternion(0, 0, 0, 0)));
-
+                    Instantiate(groundPrefab, new Vector3(2 * groundSize * w, 0, 0), new Quaternion(0, 0, 0, 0));
                     GameObject herbObj = Instantiate(herbPrefab,
-                        new Vector3(Random.Range(-groundSize / 4, groundSize / 4) + 2 * groundSize * w, 1f, Random.Range(-groundSize / 4, groundSize / 4)),
+                        new Vector3(Random.Range(-groundSize / 2, groundSize / 2) + 2 * groundSize * w, 1f, Random.Range(-groundSize / 2, groundSize / 2)),
                         new Quaternion(0, Random.Range(0, 360), 0, 0));
 
                     herbObj.GetComponent<Herb>().OffsetX = offsetX;
                     herbObj.GetComponent<Herb>().groundSize = groundSize;
 
-                    SpawnAgents(offsetX, w);
+                    SpawnAgents(offsetX);
                 }
                 break;
             case GameMode.Test:
-                groundsObj.Add(Instantiate(groundPrefab, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0)));
+                Instantiate(groundPrefab, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
                 SpawnHerbs();
-                SpawnAgents(0, 0);
+                SpawnAgents(0);
                 break;
         }
         
@@ -96,42 +89,60 @@ public class GameController : MonoBehaviour {
     /// </summary>
     /// <param name="offsetX"></param>
     /// <param name="groundIndex"></param>
-    void SpawnAgents(float offsetX, int groundIndex)
+    void SpawnAgents(float offsetX)
     {
         GameObject camObj = Instantiate(camPrefab,
-            new Vector3(Random.Range(-groundSize / 4, groundSize / 4) + offsetX, 1f, Random.Range(-groundSize / 4, groundSize / 4)),
+            new Vector3(Random.Range(-groundSize / 4, groundSize / 4) + offsetX, 0, Random.Range(-groundSize / 4, groundSize / 4)),
             new Quaternion(0, Random.Range(0, 360), 0, 0));
 
         CameraAgent camAgent = camObj.GetComponent<CameraAgent>();
         camAgent.GiveBrain(cameraBrain);
         // Spawn at random position on the map and random rotation
         // TODO : check if the random position doesn't collide with another gameobject (RayCast)
+        for (int i = 0; i < amountOfJointAgents; i++)
+        {
+            GameObject agentObj = Instantiate(jointAgentPrefab,
+                new Vector3(Random.Range(-groundSize / 4, groundSize / 4) + offsetX,
+                0.5f, // THIS HAS TO BE CHANGED IF THE SCALE / SIZE OF OBJECT CHANGE
+                Random.Range(-groundSize / 4, groundSize / 4)),
+                new Quaternion(0, Random.Range(0, 360), 0, 0));
+
+            camAgent.ThingsToWatch.Add(agentObj);
+            JointAgent agent = agentObj.GetComponent<JointAgent>();
+            agent.OffsetX = offsetX;
+            agent.GroundSize = groundSize;
+            agent.GiveBrain(jointBrain); // We need to give brain at runtime when dynamically spawning agent
+                                               // https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Design-Agents.md#instantiating-an-agent-at-runtime
+        }
+
         for (int i = 0; i < amountOfHerbivorousAgents; i++)
         {
             GameObject agentObj = Instantiate(herbivorousAgentPrefab,
-                new Vector3(Random.Range(-groundSize / 4, groundSize / 4) + offsetX, 1f, Random.Range(-groundSize / 4, groundSize / 4)),
+                new Vector3(Random.Range(-groundSize / 2, groundSize / 2) + offsetX,
+                0.5f,
+                Random.Range(-groundSize / 2, groundSize / 2)),
                 new Quaternion(0, Random.Range(0, 360), 0, 0));
 
             camAgent.ThingsToWatch.Add(agentObj);
             LivingBeingAgent agent = agentObj.GetComponent<LivingBeingAgent>();
-            agent.ground = groundsObj[groundIndex].transform;
             agent.OffsetX = offsetX;
-            agent.groundSize = groundSize;
+            agent.GroundSize = groundSize;
             agent.GiveBrain(herbivorousBrain); // We need to give brain at runtime when dynamically spawning agent
                                                // https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Design-Agents.md#instantiating-an-agent-at-runtime
         }
 
         for (int i = 0; i < amountOfCarnivorousAgents; i++)
         {
-            GameObject agentObj = Instantiate(CarnivorousAgentPrefab,
-                new Vector3(Random.Range(-groundSize / 4, groundSize / 4) + offsetX, 1f, Random.Range(-groundSize / 4, groundSize / 4)),
+            GameObject agentObj = Instantiate(carnivorousAgentPrefab,
+                new Vector3(Random.Range(-groundSize / 2, groundSize / 2) + offsetX,
+                0.5f,
+                Random.Range(-groundSize / 2, groundSize / 2)),
                 new Quaternion(0, Random.Range(0, 360), 0, 0));
 
             camAgent.ThingsToWatch.Add(agentObj);
             LivingBeingAgent agent = agentObj.GetComponent<LivingBeingAgent>();
-            agent.ground = groundsObj[groundIndex].transform;
             agent.OffsetX = offsetX;
-            agent.groundSize = groundSize;
+            agent.GroundSize = groundSize;
             agent.GiveBrain(carnivorousBrain); // We need to give brain at runtime when dynamically spawning agent
                                                // https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Design-Agents.md#instantiating-an-agent-at-runtime
         }
@@ -151,7 +162,7 @@ public class GameController : MonoBehaviour {
     {
         for(int i = 0;i < maxHerbs; i++)
         {
-            GameObject herbObj = Instantiate(herbPrefab, new Vector3(Random.Range(-groundSize / 2, groundSize / 2), 0.05f,
+            GameObject herbObj = Instantiate(herbPrefab, new Vector3(Random.Range(-groundSize / 2, groundSize / 2), 0.5f,
                 Random.Range(-groundSize / 2, groundSize / 2)), new Quaternion(0, Random.Range(0, 360), 0, 0));
         }
     }
