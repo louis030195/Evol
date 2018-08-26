@@ -48,21 +48,23 @@ public class CameraAgent : Agent
         if (amountActions >= 1000)
         {
             //AddReward(-10f);
-            print("I finished after " + amountActions + " actions");
+            // print("I finished after " + amountActions + " actions");
             amountActions = 0;
             Done();
         }
+        
+        AddReward(1f * thingsSaw);
 
-        if (thingsSaw > 0)
-            AddReward(1f);
-
+        if(Vector3.Distance(transform.position, new Vector3(OffsetX, 0, 0)) > 20)
+            AddReward(-1f);
+        /*
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity))
         {
             //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
             if (hit.distance > 20f)
                 AddReward(-1f);
-        }
+        }*/
 
 
         // Move

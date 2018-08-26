@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 114923276205832288}
   m_Layer: 0
   m_Name: HerbivorousAgent2
-  m_TagString: Untagged
+  m_TagString: herbivorous
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -683,7 +683,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: d633725e980bb4ac5b0dd309bad3702f, type: 2}
+  - {fileID: 2100000, guid: 9cb7c9360b819dc4e92eadace035e1ed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -753,7 +753,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 00d852aac9443402984416f9dbcd22ea, type: 2}
+  - {fileID: 2100000, guid: 9cb7c9360b819dc4e92eadace035e1ed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -858,7 +858,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: d633725e980bb4ac5b0dd309bad3702f, type: 2}
+  - {fileID: 2100000, guid: 9cb7c9360b819dc4e92eadace035e1ed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -893,7 +893,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: d633725e980bb4ac5b0dd309bad3702f, type: 2}
+  - {fileID: 2100000, guid: 9cb7c9360b819dc4e92eadace035e1ed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -928,7 +928,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 00d852aac9443402984416f9dbcd22ea, type: 2}
+  - {fileID: 2100000, guid: 9cb7c9360b819dc4e92eadace035e1ed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -963,7 +963,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: d633725e980bb4ac5b0dd309bad3702f, type: 2}
+  - {fileID: 2100000, guid: 9cb7c9360b819dc4e92eadace035e1ed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1033,7 +1033,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 00d852aac9443402984416f9dbcd22ea, type: 2}
+  - {fileID: 2100000, guid: 9cb7c9360b819dc4e92eadace035e1ed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1138,7 +1138,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 00d852aac9443402984416f9dbcd22ea, type: 2}
+  - {fileID: 2100000, guid: 9cb7c9360b819dc4e92eadace035e1ed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1243,7 +1243,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 00d852aac9443402984416f9dbcd22ea, type: 2}
+  - {fileID: 2100000, guid: 9cb7c9360b819dc4e92eadace035e1ed, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1693,7 +1693,7 @@ MonoBehaviour:
   leg2Lower: {fileID: 4398813339315582}
   leg3Upper: {fileID: 4316537943453514}
   leg3Lower: {fileID: 4748695228190190}
-  useFootGroundedVisualization: 1
+  useFootGroundedVisualization: 0
   foot0: {fileID: 23722828552923028}
   foot1: {fileID: 23773700375099750}
   foot2: {fileID: 23968964384749198}

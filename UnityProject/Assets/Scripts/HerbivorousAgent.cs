@@ -41,7 +41,7 @@ public class HerbivorousAgent : LivingBeingAgent
                 Done();
             }
 
-            if (LivingBeing.Life == 0 || transform.GetChild(0).localPosition.y < 0) // Strange, the parent y position doesn't change but the child, so we check child pos
+            if (LivingBeing.Life == 0 || transform.GetChild(0).position.y < -10) // Strange, the parent y position doesn't change but the child, so we check child pos
             {
                 AddReward(-10f);
                 amountActions = 0;
@@ -49,7 +49,7 @@ public class HerbivorousAgent : LivingBeingAgent
             }
 
         }
-
+        
         else if(rewardMode == RewardMode.Dense)
         {
             // AddReward(-0.015f);
@@ -57,16 +57,23 @@ public class HerbivorousAgent : LivingBeingAgent
             if (amountActions >= 1000)
             {
                 //AddReward(-10f);
-                print("I finished after " + amountActions + " actions");
-                amountActions = 0;
-                Done();
+                //print("I finished after " + amountActions + " actions");
+                //amountActions = 0;
+                //Done();
             }
-            else if (transform.GetChild(0).position.y < 0)
+
+            if (transform.GetChild(0).position.y < -2f)
             {
                 print("I jumped from the board after " + amountActions + " actions");
                 AddReward(-10f);
                 amountActions = 0;
                 Done();
+            }
+
+            if (Vector3.Distance(transform.GetChild(0).position, prevPosition) > 0)
+            {
+                AddReward(0.01f);
+                prevPosition = transform.GetChild(0).position;
             }
         }
 

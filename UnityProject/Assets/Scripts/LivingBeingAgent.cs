@@ -41,6 +41,8 @@ public abstract class LivingBeingAgent : Agent
 
     // ------------crawler above----------------
 
+    protected int totalActions;
+    protected Vector3 prevPosition;
     protected RayPerception rayPer;
     public LivingBeing LivingBeing { get; protected set; }
     public float groundSize { get; set; }
@@ -63,6 +65,8 @@ public abstract class LivingBeingAgent : Agent
 
     public override void InitializeAgent()
     {
+        prevPosition = transform.GetChild(0).position;
+
         jdController = GetComponent<JointDriveController>();
         currentDecisionStep = 1;
 
@@ -219,8 +223,8 @@ public abstract class LivingBeingAgent : Agent
         isNewDecisionStep = true;
         currentDecisionStep = 1;
         
-        transform.position = new Vector3(Random.Range(-groundSize / 4, groundSize / 4) + OffsetX, 1, Random.Range(-groundSize / 4, groundSize / 4));
-        transform.rotation = new Quaternion(0, Random.Range(0, 360), 0, 0);
+        //transform.position = new Vector3(Random.Range(-groundSize / 10, groundSize / 10) + OffsetX, 1, Random.Range(-groundSize / 10, groundSize / 10));
+        //transform.rotation = new Quaternion(0, Random.Range(0, 360), 0, 0);
 
         LivingBeing.Satiety = 49;
         LivingBeing.Life = 99;
