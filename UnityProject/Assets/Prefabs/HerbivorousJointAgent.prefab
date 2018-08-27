@@ -93,10 +93,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4799443970722236}
-  - component: {fileID: 114828883350499906}
   - component: {fileID: 114437484583077330}
   - component: {fileID: 114091081086300714}
   - component: {fileID: 114923276205832288}
+  - component: {fileID: 114059801201440470}
   m_Layer: 0
   m_Name: HerbivorousJointAgent
   m_TagString: herbivorous
@@ -1590,6 +1590,21 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &114059801201440470
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1156664839165676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd4a3cfb1d66c0c49b91a5483208eb24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxJointSpring: 40000
+  jointDampen: 3000
+  maxJointForceLimit: 30000
+  ItemPartsList: []
 --- !u!114 &114091081086300714
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1652,15 +1667,6 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 5
   rewardMode: 1
-  body: {fileID: 4248258476138524}
-  leg0Upper: {fileID: 4833480079868186}
-  leg0Lower: {fileID: 4785553287137952}
-  leg1Upper: {fileID: 4863136732251972}
-  leg1Lower: {fileID: 4051865413705818}
-  leg2Upper: {fileID: 4547910743848602}
-  leg2Lower: {fileID: 4398813339315582}
-  leg3Upper: {fileID: 4316537943453514}
-  leg3Lower: {fileID: 4748695228190190}
 --- !u!114 &114529273537430880
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1725,21 +1731,6 @@ MonoBehaviour:
   penalizeGroundContact: 0
   groundContactPenalty: 0
   touchingGround: 0
---- !u!114 &114828883350499906
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1156664839165676}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b29724baddfa457da6eeab446fa49ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxJointSpring: 40000
-  jointDampen: 3000
-  maxJointForceLimit: 10000
-  bodyPartsList: []
 --- !u!114 &114889346459114316
 MonoBehaviour:
   m_ObjectHideFlags: 1
