@@ -1,6 +1,8 @@
 ﻿using MLAgents;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 /// <summary>
@@ -14,156 +16,51 @@ public class GameController : MonoBehaviour {
         Test // Other modes ? Like real video game ?
     }
 
-    [Header("JointAgent")]
+    [Header("Workers")]
     [Space(10)]
-    public GameObject jointAgentPrefab;
-    public Brain jointBrain;
-    public int amountOfJointAgents = 1;
-
-    [Header("HerbivorousAgent")]
-    [Space(10)]
-    public GameObject herbivorousAgentPrefab;
-    public Brain herbivorousBrain;
-    public int amountOfHerbivorousAgents = 1;
-
-    [Header("CarnivorousAgent")]
-    [Space(10)]
-    public GameObject carnivorousAgentPrefab;
-    public Brain carnivorousBrain;
-    public int amountOfCarnivorousAgents = 1;
-
-    [Header("CameraAgent")]
-    [Space(10)]
-    public GameObject camPrefab;
-    public Brain cameraBrain;
+    public List<TupleWorker> workers; // You have to assign a Prefab containing the ground and agents
+    public List<Brain> brains; // Give all the brains you use in all workers
 
     [Header("Misc")]
     [Space(10)]
     public GameMode gameMode = GameMode.Test;
-    public int amountOfWorkers = 10;
-    public GameObject groundPrefab;
-    public GameObject herbPrefab;
-    public int maxHerbs = 1;
-
     
-    private int amountOfHerbs = 0;
-    private GameObject[] herbsObj;
-    private int nbActions = 0;
-    private float groundSize;
 
 	// Use this for initialization
 	void Start () {
-
-        groundSize = groundPrefab.GetComponent<MeshRenderer>().bounds.size.x;
-        float offsetX;
+        
 
         switch (gameMode)
         {
             case GameMode.Train:
-                for (int w = 0; w < amountOfWorkers; w++)
+                foreach (TupleWorker worker in workers)
                 {
-                    offsetX = 2 * groundSize * w;
-                    Instantiate(groundPrefab, new Vector3(2 * groundSize * w, 0, 0), new Quaternion(0, 0, 0, 0));
-                    GameObject herbObj = Instantiate(herbPrefab,
-                        new Vector3(Random.Range(-groundSize / 2, groundSize / 2) + 2 * groundSize * w, 1f, Random.Range(-groundSize / 2, groundSize / 2)),
-                        new Quaternion(0, Random.Range(0, 360), 0, 0));
+                    float groundSize = worker.first.transform.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x;
+                    for (int w = 0; w < worker.second; w++)
+                    {
+                        GameObject workerObject = Instantiate(worker.first, new Vector3(2 * groundSize * w, 0, 0), new Quaternion(0, 0, 0, 0));
+                        /*foreach (Transform child in workerObject.transform)
+                        {
+                            child.position = new Vector3(Random.Range(-groundSize, groundSize) + 2 * groundSize * w, 0.5f, Random.Range(-groundSize, groundSize));
+                            child.rotation = new Quaternion(0, Random.Range(0, 360), 0, 0);
+                        }*///
 
-                    herbObj.GetComponent<Herb>().OffsetX = offsetX;
-                    herbObj.GetComponent<Herb>().groundSize = groundSize;
-
-                    SpawnAgents(offsetX);
+                        // Here we assign the brain to every agent (checking brains list, if the name match with the agent we give brain)
+                        foreach (Agent agent in workerObject.GetComponentsInChildren<Agent>())
+                            foreach (Brain brain in brains.Where(brain => agent.GetType().Name.Contains(Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]))) 
+                                agent.GiveBrain(brain);
+                            
+                            
+                    }
                 }
                 break;
             case GameMode.Test:
-                Instantiate(groundPrefab, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
-                SpawnHerbs();
-                SpawnAgents(0);
+                GameObject workerObject2 = Instantiate(workers[0].first, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+                foreach (Agent agent in workerObject2.GetComponents<Agent>())
+                    agent.GiveBrain(agent.brain);
                 break;
         }
         
 
-    }
-
-    /// <summary>
-    /// Function to spawn agents
-    /// </summary>
-    /// <param name="offsetX"></param>
-    /// <param name="groundIndex"></param>
-    void SpawnAgents(float offsetX)
-    {
-        GameObject camObj = Instantiate(camPrefab,
-            new Vector3(Random.Range(-groundSize / 4, groundSize / 4) + offsetX, 0, Random.Range(-groundSize / 4, groundSize / 4)),
-            new Quaternion(0, Random.Range(0, 360), 0, 0));
-
-        CameraAgent camAgent = camObj.GetComponent<CameraAgent>();
-        camAgent.GiveBrain(cameraBrain);
-        // Spawn at random position on the map and random rotation
-        // TODO : check if the random position doesn't collide with another gameobject (RayCast)
-        for (int i = 0; i < amountOfJointAgents; i++)
-        {
-            GameObject agentObj = Instantiate(jointAgentPrefab,
-                new Vector3(Random.Range(-groundSize / 4, groundSize / 4) + offsetX,
-                0.5f, // THIS HAS TO BE CHANGED IF THE SCALE / SIZE OF OBJECT CHANGE
-                Random.Range(-groundSize / 4, groundSize / 4)),
-                new Quaternion(0, Random.Range(0, 360), 0, 0));
-
-            camAgent.ThingsToWatch.Add(agentObj);
-            JointAgent agent = agentObj.GetComponent<JointAgent>();
-            agent.OffsetX = offsetX;
-            agent.GroundSize = groundSize;
-            agent.GiveBrain(jointBrain); // We need to give brain at runtime when dynamically spawning agent
-                                               // https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Design-Agents.md#instantiating-an-agent-at-runtime
-        }
-
-        for (int i = 0; i < amountOfHerbivorousAgents; i++)
-        {
-            GameObject agentObj = Instantiate(herbivorousAgentPrefab,
-                new Vector3(Random.Range(-groundSize / 2, groundSize / 2) + offsetX,
-                0.5f,
-                Random.Range(-groundSize / 2, groundSize / 2)),
-                new Quaternion(0, Random.Range(0, 360), 0, 0));
-
-            camAgent.ThingsToWatch.Add(agentObj);
-            LivingBeingAgent agent = agentObj.GetComponent<LivingBeingAgent>();
-            agent.OffsetX = offsetX;
-            agent.GroundSize = groundSize;
-            agent.GiveBrain(herbivorousBrain); // We need to give brain at runtime when dynamically spawning agent
-                                               // https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Design-Agents.md#instantiating-an-agent-at-runtime
-        }
-
-        for (int i = 0; i < amountOfCarnivorousAgents; i++)
-        {
-            GameObject agentObj = Instantiate(carnivorousAgentPrefab,
-                new Vector3(Random.Range(-groundSize / 2, groundSize / 2) + offsetX,
-                0.5f,
-                Random.Range(-groundSize / 2, groundSize / 2)),
-                new Quaternion(0, Random.Range(0, 360), 0, 0));
-
-            camAgent.ThingsToWatch.Add(agentObj);
-            LivingBeingAgent agent = agentObj.GetComponent<LivingBeingAgent>();
-            agent.OffsetX = offsetX;
-            agent.GroundSize = groundSize;
-            agent.GiveBrain(carnivorousBrain); // We need to give brain at runtime when dynamically spawning agent
-                                               // https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Design-Agents.md#instantiating-an-agent-at-runtime
-        }
-
-        
-    }
-	
-    /*
-    void FixedUpdate()
-    {
-        nbActions++;
-        if (nbActions % 10000 == 0)
-            SpawnHerbs();
-    }
-    */
-    void SpawnHerbs()
-    {
-        for(int i = 0;i < maxHerbs; i++)
-        {
-            GameObject herbObj = Instantiate(herbPrefab, new Vector3(Random.Range(-groundSize / 2, groundSize / 2), 0.5f,
-                Random.Range(-groundSize / 2, groundSize / 2)), new Quaternion(0, Random.Range(0, 360), 0, 0));
-        }
     }
 }

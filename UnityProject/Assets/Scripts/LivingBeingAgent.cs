@@ -14,8 +14,6 @@ public abstract class LivingBeingAgent : Agent
     protected RayPerception rayPer;
     public LivingBeing LivingBeing { get; protected set; }
     public System.Action action;
-    public float OffsetX { get; set; }
-    public float GroundSize {get; set; }
 
     protected int amountActions = 0;
     
@@ -36,7 +34,9 @@ public abstract class LivingBeingAgent : Agent
     /// </summary>
     public override void AgentReset()
     {
-        transform.position = new Vector3(Random.Range(-GroundSize / 2, GroundSize / 2) + OffsetX, 0.5f, Random.Range(-GroundSize / 2, GroundSize / 2));
+        float groundSize = transform.parent.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x;
+        float offsetX = transform.parent.position.x;
+        transform.position = new Vector3(Random.Range(-groundSize, groundSize) + offsetX, 0.5f, Random.Range(-groundSize, groundSize));
         transform.rotation = new Quaternion(0, Random.Range(0, 360), 0, 0);
 
         LivingBeing.Satiety = 49;

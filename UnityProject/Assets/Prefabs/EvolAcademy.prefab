@@ -182,13 +182,13 @@ MonoBehaviour:
     - 
     vectorActionSpaceType: 1
     vectorObservationSpaceType: 1
-  brainType: 2
+  brainType: 3
   CoreBrains:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: -1056
+  instanceID: -39078
 --- !u!114 &114530053126441440
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -228,13 +228,13 @@ MonoBehaviour:
     - 
     vectorActionSpaceType: 1
     vectorObservationSpaceType: 1
-  brainType: 2
+  brainType: 3
   CoreBrains:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: -1060
+  instanceID: -39082
 --- !u!114 &114747797302771448
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -260,13 +260,13 @@ MonoBehaviour:
     - 
     vectorActionSpaceType: 1
     vectorObservationSpaceType: 1
-  brainType: 2
+  brainType: 3
   CoreBrains:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: 14846
+  instanceID: -39080
 --- !u!114 &114830505798622882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -304,6 +304,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86645e398866ce140a294c3976cd5714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  workers:
+  - {fileID: 1279282397189220, guid: 172ce0beb97da8248a616d01863dc9d0, type: 2}
   jointAgentPrefab: {fileID: 1156664839165676, guid: 9c62f8f579a84334580cc1cb629ac0a8,
     type: 2}
   jointBrain: {fileID: 114530053126441440}
@@ -318,8 +320,8 @@ MonoBehaviour:
   amountOfCarnivorousAgents: 1
   camPrefab: {fileID: 1076389815045292, guid: 5ffb5b0870b820a4cb27ca9d99b52438, type: 2}
   cameraBrain: {fileID: 114747797302771448}
-  gameMode: 0
-  amountOfWorkers: 20
+  gameMode: 1
+  amountOfWorkers: 1
   groundPrefab: {fileID: 1895891338971484, guid: 129c30dad65218743941e70e0de4caf1,
     type: 2}
   herbPrefab: {fileID: 1879075460785134, guid: 946becfa29c68964a8dd7e0332c7613e, type: 2}
@@ -345,7 +347,7 @@ MonoBehaviour:
     - 
     vectorActionSpaceType: 1
     vectorObservationSpaceType: 1
-  brainType: 2
+  brainType: 0
   CoreBrains:
   - {fileID: 0}
   - {fileID: 0}

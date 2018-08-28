@@ -8,7 +8,6 @@ public class CameraAgent : Agent
 {
 
     public List<GameObject> ThingsToWatch { get; set; }
-    public float OffsetX { get; set; }
 
     private Camera cam;
     private Plane[] planes;
@@ -57,7 +56,7 @@ public class CameraAgent : Agent
 
         //if (transform.rotation.z > 150)
 
-        if(Vector3.Distance(transform.position, new Vector3(OffsetX, 0, 0)) > 20)
+        if(Vector3.Distance(transform.position, new Vector3(transform.parent.position.x, 0, 0)) > 20)
             AddReward(-1f);
         /*
         RaycastHit hit;
@@ -89,7 +88,9 @@ public class CameraAgent : Agent
     /// </summary>
     public override void AgentReset()
     {
-        transform.position = new Vector3(Random.Range(-5f, 5f) + OffsetX, 0.05f, Random.Range(-5f, 5f));
-        transform.rotation = new Quaternion(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360), 0);
+        float groundSize = transform.parent.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x;
+        float offsetX = transform.parent.position.x;
+        transform.position = new Vector3(Random.Range(-groundSize, groundSize) + offsetX, 0.5f, Random.Range(-groundSize, groundSize));
+        transform.rotation = new Quaternion(0, Random.Range(0, 360), 0, 0);
     }
 }
