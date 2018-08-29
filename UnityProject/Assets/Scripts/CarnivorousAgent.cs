@@ -82,7 +82,7 @@ public class CarnivorousAgent : LivingBeingAgent
             LivingBeing.Satiety += 10;
             collision.collider.GetComponent<HerbivorousAgent>().LivingBeing.Life -= 25;
             if (rewardMode == RewardMode.Dense)
-                AddReward(10f);
+                AddReward(20f);
             Done();
         }
     }

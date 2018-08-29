@@ -45,7 +45,11 @@ public class GameController : MonoBehaviour {
                             child.rotation = new Quaternion(0, Random.Range(0, 360), 0, 0);
                         }*///
 
-                        // Here we assign the brain to every agent (checking brains list, if the name match with the agent we give brain)
+                        foreach (LivingBeingAgent livingBeingAgent in workerObject.GetComponentsInChildren<LivingBeingAgent>())
+                            livingBeingAgent.ResetPosition();
+
+
+                            // Here we assign the brain to every agent (checking brains list, if the name match with the agent we give brain)
                         foreach (Agent agent in workerObject.GetComponentsInChildren<Agent>())
                             foreach (Brain brain in brains.Where(brain => agent.GetType().Name.Contains(Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]))) 
                                 agent.GiveBrain(brain);

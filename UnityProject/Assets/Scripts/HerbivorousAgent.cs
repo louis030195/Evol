@@ -65,6 +65,7 @@ public class HerbivorousAgent : LivingBeingAgent
                 print("I jumped from the board after " + amountActions + " actions");
                 AddReward(-10f);
                 amountActions = 0;
+                ResetPosition();
                 Done();
             }
         }
@@ -96,5 +97,11 @@ public class HerbivorousAgent : LivingBeingAgent
                 AddReward(-1f);
             }
         }
+    }
+
+    public override void AgentReset()
+    {
+        LivingBeing.Satiety = 49;
+        LivingBeing.Life = 99;
     }
 }

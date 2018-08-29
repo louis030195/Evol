@@ -34,12 +34,16 @@ public abstract class LivingBeingAgent : Agent
     /// </summary>
     public override void AgentReset()
     {
+        ResetPosition();
+        LivingBeing.Satiety = 49;
+        LivingBeing.Life = 99;
+    }
+
+    public void ResetPosition()
+    {
         float groundSize = transform.parent.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 2;
         float offsetX = transform.parent.position.x;
         transform.position = new Vector3(Random.Range(-groundSize, groundSize) + offsetX, 0.5f, Random.Range(-groundSize, groundSize));
         transform.rotation = new Quaternion(0, Random.Range(0, 360), 0, 0);
-
-        LivingBeing.Satiety = 49;
-        LivingBeing.Life = 99;
     }
 }
