@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MLAgents;
+using System.Linq;
 
 /// <summary>
 /// This class handles the behaviour of the herbivorous agent
@@ -18,7 +19,7 @@ public class HerbivorousAgent : LivingBeingAgent
 
     public override void CollectObservations()
     {
-        var rayDistance = 50f;
+        var rayDistance = 200f;
         float[] rayAngles = { 0f, 45f, 90f, 135f, 180f, 110f, 70f };
         var detectableObjects = new[] { "food", "carnivorous" };
         AddVectorObs(rayPer.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f));
