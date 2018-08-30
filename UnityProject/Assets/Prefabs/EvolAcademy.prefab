@@ -188,7 +188,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: -39078
+  instanceID: 11644
 --- !u!114 &114530053126441440
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -228,13 +228,13 @@ MonoBehaviour:
     - 
     vectorActionSpaceType: 1
     vectorObservationSpaceType: 1
-  brainType: 3
+  brainType: 0
   CoreBrains:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: -39082
+  instanceID: 11648
 --- !u!114 &114747797302771448
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -266,7 +266,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: -39080
+  instanceID: 11646
 --- !u!114 &114830505798622882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -283,7 +283,7 @@ MonoBehaviour:
     width: 300
     height: 300
     qualityLevel: 1
-    timeScale: 100
+    timeScale: 1
     targetFrameRate: -1
   inferenceConfiguration:
     width: 1280
@@ -305,27 +305,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   workers:
-  - {fileID: 1279282397189220, guid: 172ce0beb97da8248a616d01863dc9d0, type: 2}
-  jointAgentPrefab: {fileID: 1156664839165676, guid: 9c62f8f579a84334580cc1cb629ac0a8,
-    type: 2}
-  jointBrain: {fileID: 114530053126441440}
-  amountOfJointAgents: 0
-  herbivorousAgentPrefab: {fileID: 1592921145049348, guid: 85937eb0de212944c9f4fdb9a66cde4f,
-    type: 2}
-  herbivorousBrain: {fileID: 114859714832689094}
-  amountOfHerbivorousAgents: 1
-  carnivorousAgentPrefab: {fileID: 1592921145049348, guid: 5bd61245a87d69e4db6e6a25d15a7432,
-    type: 2}
-  carnivorousBrain: {fileID: 114094034598838896}
-  amountOfCarnivorousAgents: 1
-  camPrefab: {fileID: 1076389815045292, guid: 5ffb5b0870b820a4cb27ca9d99b52438, type: 2}
-  cameraBrain: {fileID: 114747797302771448}
-  gameMode: 1
-  amountOfWorkers: 1
-  groundPrefab: {fileID: 1895891338971484, guid: 129c30dad65218743941e70e0de4caf1,
-    type: 2}
-  herbPrefab: {fileID: 1879075460785134, guid: 946becfa29c68964a8dd7e0332c7613e, type: 2}
-  maxHerbs: 1
+  - {fileID: 11400000, guid: 816a05b25e1503540a264a96695a5a92, type: 2}
+  brains:
+  - {fileID: 114859714832689094}
+  - {fileID: 114094034598838896}
+  - {fileID: 114747797302771448}
+  - {fileID: 114530053126441440}
+  gameMode: 0
 --- !u!114 &114859714832689094
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -347,10 +333,10 @@ MonoBehaviour:
     - 
     vectorActionSpaceType: 1
     vectorObservationSpaceType: 1
-  brainType: 0
+  brainType: 3
   CoreBrains:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: -1054
+  instanceID: 11642

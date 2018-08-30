@@ -132,16 +132,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114848087305653304, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-        type: 2}
-      propertyPath: brains.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114848087305653304, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-        type: 2}
-      propertyPath: workers.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4856651493469528, guid: a233e8e6c6be3dc4aa8847cfad7cb193, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -254,92 +244,6 @@ Prefab:
       propertyPath: CoreBrains.Array.data[3]
       value: 
       objectReference: {fileID: 1496451619}
-    - target: {fileID: 114848087305653304, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-        type: 2}
-      propertyPath: workers.Array.data[0].first
-      value: 
-      objectReference: {fileID: 1279282397189220, guid: 172ce0beb97da8248a616d01863dc9d0,
-        type: 2}
-    - target: {fileID: 114848087305653304, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-        type: 2}
-      propertyPath: workers.Array.data[0].second
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114848087305653304, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-        type: 2}
-      propertyPath: gameMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114530053126441440, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-        type: 2}
-      propertyPath: brainType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114530053126441440, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-        type: 2}
-      propertyPath: instanceID
-      value: -1060
-      objectReference: {fileID: 0}
-    - target: {fileID: 114859714832689094, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-        type: 2}
-      propertyPath: brainType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114094034598838896, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-        type: 2}
-      propertyPath: brainType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114094034598838896, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-        type: 2}
-      propertyPath: instanceID
-      value: -1056
-      objectReference: {fileID: 0}
-    - target: {fileID: 114848087305653304, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-        type: 2}
-      propertyPath: brains.Array.data[0]
-      value: 
-      objectReference: {fileID: 35616141}
-    - target: {fileID: 114848087305653304, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-        type: 2}
-      propertyPath: brains.Array.data[1]
-      value: 
-      objectReference: {fileID: 35616140}
-    - target: {fileID: 114848087305653304, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-        type: 2}
-      propertyPath: brains.Array.data[2]
-      value: 
-      objectReference: {fileID: 35616142}
-    - target: {fileID: 114848087305653304, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-        type: 2}
-      propertyPath: brains.Array.data[3]
-      value: 
-      objectReference: {fileID: 1999889997}
-    - target: {fileID: 114747797302771448, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-        type: 2}
-      propertyPath: brainType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114747797302771448, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-        type: 2}
-      propertyPath: instanceID
-      value: -1058
-      objectReference: {fileID: 0}
-    - target: {fileID: 114830505798622882, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-        type: 2}
-      propertyPath: trainingConfiguration.timeScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114859714832689094, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-        type: 2}
-      propertyPath: brainParameters.vectorObservationSize
-      value: 29
-      objectReference: {fileID: 0}
-    - target: {fileID: 114094034598838896, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-        type: 2}
-      propertyPath: brainParameters.vectorObservationSize
-      value: 29
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a233e8e6c6be3dc4aa8847cfad7cb193, type: 2}
   m_IsPrefabAsset: 0
@@ -373,7 +277,7 @@ MonoBehaviour:
   m_Name: (Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
   broadcast: 1
-  graphModel: {fileID: 4900000, guid: 71a52cf651c85f241aa0fc83a0b0d8b5, type: 3}
+  graphModel: {fileID: 4900000, guid: 57b47210a765db942b4e7b9451b6ecb0, type: 3}
   graphScope: BrainHerbivorous
   graphPlaceholders: []
   BatchSizePlaceholderName: batch_size
@@ -542,7 +446,7 @@ MonoBehaviour:
   m_Name: (Clone)(Clone)
   m_EditorClassIdentifier: 
   broadcast: 1
-  graphModel: {fileID: 4900000, guid: 71a52cf651c85f241aa0fc83a0b0d8b5, type: 3}
+  graphModel: {fileID: 4900000, guid: 9991b1c418b488a4e80add41c9688e11, type: 3}
   graphScope: BrainCamera
   graphPlaceholders: []
   BatchSizePlaceholderName: batch_size
@@ -565,7 +469,7 @@ MonoBehaviour:
   m_Name: (Clone)(Clone)
   m_EditorClassIdentifier: 
   broadcast: 1
-  graphModel: {fileID: 4900000, guid: 71a52cf651c85f241aa0fc83a0b0d8b5, type: 3}
+  graphModel: {fileID: 4900000, guid: 57b47210a765db942b4e7b9451b6ecb0, type: 3}
   graphScope: BrainCarnivorous
   graphPlaceholders: []
   BatchSizePlaceholderName: batch_size

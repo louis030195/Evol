@@ -18,12 +18,13 @@ public class GameController : MonoBehaviour {
 
     [Header("Workers")]
     [Space(10)]
-    public List<TupleWorker> workers; // You have to assign a Prefab containing the ground and agents
+    public List<Worker> workers;
     public List<Brain> brains; // Give all the brains you use in all workers
 
-    [Header("Misc")]
+
+    [Header("Useless atm")]
     [Space(10)]
-    public GameMode gameMode = GameMode.Test;
+    public GameMode gameMode = GameMode.Train;
     
 
 	// Use this for initialization
@@ -33,23 +34,24 @@ public class GameController : MonoBehaviour {
         switch (gameMode)
         {
             case GameMode.Train:
-                foreach (TupleWorker worker in workers)
+                foreach (Worker worker in workers)
                 {
-                    float groundSize = worker.first.transform.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x;
-                    for (int w = 0; w < worker.second; w++)
+                    float groundSize = worker.WorkerPrefab.transform.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x;
+                    for (int w = 0; w < worker.AmountOfWorkers; w++)
                     {
-                        GameObject workerObject = Instantiate(worker.first, new Vector3(2 * groundSize * w, 0, 0), new Quaternion(0, 0, 0, 0));
-                        /*foreach (Transform child in workerObject.transform)
-                        {
-                            child.position = new Vector3(Random.Range(-groundSize, groundSize) + 2 * groundSize * w, 0.5f, Random.Range(-groundSize, groundSize));
-                            child.rotation = new Quaternion(0, Random.Range(0, 360), 0, 0);
-                        }*///
+                        GameObject workerObject = Instantiate(worker.WorkerPrefab, new Vector3(2 * groundSize * w, 0, 0), new Quaternion(0, 0, 0, 0));
+                        for (int i = 0; i < worker.AmountOfAgents.Count; i++){
+                            for (int j = 0; j < worker.AmountOfAgents[i]; j++) {
+                                Transform childTransform = Instantiate(worker.WorkerPrefab.transform.GetChild(i));
+                                childTransform.parent = workerObject.transform;
+                            }
+                         }
 
                         foreach (LivingBeingAgent livingBeingAgent in workerObject.GetComponentsInChildren<LivingBeingAgent>())
                             livingBeingAgent.ResetPosition();
 
 
-                            // Here we assign the brain to every agent (checking brains list, if the name match with the agent we give brain)
+                        // Here we assign the brain to every agent (checking brains list, if the name match with the agent we give brain)
                         foreach (Agent agent in workerObject.GetComponentsInChildren<Agent>())
                             foreach (Brain brain in brains.Where(brain => agent.GetType().Name.Contains(Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]))) 
                                 agent.GiveBrain(brain);
@@ -59,7 +61,7 @@ public class GameController : MonoBehaviour {
                 }
                 break;
             case GameMode.Test:
-                GameObject workerObject2 = Instantiate(workers[0].first, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+                GameObject workerObject2 = Instantiate(workers[0].WorkerPrefab, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
                 foreach (Agent agent in workerObject2.GetComponents<Agent>())
                     agent.GiveBrain(agent.brain);
                 break;
