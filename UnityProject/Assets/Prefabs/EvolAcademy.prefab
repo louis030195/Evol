@@ -27,6 +27,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1399405223020630
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4260780733700904}
+  - component: {fileID: 114530053126441440}
+  m_Layer: 0
+  m_Name: BrainJoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1512304687093500
 GameObject:
   m_ObjectHideFlags: 0
@@ -115,6 +131,19 @@ Transform:
   m_Father: {fileID: 4856651493469528}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4260780733700904
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1399405223020630}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4856651493469528}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4856651493469528
 Transform:
   m_ObjectHideFlags: 1
@@ -128,6 +157,7 @@ Transform:
   - {fileID: 4153199761480242}
   - {fileID: 4010749345161656}
   - {fileID: 4232205203749172}
+  - {fileID: 4260780733700904}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -158,24 +188,38 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: -1420
---- !u!114 &114747797302771448
+  instanceID: 11644
+--- !u!114 &114530053126441440
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1512304687093500}
+  m_GameObject: {fileID: 1399405223020630}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c676a8ddf5a5f4f64b35e9ed5028679d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 6
+    vectorObservationSize: 155
     numStackedVectorObservations: 1
-    vectorActionSize: 6
+    vectorActionSize: 20
     cameraResolutions: []
     vectorActionDescriptions:
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
     - 
     - 
     - 
@@ -190,7 +234,39 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: -32868
+  instanceID: 11648
+--- !u!114 &114747797302771448
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1512304687093500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c676a8ddf5a5f4f64b35e9ed5028679d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brainParameters:
+    vectorObservationSize: 7
+    numStackedVectorObservations: 1
+    vectorActionSize: 6
+    cameraResolutions: []
+    vectorActionDescriptions:
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    vectorActionSpaceType: 1
+    vectorObservationSpaceType: 1
+  brainType: 3
+  CoreBrains:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  instanceID: 11646
 --- !u!114 &114830505798622882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -202,12 +278,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2629a1097955374ba445e916c614087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSteps: 10000000
+  maxSteps: 0
   trainingConfiguration:
     width: 300
     height: 300
     qualityLevel: 1
-    timeScale: 100
+    timeScale: 1
     targetFrameRate: -1
   inferenceConfiguration:
     width: 1280
@@ -228,21 +304,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86645e398866ce140a294c3976cd5714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMode: 1
-  herbivorousBrain: {fileID: 114859714832689094}
-  carnivorousBrain: {fileID: 114094034598838896}
-  herbPrefab: {fileID: 1879075460785134, guid: 946becfa29c68964a8dd7e0332c7613e, type: 2}
-  maxHerbs: 1
-  herbivorousAgentPrefab: {fileID: 1592921145049348, guid: 85937eb0de212944c9f4fdb9a66cde4f,
-    type: 2}
-  amountOfHerbivorousAgents: 1
-  CarnivorousAgentPrefab: {fileID: 1592921145049348, guid: 5bd61245a87d69e4db6e6a25d15a7432,
-    type: 2}
-  amountOfCarnivorousAgents: 1
-  groundPrefab: {fileID: 1895891338971484, guid: 129c30dad65218743941e70e0de4caf1,
-    type: 2}
-  amountOfWorkers: 1
-  cam: {fileID: 0}
+  workers:
+  - {fileID: 11400000, guid: 816a05b25e1503540a264a96695a5a92, type: 2}
+  brains:
+  - {fileID: 114859714832689094}
+  - {fileID: 114094034598838896}
+  - {fileID: 114747797302771448}
+  - {fileID: 114530053126441440}
+  gameMode: 0
 --- !u!114 &114859714832689094
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -270,4 +339,4 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: -1434
+  instanceID: 11642

@@ -2,29 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MLAgents;
+using System.Linq;
 
 /// <summary>
 /// This class handles the behaviour of the carnivorous agent
-/// TODO : possibility that we can regroup the common code of multiple agents into a mother abstract class
 /// </summary>
 public class CarnivorousAgent : LivingBeingAgent
 {
     public override void InitializeAgent()
     {
         LivingBeing = new Carnivorous(99, 0, 20, 99, 0);
-        base.InitializeAgent();
+        rayPer = GetComponent<RayPerception>();
     }
 
     public override void CollectObservations()
     {
-        if (useVectorObs)
-        {
-            var rayDistance = 5f;
-            float[] rayAngles = { 0f, 45f, 90f, 135f, 180f, 110f, 70f };
-            var detectableObjects = new[] { "herbivorous", "food" };
-            AddVectorObs(rayPer.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f));
-            AddVectorObs(gameObject.transform.rotation.y);
-        }
+        var rayDistance = 200f;
+        float[] rayAngles = { 0f, 45f, 90f, 135f, 180f, 110f, 70f };
+        var detectableObjects = new[] { "herbivorous", "food" };
+        AddVectorObs(rayPer.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f));
+        AddVectorObs(gameObject.transform.rotation.y);
     }
 
     public override void AgentAction(float[] vectorAction, string textAction)
@@ -57,7 +54,7 @@ public class CarnivorousAgent : LivingBeingAgent
             if (amountActions >= 1000)
             {
                 //AddReward(-10f);
-                print("I finished after " + amountActions + " actions");
+                //print("I finished after " + amountActions + " actions");
                 amountActions = 0;
                 Done();
             }
@@ -72,7 +69,7 @@ public class CarnivorousAgent : LivingBeingAgent
 
         // Move
         transform.Rotate(new Vector3(0, 1f, 0), Time.fixedDeltaTime * 500 * Mathf.Clamp(vectorAction[1], -1f, 1f));
-        transform.Translate(new Vector3(0, 0, 0.1f) * Mathf.Clamp(vectorAction[0], 0f, 2f));
+        transform.Translate(new Vector3(0, 0, 1f) * Mathf.Clamp(vectorAction[0], 0f, 2f));
 
         amountActions++;
     }
@@ -84,8 +81,8 @@ public class CarnivorousAgent : LivingBeingAgent
             print("Hit HerbivorousAgent");
             LivingBeing.Satiety += 10;
             collision.collider.GetComponent<HerbivorousAgent>().LivingBeing.Life -= 25;
-            if(rewardMode == RewardMode.Dense)
-                AddReward(10f);
+            if (rewardMode == RewardMode.Dense)
+                AddReward(20f);
             Done();
         }
     }
