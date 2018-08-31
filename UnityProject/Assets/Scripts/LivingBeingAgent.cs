@@ -35,8 +35,8 @@ public abstract class LivingBeingAgent : Agent
     public override void AgentReset()
     {
         ResetPosition();
-        LivingBeing.Satiety = 49;
-        LivingBeing.Life = 99;
+        LivingBeing.Satiety = 100;
+        LivingBeing.Life = 100;
     }
 
     public void ResetPosition()

@@ -6,10 +6,10 @@ using MLAgents;
 /// <summary>
 /// This class handles the behaviour of the herbivorous agent
 /// </summary>
-//[RequireComponent(typeof(JointDriveController))] // Required to set joint forces
+[RequireComponent(typeof(JointDriveController))] // Required to set joint forces
 public class JointAgent : LivingBeingAgent
 {
-    /*
+    
     [Header("Body Parts")] [Space(10)] public Transform body;
     public Transform leg0Upper;
     public Transform leg0Lower;
@@ -243,5 +243,5 @@ public class JointAgent : LivingBeingAgent
         
         LivingBeing.Satiety = 49;
         LivingBeing.Life = 99;
-    }*/
+    }
 }

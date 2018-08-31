@@ -13,7 +13,7 @@ public class HerbivorousAgent : LivingBeingAgent
 
     public override void InitializeAgent()
     {
-        LivingBeing = new Herbivorous(99, 0, 20, 99, 0);
+        LivingBeing = new Herbivorous(99, 0, 0, 99, 0);
         rayPer = GetComponent<RayPerception>();
     }
 
@@ -31,22 +31,26 @@ public class HerbivorousAgent : LivingBeingAgent
         action();
         if (rewardMode == RewardMode.Sparse)
         {
-
+            AddReward(0.01f); // Reward for staying alive
             // Reset every 1000 actions or when the agent fell
-            if (amountActions >= 999)
+            if (amountActions >= 1000)
             {
-                AddReward(10f);
+                //print("I finished after " + amountActions + " actions");
                 amountActions = 0;
                 Done();
             }
-
-            if (LivingBeing.Life == 0 || transform.position.y < 0) // Dead
+            else if (transform.position.y < 0)
+            {
+                // print("I jumped from the board after " + amountActions + " actions");
+                // AddReward(-10f);
+                LivingBeing.Life -= 100;
+                amountActions = 0;
+                ResetPosition();
+                // Done();
+            }else if (LivingBeing.Life == 0)
             {
                 AddReward(-10f);
-                amountActions = 0;
-                Done();
             }
-
         }
 
         else if (rewardMode == RewardMode.Dense)
@@ -55,14 +59,13 @@ public class HerbivorousAgent : LivingBeingAgent
             // Reset every 1000 actions or when the agent fell
             if (amountActions >= 1000)
             {
-                //AddReward(-10f);
                 //print("I finished after " + amountActions + " actions");
                 amountActions = 0;
                 Done();
             }
             else if (transform.position.y < 0)
             {
-                print("I jumped from the board after " + amountActions + " actions");
+                // print("I jumped from the board after " + amountActions + " actions");
                 AddReward(-10f);
                 amountActions = 0;
                 ResetPosition();
@@ -82,26 +85,30 @@ public class HerbivorousAgent : LivingBeingAgent
         if (collision.collider.GetComponent<Herb>() != null)
         {
             LivingBeing.Satiety += 100;
+            LivingBeing.Life += 50;
             if (rewardMode == RewardMode.Dense)
             {
-                print("I ate something");
+                // print("I ate something");
                 AddReward(20f);
-                Done();
             }
+            Done();
         }
 
         if (collision.collider.GetComponent<CarnivorousAgent>() != null)
         {
+            LivingBeing.Life -= 50;
             if (rewardMode == RewardMode.Dense)
             {
                 AddReward(-1f);
             }
+            Done();
+            ResetPosition();
         }
     }
 
     public override void AgentReset()
     {
-        LivingBeing.Satiety = 49;
-        LivingBeing.Life = 99;
+        LivingBeing.Satiety = 100;
+        LivingBeing.Life = 100;
     }
 }

@@ -8,6 +8,6 @@ public class Worker : ScriptableObject {
     
     public GameObject WorkerPrefab;
     public int AmountOfWorkers = 1;
-    public List<int> AmountOfAgents;
+    public List<int> AmountOfAgentsToAdd;
 
 }

@@ -34,14 +34,15 @@ public class GameController : MonoBehaviour {
         switch (gameMode)
         {
             case GameMode.Train:
+                int w = 0;
                 foreach (Worker worker in workers)
                 {
                     float groundSize = worker.WorkerPrefab.transform.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x;
-                    for (int w = 0; w < worker.AmountOfWorkers; w++)
+                    for (; w < worker.AmountOfWorkers; w++)
                     {
                         GameObject workerObject = Instantiate(worker.WorkerPrefab, new Vector3(2 * groundSize * w, 0, 0), new Quaternion(0, 0, 0, 0));
-                        for (int i = 0; i < worker.AmountOfAgents.Count; i++){
-                            for (int j = 0; j < worker.AmountOfAgents[i]; j++) {
+                        for (int i = 0; i < worker.AmountOfAgentsToAdd.Count; i++){
+                            for (int j = 0; j < worker.AmountOfAgentsToAdd[i]; j++) {
                                 Transform childTransform = Instantiate(worker.WorkerPrefab.transform.GetChild(i));
                                 childTransform.parent = workerObject.transform;
                             }

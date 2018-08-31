@@ -56,7 +56,7 @@ public class CameraAgent : Agent
 
         //if (transform.rotation.z > 150)
 
-        if(Vector3.Distance(transform.position, new Vector3(transform.parent.position.x, 0, 0)) > 20)
+        if(Vector3.Distance(transform.position, transform.parent.Find("Ground").position) > 100)
             AddReward(-1f);
         /*
         RaycastHit hit;
@@ -69,14 +69,14 @@ public class CameraAgent : Agent
 
 
         // Move
-        transform.Rotate(new Vector3(Mathf.Clamp(vectorAction[0], 0f, 1f),
-            Mathf.Clamp(vectorAction[1], 0f, 1f),
-            0),
-            Time.fixedDeltaTime * 500 * Mathf.Clamp(vectorAction[2], -1f, 1f));
+        transform.Rotate(new Vector3(Mathf.Clamp(vectorAction[0], -1f, 1f),
+            0f,
+            0f),
+            Time.fixedDeltaTime * 500 * Mathf.Clamp(vectorAction[1], -1f, 1f));
 
-        transform.Translate(new Vector3(Mathf.Clamp(vectorAction[3], 0f, 2f),
-            Mathf.Clamp(vectorAction[4], 0f, 2f),
-            Mathf.Clamp(vectorAction[5], 0f, 2f)));
+        transform.Translate(new Vector3(Mathf.Clamp(vectorAction[2], -1f, 1f),
+            0f,
+            Mathf.Clamp(vectorAction[3], -1f, 1f)));
 
         amountActions++;
     }
@@ -90,7 +90,7 @@ public class CameraAgent : Agent
     {
         float groundSize = transform.parent.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x;
         float offsetX = transform.parent.position.x;
-        transform.position = new Vector3(Random.Range(-groundSize, groundSize) + offsetX, 0.5f, Random.Range(-groundSize, groundSize));
-        transform.rotation = new Quaternion(0, Random.Range(0, 360), 0, 0);
+        transform.position = new Vector3(Random.Range(-groundSize, groundSize) + offsetX, 50f, Random.Range(-groundSize, groundSize));
+        transform.rotation = new Quaternion(Random.Range(0, 360), 0, 0, 0);
     }
 }
