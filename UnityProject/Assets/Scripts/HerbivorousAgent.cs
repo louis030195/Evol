@@ -55,7 +55,7 @@ public class HerbivorousAgent : LivingBeingAgent
 
         else if (rewardMode == RewardMode.Dense)
         {
-            AddReward(-0.015f);
+            AddReward(-0.01f);
             // Reset every 1000 actions or when the agent fell
             if (amountActions >= 1000)
             {
@@ -99,7 +99,7 @@ public class HerbivorousAgent : LivingBeingAgent
             LivingBeing.Life -= 50;
             if (rewardMode == RewardMode.Dense)
             {
-                AddReward(-1f);
+                AddReward(-10f);
             }
             Done();
             ResetPosition();
