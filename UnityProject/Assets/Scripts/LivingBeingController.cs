@@ -26,13 +26,17 @@ public abstract class LivingBeingController : MonoBehaviour {
         livingBeing.Life -= 0.001f;
         //print(livingBeing.Life);
 
+        if (livingBeing.Life < 0)
+        {
+            livingBeingAgent.Done();
+            Destroy(gameObject);
+        }
+
         livingBeing.Life = livingBeing.Life > 100 ?
-            100 : livingBeing.Life < 0 ?
-            0 : livingBeing.Life;
+            100 : livingBeing.Life;
 
         livingBeing.Satiety = livingBeing.Satiety > 100 ?
-            100 : livingBeing.Satiety < 0 ?
-            0 : livingBeing.Satiety;
+            100 : livingBeing.Satiety;
     }
 
 }

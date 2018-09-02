@@ -11,7 +11,7 @@ public class CarnivorousAgent : LivingBeingAgent
 {
     public override void InitializeAgent()
     {
-        LivingBeing = new Carnivorous(100, 0, 0, 100, 0);
+        LivingBeing = new Carnivorous(50, 0, 0, 100, 0);
         rayPer = GetComponent<RayPerception>();
     }
 
@@ -44,7 +44,7 @@ public class CarnivorousAgent : LivingBeingAgent
                 LivingBeing.Life -= 100;
                 amountActions = 0;
                 ResetPosition();
-                // Done();
+                Done();
             }
             else if (LivingBeing.Life == 0)
             {
@@ -67,8 +67,9 @@ public class CarnivorousAgent : LivingBeingAgent
                 //print("I jumped from the board after " + amountActions + " actions");
                 AddReward(-10f);
                 amountActions = 0;
-                ResetPosition();
-                Done();
+                LivingBeing.Life = -1;
+                //ResetPosition();
+                //Done();
             }
         }
 
@@ -89,12 +90,25 @@ public class CarnivorousAgent : LivingBeingAgent
                 AddReward(20f);
             Done();
         }
+        if (collision.collider.GetComponent<CarnivorousAgent>() != null)
+        {
+            if (LivingBeing.Life > 90)
+            {
+                LivingBeing.Life -= 50;
+                if (rewardMode == RewardMode.Dense)
+                {
+                    AddReward(10f);
+                }
+                Instantiate(gameObject, transform.parent); // Create child
+                Done();
+            }
+        }
     }
 
     public override void AgentReset()
     {
-        LivingBeing.Satiety = 100;
-        LivingBeing.Life = 100;
+        LivingBeing.Satiety = 50;
+        LivingBeing.Life = 50;
     }
 
 }

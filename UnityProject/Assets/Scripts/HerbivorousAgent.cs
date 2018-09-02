@@ -13,7 +13,7 @@ public class HerbivorousAgent : LivingBeingAgent
 
     public override void InitializeAgent()
     {
-        LivingBeing = new Herbivorous(99, 0, 0, 99, 0);
+        LivingBeing = new Herbivorous(50, 0, 0, 100, 0);
         rayPer = GetComponent<RayPerception>();
     }
 
@@ -68,8 +68,9 @@ public class HerbivorousAgent : LivingBeingAgent
                 // print("I jumped from the board after " + amountActions + " actions");
                 AddReward(-10f);
                 amountActions = 0;
-                ResetPosition();
-                Done();
+                LivingBeing.Life = -1;
+                //ResetPosition();
+                //Done();
             }
         }
 
@@ -96,19 +97,30 @@ public class HerbivorousAgent : LivingBeingAgent
 
         if (collision.collider.GetComponent<CarnivorousAgent>() != null)
         {
-            LivingBeing.Life -= 50;
             if (rewardMode == RewardMode.Dense)
             {
                 AddReward(-10f);
             }
-            Done();
-            ResetPosition();
+            LivingBeing.Life = -1;
+        }
+        if (collision.collider.GetComponent<HerbivorousAgent>() != null)
+        {
+            if (LivingBeing.Life > 90)
+            {
+                LivingBeing.Life -= 50;
+                if (rewardMode == RewardMode.Dense)
+                {
+                    AddReward(10f);
+                }
+                Instantiate(gameObject, transform.parent); // Create child
+                Done();
+            }
         }
     }
 
     public override void AgentReset()
     {
-        LivingBeing.Satiety = 100;
-        LivingBeing.Life = 100;
+        // LivingBeing.Satiety = 50;
+        // LivingBeing.Life = 50;
     }
 }
