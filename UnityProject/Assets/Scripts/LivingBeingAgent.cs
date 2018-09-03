@@ -13,6 +13,7 @@ public abstract class LivingBeingAgent : Agent
 
     protected RayPerception rayPer;
     public LivingBeing LivingBeing { get; protected set; }
+    public bool Evolve { get; set; }
     public System.Action action;
 
     protected int amountActions = 0;
@@ -29,21 +30,13 @@ public abstract class LivingBeingAgent : Agent
     public RewardMode rewardMode = RewardMode.Dense;
 
 
-    /// <summary>
-    /// Loop over body parts and reset them to initial conditions.
-    /// </summary>
-    public override void AgentReset()
-    {
-        ResetPosition();
-        LivingBeing.Satiety = 100;
-        LivingBeing.Life = 100;
-    }
-
     public void ResetPosition()
     {
         float groundSize = transform.parent.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 2;
         float offsetX = transform.parent.position.x;
         transform.position = new Vector3(Random.Range(-groundSize, groundSize) + offsetX, 0.5f, Random.Range(-groundSize, groundSize));
         transform.rotation = new Quaternion(0, Random.Range(0, 360), 0, 0);
+        LivingBeing.Satiety = 50;
+        LivingBeing.Life = 50;
     }
 }

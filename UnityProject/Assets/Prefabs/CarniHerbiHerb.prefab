@@ -24,8 +24,8 @@ GameObject:
   - component: {fileID: 65383218771412066}
   - component: {fileID: 54624953187513354}
   - component: {fileID: 114720245188168506}
-  - component: {fileID: 114701996707393770}
   - component: {fileID: 114321754245890066}
+  - component: {fileID: 114701996707393770}
   m_Layer: 0
   m_Name: CarnivorousAgent
   m_TagString: carnivorous
@@ -46,8 +46,8 @@ GameObject:
   - component: {fileID: 65834813971969264}
   - component: {fileID: 54853806949740422}
   - component: {fileID: 114534959128408490}
-  - component: {fileID: 114950322594846580}
   - component: {fileID: 114174341291543640}
+  - component: {fileID: 114950322594846580}
   m_Layer: 0
   m_Name: HerbivorousAgent
   m_TagString: herbivorous
@@ -543,6 +543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eee03c7d0ec64b4b82df7a48caab040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  evolve: 0
 --- !u!114 &114321754245890066
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -554,6 +555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea89a7ca77154cf4a959c1123ebea54f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  evolve: 0
 --- !u!114 &114534959128408490
 MonoBehaviour:
   m_ObjectHideFlags: 1

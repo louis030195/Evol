@@ -8,6 +8,7 @@ using UnityEngine;
 /// </summary>
 public abstract class LivingBeingController : MonoBehaviour {
 
+    public bool evolve = true;
 
     protected LivingBeingAgent livingBeingAgent;
     protected LivingBeing livingBeing;
@@ -15,6 +16,7 @@ public abstract class LivingBeingController : MonoBehaviour {
 	// Use this for initialization
 	protected virtual void Start () {
         livingBeingAgent = GetComponent<LivingBeingAgent>();
+        livingBeingAgent.Evolve = evolve;
         livingBeingAgent.action = DoAction;
         livingBeing = livingBeingAgent.LivingBeing;
 	}
@@ -29,7 +31,9 @@ public abstract class LivingBeingController : MonoBehaviour {
         if (livingBeing.Life < 0)
         {
             livingBeingAgent.Done();
-            Destroy(gameObject);
+            livingBeingAgent.ResetPosition();
+            if(evolve)
+                Destroy(gameObject);
         }
 
         livingBeing.Life = livingBeing.Life > 100 ?

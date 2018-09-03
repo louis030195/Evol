@@ -69,8 +69,6 @@ public class HerbivorousAgent : LivingBeingAgent
                 AddReward(-10f);
                 amountActions = 0;
                 LivingBeing.Life = -1;
-                //ResetPosition();
-                //Done();
             }
         }
 
@@ -105,22 +103,27 @@ public class HerbivorousAgent : LivingBeingAgent
         }
         if (collision.collider.GetComponent<HerbivorousAgent>() != null)
         {
-            if (LivingBeing.Life > 90)
+            if (Evolve)
             {
-                LivingBeing.Life -= 50;
-                if (rewardMode == RewardMode.Dense)
+                if (LivingBeing.Life > 90)
                 {
-                    AddReward(10f);
+
+                    LivingBeing.Life -= 50;
+
+                    if (rewardMode == RewardMode.Dense)
+                    {
+                        AddReward(10f);
+                    }
+                    Instantiate(gameObject, transform.parent); // Create child
+                    Done();
+
                 }
-                Instantiate(gameObject, transform.parent); // Create child
-                Done();
             }
         }
     }
 
     public override void AgentReset()
     {
-        // LivingBeing.Satiety = 50;
-        // LivingBeing.Life = 50;
+
     }
 }
