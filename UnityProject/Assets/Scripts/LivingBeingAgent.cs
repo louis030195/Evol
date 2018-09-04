@@ -10,11 +10,13 @@ public abstract class LivingBeingAgent : Agent
 {
 
     protected int totalActions;
+    protected Rigidbody rigidBody;
 
     protected RayPerception rayPer;
     public LivingBeing LivingBeing { get; protected set; }
     public bool Evolve { get; set; }
     public System.Action action;
+    public float moveSpeed = 2;
 
     protected int amountActions = 0;
     

@@ -15,6 +15,7 @@ public class HerbivorousAgent : LivingBeingAgent
     {
         LivingBeing = new Herbivorous(50, 0, 0, 100, 0);
         rayPer = GetComponent<RayPerception>();
+        rigidBody = GetComponent<Rigidbody>();
     }
 
     public override void CollectObservations()
@@ -24,6 +25,10 @@ public class HerbivorousAgent : LivingBeingAgent
         var detectableObjects = new[] { "food", "carnivorous" };
         AddVectorObs(rayPer.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f));
         AddVectorObs(gameObject.transform.rotation.y);
+        Vector3 localVelocity = transform.InverseTransformDirection(rigidBody.velocity);
+        AddVectorObs(localVelocity.x);
+        AddVectorObs(localVelocity.z);
+        AddVectorObs(LivingBeing.Life);
     }
 
     public override void AgentAction(float[] vectorAction, string textAction)
@@ -73,8 +78,15 @@ public class HerbivorousAgent : LivingBeingAgent
         }
 
         // Move
+        rigidBody.AddForce(moveSpeed * transform.forward * Mathf.Clamp(vectorAction[0], -1f, 1f), ForceMode.VelocityChange);
         transform.Rotate(new Vector3(0, 1f, 0), Time.fixedDeltaTime * 500 * Mathf.Clamp(vectorAction[1], -1f, 1f));
-        transform.Translate(new Vector3(0, 0, 1f) * Mathf.Clamp(vectorAction[0], 0f, 2f));
+        // transform.Translate(new Vector3(0, 0, 1f) * Mathf.Clamp(vectorAction[0], 0f, 2f));
+
+        if (rigidBody.velocity.sqrMagnitude > 25f) // slow it down
+        {
+            rigidBody.velocity *= 0.95f;
+        }
+
 
         amountActions++;
     }

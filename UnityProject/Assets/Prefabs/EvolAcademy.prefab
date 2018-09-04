@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 29
+    vectorObservationSize: 32
     numStackedVectorObservations: 1
     vectorActionSize: 2
     cameraResolutions: []
@@ -182,13 +182,13 @@ MonoBehaviour:
     - 
     vectorActionSpaceType: 1
     vectorObservationSpaceType: 1
-  brainType: 3
+  brainType: 2
   CoreBrains:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: 11644
+  instanceID: -1056
 --- !u!114 &114530053126441440
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -249,24 +249,22 @@ MonoBehaviour:
   brainParameters:
     vectorObservationSize: 7
     numStackedVectorObservations: 1
-    vectorActionSize: 6
+    vectorActionSize: 4
     cameraResolutions: []
     vectorActionDescriptions:
     - 
     - 
     - 
     - 
-    - 
-    - 
     vectorActionSpaceType: 1
     vectorObservationSpaceType: 1
-  brainType: 3
+  brainType: 2
   CoreBrains:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: 11646
+  instanceID: -1058
 --- !u!114 &114830505798622882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -283,7 +281,7 @@ MonoBehaviour:
     width: 300
     height: 300
     qualityLevel: 1
-    timeScale: 1
+    timeScale: 100
     targetFrameRate: -1
   inferenceConfiguration:
     width: 1280
@@ -312,6 +310,7 @@ MonoBehaviour:
   - {fileID: 114747797302771448}
   - {fileID: 114530053126441440}
   gameMode: 0
+  resetWorkers: 0
 --- !u!114 &114859714832689094
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -324,7 +323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 29
+    vectorObservationSize: 32
     numStackedVectorObservations: 1
     vectorActionSize: 2
     cameraResolutions: []
@@ -333,10 +332,10 @@ MonoBehaviour:
     - 
     vectorActionSpaceType: 1
     vectorObservationSpaceType: 1
-  brainType: 3
+  brainType: 2
   CoreBrains:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: 11642
+  instanceID: -1054
