@@ -16,7 +16,7 @@ public abstract class LivingBeingAgent : Agent
     public LivingBeing LivingBeing { get; protected set; }
     public bool Evolve { get; set; }
     public System.Action action;
-    public float moveSpeed = 2;
+    public float moveSpeed = 20;
 
     protected int amountActions = 0;
     
