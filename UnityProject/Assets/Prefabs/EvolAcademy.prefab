@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 32
+    vectorObservationSize: 39
     numStackedVectorObservations: 1
     vectorActionSize: 2
     cameraResolutions: []
@@ -264,7 +264,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: -1058
+  instanceID: 16692
 --- !u!114 &114830505798622882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -303,14 +303,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   workers:
-  - {fileID: 11400000, guid: 816a05b25e1503540a264a96695a5a92, type: 2}
+  - {fileID: 11400000, guid: 744d4ffa512156b419c32f20deaf524c, type: 2}
   brains:
   - {fileID: 114859714832689094}
   - {fileID: 114094034598838896}
   - {fileID: 114747797302771448}
   - {fileID: 114530053126441440}
   gameMode: 0
-  resetWorkers: 0
+  resetWorkers: 1
 --- !u!114 &114859714832689094
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -323,7 +323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 32
+    vectorObservationSize: 39
     numStackedVectorObservations: 1
     vectorActionSize: 2
     cameraResolutions: []

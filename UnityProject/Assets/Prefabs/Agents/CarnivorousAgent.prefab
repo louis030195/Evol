@@ -144,6 +144,7 @@ MonoBehaviour:
     resetOnDone: 1
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
+  moveSpeed: 40
   rewardMode: 1
 --- !u!114 &114698542734820688
 MonoBehaviour:
@@ -156,3 +157,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea89a7ca77154cf4a959c1123ebea54f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  evolve: 1

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MLAgents;
 using System.Linq;
+using System;
 
 /// <summary>
 /// This class handles the behaviour of the carnivorous agent
@@ -12,7 +13,7 @@ public class CarnivorousAgent : LivingBeingAgent
     public override void InitializeAgent()
     {
         LivingBeing = new Carnivorous(50, 0, 0, 100, 0);
-        rayPer = GetComponent<RayPerception>();
+        perception = GetComponent<Perception>();
         rigidBody = GetComponent<Rigidbody>();
     }
 
@@ -20,8 +21,8 @@ public class CarnivorousAgent : LivingBeingAgent
     {
         var rayDistance = 200f;
         float[] rayAngles = { 0f, 45f, 90f, 135f, 180f, 110f, 70f };
-        var detectableObjects = new[] { "herbivorous", "food" };
-        AddVectorObs(rayPer.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f));
+        var detectableObjects = new[] { "carnivorous", "herbivorous", "food" };
+        AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f));
         Vector3 localVelocity = transform.InverseTransformDirection(rigidBody.velocity);
         AddVectorObs(localVelocity.x);
         AddVectorObs(localVelocity.z);
@@ -31,7 +32,13 @@ public class CarnivorousAgent : LivingBeingAgent
 
     public override void AgentAction(float[] vectorAction, string textAction)
     {
-        action();
+        try
+        {
+            action();
+        }catch(Exception e)
+        {
+
+        }
         if (rewardMode == RewardMode.Sparse)
         {
             AddReward(0.01f); // Reward for staying alive
@@ -103,7 +110,7 @@ public class CarnivorousAgent : LivingBeingAgent
         {
             if (Evolve)
             {
-                if (LivingBeing.Life > 90)
+                if (LivingBeing.Life > 90 && collision.collider.GetComponent<CarnivorousAgent>().LivingBeing.Life > 90)
                 {
                     LivingBeing.Life -= 50;
                     if (rewardMode == RewardMode.Dense)

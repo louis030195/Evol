@@ -25,15 +25,17 @@ public abstract class LivingBeingController : MonoBehaviour {
     protected virtual void DoAction () {
         //livingBeing.Life += livingBeing.Satiety >= 50 ? 0.1f : -0.1f;
         //livingBeing.Satiety -= 0.1f;
-        livingBeing.Life -= 0.001f;
+        livingBeing.Life -= 0.002f;
         //print(livingBeing.Life);
 
         if (livingBeing.Life < 0)
         {
             livingBeingAgent.Done();
-            livingBeingAgent.ResetPosition();
-            if(evolve)
+            if (evolve)
                 Destroy(gameObject);
+            else
+                livingBeingAgent.ResetPosition();
+
         }
 
         livingBeing.Life = livingBeing.Life > 100 ?

@@ -137,6 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eee03c7d0ec64b4b82df7a48caab040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  evolve: 1
 --- !u!114 &114367076263685582
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -155,4 +156,5 @@ MonoBehaviour:
     resetOnDone: 1
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
+  moveSpeed: 40
   rewardMode: 1

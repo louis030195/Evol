@@ -23,9 +23,9 @@ GameObject:
   - component: {fileID: 23775510643590556}
   - component: {fileID: 65383218771412066}
   - component: {fileID: 54624953187513354}
-  - component: {fileID: 114720245188168506}
   - component: {fileID: 114321754245890066}
   - component: {fileID: 114701996707393770}
+  - component: {fileID: 114247295103143494}
   m_Layer: 0
   m_Name: CarnivorousAgent
   m_TagString: carnivorous
@@ -48,9 +48,28 @@ GameObject:
   - component: {fileID: 114534959128408490}
   - component: {fileID: 114174341291543640}
   - component: {fileID: 114950322594846580}
+  - component: {fileID: 114980908740784916}
   m_Layer: 0
   m_Name: HerbivorousAgent
   m_TagString: herbivorous
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1192054923068398
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4065596137913004}
+  - component: {fileID: 20552396090388082}
+  - component: {fileID: 81206720980223296}
+  - component: {fileID: 114490064988093406}
+  m_Layer: 0
+  m_Name: MainCamera
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,24 +128,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1808244651477258
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4155982532899080}
-  - component: {fileID: 20130991220696168}
-  - component: {fileID: 81130386417471326}
-  - component: {fileID: 114722250089160942}
-  m_Layer: 0
-  m_Name: MainCamera
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!4 &4047416328818374
 Transform:
   m_ObjectHideFlags: 1
@@ -140,6 +141,19 @@ Transform:
   m_Father: {fileID: 4468927558997480}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4065596137913004
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1192054923068398}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4468927558997480}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!4 &4092455766562308
 Transform:
   m_ObjectHideFlags: 1
@@ -152,19 +166,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4468927558997480}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4155982532899080
-Transform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1808244651477258}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 50, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4468927558997480}
-  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4468927558997480
 Transform:
@@ -180,7 +181,7 @@ Transform:
   - {fileID: 4047416328818374}
   - {fileID: 4586023527623412}
   - {fileID: 4556095157711874}
-  - {fileID: 4155982532899080}
+  - {fileID: 4065596137913004}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -210,13 +211,13 @@ Transform:
   m_Father: {fileID: 4468927558997480}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!20 &20130991220696168
+--- !u!20 &20552396090388082
 Camera:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1808244651477258}
-  m_Enabled: 0
+  m_GameObject: {fileID: 1192054923068398}
+  m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
@@ -440,8 +441,8 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1032786988728652}
   serializedVersion: 2
-  m_Mass: 10
-  m_Drag: 15
+  m_Mass: 100
+  m_Drag: 25
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -455,8 +456,8 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1125772784223800}
   serializedVersion: 2
-  m_Mass: 10
-  m_Drag: 15
+  m_Mass: 100
+  m_Drag: 25
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -525,12 +526,12 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!81 &81130386417471326
+--- !u!81 &81206720980223296
 AudioListener:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1808244651477258}
+  m_GameObject: {fileID: 1192054923068398}
   m_Enabled: 1
 --- !u!114 &114174341291543640
 MonoBehaviour:
@@ -543,7 +544,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eee03c7d0ec64b4b82df7a48caab040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  evolve: 0
+  evolve: 1
+--- !u!114 &114247295103143494
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1032786988728652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43aaf0fe8c4b848449c11db9a90491e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114321754245890066
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -555,7 +567,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea89a7ca77154cf4a959c1123ebea54f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  evolve: 0
+  evolve: 1
+--- !u!114 &114490064988093406
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1192054923068398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb63d76d84865f94a80d601a8baee935, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brain: {fileID: 114747797302771448, guid: a233e8e6c6be3dc4aa8847cfad7cb193, type: 2}
+  agentParameters:
+    agentCameras: []
+    maxStep: 0
+    resetOnDone: 1
+    onDemandDecision: 0
+    numberOfActionsBetweenDecisions: 1
 --- !u!114 &114534959128408490
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -585,37 +615,8 @@ MonoBehaviour:
     resetOnDone: 1
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
-  moveSpeed: 10
+  moveSpeed: 30
   rewardMode: 1
---- !u!114 &114720245188168506
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1032786988728652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb172294dbbcc408286b156a2c4b553c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114722250089160942
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1808244651477258}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb63d76d84865f94a80d601a8baee935, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  brain: {fileID: 114747797302771448, guid: a233e8e6c6be3dc4aa8847cfad7cb193, type: 2}
-  agentParameters:
-    agentCameras: []
-    maxStep: 0
-    resetOnDone: 1
-    onDemandDecision: 0
-    numberOfActionsBetweenDecisions: 1
 --- !u!114 &114800558839544692
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -645,5 +646,16 @@ MonoBehaviour:
     resetOnDone: 1
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
-  moveSpeed: 10
+  moveSpeed: 30
   rewardMode: 1
+--- !u!114 &114980908740784916
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1125772784223800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43aaf0fe8c4b848449c11db9a90491e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
