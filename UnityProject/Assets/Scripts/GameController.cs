@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour {
 
 
     private List<GameObject> workerObjects;
+    private int frames;
 
 	// Use this for initialization
 	void Start () {
@@ -64,38 +65,54 @@ public class GameController : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (resetWorkers)
+        if (frames % 100 == 0)
         {
-            foreach (GameObject workerObject in workerObjects)
+            if (resetWorkers)
             {
-                // TODO : check if any child of LivingBeingAgent is null instead ?
-                if (workerObject.GetComponentInChildren<CarnivorousAgent>() == null || workerObject.GetComponentInChildren<HerbivorousAgent>() == null)
+                foreach (GameObject workerObject in workerObjects)
                 {
-                    // TODO : Find a cleaner solution than workers[0] ...
-                    for (int i = 0; i < workers[0].AmountOfAgentsToAdd.Count; i++)
+                    System.IO.File.WriteAllText(@"evol.txt", $"Amount of living beings : { workerObject.GetComponentsInChildren<LivingBeingAgent>().Length }" +
+                        $"\n {workerObject.GetComponentsInChildren<HerbivorousAgent>().Length} Herbivorous" +
+                        $"\n {workerObject.GetComponentsInChildren<CarnivorousAgent>().Length} Carnivorous");
+
+                    if (workerObject.GetComponentsInChildren<LivingBeingAgent>().Length > 15)
                     {
-                        for (int j = 0; j < workers[0].AmountOfAgentsToAdd[i]; j++)
+                        foreach (LivingBeingAgent agent in workerObject.GetComponentsInChildren<LivingBeingAgent>())
                         {
-                            // Check if the gameobject isnt already present (camera, herbs ...)
-                            if (workerObject.transform.Find(workers[0].WorkerPrefab.transform.GetChild(i).name) == null)
-                            {
-                                Transform childTransform = Instantiate(workers[0].WorkerPrefab.transform.GetChild(i));
-                                childTransform.parent = workerObject.transform;
-                            }
+                            agent.Done();
+                            Destroy(agent.GetComponentInParent<MeshFilter>());
+                            Destroy(agent.gameObject);
                         }
                     }
+                    // TODO : check if any child of LivingBeingAgent is null instead ?
+                    if (workerObject.GetComponentInChildren<CarnivorousAgent>() == null || workerObject.GetComponentInChildren<HerbivorousAgent>() == null)
+                    {
+                        // TODO : Find a cleaner solution than workers[0] ...
+                        for (int i = 0; i < workers[0].AmountOfAgentsToAdd.Count; i++)
+                        {
+                            for (int j = 0; j < workers[0].AmountOfAgentsToAdd[i]; j++)
+                            {
+                                // Check if the gameobject isnt already present (camera, herbs ...)
+                                if (workerObject.transform.Find(workers[0].WorkerPrefab.transform.GetChild(i).name) == null)
+                                {
+                                    Transform childTransform = Instantiate(workers[0].WorkerPrefab.transform.GetChild(i));
+                                    childTransform.parent = workerObject.transform;
+                                }
+                            }
+                        }
 
-                    foreach (LivingBeingAgent livingBeingAgent in workerObject.GetComponentsInChildren<LivingBeingAgent>())
-                        livingBeingAgent.ResetPosition();
+                        foreach (LivingBeingAgent livingBeingAgent in workerObject.GetComponentsInChildren<LivingBeingAgent>())
+                            livingBeingAgent.ResetPosition();
 
 
-                    // Here we assign the brain to every agent (checking brains list, if the name match with the agent we give brain)
-                    foreach (Agent agent in workerObject.GetComponentsInChildren<Agent>())
-                        foreach (Brain brain in brains.Where(brain => agent.GetType().Name.Contains(Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1])))
-                            agent.GiveBrain(brain);
+                        // Here we assign the brain to every agent (checking brains list, if the name match with the agent we give brain)
+                        foreach (Agent agent in workerObject.GetComponentsInChildren<Agent>())
+                            foreach (Brain brain in brains.Where(brain => agent.GetType().Name.Contains(Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1])))
+                                agent.GiveBrain(brain);
+                    }
                 }
             }
         }
-        
+        frames++;
     }
 }

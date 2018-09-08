@@ -32,7 +32,10 @@ public abstract class LivingBeingController : MonoBehaviour {
         {
             livingBeingAgent.Done();
             if (evolve)
+            {
+                Destroy(gameObject.GetComponentInParent<MeshFilter>());
                 Destroy(gameObject);
+            }
             else
                 livingBeingAgent.ResetPosition();
 

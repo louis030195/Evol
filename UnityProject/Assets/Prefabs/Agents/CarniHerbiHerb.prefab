@@ -45,7 +45,6 @@ GameObject:
   - component: {fileID: 23991629629092432}
   - component: {fileID: 65834813971969264}
   - component: {fileID: 54853806949740422}
-  - component: {fileID: 114534959128408490}
   - component: {fileID: 114174341291543640}
   - component: {fileID: 114950322594846580}
   - component: {fileID: 114980908740784916}
@@ -586,17 +585,6 @@ MonoBehaviour:
     resetOnDone: 1
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
---- !u!114 &114534959128408490
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1125772784223800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb172294dbbcc408286b156a2c4b553c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114701996707393770
 MonoBehaviour:
   m_ObjectHideFlags: 1
