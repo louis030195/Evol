@@ -1,4 +1,6 @@
-﻿using MLAgents;
+﻿using DesignPattern.Objectpool;
+using MLAgents;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +29,17 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         workerObjects = new List<GameObject>();
+
+        // This part is used to initialize the list of objects than need to be added / removed from game a lot during runtime
+        List<GameObject> temporaryPrefabs = new List<GameObject>();
+        foreach (Worker worker in workers)
+        {
+            for(int i = 0; i < worker.WorkerPrefab.transform.childCount; i++)
+                temporaryPrefabs.Add(worker.WorkerPrefab.transform.GetChild(i).gameObject);
+        }
+        Pool.Initialize(100, temporaryPrefabs, brains);
+
+
         SpawnWorkers();
     }
 
@@ -43,8 +56,12 @@ public class GameController : MonoBehaviour {
                 {
                     for (int j = 0; j < worker.AmountOfAgentsToAdd[i]; j++)
                     {
-                        Transform childTransform = Instantiate(worker.WorkerPrefab.transform.GetChild(i));
-                        childTransform.parent = workerObject.transform;
+                        try
+                        {
+                            GameObject child = Pool.GetObject(worker.WorkerPrefab.transform.GetChild(i).name);
+                            //Transform childTransform = Instantiate(worker.WorkerPrefab.transform.GetChild(i));
+                            child.transform.parent = workerObject.transform;
+                        }catch(Exception e) { Debug.Log($"Object { worker.WorkerPrefab.transform.GetChild(i).name } not found in the pool"); }
                     }
                 }
 
@@ -71,17 +88,18 @@ public class GameController : MonoBehaviour {
             {
                 foreach (GameObject workerObject in workerObjects)
                 {
+                    /*
                     System.IO.File.WriteAllText(@"evol.txt", $"Amount of living beings : { workerObject.GetComponentsInChildren<LivingBeingAgent>().Length }" +
                         $"\n {workerObject.GetComponentsInChildren<HerbivorousAgent>().Length} Herbivorous" +
                         $"\n {workerObject.GetComponentsInChildren<CarnivorousAgent>().Length} Carnivorous");
-
-                    if (workerObject.GetComponentsInChildren<LivingBeingAgent>().Length > 15)
+                        */
+                    if (workerObject.GetComponentsInChildren<LivingBeingAgent>().Length > 20)
                     {
                         foreach (LivingBeingAgent agent in workerObject.GetComponentsInChildren<LivingBeingAgent>())
                         {
                             agent.Done();
-                            Destroy(agent.GetComponentInParent<MeshFilter>());
-                            Destroy(agent.gameObject);
+                            //Destroy(agent.GetComponentInParent<MeshFilter>());
+                            Pool.ReleaseObject(agent.gameObject);
                         }
                     }
                     // TODO : check if any child of LivingBeingAgent is null instead ?
@@ -95,8 +113,9 @@ public class GameController : MonoBehaviour {
                                 // Check if the gameobject isnt already present (camera, herbs ...)
                                 if (workerObject.transform.Find(workers[0].WorkerPrefab.transform.GetChild(i).name) == null)
                                 {
-                                    Transform childTransform = Instantiate(workers[0].WorkerPrefab.transform.GetChild(i));
-                                    childTransform.parent = workerObject.transform;
+                                    GameObject child = Pool.GetObject(workers[0].WorkerPrefab.transform.GetChild(i).name);
+                                    //Transform childTransform = Instantiate(workers[0].WorkerPrefab.transform.GetChild(i));
+                                    child.transform.parent = workerObject.transform;
                                 }
                             }
                         }

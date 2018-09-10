@@ -1,4 +1,5 @@
-﻿using MLAgents;
+﻿using DesignPattern.Objectpool;
+using MLAgents;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,18 +24,18 @@ public abstract class LivingBeingController : MonoBehaviour {
 
     // Update is called once per frame
     protected virtual void DoAction () {
-        //livingBeing.Life += livingBeing.Satiety >= 50 ? 0.1f : -0.1f;
-        //livingBeing.Satiety -= 0.1f;
         livingBeing.Life -= 0.002f;
-        //print(livingBeing.Life);
 
         if (livingBeing.Life < 0)
         {
+            // print($"{ transform.name } - I'm dead");
+            livingBeingAgent.AddReward(-10f);
             livingBeingAgent.Done();
             if (evolve)
             {
-                Destroy(gameObject.GetComponentInParent<MeshFilter>());
-                Destroy(gameObject);
+                //Destroy(gameObject.GetComponentInParent<MeshFilter>());
+                //Destroy(gameObject);
+                Pool.ReleaseObject(gameObject);
             }
             else
                 livingBeingAgent.ResetPosition();

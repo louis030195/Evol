@@ -8,8 +8,6 @@ using MLAgents;
 /// </summary>
 public abstract class LivingBeingAgent : Agent
 {
-
-    protected int totalActions;
     protected Rigidbody rigidBody;
 
     protected Perception perception;
@@ -18,7 +16,7 @@ public abstract class LivingBeingAgent : Agent
     public System.Action action;
     public float moveSpeed = 20;
 
-    protected int amountActions = 0;
+    protected short amountActions = 0;
     
 
     public enum RewardMode

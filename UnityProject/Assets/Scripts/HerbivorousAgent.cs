@@ -4,6 +4,7 @@ using UnityEngine;
 using MLAgents;
 using System.Linq;
 using System;
+using DesignPattern.Objectpool;
 
 /// <summary>
 /// This class handles the behaviour of the herbivorous agent
@@ -34,6 +35,7 @@ public class HerbivorousAgent : LivingBeingAgent
 
     public override void AgentAction(float[] vectorAction, string textAction)
     {
+        // Try catch because action raise NullPointerException executing earlier than LivingBeingController instanciation ...
         try
         {
             action();
@@ -79,7 +81,6 @@ public class HerbivorousAgent : LivingBeingAgent
             else if (transform.position.y < 0)
             {
                 // print("I jumped from the board after " + amountActions + " actions");
-                AddReward(-10f);
                 amountActions = 0;
                 LivingBeing.Life = -1;
             }
@@ -89,11 +90,6 @@ public class HerbivorousAgent : LivingBeingAgent
         rigidBody.AddForce(moveSpeed * transform.forward * Mathf.Clamp(vectorAction[0], -1f, 1f), ForceMode.VelocityChange);
         transform.Rotate(new Vector3(0, 1f, 0), Time.fixedDeltaTime * 500 * Mathf.Clamp(vectorAction[1], -1f, 1f));
         // transform.Translate(new Vector3(0, 0, 1f) * Mathf.Clamp(vectorAction[0], 0f, 2f));
-
-        if (rigidBody.velocity.sqrMagnitude > 25f) // slow it down
-        {
-            rigidBody.velocity *= 0.95f;
-        }
 
 
         amountActions++;
@@ -115,35 +111,30 @@ public class HerbivorousAgent : LivingBeingAgent
 
         if (collision.collider.GetComponent<CarnivorousAgent>() != null)
         {
-            if (rewardMode == RewardMode.Dense)
-            {
-                AddReward(-10f);
-            }
             LivingBeing.Life = -1;
         }
         if (collision.collider.GetComponent<HerbivorousAgent>() != null)
         {
             if (Evolve)
             {
-                if (LivingBeing.Life > 90 && collision.collider.GetComponent<HerbivorousAgent>().LivingBeing.Life > 90)
+                if (LivingBeing.Life >= 100 && collision.collider.GetComponent<HerbivorousAgent>().LivingBeing.Life >= 100)
                 {
 
                     LivingBeing.Life -= 50;
+                    collision.collider.GetComponent<HerbivorousAgent>().LivingBeing.Life -= 50;
 
                     if (rewardMode == RewardMode.Dense)
                     {
                         AddReward(10f);
                     }
-                    Instantiate(gameObject, transform.parent); // Create child
+                    //Instantiate(gameObject, transform.parent); // Create child
+                    GameObject go = Pool.GetObject(gameObject.name);
+                    go.transform.parent = transform.parent;
+                    go.transform.position = transform.position;
                     Done();
 
                 }
             }
         }
-    }
-
-    public override void AgentReset()
-    {
-
     }
 }
