@@ -33,14 +33,8 @@ public class CarnivorousAgent : LivingBeingAgent
 
     public override void AgentAction(float[] vectorAction, string textAction)
     {
-        // Try catch because action raise NullPointerException executing earlier than LivingBeingController instanciation ...
-        try
-        {
-            action();
-        }catch(Exception e)
-        {
+        action();
 
-        }
         if (rewardMode == RewardMode.Sparse)
         {
             AddReward(0.01f); // Reward for staying alive

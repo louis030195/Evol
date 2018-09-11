@@ -35,9 +35,11 @@ public class GameController : MonoBehaviour {
         foreach (Worker worker in workers)
         {
             for(int i = 0; i < worker.WorkerPrefab.transform.childCount; i++)
-                temporaryPrefabs.Add(worker.WorkerPrefab.transform.GetChild(i).gameObject);
+                if(worker.WorkerPrefab.transform.GetChild(i).GetComponent<LivingBeingAgent>() != null ||
+                    worker.WorkerPrefab.transform.GetChild(i).GetComponent<Herb>() != null)
+                    temporaryPrefabs.Add(worker.WorkerPrefab.transform.GetChild(i).gameObject);
         }
-        Pool.Initialize(100, temporaryPrefabs, brains);
+        Pool.Initialize(100 * workers[0].AmountOfWorkers * 3, temporaryPrefabs, brains); // TODO: Pool size changing according limit of living being etc ...
 
 
         SpawnWorkers();
@@ -88,11 +90,12 @@ public class GameController : MonoBehaviour {
             {
                 foreach (GameObject workerObject in workerObjects)
                 {
-                    /*
+                    
                     System.IO.File.WriteAllText(@"evol.txt", $"Amount of living beings : { workerObject.GetComponentsInChildren<LivingBeingAgent>().Length }" +
                         $"\n {workerObject.GetComponentsInChildren<HerbivorousAgent>().Length} Herbivorous" +
-                        $"\n {workerObject.GetComponentsInChildren<CarnivorousAgent>().Length} Carnivorous");
-                        */
+                        $"\n {workerObject.GetComponentsInChildren<CarnivorousAgent>().Length} Carnivorous" +
+                        $"\n Amount of herbs : {workerObject.GetComponentsInChildren<Herb>().Length}");
+                        
                     if (workerObject.GetComponentsInChildren<LivingBeingAgent>().Length > 20)
                     {
                         foreach (LivingBeingAgent agent in workerObject.GetComponentsInChildren<LivingBeingAgent>())

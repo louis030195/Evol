@@ -19,7 +19,7 @@ namespace DesignPattern.Objectpool
 
         public static void Initialize(int poolSize, List<GameObject> gameObjects, List<Brain> brains)
         {
-            _parent = UnityEngine.Object.Instantiate(new GameObject());
+            _parent = new GameObject("Pool");
             for(int i = 0; i < poolSize; i++)
             {
                 foreach(GameObject go in gameObjects)
