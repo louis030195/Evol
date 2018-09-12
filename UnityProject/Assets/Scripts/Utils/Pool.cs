@@ -51,20 +51,25 @@ namespace DesignPattern.Objectpool
         /// </summary>
         /// <param name="name">Name of the GameObject we want to use</param>
         /// <returns></returns>
-        public static GameObject GetObject(string name)
+        public static GameObject GetObject(string tag)
         {
             lock (_available)
             {
                 if (_available.Count != 0)
                 {
                     // We need to use "Contains" because Unity add (Clone) to the name
-                    GameObject go = _available.Find(tmpGo => tmpGo.name.Contains(name));
+                    GameObject go = _available.Find(tmpGo => tmpGo.CompareTag(tag));
                     if (go)
                     {
                         go.SetActive(true);
                         _inUse.Add(go);
                         _available.Remove(go);
                         go.transform.parent = null;
+                    }
+                    else
+                    {
+                        System.IO.File.AppendAllText(@"pool.txt", $"Time : {Time.fixedTime} seconds" +
+                            $"Out of {tag}");
                     }
                     return go;
                 } // Else ?

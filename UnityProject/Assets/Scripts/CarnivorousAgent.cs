@@ -110,7 +110,7 @@ public class CarnivorousAgent : LivingBeingAgent
                         AddReward(10f);
                     }
                     //Instantiate(gameObject, transform.parent); // Create child
-                    GameObject go = Pool.GetObject(gameObject.name);
+                    GameObject go = Pool.GetObject(gameObject.tag);
                     go.transform.parent = transform.parent;
                     go.transform.position = transform.position;
                     Done();

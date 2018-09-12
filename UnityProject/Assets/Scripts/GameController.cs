@@ -59,7 +59,7 @@ public class GameController : MonoBehaviour {
                     {
                         try
                         {
-                            GameObject child = Pool.GetObject(worker.WorkerPrefab.transform.GetChild(i).name);
+                            GameObject child = Pool.GetObject(worker.WorkerPrefab.transform.GetChild(i).tag);
                             //Transform childTransform = Instantiate(worker.WorkerPrefab.transform.GetChild(i));
                             child.transform.parent = workerObject.transform;
                         }catch(Exception e) { Debug.Log($"Object { worker.WorkerPrefab.transform.GetChild(i).name } not found in the pool"); }
@@ -113,7 +113,7 @@ public class GameController : MonoBehaviour {
                                 //print("Spawn " + workers[0].WorkerPrefab.transform.GetChild(i).name);
                                 if (workers[0].WorkerPrefab.transform.GetChild(i).name.Contains("Agent"))
                                 {
-                                    GameObject child = Pool.GetObject(workers[0].WorkerPrefab.transform.GetChild(i).name);
+                                    GameObject child = Pool.GetObject(workers[0].WorkerPrefab.transform.GetChild(i).tag);
                                     //Transform childTransform = Instantiate(workers[0].WorkerPrefab.transform.GetChild(i));
                                     child.transform.parent = workerObject.transform;
                                 }
