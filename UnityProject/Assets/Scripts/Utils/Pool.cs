@@ -17,6 +17,16 @@ namespace DesignPattern.Objectpool
         private static List<GameObject> _inUse = new List<GameObject>();
         private static GameObject _parent;
 
+        public static int GetAvailableCount()
+        {
+            return _available.Count;
+        }
+
+        public static int GetInUseCount()
+        {
+            return _inUse.Count;
+        }
+
         public static void Initialize(int poolSize, List<GameObject> gameObjects, List<Brain> brains)
         {
             _parent = new GameObject("Pool");

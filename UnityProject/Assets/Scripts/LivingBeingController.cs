@@ -24,13 +24,12 @@ public abstract class LivingBeingController : MonoBehaviour {
 
     // Update is called once per frame
     protected virtual void DoAction () {
-        livingBeing.Life -= 0.002f;
+        livingBeing.Life -= 0.01f;
 
         if (livingBeing.Life < 0)
         {
             // print($"{ transform.name } - I'm dead");
             livingBeingAgent.AddReward(-10f);
-            livingBeingAgent.Done();
             if (evolve)
             {
                 //Destroy(gameObject.GetComponentInParent<MeshFilter>());
@@ -39,6 +38,8 @@ public abstract class LivingBeingController : MonoBehaviour {
             }
             else
                 livingBeingAgent.ResetPosition();
+            livingBeingAgent.Done();
+
 
         }
 
