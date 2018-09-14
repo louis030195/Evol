@@ -13,9 +13,10 @@ public abstract class LivingBeingController : MonoBehaviour {
 
     protected LivingBeingAgent livingBeingAgent;
     protected LivingBeing livingBeing;
+    protected float now;
 
-	// Use this for initialization
-	protected virtual void Start () {
+    // Use this for initialization
+    protected virtual void Start () {
         livingBeingAgent = GetComponent<LivingBeingAgent>();
         livingBeingAgent.Evolve = evolve;
         livingBeingAgent.action = DoAction;
@@ -50,4 +51,19 @@ public abstract class LivingBeingController : MonoBehaviour {
             100 : livingBeing.Satiety;
     }
 
+    
+    private void OnEnable()
+    {
+        //now = Time.fixedTime;
+    }
+
+    private void OnDisable()
+    {
+        /*
+        if (Time.fixedTime > 100 && Time.fixedTime % 50 < 10)
+        {
+            System.IO.File.AppendAllText(@"positions.txt", $"\n Time : {Time.fixedTime} seconds" +
+                $"\n Length of life : {Time.fixedTime - now} seconds");
+        }*/
+    }
 }

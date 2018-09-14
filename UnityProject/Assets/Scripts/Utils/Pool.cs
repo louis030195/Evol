@@ -1,6 +1,7 @@
 ﻿using MLAgents;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -17,16 +18,6 @@ namespace DesignPattern.Objectpool
         private static List<GameObject> _inUse = new List<GameObject>();
         private static GameObject _parent;
 
-        public static int GetAvailableCount()
-        {
-            return _available.Count;
-        }
-
-        public static int GetInUseCount()
-        {
-            return _inUse.Count;
-        }
-
         public static void Initialize(int poolSize, List<GameObject> gameObjects, List<Brain> brains)
         {
             _parent = new GameObject("Pool");
@@ -41,9 +32,16 @@ namespace DesignPattern.Objectpool
                 }
             }
             foreach (GameObject agent in _available)
-                if(agent.GetComponent<Agent>() != null)
+            {
+                if (agent.GetComponent<Agent>() != null)
+                {
                     foreach (Brain brain in brains.Where(brain => agent.GetComponent<Agent>().GetType().Name.Contains(Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1])))
+                    {
                         agent.GetComponent<Agent>().GiveBrain(brain);
+                        agent.GetComponent<Agent>().AgentReset();
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -68,8 +66,7 @@ namespace DesignPattern.Objectpool
                     }
                     else
                     {
-                        System.IO.File.AppendAllText(@"pool.txt", $"Time : {Time.fixedTime} seconds" +
-                            $"Out of {tag}");
+                        throw new Exception($"Can't find {tag}");
                     }
                     return go;
                 } // Else ?
@@ -90,6 +87,15 @@ namespace DesignPattern.Objectpool
                 _inUse.Remove(go);
                 go.transform.parent = _parent.transform;
             }
+        }
+
+
+        public static string GetStats()
+        {
+            return ($"Available objects : {_available.Count}\n - {_available.Count(x => x.tag == "carnivorous")} carnivorous agents" +
+                $"\n - {_available.Count(x => x.tag == "herbivorous")} herbivorous agents" +
+                $"\nIn use objects : {_inUse.Count}\n - {_inUse.Count(x => x.tag == "carnivorous")} carnivorous agents" +
+                $"\n - {_inUse.Count(x => x.tag == "herbivorous")} herbivorous agents");
         }
     }
 }

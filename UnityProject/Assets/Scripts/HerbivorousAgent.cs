@@ -15,7 +15,7 @@ public class HerbivorousAgent : LivingBeingAgent
 
     public override void InitializeAgent()
     {
-        LivingBeing = new Herbivorous(50, 0, 0, 100, 0);
+        LivingBeing = new Herbivorous(50, 0, 0, 50, 0);
         perception = GetComponent<Perception>();
         rigidBody = GetComponent<Rigidbody>();
     }
@@ -82,10 +82,15 @@ public class HerbivorousAgent : LivingBeingAgent
         // Move
         rigidBody.AddForce(moveSpeed * transform.forward * Mathf.Clamp(vectorAction[0], -1f, 1f), ForceMode.VelocityChange);
         transform.Rotate(new Vector3(0, 1f, 0), Time.fixedDeltaTime * 500 * Mathf.Clamp(vectorAction[1], -1f, 1f));
-        // transform.Translate(new Vector3(0, 0, 1f) * Mathf.Clamp(vectorAction[0], 0f, 2f));
+        //transform.Translate(new Vector3(0, 0, 1f) * Mathf.Clamp(vectorAction[0], 0f, 2f));
 
 
         amountActions++;
+    }
+
+    public override void AgentReset()
+    {
+        rigidBody.velocity = Vector3.zero;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -110,7 +115,7 @@ public class HerbivorousAgent : LivingBeingAgent
         {
             if (Evolve)
             {
-                if (LivingBeing.Life >= 100 && collision.collider.GetComponent<HerbivorousAgent>().LivingBeing.Life >= 100)
+                if (LivingBeing.Life >= 90 && collision.collider.GetComponent<HerbivorousAgent>().LivingBeing.Life >= 90)
                 {
 
                     LivingBeing.Life -= 50;

@@ -17,7 +17,6 @@ public abstract class LivingBeingAgent : Agent
     public float moveSpeed = 20;
 
     protected short amountActions = 0;
-    
 
     public enum RewardMode
     {
@@ -39,4 +38,5 @@ public abstract class LivingBeingAgent : Agent
         LivingBeing.Satiety = 50;
         LivingBeing.Life = 50;
     }
+
 }

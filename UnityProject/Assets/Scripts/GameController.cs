@@ -29,7 +29,7 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         workerObjects = new List<GameObject>();
-
+        
         // This part is used to initialize the list of objects than need to be added / removed from game a lot during runtime
         List<GameObject> temporaryPrefabs = new List<GameObject>();
         foreach (Worker worker in workers)
@@ -39,8 +39,8 @@ public class GameController : MonoBehaviour {
                     worker.WorkerPrefab.transform.GetChild(i).GetComponent<Herb>() != null)
                     temporaryPrefabs.Add(worker.WorkerPrefab.transform.GetChild(i).gameObject);
         }
-        Pool.Initialize(10 * workers[0].AmountOfWorkers * 3, temporaryPrefabs, brains); // TODO: Pool size changing according limit of living being etc ...
-
+        Pool.Initialize(workers[0].AmountOfWorkers * 40, temporaryPrefabs, brains);
+        
         SpawnWorkers();
     }
 
@@ -60,7 +60,7 @@ public class GameController : MonoBehaviour {
                         try
                         {
                             GameObject child = Pool.GetObject(worker.WorkerPrefab.transform.GetChild(i).tag);
-                            //Transform childTransform = Instantiate(worker.WorkerPrefab.transform.GetChild(i));
+                            //Transform child = Instantiate(worker.WorkerPrefab.transform.GetChild(i));
                             child.transform.parent = workerObject.transform;
                         }catch(Exception e) { Debug.Log($"Object { worker.WorkerPrefab.transform.GetChild(i).name } not found in the pool"); }
                     }
@@ -85,9 +85,8 @@ public class GameController : MonoBehaviour {
     {
         if (frames % 100 == 0)
         {
-            System.IO.File.WriteAllText(@"evol.txt", $"Time : {Time.fixedTime} seconds" +
-                $"\n Available objects in the pool : {Pool.GetAvailableCount()}" +
-                $"\n Objects in use in the pool : {Pool.GetInUseCount()}");
+            
+            System.IO.File.WriteAllText(@"evol.txt", $"Time : {Time.fixedTime} seconds \n{Pool.GetStats()}");
             frames = 0;
 
             if (resetWorkers)
@@ -102,7 +101,7 @@ public class GameController : MonoBehaviour {
                         foreach (LivingBeingAgent agent in workerObject.GetComponentsInChildren<LivingBeingAgent>())
                         {
                             agent.Done();
-                            //Destroy(agent.GetComponentInParent<MeshFilter>());
+                            //Destroy(agent.gameObject);
                             Pool.ReleaseObject(agent.gameObject);
                         }
                         // TODO : Find a cleaner solution than workers[0] ...
@@ -111,10 +110,10 @@ public class GameController : MonoBehaviour {
                             for (int j = 0; j < workers[0].AmountOfAgentsToAdd[i]; j++)
                             {
                                 //print("Spawn " + workers[0].WorkerPrefab.transform.GetChild(i).name);
-                                if (workers[0].WorkerPrefab.transform.GetChild(i).name.Contains("Agent"))
+                                if (workers[0].WorkerPrefab.transform.GetChild(i).GetComponent<LivingBeingAgent>() != null)
                                 {
                                     GameObject child = Pool.GetObject(workers[0].WorkerPrefab.transform.GetChild(i).tag);
-                                    //Transform childTransform = Instantiate(workers[0].WorkerPrefab.transform.GetChild(i));
+                                    //Transform child = Instantiate(workers[0].WorkerPrefab.transform.GetChild(i));
                                     child.transform.parent = workerObject.transform;
                                 }
                             }
@@ -123,11 +122,11 @@ public class GameController : MonoBehaviour {
                         foreach (LivingBeingAgent livingBeingAgent in workerObject.GetComponentsInChildren<LivingBeingAgent>())
                             livingBeingAgent.ResetPosition();
 
-
+                        /*
                         // Here we assign the brain to every agent (checking brains list, if the name match with the agent we give brain)
                         foreach (Agent agent in workerObject.GetComponentsInChildren<Agent>())
                             foreach (Brain brain in brains.Where(brain => agent.GetType().Name.Contains(Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1])))
-                                agent.GiveBrain(brain);
+                                agent.GiveBrain(brain);*/
                     }
                 }
             }
