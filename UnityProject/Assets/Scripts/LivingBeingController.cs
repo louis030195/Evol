@@ -10,6 +10,7 @@ using UnityEngine;
 public abstract class LivingBeingController : MonoBehaviour {
 
     public bool evolve = true;
+    public Pool Pool { get; set; }
 
     protected LivingBeingAgent livingBeingAgent;
     protected LivingBeing livingBeing;
@@ -20,25 +21,33 @@ public abstract class LivingBeingController : MonoBehaviour {
         livingBeingAgent = GetComponent<LivingBeingAgent>();
         livingBeingAgent.Evolve = evolve;
         livingBeingAgent.action = DoAction;
+        livingBeingAgent.Pool = Pool;
         livingBeing = livingBeingAgent.LivingBeing;
-	}
+        now = Time.fixedTime;
+    }
 
     // Update is called once per frame
     protected virtual void DoAction () {
-        livingBeing.Life -= 0.01f;
+        // Start losing life after 200 actions done
+        /*
+        if(livingBeingAgent.AmountActions > 200)
+            livingBeing.Life -= 0.01f;
+        */
 
+        if (transform.position.y < 0)
+            livingBeing.Life = -1;
+        
+
+        // To avoid dying instantly before having his stats resetted
         if (livingBeing.Life < 0)
         {
-            // print($"{ transform.name } - I'm dead");
+            livingBeingAgent.ResetStats();
+            livingBeingAgent.ResetPosition();
             livingBeingAgent.AddReward(-10f);
+            
             if (evolve)
-            {
-                //Destroy(gameObject.GetComponentInParent<MeshFilter>());
-                //Destroy(gameObject);
                 Pool.ReleaseObject(gameObject);
-            }
-            else
-                livingBeingAgent.ResetPosition();
+
             livingBeingAgent.Done();
 
 
@@ -50,20 +59,22 @@ public abstract class LivingBeingController : MonoBehaviour {
         livingBeing.Satiety = livingBeing.Satiety > 100 ?
             100 : livingBeing.Satiety;
     }
-
     
-    private void OnEnable()
-    {
-        //now = Time.fixedTime;
-    }
-
     private void OnDisable()
     {
-        /*
+
         if (Time.fixedTime > 100 && Time.fixedTime % 50 < 10)
         {
-            System.IO.File.AppendAllText(@"positions.txt", $"\n Time : {Time.fixedTime} seconds" +
-                $"\n Length of life : {Time.fixedTime - now} seconds");
-        }*/
+            if (!System.IO.File.Exists(@"disable.txt"))
+                System.IO.File.Create(@"disable.txt");
+            if (Time.fixedTime % 400 < 10)
+                System.IO.File.WriteAllText(@"disable.txt", "");
+            System.IO.File.AppendAllText(@"disable.txt", $"\n-------------" +
+                $"\n Disabled {name} at {Time.fixedTime} seconds" +
+                $"\nLength of life : {Time.fixedTime - now} seconds" +
+                $"\nPosition|Rotation : {transform.position}|{transform.rotation}" +
+                $"\nLivingBeing \n{livingBeing.ToString()}" +
+                $"RigidBody velocity {GetComponent<Rigidbody>().velocity}");
+        }
     }
 }

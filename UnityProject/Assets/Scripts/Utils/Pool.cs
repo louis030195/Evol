@@ -12,36 +12,22 @@ namespace DesignPattern.Objectpool
     // pooled objects, maintaining a list of available objects and a collection of objects that have already been
     // requested from the pool and are still in use. The pool also ensures that objects that have been released
     // are returned to a suitable state, ready for the next time they are requested. 
-    public static class Pool
+    public class Pool
     {
-        private static List<GameObject> _available = new List<GameObject>();
-        private static List<GameObject> _inUse = new List<GameObject>();
-        private static GameObject _parent;
+        private List<GameObject> available;
+        private List<GameObject> inUse;
+        private GameObject prefab;
+        private GameObject parent;
 
-        public static void Initialize(int poolSize, List<GameObject> gameObjects, List<Brain> brains)
+        public Brain Brain { get; set; } // Auto because not all items are agents
+
+        public Pool(GameObject prefab)
         {
-            _parent = new GameObject("Pool");
-            for(int i = 0; i < poolSize; i++)
-            {
-                foreach(GameObject go in gameObjects)
-                {
-                    GameObject goToAdd = UnityEngine.Object.Instantiate(go);
-                    goToAdd.SetActive(false);
-                    _available.Add(goToAdd);
-                    goToAdd.transform.parent = _parent.transform;
-                }
-            }
-            foreach (GameObject agent in _available)
-            {
-                if (agent.GetComponent<Agent>() != null)
-                {
-                    foreach (Brain brain in brains.Where(brain => agent.GetComponent<Agent>().GetType().Name.Contains(Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1])))
-                    {
-                        agent.GetComponent<Agent>().GiveBrain(brain);
-                        agent.GetComponent<Agent>().AgentReset();
-                    }
-                }
-            }
+            available = new List<GameObject>();
+            inUse = new List<GameObject>();
+            this.prefab = prefab;
+
+            parent = new GameObject($"Pool_{prefab.name}");
         }
 
         /// <summary>
@@ -49,28 +35,29 @@ namespace DesignPattern.Objectpool
         /// </summary>
         /// <param name="name">Name of the GameObject we want to use</param>
         /// <returns></returns>
-        public static GameObject GetObject(string tag)
+        public GameObject GetObject()
         {
-            lock (_available)
+            if (available.Count != 0)
             {
-                if (_available.Count != 0)
+                GameObject go = available[0];
+                inUse.Add(go);
+                available.RemoveAt(0);
+                //go.transform.parent = null;
+                    
+                return go;
+            }
+            else
+            {
+                GameObject go = UnityEngine.Object.Instantiate(prefab);
+                if (go.GetComponent<LivingBeingController>() != null)
+                    go.GetComponent<LivingBeingController>().Pool = this;
+                if (go.GetComponent<LivingBeingAgent>() != null)
                 {
-                    // We need to use "Contains" because Unity add (Clone) to the name
-                    GameObject go = _available.Find(tmpGo => tmpGo.CompareTag(tag));
-                    if (go)
-                    {
-                        go.SetActive(true);
-                        _inUse.Add(go);
-                        _available.Remove(go);
-                        go.transform.parent = null;
-                    }
-                    else
-                    {
-                        throw new Exception($"Can't find {tag}");
-                    }
-                    return go;
-                } // Else ?
-                return null;
+                    // TODO : avoid giving brain every time GO respawn ?
+                    go.GetComponent<Agent>().GiveBrain(Brain);
+                }
+                inUse.Add(go);
+                return go;
             }
         }
 
@@ -78,24 +65,19 @@ namespace DesignPattern.Objectpool
         /// Deactivate the GameObject and add it to the pool
         /// </summary>
         /// <param name="go"></param>
-        public static void ReleaseObject(GameObject go)
+        public void ReleaseObject(GameObject go)
         {
-            lock (_available)
-            {
-                go.SetActive(false);
-                _available.Add(go);
-                _inUse.Remove(go);
-                go.transform.parent = _parent.transform;
-            }
+            available.Add(go);
+            Debug.Log(inUse.Remove(go));
+            go.transform.parent = parent.transform;
+            go.SetActive(false);
         }
 
 
-        public static string GetStats()
+        public override string ToString()
         {
-            return ($"Available objects : {_available.Count}\n - {_available.Count(x => x.tag == "carnivorous")} carnivorous agents" +
-                $"\n - {_available.Count(x => x.tag == "herbivorous")} herbivorous agents" +
-                $"\nIn use objects : {_inUse.Count}\n - {_inUse.Count(x => x.tag == "carnivorous")} carnivorous agents" +
-                $"\n - {_inUse.Count(x => x.tag == "herbivorous")} herbivorous agents");
+            return ($"\nAvailable objects : {available.Count}" +
+                $"\nIn use objects : {inUse.Count}");
         }
     }
 }

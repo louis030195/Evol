@@ -17,6 +17,9 @@ public class GameController : MonoBehaviour {
     public List<Worker> workers;
     public List<Brain> brains; // Give all the brains you use in all workers
 
+    [Header("Items To Spawn")]
+    [Space(10)]
+    public List<GameObject> itemsToSpawn;
 
     [Header("Misc")]
     [Space(10)]
@@ -25,22 +28,21 @@ public class GameController : MonoBehaviour {
 
     private List<GameObject> workerObjects;
     private int frames;
+    private Pool herbivorousPool;
+    private Pool carnivorousPool;
+    private Pool herbPool;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         workerObjects = new List<GameObject>();
+        herbivorousPool = new Pool(itemsToSpawn.FirstOrDefault(go => go.CompareTag("herbivorous")));
+        carnivorousPool = new Pool(itemsToSpawn.FirstOrDefault(go => go.CompareTag("carnivorous")));
+        herbPool = new Pool(itemsToSpawn.FirstOrDefault(go => go.CompareTag("food")));
         
-        // This part is used to initialize the list of objects than need to be added / removed from game a lot during runtime
-        List<GameObject> temporaryPrefabs = new List<GameObject>();
-        foreach (Worker worker in workers)
-        {
-            for(int i = 0; i < worker.WorkerPrefab.transform.childCount; i++)
-                if(worker.WorkerPrefab.transform.GetChild(i).GetComponent<LivingBeingAgent>() != null ||
-                    worker.WorkerPrefab.transform.GetChild(i).GetComponent<Herb>() != null)
-                    temporaryPrefabs.Add(worker.WorkerPrefab.transform.GetChild(i).gameObject);
-        }
-        Pool.Initialize(workers[0].AmountOfWorkers * 40, temporaryPrefabs, brains);
-        
+        herbivorousPool.Brain = brains.FirstOrDefault(brain => "Herbivorous" == Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]);
+        carnivorousPool.Brain = brains.FirstOrDefault(brain => "Carnivorous" == Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]);
+
+
         SpawnWorkers();
     }
 
@@ -53,21 +55,26 @@ public class GameController : MonoBehaviour {
             for (; w < worker.AmountOfWorkers; w++)
             {
                 GameObject workerObject = Instantiate(worker.WorkerPrefab, new Vector3(2 * groundSize * w, 0, 0), new Quaternion(0, 0, 0, 0));
-                for (int i = 0; i < worker.AmountOfAgentsToAdd.Count; i++)
+                for (int i = 0; i < worker.AmountOfAgentsToAdd; i++)
                 {
-                    for (int j = 0; j < worker.AmountOfAgentsToAdd[i]; j++)
+                    try
                     {
-                        try
-                        {
-                            GameObject child = Pool.GetObject(worker.WorkerPrefab.transform.GetChild(i).tag);
-                            //Transform child = Instantiate(worker.WorkerPrefab.transform.GetChild(i));
-                            child.transform.parent = workerObject.transform;
-                        }catch(Exception e) { Debug.Log($"Object { worker.WorkerPrefab.transform.GetChild(i).name } not found in the pool"); }
-                    }
-                }
+                        GameObject CarnivorousChild = carnivorousPool.GetObject();
+                        CarnivorousChild.transform.parent = workerObject.transform;
+                        CarnivorousChild.SetActive(true);
 
-                foreach (LivingBeingAgent livingBeingAgent in workerObject.GetComponentsInChildren<LivingBeingAgent>())
-                    livingBeingAgent.ResetPosition();
+                        GameObject herbivorousChild = herbivorousPool.GetObject();
+                        herbivorousChild.transform.parent = workerObject.transform;
+                        herbivorousChild.SetActive(true);
+
+                        GameObject herbChild = herbPool.GetObject();
+                        herbChild.transform.parent = workerObject.transform;
+                        herbChild.SetActive(true);
+
+                    }
+                    catch(Exception e) { Debug.Log($"Object { worker.WorkerPrefab.transform.GetChild(i).name } not found in the pool ex: {e.Message}"); }
+                    
+                }
 
 
                 // Here we assign the brain to every agent (checking brains list, if the name match with the agent we give brain)
@@ -85,8 +92,9 @@ public class GameController : MonoBehaviour {
     {
         if (frames % 100 == 0)
         {
-            
-            System.IO.File.WriteAllText(@"evol.txt", $"Time : {Time.fixedTime} seconds \n{Pool.GetStats()}");
+            System.IO.File.WriteAllText(@"evol.txt", $"\nTime : {Time.fixedTime} seconds \n{herbivorousPool.ToString()}");
+            System.IO.File.AppendAllText(@"evol.txt", $"\nTime : {Time.fixedTime} seconds \n{carnivorousPool.ToString()}");
+            System.IO.File.AppendAllText(@"evol.txt", $"\nTime : {Time.fixedTime} seconds \n{herbPool.ToString()}");
             frames = 0;
 
             if (resetWorkers)
@@ -95,38 +103,31 @@ public class GameController : MonoBehaviour {
                 {
                     // TODO : check if any child of LivingBeingAgent is null instead ?
                     if (workerObject.GetComponentInChildren<CarnivorousAgent>() == null 
-                        || workerObject.GetComponentInChildren<HerbivorousAgent>() == null
-                        || workerObject.GetComponentsInChildren<LivingBeingAgent>().Length > 20)
+                        || workerObject.GetComponentInChildren<HerbivorousAgent>() == null)
                     {
-                        foreach (LivingBeingAgent agent in workerObject.GetComponentsInChildren<LivingBeingAgent>())
+                        foreach (LivingBeingAgent agent in workerObject.GetComponentsInChildren<HerbivorousAgent>())
                         {
                             agent.Done();
-                            //Destroy(agent.gameObject);
-                            Pool.ReleaseObject(agent.gameObject);
+                            herbivorousPool.ReleaseObject(agent.gameObject);
+                        }
+                        foreach (LivingBeingAgent agent in workerObject.GetComponentsInChildren<CarnivorousAgent>())
+                        {
+                            agent.Done();
+                            carnivorousPool.ReleaseObject(agent.gameObject);
                         }
                         // TODO : Find a cleaner solution than workers[0] ...
-                        for (int i = 0; i < workers[0].AmountOfAgentsToAdd.Count; i++)
+                        for (int i = 0; i < workers[0].AmountOfAgentsToAdd; i++)
                         {
-                            for (int j = 0; j < workers[0].AmountOfAgentsToAdd[i]; j++)
-                            {
-                                //print("Spawn " + workers[0].WorkerPrefab.transform.GetChild(i).name);
-                                if (workers[0].WorkerPrefab.transform.GetChild(i).GetComponent<LivingBeingAgent>() != null)
-                                {
-                                    GameObject child = Pool.GetObject(workers[0].WorkerPrefab.transform.GetChild(i).tag);
-                                    //Transform child = Instantiate(workers[0].WorkerPrefab.transform.GetChild(i));
-                                    child.transform.parent = workerObject.transform;
-                                }
-                            }
+                            GameObject CarnivorousChild = carnivorousPool.GetObject();
+                            CarnivorousChild.SetActive(true);
+                            CarnivorousChild.transform.parent = workerObject.transform;
+                            CarnivorousChild.GetComponent<LivingBeingAgent>().ResetPosition();
+
+                            GameObject herbivorousChild = herbivorousPool.GetObject();
+                            herbivorousChild.SetActive(true);
+                            herbivorousChild.transform.parent = workerObject.transform;
+                            herbivorousChild.GetComponent<LivingBeingAgent>().ResetPosition();
                         }
-
-                        foreach (LivingBeingAgent livingBeingAgent in workerObject.GetComponentsInChildren<LivingBeingAgent>())
-                            livingBeingAgent.ResetPosition();
-
-                        /*
-                        // Here we assign the brain to every agent (checking brains list, if the name match with the agent we give brain)
-                        foreach (Agent agent in workerObject.GetComponentsInChildren<Agent>())
-                            foreach (Brain brain in brains.Where(brain => agent.GetType().Name.Contains(Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1])))
-                                agent.GiveBrain(brain);*/
                     }
                 }
             }

@@ -41,23 +41,9 @@ public class HerbivorousAgent : LivingBeingAgent
         {
             AddReward(0.01f); // Reward for staying alive
             // Reset every 1000 actions or when the agent fell
-            if (amountActions >= 1000)
+            if (AmountActions >= 1000)
             {
-                //print("I finished after " + amountActions + " actions");
-                amountActions = 0;
                 Done();
-            }
-            else if (transform.position.y < 0)
-            {
-                // print("I jumped from the board after " + amountActions + " actions");
-                // AddReward(-10f);
-                LivingBeing.Life -= 100;
-                amountActions = 0;
-                ResetPosition();
-                // Done();
-            }else if (LivingBeing.Life == 0)
-            {
-                AddReward(-10f);
             }
         }
 
@@ -65,31 +51,23 @@ public class HerbivorousAgent : LivingBeingAgent
         {
             AddReward(-0.01f);
             // Reset every 1000 actions or when the agent fell
-            if (amountActions >= 1000)
+            if (AmountActions >= 1000)
             {
-                //print("I finished after " + amountActions + " actions");
-                amountActions = 0;
                 Done();
-            }
-            else if (transform.position.y < 0)
-            {
-                // print("I jumped from the board after " + amountActions + " actions");
-                amountActions = 0;
-                LivingBeing.Life = -1;
             }
         }
 
         // Move
         rigidBody.AddForce(moveSpeed * transform.forward * Mathf.Clamp(vectorAction[0], -1f, 1f), ForceMode.VelocityChange);
         transform.Rotate(new Vector3(0, 1f, 0), Time.fixedDeltaTime * 500 * Mathf.Clamp(vectorAction[1], -1f, 1f));
-        //transform.Translate(new Vector3(0, 0, 1f) * Mathf.Clamp(vectorAction[0], 0f, 2f));
 
 
-        amountActions++;
+        AmountActions++;
     }
 
     public override void AgentReset()
     {
+        AmountActions = 0;
         rigidBody.velocity = Vector3.zero;
     }
 
@@ -101,7 +79,6 @@ public class HerbivorousAgent : LivingBeingAgent
             LivingBeing.Life += 50;
             if (rewardMode == RewardMode.Dense)
             {
-                // print("I ate something");
                 AddReward(20f);
             }
             Done();
@@ -125,10 +102,11 @@ public class HerbivorousAgent : LivingBeingAgent
                     {
                         AddReward(10f);
                     }
-                    //Instantiate(gameObject, transform.parent); // Create child
-                    GameObject go = Pool.GetObject(gameObject.tag);
+                    /*
+                    GameObject go = Pool.GetObject();
                     go.transform.parent = transform.parent;
                     go.transform.position = transform.position;
+                    go.SetActive(true);*/
                     Done();
 
                 }

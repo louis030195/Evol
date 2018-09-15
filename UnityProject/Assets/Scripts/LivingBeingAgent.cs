@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MLAgents;
+using DesignPattern.Objectpool;
 
 /// <summary>
 /// This class handles the behaviour of the agent
@@ -13,10 +14,11 @@ public abstract class LivingBeingAgent : Agent
     protected Perception perception;
     public LivingBeing LivingBeing { get; protected set; }
     public bool Evolve { get; set; }
+    public Pool Pool { get; set; }
     public System.Action action;
     public float moveSpeed = 20;
 
-    protected short amountActions = 0;
+    public short AmountActions { get; protected set; } = 0;
 
     public enum RewardMode
     {
@@ -35,6 +37,10 @@ public abstract class LivingBeingAgent : Agent
         float offsetX = transform.parent.position.x;
         transform.position = new Vector3(Random.Range(-groundSize, groundSize) + offsetX, 0.5f, Random.Range(-groundSize, groundSize));
         transform.rotation = new Quaternion(0, Random.Range(0, 360), 0, 0);
+    }
+
+    public void ResetStats()
+    {
         LivingBeing.Satiety = 50;
         LivingBeing.Life = 50;
     }
