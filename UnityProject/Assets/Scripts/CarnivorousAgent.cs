@@ -42,6 +42,7 @@ public class CarnivorousAgent : LivingBeingAgent
             // Reset every 1000 actions or when the agent fell
             if (AmountActions >= 1000)
             {
+                AmountActions = 0;
                 Done();
             }
         }
@@ -52,6 +53,7 @@ public class CarnivorousAgent : LivingBeingAgent
             // Reset every 1000 actions or when the agent fell
             if (AmountActions >= 1000)
             {
+                AmountActions = 0;
                 Done();
             }
         }
@@ -63,11 +65,6 @@ public class CarnivorousAgent : LivingBeingAgent
         AmountActions++;
     }
 
-    public override void AgentReset()
-    {
-        AmountActions = 0;
-        rigidBody.velocity = Vector3.zero;
-    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -92,11 +89,11 @@ public class CarnivorousAgent : LivingBeingAgent
                     {
                         AddReward(10f);
                     }
-                    /*
+                    
                     GameObject go = Pool.GetObject();
                     go.transform.parent = transform.parent;
                     go.transform.position = transform.position;
-                    go.SetActive(true);*/
+                    go.SetActive(true);
                     Done();
                 }
             }

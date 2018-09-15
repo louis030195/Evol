@@ -105,13 +105,17 @@ public class GameController : MonoBehaviour {
                     if (workerObject.GetComponentInChildren<CarnivorousAgent>() == null 
                         || workerObject.GetComponentInChildren<HerbivorousAgent>() == null)
                     {
-                        foreach (LivingBeingAgent agent in workerObject.GetComponentsInChildren<HerbivorousAgent>())
+                        foreach (HerbivorousAgent agent in workerObject.GetComponentsInChildren<HerbivorousAgent>())
                         {
+                            agent.GetComponent<LivingBeingController>().ResetStats();
+                            agent.ResetPosition();
                             agent.Done();
                             herbivorousPool.ReleaseObject(agent.gameObject);
                         }
-                        foreach (LivingBeingAgent agent in workerObject.GetComponentsInChildren<CarnivorousAgent>())
+                        foreach (CarnivorousAgent agent in workerObject.GetComponentsInChildren<CarnivorousAgent>())
                         {
+                            agent.GetComponent<LivingBeingController>().ResetStats();
+                            agent.ResetPosition();
                             agent.Done();
                             carnivorousPool.ReleaseObject(agent.gameObject);
                         }
@@ -121,12 +125,10 @@ public class GameController : MonoBehaviour {
                             GameObject CarnivorousChild = carnivorousPool.GetObject();
                             CarnivorousChild.SetActive(true);
                             CarnivorousChild.transform.parent = workerObject.transform;
-                            CarnivorousChild.GetComponent<LivingBeingAgent>().ResetPosition();
 
                             GameObject herbivorousChild = herbivorousPool.GetObject();
                             herbivorousChild.SetActive(true);
                             herbivorousChild.transform.parent = workerObject.transform;
-                            herbivorousChild.GetComponent<LivingBeingAgent>().ResetPosition();
                         }
                     }
                 }

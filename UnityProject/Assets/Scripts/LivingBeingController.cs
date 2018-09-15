@@ -29,10 +29,10 @@ public abstract class LivingBeingController : MonoBehaviour {
     // Update is called once per frame
     protected virtual void DoAction () {
         // Start losing life after 200 actions done
-        /*
+        
         if(livingBeingAgent.AmountActions > 200)
             livingBeing.Life -= 0.01f;
-        */
+        
 
         if (transform.position.y < 0)
             livingBeing.Life = -1;
@@ -41,7 +41,7 @@ public abstract class LivingBeingController : MonoBehaviour {
         // To avoid dying instantly before having his stats resetted
         if (livingBeing.Life < 0)
         {
-            livingBeingAgent.ResetStats();
+            ResetStats();
             livingBeingAgent.ResetPosition();
             livingBeingAgent.AddReward(-10f);
             
@@ -59,7 +59,13 @@ public abstract class LivingBeingController : MonoBehaviour {
         livingBeing.Satiety = livingBeing.Satiety > 100 ?
             100 : livingBeing.Satiety;
     }
-    
+
+    public void ResetStats()
+    {
+        livingBeing.Satiety = 50;
+        livingBeing.Life = 50;
+    }
+
     private void OnDisable()
     {
 

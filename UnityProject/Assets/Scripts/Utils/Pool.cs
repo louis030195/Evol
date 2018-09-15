@@ -68,7 +68,7 @@ namespace DesignPattern.Objectpool
         public void ReleaseObject(GameObject go)
         {
             available.Add(go);
-            Debug.Log(inUse.Remove(go));
+            inUse.Remove(go);
             go.transform.parent = parent.transform;
             go.SetActive(false);
         }
