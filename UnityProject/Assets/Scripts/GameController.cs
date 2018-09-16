@@ -62,10 +62,12 @@ public class GameController : MonoBehaviour {
                         GameObject CarnivorousChild = carnivorousPool.GetObject();
                         CarnivorousChild.transform.parent = workerObject.transform;
                         CarnivorousChild.SetActive(true);
+                        CarnivorousChild.GetComponent<LivingBeingAgent>().ResetPosition();
 
                         GameObject herbivorousChild = herbivorousPool.GetObject();
                         herbivorousChild.transform.parent = workerObject.transform;
                         herbivorousChild.SetActive(true);
+                        herbivorousChild.GetComponent<LivingBeingAgent>().ResetPosition();
 
                         GameObject herbChild = herbPool.GetObject();
                         herbChild.transform.parent = workerObject.transform;
@@ -103,7 +105,8 @@ public class GameController : MonoBehaviour {
                 {
                     // TODO : check if any child of LivingBeingAgent is null instead ?
                     if (workerObject.GetComponentInChildren<CarnivorousAgent>() == null 
-                        || workerObject.GetComponentInChildren<HerbivorousAgent>() == null)
+                        || workerObject.GetComponentInChildren<HerbivorousAgent>() == null
+                        || workerObject.GetComponentsInChildren<LivingBeingAgent>().Length > 15)
                     {
                         foreach (HerbivorousAgent agent in workerObject.GetComponentsInChildren<HerbivorousAgent>())
                         {

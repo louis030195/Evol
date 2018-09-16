@@ -30,7 +30,7 @@ public abstract class LivingBeingController : MonoBehaviour {
     protected virtual void DoAction () {
         // Start losing life after 200 actions done
         
-        if(livingBeingAgent.AmountActions > 200)
+        if(livingBeingAgent.AmountActions > 50)
             livingBeing.Life -= 0.01f;
         
 
