@@ -182,13 +182,13 @@ MonoBehaviour:
     - 
     vectorActionSpaceType: 1
     vectorObservationSpaceType: 1
-  brainType: 2
+  brainType: 3
   CoreBrains:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: 14764
+  instanceID: 15306
 --- !u!114 &114530053126441440
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -258,13 +258,13 @@ MonoBehaviour:
     - 
     vectorActionSpaceType: 1
     vectorObservationSpaceType: 1
-  brainType: 2
+  brainType: 0
   CoreBrains:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: 14776
+  instanceID: -1066
 --- !u!114 &114830505798622882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -303,12 +303,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   workers:
-  - {fileID: 11400000, guid: 744d4ffa512156b419c32f20deaf524c, type: 2}
+  - {fileID: 11400000, guid: 30a419770e09f6940951d99abc1a908a, type: 2}
   brains:
   - {fileID: 114859714832689094}
   - {fileID: 114094034598838896}
   - {fileID: 114747797302771448}
   - {fileID: 114530053126441440}
+  itemsToSpawn:
+  - {fileID: 1037065897526392, guid: 5bd61245a87d69e4db6e6a25d15a7432, type: 2}
+  - {fileID: 1563969880686890, guid: 4e841b8558850db46908a10a8aa09f60, type: 2}
+  - {fileID: 1777388096454044, guid: 85937eb0de212944c9f4fdb9a66cde4f, type: 2}
   resetWorkers: 1
 --- !u!114 &114859714832689094
 MonoBehaviour:
@@ -331,10 +335,10 @@ MonoBehaviour:
     - 
     vectorActionSpaceType: 1
     vectorObservationSpaceType: 1
-  brainType: 2
+  brainType: 3
   CoreBrains:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: 14782
+  instanceID: 15332

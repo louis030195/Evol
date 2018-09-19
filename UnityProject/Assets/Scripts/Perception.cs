@@ -49,9 +49,21 @@ public class Perception : MonoBehaviour
                 {
                     if (hit.collider.gameObject.CompareTag(detectableObjects[i]))
                     {
-                        subList[i] = 1;
-                        subList[detectableObjects.Length + 1] = hit.distance / rayDistance;
-                        break;
+                        if (!hit.collider.gameObject.CompareTag(gameObject.tag))
+                        {
+                            subList[i] = 1;
+                            subList[detectableObjects.Length + 1] = hit.distance / rayDistance;
+                            break;
+                        }
+                        else
+                        {
+                            if (hit.collider.gameObject.GetComponent<LivingBeingAgent>().LivingBeing.Life > 90)
+                            {
+                                subList[i] = 2;
+                                subList[detectableObjects.Length + 1] = hit.distance / rayDistance;
+                                break;
+                            }
+                        }
                     }
                 }
             }

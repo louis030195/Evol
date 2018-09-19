@@ -92,7 +92,7 @@ public class GameController : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (frames % 100 == 0)
+        if (frames % 10 == 0)
         {
             System.IO.File.WriteAllText(@"evol.txt", $"\nTime : {Time.fixedTime} seconds \n{herbivorousPool.ToString()}");
             System.IO.File.AppendAllText(@"evol.txt", $"\nTime : {Time.fixedTime} seconds \n{carnivorousPool.ToString()}");

@@ -6,7 +6,7 @@ using MLAgents;
 /// <summary>
 /// This class handles the behaviour of the herbivorous agent
 /// </summary>
-[RequireComponent(typeof(JointDriveController))] // Required to set joint forces
+//[RequireComponent(typeof(JointDriveController))] // Required to set joint forces
 public class JointAgent : LivingBeingAgent
 {
     /*

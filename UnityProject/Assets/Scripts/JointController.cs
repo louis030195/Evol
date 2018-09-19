@@ -9,7 +9,7 @@ using UnityEngine;
     /// </summary>
     [System.Serializable]
     public class ItemPart
-    {
+    {/*
         [Header("Body Part Info")] [Space(10)] public ConfigurableJoint joint;
         public Rigidbody rb;
         [HideInInspector] public Vector3 startingPos;
@@ -39,9 +39,11 @@ using UnityEngine;
         public AnimationCurve jointForceCurve = new AnimationCurve();
         public AnimationCurve jointTorqueCurve = new AnimationCurve();
 
+        
         /// <summary>
         /// Reset body part to initial configuration.
         /// </summary>
+        ///
         public void Reset(ItemPart bp)
         {
             bp.rb.transform.position = bp.startingPos;
@@ -92,11 +94,11 @@ using UnityEngine;
             };
             joint.slerpDrive = jd;
             currentStrength = jd.maximumForce;
-        }
+        }*/
     }
 
     public class JointController : MonoBehaviour
-    {
+    {/*
         [Header("Joint Drive Settings")] [Space(10)]
         public float maxJointSpring;
 
@@ -173,6 +175,6 @@ using UnityEngine;
                     }
                 }
             }
-        }
+        }*/
     }
 
