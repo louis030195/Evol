@@ -52,11 +52,12 @@ public class HerbivorousAgent : LivingBeingAgent
         {
             AddReward(-0.01f);
             // Reset every 1000 actions or when the agent fell
+            /*
             if (AmountActions >= 1000)
             {
                 AmountActions = 0;
                 Done();
-            }
+            }*/
         }
 
         // Move
