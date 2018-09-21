@@ -106,7 +106,7 @@ public class GameController : MonoBehaviour {
                     // TODO : check if any child of LivingBeingAgent is null instead ?
                     if (workerObject.GetComponentInChildren<CarnivorousAgent>() == null 
                         || workerObject.GetComponentInChildren<HerbivorousAgent>() == null
-                        || workerObject.GetComponentsInChildren<LivingBeingAgent>().Length > workers[0].AmountOfAgentsToAdd * 3)
+                        || workerObject.GetComponentsInChildren<LivingBeingAgent>().Length > workers[0].AmountOfAgentsToAdd * 10)
                     {
                         foreach (HerbivorousAgent agent in workerObject.GetComponentsInChildren<HerbivorousAgent>())
                         {

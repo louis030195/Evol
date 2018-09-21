@@ -13,7 +13,7 @@ public class CarnivorousAgent : LivingBeingAgent
 {
     public override void InitializeAgent()
     {
-        LivingBeing = new Carnivorous(50, 0, 0, 50, 0);
+        LivingBeing = new Carnivorous(50, 0, 0, 50, 0, 50);
         perception = GetComponent<Perception>();
         rigidBody = GetComponent<Rigidbody>();
     }
@@ -60,7 +60,7 @@ public class CarnivorousAgent : LivingBeingAgent
         }
 
         // Move
-        rigidBody.AddForce(moveSpeed * transform.forward * Mathf.Clamp(vectorAction[0], -1f, 1f), ForceMode.VelocityChange);
+        rigidBody.AddForce(LivingBeing.Speed * transform.forward * Mathf.Clamp(vectorAction[0], -1f, 1f), ForceMode.VelocityChange);
         transform.Rotate(new Vector3(0, 1f, 0), Time.fixedDeltaTime * 500 * Mathf.Clamp(vectorAction[1], -1f, 1f));
 
         AmountActions++;
