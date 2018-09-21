@@ -42,7 +42,6 @@ public abstract class LivingBeingController : MonoBehaviour {
         if (livingBeing.Life < 0)
         {
             ResetStats();
-            livingBeingAgent.ResetPosition();
             livingBeingAgent.AddReward(-10f);
             
             if (evolve)

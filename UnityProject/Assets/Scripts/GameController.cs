@@ -62,12 +62,12 @@ public class GameController : MonoBehaviour {
                         GameObject CarnivorousChild = carnivorousPool.GetObject();
                         CarnivorousChild.transform.parent = workerObject.transform;
                         CarnivorousChild.SetActive(true);
-                        CarnivorousChild.GetComponent<LivingBeingAgent>().ResetPosition();
+                        CarnivorousChild.GetComponent<LivingBeingAgent>().ResetPosition(workerObject.transform);
 
                         GameObject herbivorousChild = herbivorousPool.GetObject();
                         herbivorousChild.transform.parent = workerObject.transform;
                         herbivorousChild.SetActive(true);
-                        herbivorousChild.GetComponent<LivingBeingAgent>().ResetPosition();
+                        herbivorousChild.GetComponent<LivingBeingAgent>().ResetPosition(workerObject.transform);
 
                         GameObject herbChild = herbPool.GetObject();
                         herbChild.transform.parent = workerObject.transform;
@@ -111,27 +111,29 @@ public class GameController : MonoBehaviour {
                         foreach (HerbivorousAgent agent in workerObject.GetComponentsInChildren<HerbivorousAgent>())
                         {
                             agent.GetComponent<LivingBeingController>().ResetStats();
-                            agent.ResetPosition();
                             agent.Done();
                             herbivorousPool.ReleaseObject(agent.gameObject);
                         }
                         foreach (CarnivorousAgent agent in workerObject.GetComponentsInChildren<CarnivorousAgent>())
                         {
                             agent.GetComponent<LivingBeingController>().ResetStats();
-                            agent.ResetPosition();
                             agent.Done();
                             carnivorousPool.ReleaseObject(agent.gameObject);
                         }
                         // TODO : Find a cleaner solution than workers[0] ...
                         for (int i = 0; i < workers[0].AmountOfAgentsToAdd; i++)
                         {
-                            GameObject CarnivorousChild = carnivorousPool.GetObject();
-                            CarnivorousChild.SetActive(true);
-                            CarnivorousChild.transform.parent = workerObject.transform;
+                            GameObject carnivorousChild = carnivorousPool.GetObject();
+                            carnivorousChild.transform.parent = workerObject.transform;
+                            carnivorousChild.GetComponent<LivingBeingAgent>().ResetPosition(workerObject.transform);
+                            carnivorousChild.SetActive(true);
+                            
 
                             GameObject herbivorousChild = herbivorousPool.GetObject();
-                            herbivorousChild.SetActive(true);
                             herbivorousChild.transform.parent = workerObject.transform;
+                            herbivorousChild.GetComponent<LivingBeingAgent>().ResetPosition(workerObject.transform);
+                            herbivorousChild.SetActive(true);
+                            
                         }
                     }
                 }
