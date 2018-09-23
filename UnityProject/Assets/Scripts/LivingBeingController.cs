@@ -13,7 +13,6 @@ public abstract class LivingBeingController : MonoBehaviour {
     public Pool Pool { get; set; }
 
     protected LivingBeingAgent livingBeingAgent;
-    protected LivingBeing livingBeing;
     protected float now;
 
     // Use this for initialization
@@ -22,52 +21,47 @@ public abstract class LivingBeingController : MonoBehaviour {
         livingBeingAgent.Evolve = evolve;
         livingBeingAgent.action = DoAction;
         livingBeingAgent.Pool = Pool;
-        livingBeing = livingBeingAgent.LivingBeing;
         now = Time.fixedTime;
     }
 
     // Update is called once per frame
-    protected virtual void DoAction () {
-        // Start losing life after 200 actions done
-        
-        //if(livingBeingAgent.AmountActions > 50)
-        livingBeing.Life -= 0.1f;
+    protected virtual void DoAction ()
+    {
+        //print("act" + now + "\n" + livingBeing.ToString());
+        livingBeingAgent.LivingBeing.Life -= 0.1f;
         
 
         if (transform.position.y < 0)
-            livingBeing.Life = -1;
+            livingBeingAgent.LivingBeing.Life = -1;
         
 
         // To avoid dying instantly before having his stats resetted
-        if (livingBeing.Life < 0)
+        if (livingBeingAgent.LivingBeing.Life < 0)
         {
-            ResetStats();
+            //print("dying " + livingBeingAgent.LivingBeing.Life);
             livingBeingAgent.AddReward(-10f);
-            
+            livingBeingAgent.Done();
             if (evolve)
                 Pool.ReleaseObject(gameObject);
-
-            livingBeingAgent.Done();
-
-
         }
 
-        livingBeing.Life = livingBeing.Life > 100 ?
-            100 : livingBeing.Life;
+        livingBeingAgent.LivingBeing.Life = livingBeingAgent.LivingBeing.Life > 100 ?
+            100 : livingBeingAgent.LivingBeing.Life;
 
-        livingBeing.Satiety = livingBeing.Satiety > 100 ?
-            100 : livingBeing.Satiety;
+        livingBeingAgent.LivingBeing.Satiety = livingBeingAgent.LivingBeing.Satiety > 100 ?
+            100 : livingBeingAgent.LivingBeing.Satiety;
     }
 
     public void ResetStats()
     {
-        livingBeing.Satiety = 50;
-        livingBeing.Life = 50;
+        livingBeingAgent.LivingBeing.Satiety = 50;
+        livingBeingAgent.LivingBeing.Life = 50;
     }
 
     private void OnDisable()
     {
 
+        ResetStats();
         if (Time.fixedTime > 100 && Time.fixedTime % 50 < 10)
         {
             if (!System.IO.File.Exists(@"disable.txt"))
@@ -76,9 +70,9 @@ public abstract class LivingBeingController : MonoBehaviour {
                 System.IO.File.WriteAllText(@"disable.txt", "");
             System.IO.File.AppendAllText(@"disable.txt", $"\n-------------" +
                 $"\n Disabled {name} at {Time.fixedTime} seconds" +
-                $"\nLength of life : {Time.fixedTime - now} seconds" +
+                $"\nLength of life : {livingBeingAgent.AmountActions} actions" +
                 $"\nPosition|Rotation : {transform.position}|{transform.rotation}" +
-                $"\nLivingBeing \n{livingBeing.ToString()}" +
+                $"\nLivingBeing \n{livingBeingAgent.LivingBeing.ToString()}" +
                 $"RigidBody velocity {GetComponent<Rigidbody>().velocity}");
         }
     }

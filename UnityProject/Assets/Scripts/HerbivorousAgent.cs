@@ -84,6 +84,7 @@ public class HerbivorousAgent : LivingBeingAgent
         if (collision.collider.GetComponent<CarnivorousAgent>() != null)
         {
             LivingBeing.Life = -1;
+            //print("hit by carni" + LivingBeing.Life);
         }
         if (collision.collider.GetComponent<HerbivorousAgent>() != null)
         {

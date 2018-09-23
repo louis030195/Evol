@@ -53,7 +53,6 @@ namespace DesignPattern.Objectpool
                     go.GetComponent<LivingBeingController>().Pool = this;
                 if (go.GetComponent<LivingBeingAgent>() != null)
                 {
-                    // TODO : avoid giving brain every time GO respawn ?
                     go.GetComponent<Agent>().GiveBrain(Brain);
                 }
                 inUse.Add(go);
