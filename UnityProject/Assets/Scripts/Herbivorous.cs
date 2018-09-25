@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Herbivorous : LivingBeing {
 
-    public Herbivorous(int life, int age, int lifeExpectancy, int satiety, int tiredness) :base(life, age, lifeExpectancy, satiety, tiredness)
+    public Herbivorous(int life, int age, int lifeExpectancy, int satiety, int tiredness, int speed) 
+        :base(life, age, lifeExpectancy, satiety, tiredness, speed)
     {
 
     }

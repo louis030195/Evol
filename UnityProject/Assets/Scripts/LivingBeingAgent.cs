@@ -2,21 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MLAgents;
+using DesignPattern.Objectpool;
 
 /// <summary>
 /// This class handles the behaviour of the agent
 /// </summary>
 public abstract class LivingBeingAgent : Agent
 {
+    protected Rigidbody rigidBody;
 
-    protected int totalActions;
-
-    protected RayPerception rayPer;
+    protected Perception perception;
     public LivingBeing LivingBeing { get; protected set; }
+    public bool Evolve { get; set; }
+    public Pool Pool { get; set; }
     public System.Action action;
 
-    protected int amountActions = 0;
-    
+    public short AmountActions { get; protected set; } = 0;
 
     public enum RewardMode
     {
@@ -29,21 +30,17 @@ public abstract class LivingBeingAgent : Agent
     public RewardMode rewardMode = RewardMode.Dense;
 
 
-    /// <summary>
-    /// Loop over body parts and reset them to initial conditions.
-    /// </summary>
-    public override void AgentReset()
+    public void ResetPosition(Transform worker)
     {
-        ResetPosition();
-        LivingBeing.Satiety = 100;
-        LivingBeing.Life = 100;
-    }
-
-    public void ResetPosition()
-    {
-        float groundSize = transform.parent.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 2;
+        rigidBody.velocity = Vector3.zero;
+        float groundSize = worker.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 2;
         float offsetX = transform.parent.position.x;
         transform.position = new Vector3(Random.Range(-groundSize, groundSize) + offsetX, 0.5f, Random.Range(-groundSize, groundSize));
         transform.rotation = new Quaternion(0, Random.Range(0, 360), 0, 0);
+    }
+
+    public override void AgentReset()
+    {
+        AmountActions = 0;
     }
 }

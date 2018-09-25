@@ -5,7 +5,8 @@ using UnityEngine;
 public class Carnivorous : LivingBeing
 {
 
-    public Carnivorous(int life, int age, int lifeExpectancy, int satiety, int tiredness) : base(life, age, lifeExpectancy, satiety, tiredness)
+    public Carnivorous(int life, int age, int lifeExpectancy, int satiety, int tiredness, int speed) 
+        : base(life, age, lifeExpectancy, satiety, tiredness, speed)
     {
 
     }

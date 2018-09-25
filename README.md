@@ -1,17 +1,28 @@
-# Goal
-Build an ecosystem filled with AIs trained with reinforcement learning and possibly using genetics
+# Evol
+Ecosystem of AIs trained with reinforcement learning and evolving.
 
-![v0.2 - multiagent](Screenshots/multiagent.gif)
 
-[First version](https://www.youtube.com/watch?v=LrkpRfSFAaI&feature=youtu.be)
+[![Evol](https://img.youtube.com/vi/GqquQTyQLno/0.jpg)](https://www.youtube.com/watch?v=GqquQTyQLno)
 
-[Second version](https://www.youtube.com/watch?v=Fb50cKx8ia8&feature=youtu.be)
+# Inputs
+* Sensor-like at angles 0, 45, 90, 135, 180, 110, 70
+The sensor is returning either : - 0 Nothing
+                                 - 1 Something
+                                 - 2 Something with which i can reproduce
+* Own y rotation
+* Own x velocity
+* Own z velocity
+* Own life
 
-![Some stats](Screenshots/tensorboardv02.png?raw=true "tensorboardv02")
-
+# Outputs
+* Force forward
+* Rotation on y axis
 
 
 # Usage
-clone the repo
-Open the project with unity
+
+clone the repository
+
+Open the project with Unity
+
 Execute TensorflowSharp plugin [download link](https://s3.amazonaws.com/unity-ml-agents/0.4/TFSharpPlugin.unitypackage) and add it to the project
