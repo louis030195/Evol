@@ -1,0 +1,9 @@
+9/24/2018 9:28:30 PM
+ 
+Exception
+NullReferenceException: Object reference not set to an instance of an object
+CarnivorousAgent.AgentAction (System.Single[] vectorAction, System.String textAction) (at Assets/Scripts/CarnivorousAgent.cs:37)
+MLAgents.Agent.AgentStep () (at Assets/ML-Agents/Scripts/Agent.cs:965)
+MLAgents.Academy.EnvironmentStep () (at Assets/ML-Agents/Scripts/Academy.cs:588)
+MLAgents.Academy.FixedUpdate () (at Assets/ML-Agents/Scripts/Academy.cs:610)
+

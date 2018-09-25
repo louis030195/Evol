@@ -28,9 +28,10 @@ public abstract class LivingBeingController : MonoBehaviour {
     protected virtual void DoAction ()
     {
         //print("act" + now + "\n" + livingBeing.ToString());
-        livingBeingAgent.LivingBeing.Life -= 0.1f;
+        livingBeingAgent.LivingBeing.Life -= 0.07f;
         
 
+        
         if (transform.position.y < 0)
             livingBeingAgent.LivingBeing.Life = -1;
         
@@ -38,11 +39,19 @@ public abstract class LivingBeingController : MonoBehaviour {
         // To avoid dying instantly before having his stats resetted
         if (livingBeingAgent.LivingBeing.Life < 0)
         {
-            //print("dying " + livingBeingAgent.LivingBeing.Life);
+            // Punish the death
             livingBeingAgent.AddReward(-10f);
-            livingBeingAgent.Done();
+
+            
+            // Punish it was the last agent of the specie (genocide)
+            if(transform.parent.GetComponentsInChildren(livingBeingAgent.GetType()).Length == 1)
+                livingBeingAgent.AddReward(-50f);
+            
+            // Remove the agent from the scene
             if (evolve)
                 Pool.ReleaseObject(gameObject);
+            
+            livingBeingAgent.Done();
         }
 
         livingBeingAgent.LivingBeing.Life = livingBeingAgent.LivingBeing.Life > 100 ?

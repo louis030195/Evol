@@ -23,7 +23,7 @@ public class HerbivorousAgent : LivingBeingAgent
     public override void CollectObservations()
     {
         var rayDistance = 200f;
-        float[] rayAngles = { 0f, 45f, 90f, 135f, 180f, 110f, 70f };
+        float[] rayAngles = {0f, 45f, 90f, 135f, 180f, 110f, 70f };
         var detectableObjects = new[] { "herbivorous", "food", "carnivorous" };
         AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f));
         AddVectorObs(gameObject.transform.rotation.y);
@@ -52,12 +52,14 @@ public class HerbivorousAgent : LivingBeingAgent
         {
             AddReward(-0.01f);
             // Reset every 1000 actions or when the agent fell
-            /*
-            if (AmountActions >= 1000)
+            if (!Evolve)
             {
-                AmountActions = 0;
-                Done();
-            }*/
+                if (AmountActions >= 1000)
+                {
+                    AmountActions = 0;
+                    Done();
+                }
+            }
         }
 
         // Move

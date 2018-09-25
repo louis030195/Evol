@@ -39,4 +39,8 @@ public abstract class LivingBeingAgent : Agent
         transform.rotation = new Quaternion(0, Random.Range(0, 360), 0, 0);
     }
 
+    public override void AgentReset()
+    {
+        AmountActions = 0;
+    }
 }

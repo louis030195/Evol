@@ -94,9 +94,9 @@ public class GameController : MonoBehaviour {
     {
         if (frames % 10 == 0)
         {
-            System.IO.File.WriteAllText(@"evol.txt", $"\nTime : {Time.fixedTime} seconds \n{herbivorousPool.ToString()}");
-            System.IO.File.AppendAllText(@"evol.txt", $"\nTime : {Time.fixedTime} seconds \n{carnivorousPool.ToString()}");
-            System.IO.File.AppendAllText(@"evol.txt", $"\nTime : {Time.fixedTime} seconds \n{herbPool.ToString()}");
+            System.IO.File.WriteAllText(@"evol.txt", $"\nTime : {Time.fixedTime} seconds \nHerbivorous {herbivorousPool.ToString()}");
+            System.IO.File.AppendAllText(@"evol.txt", $"\nTime : {Time.fixedTime} seconds \nCarnivorous {carnivorousPool.ToString()}");
+            System.IO.File.AppendAllText(@"evol.txt", $"\nTime : {Time.fixedTime} seconds \nHerb {herbPool.ToString()}");
             frames = 0;
 
             if (resetWorkers)
