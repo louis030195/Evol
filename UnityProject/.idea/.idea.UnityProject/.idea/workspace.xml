@@ -2,15 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d46088b7-79b6-44b9-9c60-8489ab64c9e3" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.UnityProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UnityProject/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Python/Evol_ppo-0.bytes" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Python/Evol_ppo-0.bytes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Train.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Train.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CarnivorousAgent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CarnivorousAgent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/HerbivorousAgent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/HerbivorousAgent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/LivingBeingAgent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LivingBeingAgent.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/LivingBeingController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/LivingBeingController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Workers/HerbiCarnoTrainEvol.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Workers/HerbiCarnoTrainEvol.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/disable.txt" beforeDir="false" afterPath="$PROJECT_DIR$/disable.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Tests/Tests.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Tests/Tests.asmdef" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/evol.txt" beforeDir="false" afterPath="$PROJECT_DIR$/evol.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,7 +18,8 @@
     <session id="-1296016840">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="11" />
+          <entry key="project.closed" value="12" />
+          <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.12" value="2" />
           <entry key="project.open.time.13" value="2" />
           <entry key="project.open.time.14" value="4" />
@@ -31,32 +27,36 @@
           <entry key="project.open.time.22" value="1" />
           <entry key="project.open.time.30" value="1" />
           <entry key="project.open.time.49" value="1" />
-          <entry key="project.opened" value="12" />
+          <entry key="project.opened" value="13" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts" />
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="cs" value="15" />
+          <entry key="asmdef" value="3" />
+          <entry key="cs" value="16" />
           <entry key="md" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="C#" value="1674" />
+          <entry key="AsmDef" value="20" />
+          <entry key="C#" value="1968" />
           <entry key="PLAIN_TEXT" value="519" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="C#" value="15" />
+          <entry key="AsmDef" value="3" />
+          <entry key="C#" value="16" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="cs" value="1674" />
+          <entry key="asmdef" value="20" />
+          <entry key="cs" value="1968" />
           <entry key="md" value="519" />
         </counts>
       </usages-collector>
@@ -67,55 +67,61 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/GameController.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
+            <state relative-caret-position="1065">
               <caret line="71" column="55" selection-start-line="71" selection-start-column="51" selection-end-line="71" selection-end-column="55" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/LivingBeingController.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="457">
+              <caret line="76" column="71" lean-forward="true" selection-start-line="76" selection-start-column="71" selection-end-line="76" selection-end-column="71" />
               <folding>
-                <marker date="1537817427089" expanded="false" signature="6:197" ph="..." />
-                <marker date="1537817427089" expanded="true" signature="199:277" ph="/// This class handles all the game global events ... " />
-                <marker date="1537817427089" expanded="true" signature="322:6502" ph="{...}" />
-                <marker date="1537817427089" expanded="true" signature="859:1496" ph="{...}" />
-                <marker date="1537817427089" expanded="true" signature="1521:3645" ph="{...}" />
-                <marker date="1537817427089" expanded="true" signature="1589:3639" ph="{...}" />
-                <marker date="1537817427089" expanded="true" signature="1771:3629" ph="{...}" />
-                <marker date="1537817427089" expanded="true" signature="1997:3152" ph="{...}" />
-                <marker date="1537817427089" expanded="true" signature="2039:2959" ph="{...}" />
-                <marker date="1537817427089" expanded="true" signature="3674:6500" ph="{...}" />
-                <marker date="1537817427089" expanded="true" signature="3710:6476" ph="{...}" />
-                <marker date="1537817427089" expanded="true" signature="4168:6466" ph="{...}" />
-                <marker date="1537817427089" expanded="true" signature="4249:6452" ph="{...}" />
-                <marker date="1537817427089" expanded="true" signature="4664:6434" ph="{...}" />
-                <marker date="1537817427089" expanded="true" signature="4803:5060" ph="{...}" />
-                <marker date="1537817427089" expanded="true" signature="5177:5434" ph="{...}" />
-                <marker date="1537817427089" expanded="true" signature="5593:6412" ph="{...}" />
+                <marker date="1537988983589" expanded="false" signature="6:126" ph="..." />
+                <marker date="1537988983589" expanded="true" signature="128:208" ph="/// This class is used to update stats of the agent ... " />
+                <marker date="1537988983589" expanded="true" signature="269:3524" ph="{...}" />
+                <marker date="1537988983589" expanded="true" signature="485:707" ph="{...}" />
+                <marker date="1537988983589" expanded="true" signature="786:1950" ph="{...}" />
+                <marker date="1537988983589" expanded="true" signature="1145:1655" ph="{...}" />
+                <marker date="1537988983589" expanded="true" signature="1980:2091" ph="{...}" />
+                <marker date="1537988983589" expanded="true" signature="2123:2688" ph="{...}" />
+                <marker date="1537988983589" expanded="true" signature="2300:2456" ph="{...}" />
+                <marker date="1537988983589" expanded="true" signature="2323:2446" ph="/* the ray collided with something, you can interact ... */" />
+                <marker date="1537988983589" expanded="true" signature="2456:2682" ph="{...}" />
+                <marker date="1537988983589" expanded="true" signature="2718:3522" ph="{...}" />
+                <marker date="1537988983589" expanded="true" signature="2809:3516" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../README.md">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/Tests/TestPerception.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
+            <state relative-caret-position="210">
+              <caret line="17" column="10" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="10" />
+              <folding>
+                <marker date="1537976759929" expanded="false" signature="6:96" ph="..." />
+                <marker date="1537976759929" expanded="true" signature="126:880" ph="{...}" />
+                <marker date="1537976759929" expanded="true" signature="191:550" ph="{...}" />
+                <marker date="1537976759929" expanded="true" signature="253:544" ph="/* var agentGo = new GameObject(&quot;HerbivorousAgent&quot;); ... */" />
+                <marker date="1537976759929" expanded="true" signature="567:682" ph="/* A UnityTest behaves like a coroutine in PlayMode ... */" />
+                <marker date="1537976759929" expanded="true" signature="759:878" ph="{...}" />
+                <marker date="1537976759929" expanded="true" signature="769:845" ph="/* Use the Assert class to test conditions. ... */" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Assets/Scripts/LivingBeingController.cs">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/Tests/Tests.asmdef">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="45" column="68" selection-start-line="45" selection-start-column="68" selection-end-line="45" selection-end-column="68" />
+            <state relative-caret-position="120">
+              <caret line="8" column="1" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
               <folding>
-                <marker date="1537893639392" expanded="false" signature="6:126" ph="..." />
-                <marker date="1537893639392" expanded="true" signature="128:208" ph="/// This class is used to update stats of the agent ... " />
-                <marker date="1537893639392" expanded="true" signature="269:2927" ph="{...}" />
-                <marker date="1537893639392" expanded="true" signature="485:707" ph="{...}" />
-                <marker date="1537893639392" expanded="true" signature="786:1950" ph="{...}" />
-                <marker date="1537893639392" expanded="true" signature="1145:1655" ph="{...}" />
-                <marker date="1537893639392" expanded="true" signature="1980:2091" ph="{...}" />
-                <marker date="1537893639392" expanded="true" signature="2121:2925" ph="{...}" />
-                <marker date="1537893639392" expanded="true" signature="2212:2919" ph="{...}" />
+                <marker date="1537904714171" expanded="true" signature="54:86" ph="[...]" />
               </folding>
             </state>
           </provider>
@@ -124,23 +130,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/Utils/Pool.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="672">
+            <state relative-caret-position="1080">
               <caret line="72" column="9" selection-start-line="72" selection-start-column="9" selection-end-line="72" selection-end-column="9" />
-              <folding>
-                <marker date="1537893221012" expanded="false" signature="6:168" ph="..." />
-                <marker date="1537893221012" expanded="true" signature="204:2749" ph="{...}" />
-                <marker date="1537893221012" expanded="true" signature="211:629" ph="/* The Pool class is the most important class in the object pool design pattern. It controls access to the ... */" />
-                <marker date="1537893221012" expanded="true" signature="651:2747" ph="{...}" />
-                <marker date="1537893221012" expanded="true" signature="934:1141" ph="{...}" />
-                <marker date="1537893221012" expanded="true" signature="1151:1381" ph="/// Return the object asked or null if it doesn't exist or the pool is empty ... " />
-                <marker date="1537893221012" expanded="true" signature="1419:2198" ph="{...}" />
-                <marker date="1537893221012" expanded="true" signature="1467:1705" ph="{...}" />
-                <marker date="1537893221012" expanded="true" signature="1722:2188" ph="{...}" />
-                <marker date="1537893221012" expanded="true" signature="2017:2116" ph="{...}" />
-                <marker date="1537893221012" expanded="true" signature="2208:2343" ph="/// Deactivate the GameObject and add it to the pool ... " />
-                <marker date="1537893221012" expanded="true" signature="2392:2558" ph="{...}" />
-                <marker date="1537893221012" expanded="true" signature="2602:2741" ph="{...}" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -148,46 +139,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/LivingBeingAgent.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="555">
+            <state relative-caret-position="615">
               <caret line="41" column="37" selection-start-line="41" selection-start-column="37" selection-end-line="41" selection-end-column="37" />
-              <folding>
-                <marker date="1537892430596" expanded="false" signature="6:126" ph="..." />
-                <marker date="1537892430596" expanded="true" signature="128:206" ph="/// This class handles the behaviour of the agent ... " />
-                <marker date="1537892430596" expanded="true" signature="253:1327" ph="{...}" />
-                <marker date="1537892430596" expanded="true" signature="581:681" ph="{...}" />
-                <marker date="1537892430596" expanded="true" signature="830:1247" ph="{...}" />
-                <marker date="1537892430596" expanded="true" signature="1286:1325" ph="{...}" />
-              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/HerbivorousAgent.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="23" column="5" lean-forward="true" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
-              <folding>
-                <marker date="1537893723022" expanded="false" signature="6:159" ph="..." />
-                <marker date="1537893723022" expanded="true" signature="161:251" ph="/// This class handles the behaviour of the herbivorous agent ... " />
-                <marker date="1537893723022" expanded="true" signature="300:3582" ph="{...}" />
-                <marker date="1537893723022" expanded="true" signature="347:515" ph="{...}" />
-                <marker date="1537893723022" expanded="true" signature="563:1111" ph="{...}" />
-                <marker date="1537893723022" expanded="true" signature="1190:2189" ph="{...}" />
-                <marker date="1537893723022" expanded="true" signature="1260:1527" ph="{...}" />
-                <marker date="1537893723022" expanded="true" signature="1430:1517" ph="{...}" />
-                <marker date="1537893723022" expanded="true" signature="1577:1890" ph="{...}" />
-                <marker date="1537893723022" expanded="true" signature="1706:1880" ph="{...}" />
-                <marker date="1537893723022" expanded="true" signature="1763:1866" ph="{...}" />
-                <marker date="1537893723022" expanded="true" signature="2245:3580" ph="{...}" />
-                <marker date="1537893723022" expanded="true" signature="2312:2536" ph="{...}" />
-                <marker date="1537893723022" expanded="true" signature="2446:2506" ph="{...}" />
-                <marker date="1537893723022" expanded="true" signature="2610:2721" ph="{...}" />
-                <marker date="1537893723022" expanded="true" signature="2794:3574" ph="{...}" />
-                <marker date="1537893723022" expanded="true" signature="2828:3564" ph="{...}" />
-                <marker date="1537893723022" expanded="true" signature="2964:3550" ph="{...}" />
-                <marker date="1537893723022" expanded="true" signature="3180:3264" ph="{...}" />
-              </folding>
+            <state relative-caret-position="345">
+              <caret line="23" column="5" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -198,22 +160,22 @@
             <state relative-caret-position="810">
               <caret line="60" column="13" selection-start-line="60" selection-start-column="13" selection-end-line="60" selection-end-column="13" />
               <folding>
-                <marker date="1537817159770" expanded="false" signature="6:159" ph="..." />
-                <marker date="1537817159770" expanded="true" signature="161:251" ph="/// This class handles the behaviour of the carnivorous agent ... " />
-                <marker date="1537817159770" expanded="true" signature="345:513" ph="{...}" />
-                <marker date="1537817159770" expanded="true" signature="562:1111" ph="{...}" />
-                <marker date="1537817159770" expanded="true" signature="1190:2188" ph="{...}" />
-                <marker date="1537817159770" expanded="true" signature="1260:1527" ph="{...}" />
-                <marker date="1537817159770" expanded="true" signature="1430:1517" ph="{...}" />
-                <marker date="1537817159770" expanded="true" signature="1577:1890" ph="{...}" />
-                <marker date="1537817159770" expanded="true" signature="1706:1880" ph="{...}" />
-                <marker date="1537817159770" expanded="true" signature="1763:1866" ph="{...}" />
-                <marker date="1537817159770" expanded="true" signature="2245:3376" ph="{...}" />
-                <marker date="1537817159770" expanded="true" signature="2324:2520" ph="{...}" />
-                <marker date="1537817159770" expanded="true" signature="2593:3370" ph="{...}" />
-                <marker date="1537817159770" expanded="true" signature="2627:3360" ph="{...}" />
-                <marker date="1537817159770" expanded="true" signature="2762:3346" ph="{...}" />
-                <marker date="1537817159770" expanded="true" signature="2977:3061" ph="{...}" />
+                <marker date="1537903583399" expanded="false" signature="6:159" ph="..." />
+                <marker date="1537903583399" expanded="true" signature="161:251" ph="/// This class handles the behaviour of the carnivorous agent ... " />
+                <marker date="1537903583399" expanded="true" signature="345:513" ph="{...}" />
+                <marker date="1537903583399" expanded="true" signature="562:1111" ph="{...}" />
+                <marker date="1537903583399" expanded="true" signature="1190:2188" ph="{...}" />
+                <marker date="1537903583399" expanded="true" signature="1260:1527" ph="{...}" />
+                <marker date="1537903583399" expanded="true" signature="1430:1517" ph="{...}" />
+                <marker date="1537903583399" expanded="true" signature="1577:1890" ph="{...}" />
+                <marker date="1537903583399" expanded="true" signature="1706:1880" ph="{...}" />
+                <marker date="1537903583399" expanded="true" signature="1763:1866" ph="{...}" />
+                <marker date="1537903583399" expanded="true" signature="2245:3376" ph="{...}" />
+                <marker date="1537903583399" expanded="true" signature="2324:2520" ph="{...}" />
+                <marker date="1537903583399" expanded="true" signature="2593:3370" ph="{...}" />
+                <marker date="1537903583399" expanded="true" signature="2627:3360" ph="{...}" />
+                <marker date="1537903583399" expanded="true" signature="2762:3346" ph="{...}" />
+                <marker date="1537903583399" expanded="true" signature="2977:3061" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -238,6 +200,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Utils/Pool.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Tests/TestPerception.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Perception.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Tests/Tests.asmdef" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/CarnivorousAgent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/ML-Agents/Editor/Tests/MLAgentsEditModeTest.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/ML-Agents/Editor/Tests/EditModeTestActionMasker.cs" root0="FORCE_HIGHLIGHTING" />
@@ -255,7 +218,6 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/JointController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/JointAgent.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Perception.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Tests/TestPerception.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/LivingBeing.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Carnivorous.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Herbivorous.cs" />
@@ -264,8 +226,12 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/GameController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/LivingBeingAgent.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Utils/Pool.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/LivingBeingController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/HerbivorousAgent.cs" />
+        <option value="$PROJECT_DIR$/../../ml-agents-master/ml-agents-master/UnitySDK/Assets/ML-Agents/Scripts/MLAgents.asmdef" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/MyScriptAssembly.asmdef" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Tests/Tests.asmdef" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Tests/TestPerception.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/LivingBeingController.cs" />
       </list>
     </option>
   </component>
@@ -287,20 +253,20 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="UnityExplorer">
-        <option name="show-hidden-items" value="false" />
-      </pane>
+      <pane id="FileSystemExplorer" />
       <pane id="SolutionExplorer">
         <option name="show-all-files" value="false" />
       </pane>
-      <pane id="FileSystemExplorer" />
+      <pane id="UnityExplorer">
+        <option name="show-hidden-items" value="false" />
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="Rider.DefaultBreakpoints.AreToggled" value="true" />
     <property name="Rider.ProjectViewActivator.IsNotFirstRun" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../README.md" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Assets/Scripts/MyScriptAssembly.asmdef" />
     <property name="settings.editor.selected.configurable" value="preferences.build.unityPlugin" />
   </component>
   <component name="RunDashboard">
@@ -352,12 +318,13 @@
       <workItem from="1537682721203" duration="1576000" />
       <workItem from="1537709630231" duration="1527000" />
       <workItem from="1537810244011" duration="1214000" />
-      <workItem from="1537892211451" duration="1507000" />
+      <workItem from="1537892211451" duration="3351000" />
+      <workItem from="1537976732100" duration="2115000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24424000" />
+    <option name="totallyTimeSpent" value="28383000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -369,10 +336,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1871" height="991" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2803838" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29376036" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -474,42 +441,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Tests/TestPerception.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="10" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../README.md">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
           <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/CarnivorousAgent.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="810">
-          <caret line="60" column="13" selection-start-line="60" selection-start-column="13" selection-end-line="60" selection-end-column="13" />
-          <folding>
-            <marker date="1537817159770" expanded="false" signature="6:159" ph="..." />
-            <marker date="1537817159770" expanded="true" signature="161:251" ph="/// This class handles the behaviour of the carnivorous agent ... " />
-            <marker date="1537817159770" expanded="true" signature="345:513" ph="{...}" />
-            <marker date="1537817159770" expanded="true" signature="562:1111" ph="{...}" />
-            <marker date="1537817159770" expanded="true" signature="1190:2188" ph="{...}" />
-            <marker date="1537817159770" expanded="true" signature="1260:1527" ph="{...}" />
-            <marker date="1537817159770" expanded="true" signature="1430:1517" ph="{...}" />
-            <marker date="1537817159770" expanded="true" signature="1577:1890" ph="{...}" />
-            <marker date="1537817159770" expanded="true" signature="1706:1880" ph="{...}" />
-            <marker date="1537817159770" expanded="true" signature="1763:1866" ph="{...}" />
-            <marker date="1537817159770" expanded="true" signature="2245:3376" ph="{...}" />
-            <marker date="1537817159770" expanded="true" signature="2324:2520" ph="{...}" />
-            <marker date="1537817159770" expanded="true" signature="2593:3370" ph="{...}" />
-            <marker date="1537817159770" expanded="true" signature="2627:3360" ph="{...}" />
-            <marker date="1537817159770" expanded="true" signature="2762:3346" ph="{...}" />
-            <marker date="1537817159770" expanded="true" signature="2977:3061" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -520,111 +455,105 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../../ml-agents-master/ml-agents-master/UnitySDK/Assets/ML-Agents/Scripts/MLAgents.asmdef" />
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/MyScriptAssembly.asmdef" />
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/GameController.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
+        <state relative-caret-position="1065">
           <caret line="71" column="55" selection-start-line="71" selection-start-column="51" selection-end-line="71" selection-end-column="55" />
-          <folding>
-            <marker date="1537817427089" expanded="false" signature="6:197" ph="..." />
-            <marker date="1537817427089" expanded="true" signature="199:277" ph="/// This class handles all the game global events ... " />
-            <marker date="1537817427089" expanded="true" signature="322:6502" ph="{...}" />
-            <marker date="1537817427089" expanded="true" signature="859:1496" ph="{...}" />
-            <marker date="1537817427089" expanded="true" signature="1521:3645" ph="{...}" />
-            <marker date="1537817427089" expanded="true" signature="1589:3639" ph="{...}" />
-            <marker date="1537817427089" expanded="true" signature="1771:3629" ph="{...}" />
-            <marker date="1537817427089" expanded="true" signature="1997:3152" ph="{...}" />
-            <marker date="1537817427089" expanded="true" signature="2039:2959" ph="{...}" />
-            <marker date="1537817427089" expanded="true" signature="3674:6500" ph="{...}" />
-            <marker date="1537817427089" expanded="true" signature="3710:6476" ph="{...}" />
-            <marker date="1537817427089" expanded="true" signature="4168:6466" ph="{...}" />
-            <marker date="1537817427089" expanded="true" signature="4249:6452" ph="{...}" />
-            <marker date="1537817427089" expanded="true" signature="4664:6434" ph="{...}" />
-            <marker date="1537817427089" expanded="true" signature="4803:5060" ph="{...}" />
-            <marker date="1537817427089" expanded="true" signature="5177:5434" ph="{...}" />
-            <marker date="1537817427089" expanded="true" signature="5593:6412" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/Utils/Pool.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="672">
+        <state relative-caret-position="1080">
           <caret line="72" column="9" selection-start-line="72" selection-start-column="9" selection-end-line="72" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/LivingBeingAgent.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="615">
+          <caret line="41" column="37" selection-start-line="41" selection-start-column="37" selection-end-line="41" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/HerbivorousAgent.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="5" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/CarnivorousAgent.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="60" column="13" selection-start-line="60" selection-start-column="13" selection-end-line="60" selection-end-column="13" />
           <folding>
-            <marker date="1537893221012" expanded="false" signature="6:168" ph="..." />
-            <marker date="1537893221012" expanded="true" signature="204:2749" ph="{...}" />
-            <marker date="1537893221012" expanded="true" signature="211:629" ph="/* The Pool class is the most important class in the object pool design pattern. It controls access to the ... */" />
-            <marker date="1537893221012" expanded="true" signature="651:2747" ph="{...}" />
-            <marker date="1537893221012" expanded="true" signature="934:1141" ph="{...}" />
-            <marker date="1537893221012" expanded="true" signature="1151:1381" ph="/// Return the object asked or null if it doesn't exist or the pool is empty ... " />
-            <marker date="1537893221012" expanded="true" signature="1419:2198" ph="{...}" />
-            <marker date="1537893221012" expanded="true" signature="1467:1705" ph="{...}" />
-            <marker date="1537893221012" expanded="true" signature="1722:2188" ph="{...}" />
-            <marker date="1537893221012" expanded="true" signature="2017:2116" ph="{...}" />
-            <marker date="1537893221012" expanded="true" signature="2208:2343" ph="/// Deactivate the GameObject and add it to the pool ... " />
-            <marker date="1537893221012" expanded="true" signature="2392:2558" ph="{...}" />
-            <marker date="1537893221012" expanded="true" signature="2602:2741" ph="{...}" />
+            <marker date="1537903583399" expanded="false" signature="6:159" ph="..." />
+            <marker date="1537903583399" expanded="true" signature="161:251" ph="/// This class handles the behaviour of the carnivorous agent ... " />
+            <marker date="1537903583399" expanded="true" signature="345:513" ph="{...}" />
+            <marker date="1537903583399" expanded="true" signature="562:1111" ph="{...}" />
+            <marker date="1537903583399" expanded="true" signature="1190:2188" ph="{...}" />
+            <marker date="1537903583399" expanded="true" signature="1260:1527" ph="{...}" />
+            <marker date="1537903583399" expanded="true" signature="1430:1517" ph="{...}" />
+            <marker date="1537903583399" expanded="true" signature="1577:1890" ph="{...}" />
+            <marker date="1537903583399" expanded="true" signature="1706:1880" ph="{...}" />
+            <marker date="1537903583399" expanded="true" signature="1763:1866" ph="{...}" />
+            <marker date="1537903583399" expanded="true" signature="2245:3376" ph="{...}" />
+            <marker date="1537903583399" expanded="true" signature="2324:2520" ph="{...}" />
+            <marker date="1537903583399" expanded="true" signature="2593:3370" ph="{...}" />
+            <marker date="1537903583399" expanded="true" signature="2627:3360" ph="{...}" />
+            <marker date="1537903583399" expanded="true" signature="2762:3346" ph="{...}" />
+            <marker date="1537903583399" expanded="true" signature="2977:3061" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Tests/Tests.asmdef">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="1" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
+          <folding>
+            <marker date="1537904714171" expanded="true" signature="54:86" ph="[...]" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Tests/TestPerception.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="17" column="10" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="10" />
+          <folding>
+            <marker date="1537976759929" expanded="false" signature="6:96" ph="..." />
+            <marker date="1537976759929" expanded="true" signature="126:880" ph="{...}" />
+            <marker date="1537976759929" expanded="true" signature="191:550" ph="{...}" />
+            <marker date="1537976759929" expanded="true" signature="253:544" ph="/* var agentGo = new GameObject(&quot;HerbivorousAgent&quot;); ... */" />
+            <marker date="1537976759929" expanded="true" signature="567:682" ph="/* A UnityTest behaves like a coroutine in PlayMode ... */" />
+            <marker date="1537976759929" expanded="true" signature="759:878" ph="{...}" />
+            <marker date="1537976759929" expanded="true" signature="769:845" ph="/* Use the Assert class to test conditions. ... */" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/LivingBeingController.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="45" column="68" selection-start-line="45" selection-start-column="68" selection-end-line="45" selection-end-column="68" />
+        <state relative-caret-position="457">
+          <caret line="76" column="71" lean-forward="true" selection-start-line="76" selection-start-column="71" selection-end-line="76" selection-end-column="71" />
           <folding>
-            <marker date="1537893639392" expanded="false" signature="6:126" ph="..." />
-            <marker date="1537893639392" expanded="true" signature="128:208" ph="/// This class is used to update stats of the agent ... " />
-            <marker date="1537893639392" expanded="true" signature="269:2927" ph="{...}" />
-            <marker date="1537893639392" expanded="true" signature="485:707" ph="{...}" />
-            <marker date="1537893639392" expanded="true" signature="786:1950" ph="{...}" />
-            <marker date="1537893639392" expanded="true" signature="1145:1655" ph="{...}" />
-            <marker date="1537893639392" expanded="true" signature="1980:2091" ph="{...}" />
-            <marker date="1537893639392" expanded="true" signature="2121:2925" ph="{...}" />
-            <marker date="1537893639392" expanded="true" signature="2212:2919" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/LivingBeingAgent.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="41" column="37" selection-start-line="41" selection-start-column="37" selection-end-line="41" selection-end-column="37" />
-          <folding>
-            <marker date="1537892430596" expanded="false" signature="6:126" ph="..." />
-            <marker date="1537892430596" expanded="true" signature="128:206" ph="/// This class handles the behaviour of the agent ... " />
-            <marker date="1537892430596" expanded="true" signature="253:1327" ph="{...}" />
-            <marker date="1537892430596" expanded="true" signature="581:681" ph="{...}" />
-            <marker date="1537892430596" expanded="true" signature="830:1247" ph="{...}" />
-            <marker date="1537892430596" expanded="true" signature="1286:1325" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/HerbivorousAgent.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="23" column="5" lean-forward="true" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
-          <folding>
-            <marker date="1537893723022" expanded="false" signature="6:159" ph="..." />
-            <marker date="1537893723022" expanded="true" signature="161:251" ph="/// This class handles the behaviour of the herbivorous agent ... " />
-            <marker date="1537893723022" expanded="true" signature="300:3582" ph="{...}" />
-            <marker date="1537893723022" expanded="true" signature="347:515" ph="{...}" />
-            <marker date="1537893723022" expanded="true" signature="563:1111" ph="{...}" />
-            <marker date="1537893723022" expanded="true" signature="1190:2189" ph="{...}" />
-            <marker date="1537893723022" expanded="true" signature="1260:1527" ph="{...}" />
-            <marker date="1537893723022" expanded="true" signature="1430:1517" ph="{...}" />
-            <marker date="1537893723022" expanded="true" signature="1577:1890" ph="{...}" />
-            <marker date="1537893723022" expanded="true" signature="1706:1880" ph="{...}" />
-            <marker date="1537893723022" expanded="true" signature="1763:1866" ph="{...}" />
-            <marker date="1537893723022" expanded="true" signature="2245:3580" ph="{...}" />
-            <marker date="1537893723022" expanded="true" signature="2312:2536" ph="{...}" />
-            <marker date="1537893723022" expanded="true" signature="2446:2506" ph="{...}" />
-            <marker date="1537893723022" expanded="true" signature="2610:2721" ph="{...}" />
-            <marker date="1537893723022" expanded="true" signature="2794:3574" ph="{...}" />
-            <marker date="1537893723022" expanded="true" signature="2828:3564" ph="{...}" />
-            <marker date="1537893723022" expanded="true" signature="2964:3550" ph="{...}" />
-            <marker date="1537893723022" expanded="true" signature="3180:3264" ph="{...}" />
+            <marker date="1537988983589" expanded="false" signature="6:126" ph="..." />
+            <marker date="1537988983589" expanded="true" signature="128:208" ph="/// This class is used to update stats of the agent ... " />
+            <marker date="1537988983589" expanded="true" signature="269:3524" ph="{...}" />
+            <marker date="1537988983589" expanded="true" signature="485:707" ph="{...}" />
+            <marker date="1537988983589" expanded="true" signature="786:1950" ph="{...}" />
+            <marker date="1537988983589" expanded="true" signature="1145:1655" ph="{...}" />
+            <marker date="1537988983589" expanded="true" signature="1980:2091" ph="{...}" />
+            <marker date="1537988983589" expanded="true" signature="2123:2688" ph="{...}" />
+            <marker date="1537988983589" expanded="true" signature="2300:2456" ph="{...}" />
+            <marker date="1537988983589" expanded="true" signature="2323:2446" ph="/* the ray collided with something, you can interact ... */" />
+            <marker date="1537988983589" expanded="true" signature="2456:2682" ph="{...}" />
+            <marker date="1537988983589" expanded="true" signature="2718:3522" ph="{...}" />
+            <marker date="1537988983589" expanded="true" signature="2809:3516" ph="{...}" />
           </folding>
         </state>
       </provider>

@@ -28,7 +28,7 @@ public abstract class LivingBeingController : MonoBehaviour {
     protected virtual void DoAction ()
     {
         //print("act" + now + "\n" + livingBeing.ToString());
-        livingBeingAgent.LivingBeing.Life -= 0.07f;
+        livingBeingAgent.LivingBeing.Life -= 0.05f;
         
 
         
@@ -65,6 +65,22 @@ public abstract class LivingBeingController : MonoBehaviour {
     {
         livingBeingAgent.LivingBeing.Satiety = 50;
         livingBeingAgent.LivingBeing.Life = 50;
+    }
+
+    private void FixedUpdate()
+    {
+        // Handling gravity manually ...
+        RaycastHit hit;
+        // Debug.DrawRay(transform.position,Vector3.down * 10,Color.green);
+        if(Physics.Raycast(transform.position,Vector3.down, out hit, 10))
+        {
+            //the ray collided with something, you can interact
+            // with the hit object now by using hit.collider.gameObject
+        }
+        else{
+            //nothing was below your gameObject within 10m.
+            transform.position = Vector3.MoveTowards(transform.position, Vector3.down * 100, Time.deltaTime * 2);
+        }
     }
 
     private void OnDisable()
