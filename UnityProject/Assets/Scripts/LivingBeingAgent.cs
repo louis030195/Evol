@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MLAgents;
 using DesignPattern.Objectpool;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// This class handles the behaviour of the agent
@@ -15,7 +16,7 @@ public abstract class LivingBeingAgent : Agent
     public LivingBeing LivingBeing { get; protected set; }
     public bool Evolve { get; set; }
     public Pool Pool { get; set; }
-    public System.Action action;
+    public System.Action Action;
 
     public short AmountActions { get; protected set; } = 0;
 

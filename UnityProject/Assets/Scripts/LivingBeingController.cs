@@ -3,13 +3,14 @@ using MLAgents;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// This class is used to update stats of the agent
 /// </summary>
 public abstract class LivingBeingController : MonoBehaviour {
 
-    public bool evolve = true;
+    public bool Evolve = true;
     public Pool Pool { get; set; }
 
     protected LivingBeingAgent livingBeingAgent;
@@ -18,8 +19,8 @@ public abstract class LivingBeingController : MonoBehaviour {
     // Use this for initialization
     protected virtual void Start () {
         livingBeingAgent = GetComponent<LivingBeingAgent>();
-        livingBeingAgent.Evolve = evolve;
-        livingBeingAgent.action = DoAction;
+        livingBeingAgent.Evolve = Evolve;
+        livingBeingAgent.Action = DoAction;
         livingBeingAgent.Pool = Pool;
         now = Time.fixedTime;
     }
@@ -27,7 +28,6 @@ public abstract class LivingBeingController : MonoBehaviour {
     // Update is called once per frame
     protected virtual void DoAction ()
     {
-        //print("act" + now + "\n" + livingBeing.ToString());
         livingBeingAgent.LivingBeing.Life -= 0.05f;
         
 
@@ -44,11 +44,11 @@ public abstract class LivingBeingController : MonoBehaviour {
 
             
             // Punish it was the last agent of the specie (genocide)
-            if(transform.parent.GetComponentsInChildren(livingBeingAgent.GetType()).Length == 1)
-                livingBeingAgent.AddReward(-50f);
+            //if(transform.parent.GetComponentsInChildren(livingBeingAgent.GetType()).Length == 1)
+            //    livingBeingAgent.AddReward(-50f);
             
             // Remove the agent from the scene
-            if (evolve)
+            if (Evolve)
                 Pool.ReleaseObject(gameObject);
             
             livingBeingAgent.Done();
@@ -69,18 +69,20 @@ public abstract class LivingBeingController : MonoBehaviour {
 
     private void FixedUpdate()
     {
+    /*
         // Handling gravity manually ...
         RaycastHit hit;
         // Debug.DrawRay(transform.position,Vector3.down * 10,Color.green);
-        if(Physics.Raycast(transform.position,Vector3.down, out hit, 10))
+        if(Physics.Raycast(transform.position, new Vector3(transform.position.x, -0.1f, transform.position.z), out hit, 0.1f))
         {
             //the ray collided with something, you can interact
             // with the hit object now by using hit.collider.gameObject
         }
         else{
             //nothing was below your gameObject within 10m.
-            transform.position = Vector3.MoveTowards(transform.position, Vector3.down * 100, Time.deltaTime * 2);
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, -0.1f, transform.position.z), Time.deltaTime * 2);
         }
+        */
     }
 
     private void OnDisable()

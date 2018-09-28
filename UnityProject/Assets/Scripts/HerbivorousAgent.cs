@@ -22,7 +22,7 @@ public class HerbivorousAgent : LivingBeingAgent
 
     public override void CollectObservations()
     {
-        var rayDistance = 200f;
+        var rayDistance = 20f;
         float[] rayAngles = {0f, 45f, 90f, 135f, 180f, 110f, 70f };
         var detectableObjects = new[] { "herbivorous", "food", "carnivorous" };
         AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f));
@@ -35,7 +35,7 @@ public class HerbivorousAgent : LivingBeingAgent
 
     public override void AgentAction(float[] vectorAction, string textAction)
     {
-        action();
+        Action();
 
         if (rewardMode == RewardMode.Sparse)
         {
