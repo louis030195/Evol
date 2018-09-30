@@ -26,6 +26,7 @@ public class GameController : MonoBehaviour {
     [Header("Misc")]
     [Space(10)]
     public bool ResetWorkers = true;
+    public bool Curriculum;
 
 
     private List<GameObject> workerObjects;
@@ -108,7 +109,7 @@ public class GameController : MonoBehaviour {
         // Its not very important ...
         GroundScale = (int)evolAcademy.resetParameters["ground_scale"];
         WorkerCarniHerbi.AmountOfAgentsToAdd = (int)evolAcademy.resetParameters["amount_of_agents"];
-        //WorkerCarniHerbi.AmountOfWorkers = (int)evolAcademy.resetParameters["amount_of_workers"];
+        WorkerCarniHerbi.AmountOfWorkers = (int)evolAcademy.resetParameters["amount_of_workers"];
     }
 
     /// <summary>
@@ -117,7 +118,7 @@ public class GameController : MonoBehaviour {
     /// </summary>
     private void Reset()
     {
-        // Curriculum can't be in the reverse order atm (increasing amount of workers) anyway no point in doing that, yet?
+        // Curriculum can't be in the reverse order atm (can't increase amount of workers) anyway no point in doing that, yet?
         while (workerObjects.Count > WorkerCarniHerbi.AmountOfWorkers)
         {
             var tmp = workerObjects.Last();
@@ -129,7 +130,6 @@ public class GameController : MonoBehaviour {
         foreach (GameObject workerObject in workerObjects)
         {
             // If the ground scale changed it means new curriculum lesson
-            /*
             if ((int)workerObject.transform.Find("Ground").localScale.x != GroundScale)
             {
                 // Reposition grounds to adapt to the new ground scale
@@ -141,14 +141,23 @@ public class GameController : MonoBehaviour {
                 workerObject.transform.Find("Ground").localScale = new Vector3(GroundScale,
                     1,
                     GroundScale);
-                
+
+                // Adding herbs
+                for (int i = 0; i < WorkerCarniHerbi.AmountOfAgentsToAdd - workerObject.GetComponentsInChildren(typeof(Herb)).Length; i++)
+                {
+                    GameObject herbChild = herbPool.GetObject();
+                    herbChild.transform.parent = workerObject.transform;
+                    herbChild.SetActive(true);
+                    herbChild.GetComponent<Herb>().ResetPosition(workerObject.transform);
+                }
+
                 foreach(Herb h in workerObject.GetComponentsInChildren<Herb>())
                     h.ResetPosition(workerObject.transform);
-            }*/
+            }
             
 
 
-
+            // The last condition is only useful in evolution mode
             // TODO : check if any child of LivingBeingAgent is null instead ?
             if (workerObject.GetComponentInChildren<CarnivorousAgent>() == null 
                 || workerObject.GetComponentInChildren<HerbivorousAgent>() == null
@@ -190,8 +199,8 @@ public class GameController : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        // Comment to turn off curriculum
-        // ConfigureAgent();
+        if(Curriculum)
+            ConfigureAgent();
         
         if (frames % 10 == 0)
         {
@@ -206,5 +215,14 @@ public class GameController : MonoBehaviour {
             }
         }
         frames++;
+    }
+    
+    private void OnApplicationQuit()
+    {
+        // Happens that after curriculum the scriptableobject worker isn't resetted
+        // TODO: cleaner dynamic parameters reset
+        WorkerCarniHerbi.AmountOfAgentsToAdd = 5;
+        WorkerCarniHerbi.AmountOfWorkers = 10;
+        Debug.Log("Application ending after " + Time.time + " seconds");
     }
 }

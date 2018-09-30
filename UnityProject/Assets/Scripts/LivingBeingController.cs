@@ -67,7 +67,7 @@ public abstract class LivingBeingController : MonoBehaviour {
     }
 
     private void FixedUpdate()
-    {/*
+    {
     
         // Handling gravity manually ...
         RaycastHit hit;
@@ -81,7 +81,7 @@ public abstract class LivingBeingController : MonoBehaviour {
             //nothing was below your gameObject within 10m.
             transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, -0.1f, transform.position.z), Time.deltaTime * 2);
         }
-        */
+        
     }
 
     private void OnDisable()
