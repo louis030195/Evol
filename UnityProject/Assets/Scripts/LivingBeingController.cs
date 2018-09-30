@@ -48,8 +48,7 @@ public abstract class LivingBeingController : MonoBehaviour {
             //    livingBeingAgent.AddReward(-50f);
             
             // Remove the agent from the scene
-            if (Evolve)
-                Pool.ReleaseObject(gameObject);
+            Pool.ReleaseObject(gameObject);
             
             livingBeingAgent.Done();
         }
@@ -68,8 +67,8 @@ public abstract class LivingBeingController : MonoBehaviour {
     }
 
     private void FixedUpdate()
-    {
-    /*
+    {/*
+    
         // Handling gravity manually ...
         RaycastHit hit;
         // Debug.DrawRay(transform.position,Vector3.down * 10,Color.green);

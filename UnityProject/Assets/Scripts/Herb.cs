@@ -26,4 +26,11 @@ public class Herb : MonoBehaviour {
         }
     }
     
+    public void ResetPosition(Transform worker)
+    {
+        groundSize = worker.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 2*0.8f;
+        offsetX = transform.parent.position.x;
+        transform.position = new Vector3(Random.Range(-groundSize, groundSize) + offsetX, 0.5f, Random.Range(-groundSize, groundSize));
+        transform.rotation = new Quaternion(0, Random.Range(0, 360), 0, 0);
+    }
 }

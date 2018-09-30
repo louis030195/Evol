@@ -22,9 +22,11 @@ public class Perception : MonoBehaviour
     /// <param name="detectableObjects">List of tags which correspond to object types agent can see</param>
     /// <param name="startOffset">Starting heigh offset of ray from center of agent.</param>
     /// <param name="endOffset">Ending height offset of ray from center of agent.</param>
+    /// <param name="evolution">Evolution mode or not</param>
     public List<float> Perceive(float rayDistance,
         float[] rayAngles, string[] detectableObjects,
-        float startOffset, float endOffset)
+        float startOffset, float endOffset,
+        bool evolution)
     {
         perceptionBuffer.Clear();
         // For each ray sublist stores categorial information on detected object
@@ -49,14 +51,23 @@ public class Perception : MonoBehaviour
                 {
                     if (hit.collider.gameObject.CompareTag(detectableObjects[i]))
                     {
-                        if (!hit.collider.gameObject.CompareTag(gameObject.tag) 
-                            || hit.collider.gameObject.GetComponent<LivingBeingAgent>() == null 
-                            || hit.collider.gameObject.GetComponent<LivingBeingAgent>().LivingBeing.Life <= 90)
-                            subList[i] = 1;
+                        if (evolution)
+                        {
+                            if (!hit.collider.gameObject.CompareTag(gameObject.tag)
+                                || hit.collider.gameObject.GetComponent<LivingBeingAgent>() == null
+                                || hit.collider.gameObject.GetComponent<LivingBeingAgent>().LivingBeing.Life <= 90)
+                                subList[i] = 1;
+                            else
+                                subList[i] = 2;
+                            subList[detectableObjects.Length + 1] = hit.distance / rayDistance;
+                            break;
+                        }
                         else
-                            subList[i] = 2;
-                        subList[detectableObjects.Length + 1] = hit.distance / rayDistance;
-                        break;
+                        {
+                            subList[i] = 1;
+                            subList[detectableObjects.Length + 1] = hit.distance / rayDistance;
+                            break;
+                        }
 
                     }
                 }

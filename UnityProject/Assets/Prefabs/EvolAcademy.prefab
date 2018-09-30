@@ -265,9 +265,11 @@ MonoBehaviour:
   resetParameters:
     resetParameters:
     - key: ground_scale
-      value: 50
+      value: 10
     - key: amount_of_agents
-      value: 50
+      value: 5
+    - key: amount_of_workers
+      value: 10
 --- !u!114 &114848087305653304
 MonoBehaviour:
   m_ObjectHideFlags: 1
