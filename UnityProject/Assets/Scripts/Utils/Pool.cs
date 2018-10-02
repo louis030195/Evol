@@ -5,8 +5,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using Evol.Agents;
 
-namespace DesignPattern.Objectpool
+namespace Evol.Utils
 {
     // The Pool class is the most important class in the object pool design pattern. It controls access to the
     // pooled objects, maintaining a list of available objects and a collection of objects that have already been

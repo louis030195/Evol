@@ -3,23 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EvolAcademy : Academy
+namespace Evol
 {
-    
-    public override void InitializeAcademy()
-    {
-    }
-
-    public override void AcademyReset()
+    public class EvolAcademy : Academy
     {
 
+        public override void InitializeAcademy()
+        {
+        }
+
+        public override void AcademyReset()
+        {
+
+
+        }
+
+        public override void AcademyStep()
+        {
+
+
+        }
 
     }
-
-    public override void AcademyStep()
-    {
-
-
-    }
-
 }

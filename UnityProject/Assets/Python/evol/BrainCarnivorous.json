@@ -1,11 +1,10 @@
 {
     "measure" : "progress",
-    "thresholds" : [0.1, 0.2, 0.3, 0.4],
+    "thresholds" : [0.03, 0.06, 0.09, 0.2],
     "min_lesson_length" : 100,
     "signal_smoothing" : true, 
     "parameters" : 
     {
-        "ground_scale" : [10, 20, 30, 40, 50],
-        "amount_of_agents":[10, 20, 30, 40, 50]
+        "speed" : [100, 80, 70, 60, 50]
     }
 }

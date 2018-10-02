@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Carnivorous : LivingBeing
+namespace Evol
 {
-
-    public Carnivorous(int life, int age, int lifeExpectancy, int satiety, int tiredness, int speed) 
-        : base(life, age, lifeExpectancy, satiety, tiredness, speed)
+    public class Carnivorous : LivingBeing
     {
 
+        public Carnivorous(int life, int age, int lifeExpectancy, int satiety, int tiredness, int speed)
+            : base(life, age, lifeExpectancy, satiety, tiredness, speed)
+        {
+
+        }
     }
 }

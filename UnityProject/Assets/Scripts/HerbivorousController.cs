@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HerbivorousController : LivingBeingController
+namespace Evol
 {
+    public class HerbivorousController : LivingBeingController
+    {
 
+    }
 }

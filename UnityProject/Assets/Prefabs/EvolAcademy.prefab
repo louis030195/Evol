@@ -187,7 +187,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: 14324
+  instanceID: 12482
 --- !u!114 &114530053126441440
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -270,6 +270,8 @@ MonoBehaviour:
       value: 5
     - key: amount_of_workers
       value: 10
+    - key: speed
+      value: 100
 --- !u!114 &114848087305653304
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -293,7 +295,7 @@ MonoBehaviour:
   - {fileID: 1777388096454044, guid: 85937eb0de212944c9f4fdb9a66cde4f, type: 2}
   - {fileID: 1563969880686890, guid: 4e841b8558850db46908a10a8aa09f60, type: 2}
   ResetWorkers: 1
-  Curriculum: 0
+  Curriculum: 1
 --- !u!114 &114859714832689094
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -320,4 +322,4 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: 14344
+  instanceID: 12500
