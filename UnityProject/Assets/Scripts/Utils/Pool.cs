@@ -16,7 +16,7 @@ namespace Evol.Utils
     public class Pool
     {
         private List<GameObject> available;
-        private List<GameObject> inUse;
+        public List<GameObject> inUse { get; set; }
         private GameObject prefab;
         private GameObject parent;
 
@@ -52,10 +52,9 @@ namespace Evol.Utils
                 GameObject go = UnityEngine.Object.Instantiate(prefab);
                 if (go.GetComponent<LivingBeingController>() != null)
                     go.GetComponent<LivingBeingController>().Pool = this;
-                if (go.GetComponent<LivingBeingAgent>() != null)
-                {
+                if (go.GetComponent<Agent>() != null)
                     go.GetComponent<Agent>().GiveBrain(Brain);
-                }
+                
                 inUse.Add(go);
                 return go;
             }

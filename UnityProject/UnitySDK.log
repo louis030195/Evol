@@ -1,14 +1,14 @@
-10/1/2018 11:06:03 AM
+10/7/2018 3:31:39 PM
  
 Exception
 NullReferenceException: Object reference not set to an instance of an object
-CarnivorousAgent.AgentAction (System.Single[] vectorAction, System.String textAction) (at Assets/Scripts/CarnivorousAgent.cs:39)
+Evol.Agents.CarnivorousAgent.AgentAction (System.Single[] vectorAction, System.String textAction) (at Assets/Scripts/Agents/CarnivorousAgent.cs:42)
 MLAgents.Agent.AgentStep () (at Assets/ML-Agents/Scripts/Agent.cs:965)
 MLAgents.Academy.EnvironmentStep () (at Assets/ML-Agents/Scripts/Academy.cs:588)
 MLAgents.Academy.FixedUpdate () (at Assets/ML-Agents/Scripts/Academy.cs:610)
 
 Log
-Application ending after 11.66667 seconds
+Application ending after 1471.667 seconds
 UnityEngine.Debug:Log(Object)
-GameController:OnApplicationQuit() (at Assets/Scripts/GameController.cs:222)
+Evol.TrainController:OnApplicationQuit() (at Assets/Scripts/TrainController.cs:254)
 

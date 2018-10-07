@@ -8,13 +8,14 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Evol.Agents;
+using Prometheus;
 
 namespace Evol
 {
     /// <summary>
-    /// This class handles all the game global events
+    /// This class handles all the training of the agents
     /// </summary>
-    public class GameController : MonoBehaviour
+    public class TrainController : MonoBehaviour
     {
 
         [Header("Workers")] [Space(10)] public Worker WorkerCarniHerbi;
@@ -32,11 +33,22 @@ namespace Evol
         private Pool herbivorousPool;
         private Pool carnivorousPool;
         private Pool herbPool;
+        private Pool godPool;
         private Academy evolAcademy;
+        
+        // Monitoring
+        private MetricServer metricServer;
+        private Counter counter;
 
         // Use this for initialization
         private void Start()
         {
+            
+            metricServer = new MetricServer(port: 1234);
+            metricServer.Start();
+            
+            counter = Metrics.CreateCounter("myCounter", "some help about this");
+            
             evolAcademy = FindObjectOfType<EvolAcademy>();
 
 
@@ -46,12 +58,16 @@ namespace Evol
             herbivorousPool = new Pool(ItemsToSpawn.FirstOrDefault(go => go.CompareTag("herbivorous")));
             carnivorousPool = new Pool(ItemsToSpawn.FirstOrDefault(go => go.CompareTag("carnivorous")));
             herbPool = new Pool(ItemsToSpawn.FirstOrDefault(go => go.CompareTag("food")));
+            //godPool = new Pool(ItemsToSpawn.FirstOrDefault(go => go.CompareTag("god")));
+           
 
             // Find the brains in the list
             herbivorousPool.Brain =
                 Brains.FirstOrDefault(brain => "Herbivorous" == Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]);
             carnivorousPool.Brain =
                 Brains.FirstOrDefault(brain => "Carnivorous" == Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]);
+            //godPool.Brain =
+            //    Brains.FirstOrDefault(brain => "God" == Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]);
 
 
             SpawnWorkers();
@@ -81,7 +97,13 @@ namespace Evol
                         herbivorousChild.transform.parent = workerObject.transform;
                         herbivorousChild.SetActive(true);
                         herbivorousChild.GetComponent<LivingBeingAgent>().ResetPosition(workerObject.transform);
-
+                        /*
+                        GameObject godChild = godPool.GetObject();
+                        godChild.transform.parent = workerObject.transform;
+                        godChild.GetComponent<GodAgent>().CarnivorousPool = carnivorousPool;
+                        godChild.GetComponent<GodAgent>().HerbivorousPool = herbivorousPool;
+                        godChild.SetActive(true);
+*/
                         GameObject herbChild = herbPool.GetObject();
                         herbChild.transform.parent = workerObject.transform;
                         herbChild.SetActive(true);
@@ -102,13 +124,9 @@ namespace Evol
 
         /// <summary>
         /// Configures the agent to his curriculum, adjusting ground scale and amount of agents on academy reset
-        /// TODO : make what is needed to make curriculum training work with evolution off
         /// </summary>
         private void ConfigureAgent()
         {
-            // TODO : WARNING:mlagents.trainers:Two or more curriculums will attempt to change the same reset parameter.
-            // The result will be non-deterministic.
-            // Its not very important ...
             GroundScale = (int) evolAcademy.resetParameters["ground_scale"];
             WorkerCarniHerbi.AmountOfAgentsToAdd = (int) evolAcademy.resetParameters["amount_of_agents"];
             WorkerCarniHerbi.AmountOfWorkers = (int) evolAcademy.resetParameters["amount_of_workers"];
@@ -164,12 +182,12 @@ namespace Evol
 
 
                 // The last condition is only useful in evolution mode
-                // TODO : check if any child of LivingBeingAgent is null instead ?
-                if (workerObject.GetComponentInChildren<CarnivorousAgent>() == null
+                if (workerObject.GetComponentsInChildren<CarnivorousAgent>() == null
                     || workerObject.GetComponentInChildren<HerbivorousAgent>() == null
                     || workerObject.GetComponentsInChildren<LivingBeingAgent>().Length >
                     WorkerCarniHerbi.AmountOfAgentsToAdd * 10)
                 {
+                    counter.Inc(1.1);
                     ReleaseAgentsInWorker(workerObject);
                     for (int i = 0; i < WorkerCarniHerbi.AmountOfAgentsToAdd; i++)
                     {
@@ -212,23 +230,19 @@ namespace Evol
             if (Curriculum)
                 ConfigureAgent();
 
-            if (frames % 10 == 0)
+            System.IO.File.WriteAllText(@"evol.txt",
+                $"\nTime : {Time.fixedTime} seconds \nHerbivorous {herbivorousPool.ToString()}");
+            System.IO.File.AppendAllText(@"evol.txt",
+                $"\nTime : {Time.fixedTime} seconds \nCarnivorous {carnivorousPool.ToString()}");
+            System.IO.File.AppendAllText(@"evol.txt",
+                $"\nTime : {Time.fixedTime} seconds \nHerb {herbPool.ToString()}");
+
+            if (ResetWorkers)
             {
-                System.IO.File.WriteAllText(@"evol.txt",
-                    $"\nTime : {Time.fixedTime} seconds \nHerbivorous {herbivorousPool.ToString()}");
-                System.IO.File.AppendAllText(@"evol.txt",
-                    $"\nTime : {Time.fixedTime} seconds \nCarnivorous {carnivorousPool.ToString()}");
-                System.IO.File.AppendAllText(@"evol.txt",
-                    $"\nTime : {Time.fixedTime} seconds \nHerb {herbPool.ToString()}");
-                frames = 0;
-
-                if (ResetWorkers)
-                {
-                    Reset();
-                }
+                Reset();
             }
+            
 
-            frames++;
         }
 
         private void OnApplicationQuit()

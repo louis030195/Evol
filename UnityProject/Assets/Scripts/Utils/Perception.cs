@@ -41,7 +41,7 @@ namespace Evol.Utils
                 if (Application.isEditor)
                 {
                     //Debug.DrawRay(transform.position + new Vector3(0f, startOffset, 0f),
-                    //    endPosition, Color.black, 0.01f, true);
+                     //   endPosition, Color.black, 0.01f, true);
                 }
 
                 float[] subList = new float[detectableObjects.Length + 2];
@@ -64,13 +64,10 @@ namespace Evol.Utils
                                 subList[detectableObjects.Length + 1] = hit.distance / rayDistance;
                                 break;
                             }
-                            else
-                            {
-                                subList[i] = 1;
-                                subList[detectableObjects.Length + 1] = hit.distance / rayDistance;
-                                break;
-                            }
 
+                            subList[i] = 1;
+                            subList[detectableObjects.Length + 1] = hit.distance / rayDistance;
+                            break;
                         }
                     }
                 }

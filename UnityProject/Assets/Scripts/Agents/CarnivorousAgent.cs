@@ -29,7 +29,7 @@ namespace Evol.Agents
             var detectableObjects = new[] {"carnivorous", "herbivorous", "food"};
             var detectableObjects2 = new[] {"ground"};
             AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f, Evolve));
-            AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects2, 0f, -10f, Evolve));
+            //AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects2, 0f, -10f, Evolve));
             Vector3 localVelocity = transform.InverseTransformDirection(rigidBody.velocity);
             AddVectorObs(localVelocity.x);
             AddVectorObs(localVelocity.z);
@@ -40,31 +40,8 @@ namespace Evol.Agents
         public override void AgentAction(float[] vectorAction, string textAction)
         {
             Action();
-
-            if (rewardMode == RewardMode.Sparse)
-            {
-                AddReward(0.01f); // Reward for staying alive
-                // Reset every 1000 actions or when the agent fell
-                if (AmountActions >= 1000)
-                {
-                    AmountActions = 0;
-                    Done();
-                }
-            }
-
-            else if (rewardMode == RewardMode.Dense)
-            {
-                AddReward(-0.01f);
-                // Reset every 1000 actions or when the agent fell
-                if (!Evolve)
-                {
-                    if (AmountActions >= 1000)
-                    {
-                        AmountActions = 0;
-                        Done();
-                    }
-                }
-            }
+            AddReward(-0.01f);
+            
 
             // Move
             rigidBody.AddForce(LivingBeing.Speed * transform.forward * Mathf.Clamp(vectorAction[0], -1f, 1f),

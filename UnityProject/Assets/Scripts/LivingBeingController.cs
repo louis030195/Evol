@@ -47,8 +47,7 @@ namespace Evol
                 // Punish the death
                 livingBeingAgent.AddReward(-10f);
 
-
-                // Punish it was the last agent of the specie (genocide)
+                // Punish if it was the last agent of the specie (genocide)
                 //if(transform.parent.GetComponentsInChildren(livingBeingAgent.GetType()).Length == 1)
                 //    livingBeingAgent.AddReward(-50f);
 
@@ -64,6 +63,11 @@ namespace Evol
             livingBeingAgent.LivingBeing.Satiety = livingBeingAgent.LivingBeing.Satiety > 100
                 ? 100
                 : livingBeingAgent.LivingBeing.Satiety;
+            
+            
+            livingBeingAgent.LivingBeing.Speed = livingBeingAgent.LivingBeing.Satiety > 100
+                ? 100
+                : livingBeingAgent.LivingBeing.Speed < 0 ? 0 : livingBeingAgent.LivingBeing.Speed;
         }
 
         public void ResetStats()
