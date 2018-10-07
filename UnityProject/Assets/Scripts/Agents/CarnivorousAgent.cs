@@ -57,9 +57,8 @@ namespace Evol.Agents
             if (collision.collider.GetComponent<HerbivorousAgent>() != null)
             {
                 LivingBeing.Satiety += 100;
-                LivingBeing.Life += 30;
-                if (rewardMode == RewardMode.Dense)
-                    AddReward(20f);
+                LivingBeing.Life += 50;
+                AddReward(20f);
                 Done();
             }
 
@@ -73,10 +72,7 @@ namespace Evol.Agents
                         LivingBeing.Life -= 50;
                         collision.collider.GetComponent<CarnivorousAgent>().LivingBeing.Life -= 50;
 
-                        if (rewardMode == RewardMode.Dense)
-                        {
-                            AddReward(10f);
-                        }
+                        AddReward(10f);
 
                         GameObject go = Pool.GetObject();
                         go.transform.parent = transform.parent;

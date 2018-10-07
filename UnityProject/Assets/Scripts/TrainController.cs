@@ -47,7 +47,7 @@ namespace Evol
             metricServer = new MetricServer(port: 1234);
             metricServer.Start();
             
-            counter = Metrics.CreateCounter("myCounter", "some help about this");
+            counter = Metrics.CreateCounter("workerReset", "How many times the worker has been reset");
             
             evolAcademy = FindObjectOfType<EvolAcademy>();
 
@@ -90,8 +90,8 @@ namespace Evol
                         carnivorousChild.transform.parent = workerObject.transform;
                         carnivorousChild.SetActive(true);
                         carnivorousChild.GetComponent<LivingBeingAgent>().ResetPosition(workerObject.transform);
-                        carnivorousChild.GetComponent<LivingBeingAgent>().LivingBeing.Speed =
-                            evolAcademy.resetParameters["speed"];
+                        //carnivorousChild.GetComponent<LivingBeingAgent>().LivingBeing.Speed =
+                        //    evolAcademy.resetParameters["speed"];
 
                         GameObject herbivorousChild = herbivorousPool.GetObject();
                         herbivorousChild.transform.parent = workerObject.transform;
@@ -139,16 +139,18 @@ namespace Evol
         private void Reset()
         {
             // Curriculum can't be in the reverse order atm (can't increase amount of workers) anyway no point in doing that, yet?
+            /*
             while (workerObjects.Count > WorkerCarniHerbi.AmountOfWorkers)
             {
                 var tmp = workerObjects.Last();
                 ReleaseAgentsInWorker(tmp);
                 workerObjects.Remove(tmp);
                 Destroy(tmp.gameObject); // TODO : we are destroying non-agents items, check if not breaking references
-            }
+            }*/
 
             foreach (GameObject workerObject in workerObjects)
             {
+                /*
                 // If the ground scale changed it means new curriculum lesson
                 if ((int) workerObject.transform.Find("Ground").localScale.x != GroundScale)
                 {
@@ -177,7 +179,7 @@ namespace Evol
 
                     foreach (Herb h in workerObject.GetComponentsInChildren<Herb>())
                         h.ResetPosition(workerObject.transform);
-                }
+                }*/
 
 
 
@@ -227,8 +229,8 @@ namespace Evol
 
         private void FixedUpdate()
         {
-            if (Curriculum)
-                ConfigureAgent();
+            //if (Curriculum)
+            //    ConfigureAgent();
 
             System.IO.File.WriteAllText(@"evol.txt",
                 $"\nTime : {Time.fixedTime} seconds \nHerbivorous {herbivorousPool.ToString()}");
