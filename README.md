@@ -36,7 +36,7 @@ git clone https://github.com/louis030195/Evol.git
 
 - Open the project with Unity
 
-- Execute [TensorflowSharp](https://s3.amazonaws.com/unity-ml-agents/0.4/TFSharpPlugin.unitypackage)
+- Execute [TensorflowSharp](https://s3.amazonaws.com/unity-ml-agents/0.5/TFSharpPlugin.unitypackage)
 plugin  and add it to the project
 
 ```
@@ -49,6 +49,9 @@ Make sure to copy paste the config from Evol/UnityProject/Python/trainer_config.
 in ml-agents repository
 
 Same for curriculum config (Evol/UnityProject/Python/evol/)
+
+Run `mlagents-learn config/trainer_config.yaml --train` then press play in unity to train in editor mode
+
 
 ### Monitoring performances with Grafana & Prometheus
 
