@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Evol.Agents;
+using Prometheus;
 
 namespace Evol
 {
@@ -19,6 +20,7 @@ namespace Evol
 
         protected LivingBeingAgent livingBeingAgent;
         protected float now;
+        protected Gauge actionsGauge; 
 
         // Use this for initialization
         protected virtual void Start()
@@ -28,6 +30,7 @@ namespace Evol
             livingBeingAgent.Action = DoAction;
             livingBeingAgent.Pool = Pool;
             now = Time.fixedTime;
+            actionsGauge = Metrics.CreateGauge("actionsGauge", "Amount of actions done until death");
         }
 
         // Update is called once per frame
@@ -41,7 +44,7 @@ namespace Evol
                 livingBeingAgent.LivingBeing.Life = -1;
 
 
-            // To avoid dying instantly before having his stats resetted
+            // To avoid dying instantly before having his stats reset
             if (livingBeingAgent.LivingBeing.Life < 0)
             {
                 // Punish the death
@@ -96,21 +99,9 @@ namespace Evol
 
         private void OnDisable()
         {
-
+            actionsGauge.Set(livingBeingAgent.AmountActions);
+            
             ResetStats();
-            if (Time.fixedTime > 100 && Time.fixedTime % 50 < 10)
-            {
-                if (!System.IO.File.Exists(@"disable.txt"))
-                    System.IO.File.Create(@"disable.txt");
-                if (Time.fixedTime % 400 < 10)
-                    System.IO.File.WriteAllText(@"disable.txt", "");
-                System.IO.File.AppendAllText(@"disable.txt", $"\n-------------" +
-                                                             $"\n Disabled {name} at {Time.fixedTime} seconds" +
-                                                             $"\nLength of life : {livingBeingAgent.AmountActions} actions" +
-                                                             $"\nPosition|Rotation : {transform.position}|{transform.rotation}" +
-                                                             $"\nLivingBeing \n{livingBeingAgent.LivingBeing.ToString()}" +
-                                                             $"RigidBody velocity {GetComponent<Rigidbody>().velocity}");
-            }
         }
     }
 }

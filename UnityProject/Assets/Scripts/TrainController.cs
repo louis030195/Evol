@@ -38,7 +38,10 @@ namespace Evol
         
         // Monitoring
         private MetricServer metricServer;
-        private Counter counter;
+        private Counter resetCounter;
+        private Gauge herbivorousInUseGauge;
+        private Gauge carnivorousInUseGauge;
+        
 
         // Use this for initialization
         private void Start()
@@ -47,7 +50,9 @@ namespace Evol
             metricServer = new MetricServer(port: 1234);
             metricServer.Start();
             
-            counter = Metrics.CreateCounter("workerReset", "How many times the worker has been reset");
+            resetCounter = Metrics.CreateCounter("resetCounter", "How many times the worker has been reset");
+            herbivorousInUseGauge = Metrics.CreateGauge("herbivorousInUseGauge", "Current total amount of herbivorous agents");
+            carnivorousInUseGauge = Metrics.CreateGauge("carnivorousInUseGauge", "Current total amount of carnivorous agents");
             
             evolAcademy = FindObjectOfType<EvolAcademy>();
 
@@ -184,12 +189,12 @@ namespace Evol
 
 
                 // The last condition is only useful in evolution mode
-                if (workerObject.GetComponentsInChildren<CarnivorousAgent>() == null
-                    || workerObject.GetComponentInChildren<HerbivorousAgent>() == null
+                if (workerObject.GetComponentsInChildren<CarnivorousAgent>().Length == 0
+                    || workerObject.GetComponentsInChildren<HerbivorousAgent>().Length == 0
                     || workerObject.GetComponentsInChildren<LivingBeingAgent>().Length >
                     WorkerCarniHerbi.AmountOfAgentsToAdd * 10)
                 {
-                    counter.Inc(1.1);
+                    resetCounter.Inc(1.1);
                     ReleaseAgentsInWorker(workerObject);
                     for (int i = 0; i < WorkerCarniHerbi.AmountOfAgentsToAdd; i++)
                     {
@@ -232,12 +237,8 @@ namespace Evol
             //if (Curriculum)
             //    ConfigureAgent();
 
-            System.IO.File.WriteAllText(@"evol.txt",
-                $"\nTime : {Time.fixedTime} seconds \nHerbivorous {herbivorousPool.ToString()}");
-            System.IO.File.AppendAllText(@"evol.txt",
-                $"\nTime : {Time.fixedTime} seconds \nCarnivorous {carnivorousPool.ToString()}");
-            System.IO.File.AppendAllText(@"evol.txt",
-                $"\nTime : {Time.fixedTime} seconds \nHerb {herbPool.ToString()}");
+            herbivorousInUseGauge.Set(herbivorousPool.inUse.Count);
+            carnivorousInUseGauge.Set(carnivorousPool.inUse.Count);
 
             if (ResetWorkers)
             {

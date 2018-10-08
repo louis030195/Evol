@@ -22,6 +22,11 @@ The sensor is returning either :
 * Force forward
 * Rotation on y axis
 
+# Rewards
+- Reward on eat
+- Punish on death
+- Punish every actions (-0.01 to accelerate)
+
 
 # Usage
 
@@ -46,6 +51,8 @@ in ml-agents repository
 Same for curriculum config (Evol/UnityProject/Python/evol/)
 
 ### Monitoring performances with Grafana & Prometheus
+
+![Grafana](Screenshots/grafana_agents.png)
 
 - Download and install [Grafana](https://grafana.com/grafana/download)
 - Download and install [Prometheus](https://prometheus.io/download/)

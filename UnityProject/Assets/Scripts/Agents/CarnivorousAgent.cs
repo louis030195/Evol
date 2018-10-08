@@ -57,7 +57,7 @@ namespace Evol.Agents
             if (collision.collider.GetComponent<HerbivorousAgent>() != null)
             {
                 LivingBeing.Satiety += 100;
-                LivingBeing.Life += 50;
+                LivingBeing.Life += 100;
                 AddReward(20f);
                 Done();
             }
