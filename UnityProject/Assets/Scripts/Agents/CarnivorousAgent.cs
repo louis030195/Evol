@@ -16,7 +16,7 @@ namespace Evol.Agents
     {
         public override void InitializeAgent()
         {
-            LivingBeing = new Carnivorous(50, 0, 0, 50, 0, 50);
+            LivingBeing = new Carnivorous(50, 0, 0, 50, 0, 30);
             perception = GetComponent<Perception>();
             rigidBody = GetComponent<Rigidbody>();
         }
