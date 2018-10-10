@@ -15,8 +15,8 @@ namespace Evol.Utils
     // are returned to a suitable state, ready for the next time they are requested. 
     public class Pool
     {
-        private List<GameObject> available;
-        public List<GameObject> inUse { get; set; }
+        public List<GameObject> available { get; }
+        public List<GameObject> inUse { get; }
         private GameObject prefab;
         private GameObject parent;
 

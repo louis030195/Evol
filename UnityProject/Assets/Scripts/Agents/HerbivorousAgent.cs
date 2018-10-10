@@ -5,6 +5,7 @@ using MLAgents;
 using System.Linq;
 using System;
 using Evol.Utils;
+using Prometheus;
 
 namespace Evol.Agents
 {
@@ -14,12 +15,15 @@ namespace Evol.Agents
     public class HerbivorousAgent : LivingBeingAgent
     {
 
-
+        
         public override void InitializeAgent()
         {
-            LivingBeing = new Herbivorous(50, 0, 0, 50, 0, 30);
+            // InitializeAgent seems to be called when gameobject enabled
+            LivingBeing = LivingBeing ?? new Herbivorous(50, 0, 0, 50, 0, 50);
             perception = GetComponent<Perception>();
             rigidBody = GetComponent<Rigidbody>();
+            
+            eatCounter = Metrics.CreateCounter("herbivorousEatCounter", "How many times herbivorous has eaten");
         }
 
         public override void CollectObservations()
@@ -45,7 +49,7 @@ namespace Evol.Agents
             // Move
             rigidBody.AddForce(LivingBeing.Speed * transform.forward * Mathf.Clamp(vectorAction[0], -1f, 1f),
                 ForceMode.VelocityChange);
-            transform.Rotate(new Vector3(0, 1f, 0), Time.fixedDeltaTime * 500 * Mathf.Clamp(vectorAction[1], -1f, 1f));
+            transform.Rotate(new Vector3(0, 1f, 0), Time.fixedDeltaTime * 1000 * Mathf.Clamp(vectorAction[1], -1f, 1f));
 
 
             AmountActions++;
@@ -55,6 +59,8 @@ namespace Evol.Agents
         {
             if (collision.collider.GetComponent<Herb>() != null)
             {
+                eatCounter.Inc(1.1);
+                
                 LivingBeing.Satiety += 100;
                 LivingBeing.Life += 50;
                 AddReward(20f);

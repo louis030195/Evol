@@ -4,6 +4,7 @@ using UnityEngine;
 using MLAgents;
 using UnityEngine.Serialization;
 using Evol.Utils;
+using Prometheus;
 
 namespace Evol.Agents
 {
@@ -13,14 +14,16 @@ namespace Evol.Agents
     public abstract class LivingBeingAgent : Agent
     {
         protected Rigidbody rigidBody;
-
         protected Perception perception;
+        protected Counter eatCounter;
+        
+        
         public LivingBeing LivingBeing { get; protected set; }
         public bool Evolve { get; set; }
         public Pool Pool { get; set; }
         public System.Action Action;
 
-        public short AmountActions { get; protected set; } = 0;
+        public int AmountActions { get; set; } = 0;
 
         public enum RewardMode
         {
@@ -43,7 +46,7 @@ namespace Evol.Agents
 
         public override void AgentReset()
         {
-            AmountActions = 0;
+            
         }
     }
 }

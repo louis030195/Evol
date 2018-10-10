@@ -17,10 +17,12 @@ namespace Evol
 
         public bool Evolve = true;
         public Pool Pool { get; set; }
+        public float LifeLoss { get; set; } = 0.01f;
 
         protected LivingBeingAgent livingBeingAgent;
         protected float now;
-        protected Gauge actionsGauge; 
+        protected Gauge actionsGauge;
+        protected Gauge lifeLossGauge;
 
         // Use this for initialization
         protected virtual void Start()
@@ -29,14 +31,16 @@ namespace Evol
             livingBeingAgent.Evolve = Evolve;
             livingBeingAgent.Action = DoAction;
             livingBeingAgent.Pool = Pool;
-            now = Time.fixedTime;
             actionsGauge = Metrics.CreateGauge("actionsGauge", "Amount of actions done until death");
+            lifeLossGauge = Metrics.CreateGauge("lifeLossGauge", "Life loss per action");
         }
 
         // Update is called once per frame
         protected virtual void DoAction()
         {
-            livingBeingAgent.LivingBeing.Life -= 0.05f;
+            lifeLossGauge.Set(LifeLoss);
+            
+            livingBeingAgent.LivingBeing.Life -= LifeLoss;
 
 
 
@@ -68,7 +72,7 @@ namespace Evol
                 : livingBeingAgent.LivingBeing.Satiety;
             
             
-            livingBeingAgent.LivingBeing.Speed = livingBeingAgent.LivingBeing.Satiety > 100
+            livingBeingAgent.LivingBeing.Speed = livingBeingAgent.LivingBeing.Speed > 100
                 ? 100
                 : livingBeingAgent.LivingBeing.Speed < 0 ? 0 : livingBeingAgent.LivingBeing.Speed;
         }
@@ -97,10 +101,16 @@ namespace Evol
                 */
         }
 
+        private void OnEnable()
+        {
+            now = Time.fixedTime;
+        }
+
         private void OnDisable()
         {
             actionsGauge.Set(livingBeingAgent.AmountActions);
-            
+            livingBeingAgent.LivingBeing.LifeExpectancy = livingBeingAgent.AmountActions;
+            livingBeingAgent.AmountActions = 0;
             ResetStats();
         }
     }

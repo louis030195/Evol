@@ -63,7 +63,7 @@ namespace Evol
             herbivorousPool = new Pool(ItemsToSpawn.FirstOrDefault(go => go.CompareTag("herbivorous")));
             carnivorousPool = new Pool(ItemsToSpawn.FirstOrDefault(go => go.CompareTag("carnivorous")));
             herbPool = new Pool(ItemsToSpawn.FirstOrDefault(go => go.CompareTag("food")));
-            //godPool = new Pool(ItemsToSpawn.FirstOrDefault(go => go.CompareTag("god")));
+            godPool = new Pool(ItemsToSpawn.FirstOrDefault(go => go.CompareTag("god")));
            
 
             // Find the brains in the list
@@ -71,8 +71,8 @@ namespace Evol
                 Brains.FirstOrDefault(brain => "Herbivorous" == Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]);
             carnivorousPool.Brain =
                 Brains.FirstOrDefault(brain => "Carnivorous" == Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]);
-            //godPool.Brain =
-            //    Brains.FirstOrDefault(brain => "God" == Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]);
+            godPool.Brain =
+                Brains.FirstOrDefault(brain => "God" == Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]);
 
 
             SpawnWorkers();
@@ -102,13 +102,9 @@ namespace Evol
                         herbivorousChild.transform.parent = workerObject.transform;
                         herbivorousChild.SetActive(true);
                         herbivorousChild.GetComponent<LivingBeingAgent>().ResetPosition(workerObject.transform);
-                        /*
-                        GameObject godChild = godPool.GetObject();
-                        godChild.transform.parent = workerObject.transform;
-                        godChild.GetComponent<GodAgent>().CarnivorousPool = carnivorousPool;
-                        godChild.GetComponent<GodAgent>().HerbivorousPool = herbivorousPool;
-                        godChild.SetActive(true);
-*/
+                        
+
+
                         GameObject herbChild = herbPool.GetObject();
                         herbChild.transform.parent = workerObject.transform;
                         herbChild.SetActive(true);
@@ -125,6 +121,11 @@ namespace Evol
                 workerObjects.Add(workerObject);
 
             }
+            
+            GameObject godChild = godPool.GetObject();
+            godChild.GetComponent<GodAgent>().CarnivorousPool = carnivorousPool;
+            godChild.GetComponent<GodAgent>().HerbivorousPool = herbivorousPool;
+            godChild.SetActive(true);
         }
 
         /// <summary>
