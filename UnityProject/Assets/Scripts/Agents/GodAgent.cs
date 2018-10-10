@@ -56,12 +56,19 @@ namespace Evol.Agents
 
                         // If the cumulative reward is higher than the previous cumulative reward,
                         // we reward the god agent so that he learns to adjust well the stats of the agents
-                        AddReward(CarnivorousPool.inUse
+                        
+                        
+                        if(CarnivorousPool.inUse
                                 .Select(go => go.GetComponent<LivingBeingAgent>().LivingBeing.LifeExpectancy)
-                                          .Average() - carnivorousPreviousAmountActions);
-                        AddReward(HerbivorousPool.inUse
+                                          .Average() - carnivorousPreviousAmountActions > 0
+                                &&
+                                HerbivorousPool.inUse
                                           .Select(go => go.GetComponent<LivingBeingAgent>().LivingBeing.LifeExpectancy)
-                                          .Average() - herbivorousPreviousAmountActions);
+                                          .Average() - herbivorousPreviousAmountActions > 0)
+                                AddReward(1f);
+                        else
+                                AddReward(-1f);
+                        
 
                         
                         // Store the previous amount of actions
