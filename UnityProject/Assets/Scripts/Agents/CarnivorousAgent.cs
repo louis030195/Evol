@@ -23,7 +23,7 @@ namespace Evol.Agents
             perception = GetComponent<Perception>();
             rigidBody = GetComponent<Rigidbody>();
             
-            eatCounter = Metrics.CreateCounter("carnivorousEatCounter", "How many times carnivorous has eaten");
+            eatCounter = Metrics.CreateCounter("eatCarnivorous", "How many times carnivorous has eaten");
         }
 
 
@@ -31,7 +31,7 @@ namespace Evol.Agents
         {
             var rayDistance = 200f;
             float[] rayAngles = {0f, 45f, 90f, 135f, 180f, 110f, 70f};
-            var detectableObjects = new[] {"carnivorous", "herbivorous", "food"};
+            var detectableObjects = new[] {"herbivorous"/*, "carnivorous", "food"*/};
             var detectableObjects2 = new[] {"ground"};
             AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f, Evolve));
             //AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects2, 0f, -10f, Evolve));
@@ -39,7 +39,7 @@ namespace Evol.Agents
             AddVectorObs(localVelocity.x);
             AddVectorObs(localVelocity.z);
             AddVectorObs(gameObject.transform.rotation.y);
-            AddVectorObs(LivingBeing.Life);
+            AddVectorObs(LivingBeing.Life / 100);
         }
 
         public override void AgentAction(float[] vectorAction, string textAction)
@@ -51,6 +51,7 @@ namespace Evol.Agents
             // Move
             rigidBody.AddForce(LivingBeing.Speed * transform.forward * Mathf.Clamp(vectorAction[0], -1f, 1f),
                 ForceMode.VelocityChange);
+            //transform.Translate(LivingBeing.Speed * transform.forward * Mathf.Clamp(vectorAction[0], -1f, 1f));
             transform.Rotate(new Vector3(0, 1f, 0), Time.fixedDeltaTime * 1000 * Mathf.Clamp(vectorAction[1], -1f, 1f));
 
             AmountActions++;

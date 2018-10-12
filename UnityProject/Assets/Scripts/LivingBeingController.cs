@@ -17,12 +17,12 @@ namespace Evol
 
         public bool Evolve = true;
         public Pool Pool { get; set; }
-        public float LifeLoss { get; set; } = 0.01f;
+        public float LifeLoss { get; set; } = 0.05f;
 
         protected LivingBeingAgent livingBeingAgent;
         protected float now;
-        protected Gauge actionsGauge;
         protected Gauge lifeLossGauge;
+        protected Gauge actionsGauge;
 
         // Use this for initialization
         protected virtual void Start()
@@ -31,7 +31,6 @@ namespace Evol
             livingBeingAgent.Evolve = Evolve;
             livingBeingAgent.Action = DoAction;
             livingBeingAgent.Pool = Pool;
-            actionsGauge = Metrics.CreateGauge("actionsGauge", "Amount of actions done until death");
             lifeLossGauge = Metrics.CreateGauge("lifeLossGauge", "Life loss per action");
         }
 
@@ -101,15 +100,16 @@ namespace Evol
                 */
         }
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             now = Time.fixedTime;
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
-            actionsGauge.Set(livingBeingAgent.AmountActions);
-            livingBeingAgent.LivingBeing.LifeExpectancy = livingBeingAgent.AmountActions;
+            livingBeingAgent.LivingBeing.LifeExpectancy = 
+                (livingBeingAgent.LivingBeing.LifeExpectancy + livingBeingAgent.AmountActions) / 2;
+            actionsGauge.Set(livingBeingAgent.LivingBeing.LifeExpectancy);
             livingBeingAgent.AmountActions = 0;
             ResetStats();
         }

@@ -213,13 +213,13 @@ MonoBehaviour:
     - 
     - 
     vectorActionSpaceType: 1
-  brainType: 2
+  brainType: 3
   CoreBrains:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: -1058
+  instanceID: -1066
 --- !u!114 &114530053126441440
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -257,20 +257,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 1
+    vectorObservationSize: 4
     numStackedVectorObservations: 1
-    vectorActionSize: 01000000
+    vectorActionSize: 02000000
     cameraResolutions: []
     vectorActionDescriptions:
     - 
+    - 
     vectorActionSpaceType: 1
-  brainType: 2
+  brainType: 3
   CoreBrains:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: -39822
+  instanceID: -1072
 --- !u!114 &114575627226621030
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -402,10 +403,10 @@ MonoBehaviour:
     - 
     - 
     vectorActionSpaceType: 1
-  brainType: 2
+  brainType: 3
   CoreBrains:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: -1056
+  instanceID: -1064

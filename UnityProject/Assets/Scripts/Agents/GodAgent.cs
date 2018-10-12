@@ -48,10 +48,8 @@ namespace Evol.Agents
                                 .ForEach(go => go.GetComponent<LivingBeingAgent>().LivingBeing.Speed += Mathf.Clamp(vectorAction[1], -0.1f, 0.1f));
                         */
                         
-                        HerbivorousPool.inUse.FindAll(go => go.GetComponent(typeof(LivingBeingAgent)))
-                                .ForEach(go => go.GetComponent<LivingBeingController>().LifeLoss = Mathf.Clamp(vectorAction[1], 0.01f, 0.1f));
-                        CarnivorousPool.inUse.FindAll(go => go.GetComponent(typeof(LivingBeingAgent)))
-                                .ForEach(go => go.GetComponent<LivingBeingController>().LifeLoss = Mathf.Clamp(vectorAction[1], 0.01f, 0.1f));
+                        HerbivorousPool.inUse.ForEach(go => go.GetComponent<LivingBeingController>().LifeLoss = Mathf.Clamp(vectorAction[0], 0f, 1f));
+                        CarnivorousPool.inUse.ForEach(go => go.GetComponent<LivingBeingController>().LifeLoss = Mathf.Clamp(vectorAction[1], 0f, 1f));
 
 
                         // If the cumulative reward is higher than the previous cumulative reward,
@@ -62,12 +60,14 @@ namespace Evol.Agents
                                 .Select(go => go.GetComponent<LivingBeingAgent>().LivingBeing.LifeExpectancy)
                                           .Average() - carnivorousPreviousAmountActions > 0
                                 &&
-                                HerbivorousPool.inUse
-                                          .Select(go => go.GetComponent<LivingBeingAgent>().LivingBeing.LifeExpectancy)
-                                          .Average() - herbivorousPreviousAmountActions > 0)
+                        HerbivorousPool.inUse
+                                .Select(go => go.GetComponent<LivingBeingAgent>().LivingBeing.LifeExpectancy)
+                                .Average() - herbivorousPreviousAmountActions > 0)
                                 AddReward(1f);
                         else
                                 AddReward(-1f);
+
+
                         
 
                         
