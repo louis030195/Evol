@@ -16,6 +16,7 @@ namespace Evol.Agents
         protected Rigidbody rigidBody;
         protected Perception perception;
         protected Counter eatCounter;
+        protected Gauge cumulativeRewardGauge;
         
         
         public LivingBeing LivingBeing { get; protected set; }
@@ -46,7 +47,7 @@ namespace Evol.Agents
 
         public override void AgentReset()
         {
-            
+            cumulativeRewardGauge.Set(GetCumulativeReward());
         }
     }
 }

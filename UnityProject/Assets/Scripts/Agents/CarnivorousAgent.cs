@@ -24,14 +24,15 @@ namespace Evol.Agents
             rigidBody = GetComponent<Rigidbody>();
             
             eatCounter = Metrics.CreateCounter("eatCarnivorous", "How many times carnivorous has eaten");
+            cumulativeRewardGauge = Metrics.CreateGauge("cumulativeRewardCarnivorous", "Cumulative reward of carnivorous");
         }
 
 
         public override void CollectObservations()
         {
-            var rayDistance = 200f;
+            var rayDistance = transform.parent.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 2; // For example if ground is of scale 10 = size 100 / 2
             float[] rayAngles = {0f, 45f, 90f, 135f, 180f, 110f, 70f};
-            var detectableObjects = new[] {"herbivorous"/*, "carnivorous", "food"*/};
+            var detectableObjects = new[] {"herbivorous", "carnivorous", "food"};
             var detectableObjects2 = new[] {"ground"};
             AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f, Evolve));
             //AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects2, 0f, -10f, Evolve));
