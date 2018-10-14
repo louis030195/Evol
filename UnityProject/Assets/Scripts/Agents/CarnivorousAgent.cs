@@ -18,13 +18,20 @@ namespace Evol.Agents
 
         public override void InitializeAgent()
         {
-            // InitializeAgent seems to be called when gameobject enabled
-            LivingBeing = LivingBeing ?? new Carnivorous(50, 0, 0, 50, 0, 50);
+            // InitializeAgent seems to be called when gameobject is enabled, we only need to call it once
+            if (LivingBeing != null) return;
+            
+            LivingBeing = new Carnivorous(50, 0, 0, 50, 0, 50);
             perception = GetComponent<Perception>();
             rigidBody = GetComponent<Rigidbody>();
             
             eatCounter = Metrics.CreateCounter("eatCarnivorous", "How many times carnivorous has eaten");
-            cumulativeRewardGauge = Metrics.CreateGauge("cumulativeRewardCarnivorous", "Cumulative reward of carnivorous");
+            reproductionCounter = 
+                Metrics.CreateCounter("reproductionCarnivorous", "How many times carnivorous has reproduced");
+            cumulativeRewardGauge = 
+                Metrics.CreateGauge("cumulativeRewardCarnivorous", "Cumulative reward of carnivorous");
+            lifeGainGauge =
+                Metrics.CreateGauge("lifeGainCarnivorous", "Life gain on eat of carnivorous");
         }
 
 
@@ -43,21 +50,6 @@ namespace Evol.Agents
             AddVectorObs(LivingBeing.Life / 100);
         }
 
-        public override void AgentAction(float[] vectorAction, string textAction)
-        {
-            Action();
-            AddReward(-0.01f);
-            
-
-            // Move
-            rigidBody.AddForce(LivingBeing.Speed * transform.forward * Mathf.Clamp(vectorAction[0], -1f, 1f),
-                ForceMode.VelocityChange);
-            //transform.Translate(LivingBeing.Speed * transform.forward * Mathf.Clamp(vectorAction[0], -1f, 1f));
-            transform.Rotate(new Vector3(0, 1f, 0), Time.fixedDeltaTime * 1000 * Mathf.Clamp(vectorAction[1], -1f, 1f));
-
-            AmountActions++;
-        }
-
 
         private void OnCollisionEnter(Collision collision)
         {
@@ -66,7 +58,7 @@ namespace Evol.Agents
                 eatCounter.Inc(1.1);
                 
                 LivingBeing.Satiety += 100;
-                LivingBeing.Life += 100;
+                LivingBeing.Life += LifeGain;
                 AddReward(20f);
                 Done();
             }
@@ -78,6 +70,8 @@ namespace Evol.Agents
                     if (LivingBeing.Life >= 90 &&
                         collision.collider.GetComponent<CarnivorousAgent>().LivingBeing.Life > 90)
                     {
+                        reproductionCounter.Inc(1.1);
+                        
                         LivingBeing.Life -= 50;
                         collision.collider.GetComponent<CarnivorousAgent>().LivingBeing.Life -= 50;
 

@@ -50,8 +50,8 @@ namespace Evol.Utils
             else
             {
                 GameObject go = UnityEngine.Object.Instantiate(prefab);
-                if (go.GetComponent<LivingBeingController>() != null)
-                    go.GetComponent<LivingBeingController>().Pool = this;
+                if (go.GetComponent<LivingBeingManager>() != null)
+                    go.GetComponent<LivingBeingManager>().Pool = this;
                 if (go.GetComponent<Agent>() != null)
                     go.GetComponent<Agent>().GiveBrain(Brain);
                 

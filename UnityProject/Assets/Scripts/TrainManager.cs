@@ -15,25 +15,64 @@ namespace Evol
     /// <summary>
     /// This class handles all the training of the agents
     /// </summary>
-    public class TrainController : MonoBehaviour
+    public class TrainManager : MonoBehaviour
     {
-
+        /// <summary>
+        /// Worker carnivorous-herbivorous
+        /// </summary>
         [Header("Workers")] [Space(10)] public Worker WorkerCarniHerbi;
+        
+        /// <summary>
+        /// Scale of the carnivorous-herbivorous worker's ground
+        /// </summary>
         public int GroundScale = 10;
-        public List<Brain> Brains; // Give all the brains you use in all workers
+        
+        /// <summary>
+        /// List of all the brains needed
+        /// </summary>
+        public List<Brain> Brains; 
 
         [Header("Items To Spawn")] [Space(10)] public List<GameObject> ItemsToSpawn;
 
+        /// <summary>
+        /// Whether or not reset the workers on genocide
+        /// </summary>
         [Header("Misc")] [Space(10)] public bool ResetWorkers = true;
+        
+        /// <summary>
+        /// Whether or not activating curriculum training
+        /// </summary>
         public bool Curriculum;
 
-
-        private List<GameObject> workerObjects;
+        /// <summary>
+        /// List of instanciated workers and steps
+        /// </summary>
+        private List<Utils.Tuple<int, GameObject>> workerObjects;
         private int frames;
+        
+        /// <summary>
+        /// Pool storing herbivorous go
+        /// </summary>
         private Pool herbivorousPool;
+        
+        /// <summary>
+        /// Pool storing carnivorous go
+        /// </summary>
         private Pool carnivorousPool;
+        
+        /// <summary>
+        /// Pool storing herbs go
+        /// </summary>
         private Pool herbPool;
+        
+        /// <summary>
+        /// Pool storing gods go
+        /// </summary>
         private Pool godPool;
+        
+        /// <summary>
+        /// Academy handling communication with python
+        /// </summary>
         private Academy evolAcademy;
         
         // Monitoring
@@ -41,23 +80,30 @@ namespace Evol
         private Counter resetCounter;
         private Gauge herbivorousInUseGauge;
         private Gauge carnivorousInUseGauge;
+        private Gauge herbivorousSpecieLifeExpectancyGauge;
+        private Gauge carnivorousSpecieLifeExpectancyGauge;
         
 
         // Use this for initialization
         private void Start()
         {
-            
             metricServer = new MetricServer(port: 1234);
             metricServer.Start();
             
-            resetCounter = Metrics.CreateCounter("resetCounter", "How many times the worker has been reset");
-            herbivorousInUseGauge = Metrics.CreateGauge("herbivorousInUseGauge", "Current total amount of herbivorous agents");
-            carnivorousInUseGauge = Metrics.CreateGauge("carnivorousInUseGauge", "Current total amount of carnivorous agents");
+            resetCounter = Metrics.CreateCounter("reset", "How many times the worker has been reset");
+            herbivorousInUseGauge =
+                Metrics.CreateGauge("herbivorousInUse", "Current total amount of herbivorous agents");
+            carnivorousInUseGauge =
+                Metrics.CreateGauge("carnivorousInUse", "Current total amount of carnivorous agents");
+            herbivorousSpecieLifeExpectancyGauge =
+                Metrics.CreateGauge("herbivorousSpecieLifeExpectancy", "Life expectancy of herbivorous specie");
+            carnivorousSpecieLifeExpectancyGauge =
+                Metrics.CreateGauge("carnivorousSpecieLifeExpectancy", "Life expectancy of carnivorous specie");
             
             evolAcademy = FindObjectOfType<EvolAcademy>();
 
 
-            workerObjects = new List<GameObject>();
+            workerObjects = new List<Utils.Tuple<int, GameObject>>();
 
             // Instanciate pools to spawn / release objects
             herbivorousPool = new Pool(ItemsToSpawn.FirstOrDefault(go => go.CompareTag("herbivorous")));
@@ -118,7 +164,7 @@ namespace Evol
 
                 }
 
-                workerObjects.Add(workerObject);
+                workerObjects.Add(new Utils.Tuple<int, GameObject>(0, workerObject));
 
             }
             
@@ -154,7 +200,7 @@ namespace Evol
                 Destroy(tmp.gameObject); // TODO : we are destroying non-agents items, check if not breaking references
             }*/
 
-            foreach (GameObject workerObject in workerObjects)
+            foreach (var workerObject in workerObjects)
             {
                 /*
                 // If the ground scale changed it means new curriculum lesson
@@ -190,26 +236,35 @@ namespace Evol
 
 
                 // The last condition is only useful in evolution mode
-                if (workerObject.GetComponentsInChildren<CarnivorousAgent>().Length == 0
-                    || workerObject.GetComponentsInChildren<HerbivorousAgent>().Length == 0
-                    || workerObject.GetComponentsInChildren<LivingBeingAgent>().Length >
+                if (workerObject.second.GetComponentsInChildren<CarnivorousAgent>().Length == 0
+                    || workerObject.second.GetComponentsInChildren<HerbivorousAgent>().Length == 0
+                    || workerObject.second.GetComponentsInChildren<LivingBeingAgent>().Length >
                     WorkerCarniHerbi.AmountOfAgentsToAdd * 10)
                 {
+                    // Length of the worker
+                    workerObject.first = evolAcademy.GetStepCount() - workerObject.first;
+                    
+                    if (workerObject.second.GetComponentsInChildren<CarnivorousAgent>().Length == 0)
+                        carnivorousSpecieLifeExpectancyGauge.Set(workerObject.first);
+                    if (workerObject.second.GetComponentsInChildren<HerbivorousAgent>().Length == 0)
+                        herbivorousSpecieLifeExpectancyGauge.Set(workerObject.first);
+                    
+
                     resetCounter.Inc(1.1);
-                    ReleaseAgentsInWorker(workerObject);
+                    ReleaseAgentsInWorker(workerObject.second);
                     for (int i = 0; i < WorkerCarniHerbi.AmountOfAgentsToAdd; i++)
                     {
                         GameObject carnivorousChild = carnivorousPool.GetObject();
-                        carnivorousChild.transform.parent = workerObject.transform;
+                        carnivorousChild.transform.parent = workerObject.second.transform;
                         carnivorousChild.SetActive(true);
-                        carnivorousChild.GetComponent<LivingBeingAgent>().ResetPosition(workerObject.transform);
+                        carnivorousChild.GetComponent<LivingBeingAgent>().ResetPosition(workerObject.second.transform);
                         carnivorousChild.GetComponent<LivingBeingAgent>().LivingBeing.Speed =
                             evolAcademy.resetParameters["speed"];
 
                         GameObject herbivorousChild = herbivorousPool.GetObject();
-                        herbivorousChild.transform.parent = workerObject.transform;
+                        herbivorousChild.transform.parent = workerObject.second.transform;
                         herbivorousChild.SetActive(true);
-                        herbivorousChild.GetComponent<LivingBeingAgent>().ResetPosition(workerObject.transform);
+                        herbivorousChild.GetComponent<LivingBeingAgent>().ResetPosition(workerObject.second.transform);
                     }
                 }
             }
@@ -219,14 +274,14 @@ namespace Evol
         {
             foreach (HerbivorousAgent agent in currentWorker.GetComponentsInChildren<HerbivorousAgent>())
             {
-                agent.GetComponent<LivingBeingController>().ResetStats();
+                agent.GetComponent<LivingBeingManager>().ResetStats();
                 agent.Done();
                 herbivorousPool.ReleaseObject(agent.gameObject);
             }
 
             foreach (CarnivorousAgent agent in currentWorker.GetComponentsInChildren<CarnivorousAgent>())
             {
-                agent.GetComponent<LivingBeingController>().ResetStats();
+                agent.GetComponent<LivingBeingManager>().ResetStats();
                 agent.Done();
                 carnivorousPool.ReleaseObject(agent.gameObject);
             }

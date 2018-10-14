@@ -7,6 +7,9 @@ using UnityEngine;
 
 namespace Evol.Agents
 {
+        /// <summary>
+        /// The goal of this agent is to balance the eco system so that all species survive the longest time possible
+        /// </summary>
         public class GodAgent : Agent
         {
                 public Pool HerbivorousPool { get; set; }
@@ -28,13 +31,17 @@ namespace Evol.Agents
                         
                         // AddVectorObs(CarnivorousPool.inUse.First().GetComponent<LivingBeingAgent>().LivingBeing.Speed);
                         
-                        AddVectorObs(CarnivorousPool.inUse.First().GetComponent<LivingBeingController>().LifeLoss);
+                        AddVectorObs(CarnivorousPool.inUse.First().GetComponent<LivingBeingManager>().LifeLoss);
+                        
+                        AddVectorObs(HerbivorousPool.inUse.First().GetComponent<LivingBeingAgent>().LifeGain);
                         
                         AddVectorObs(herbivorousPreviousAmountActions);
                         
                         // AddVectorObs(HerbivorousPool.inUse.First().GetComponent<LivingBeingAgent>().LivingBeing.Speed);
                         
-                        AddVectorObs(HerbivorousPool.inUse.First().GetComponent<LivingBeingController>().LifeLoss);
+                        AddVectorObs(HerbivorousPool.inUse.First().GetComponent<LivingBeingManager>().LifeLoss);
+                        
+                        AddVectorObs(HerbivorousPool.inUse.First().GetComponent<LivingBeingAgent>().LifeGain);
                 }
 
                 public override void AgentAction(float[] vectorAction, string textAction)
@@ -48,8 +55,13 @@ namespace Evol.Agents
                                 .ForEach(go => go.GetComponent<LivingBeingAgent>().LivingBeing.Speed += Mathf.Clamp(vectorAction[1], -0.1f, 0.1f));
                         */
                         
-                        HerbivorousPool.inUse.ForEach(go => go.GetComponent<LivingBeingController>().LifeLoss = Mathf.Clamp(vectorAction[0], 0f, 1f));
-                        CarnivorousPool.inUse.ForEach(go => go.GetComponent<LivingBeingController>().LifeLoss = Mathf.Clamp(vectorAction[1], 0f, 1f));
+                        // Handle life loss per action
+                        HerbivorousPool.inUse.ForEach(go => go.GetComponent<LivingBeingManager>().LifeLoss = Mathf.Clamp(vectorAction[0], 0f, 1f));
+                        CarnivorousPool.inUse.ForEach(go => go.GetComponent<LivingBeingManager>().LifeLoss = Mathf.Clamp(vectorAction[1], 0f, 1f));
+                        
+                        // Handle life gain on eat
+                        HerbivorousPool.inUse.ForEach(go => go.GetComponent<LivingBeingAgent>().LifeGain = Mathf.Clamp(vectorAction[2], 0f, 100f));
+                        CarnivorousPool.inUse.ForEach(go => go.GetComponent<LivingBeingAgent>().LifeGain = Mathf.Clamp(vectorAction[3], 0f, 100f));
 
 
                         // If the cumulative reward is higher than the previous cumulative reward,

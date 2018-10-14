@@ -12,7 +12,7 @@ namespace Evol
     /// <summary>
     /// This class is used to update stats of the agent
     /// </summary>
-    public abstract class LivingBeingController : MonoBehaviour
+    public abstract class LivingBeingManager : MonoBehaviour
     {
 
         public bool Evolve = true;
@@ -31,7 +31,6 @@ namespace Evol
             livingBeingAgent.Evolve = Evolve;
             livingBeingAgent.Action = DoAction;
             livingBeingAgent.Pool = Pool;
-            lifeLossGauge = Metrics.CreateGauge("lifeLossGauge", "Life loss per action");
         }
 
         // Update is called once per frame
@@ -54,7 +53,7 @@ namespace Evol
                 livingBeingAgent.AddReward(-10f);
 
                 // Punish if it was the last agent of the specie (genocide)
-                //if(transform.parent.GetComponentsInChildren(livingBeingAgent.GetType()).Length == 1)
+                // if(transform.parent.GetComponentsInChildren(livingBeingAgent.GetType()).Length == 1)
                 //    livingBeingAgent.AddReward(-50f);
 
                 // Remove the agent from the scene

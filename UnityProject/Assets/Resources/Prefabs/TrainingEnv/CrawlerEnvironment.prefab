@@ -1850,6 +1850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eee03c7d0ec64b4b82df7a48caab040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Evolve: 1
 --- !u!114 &114168498947034722
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1880,15 +1881,6 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 5
   rewardMode: 1
-  body: {fileID: 4824734769794220}
-  leg0Upper: {fileID: 4953043226053326}
-  leg0Lower: {fileID: 4745376492918472}
-  leg1Upper: {fileID: 4114219758603348}
-  leg1Lower: {fileID: 4787218234722164}
-  leg2Upper: {fileID: 4780688241299116}
-  leg2Lower: {fileID: 4496392506850260}
-  leg3Upper: {fileID: 4757070399796198}
-  leg3Lower: {fileID: 4691434831085034}
 --- !u!114 &114432002192997926
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1991,10 +1983,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd4a3cfb1d66c0c49b91a5483208eb24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxJointSpring: 40000
-  jointDampen: 3000
-  maxJointForceLimit: 30000
-  ItemPartsList: []
 --- !u!114 &114646839010243466
 MonoBehaviour:
   m_ObjectHideFlags: 1

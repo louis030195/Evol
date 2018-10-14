@@ -85,7 +85,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4856651493469528}
   - component: {fileID: 114830505798622882}
-  - component: {fileID: 114848087305653304}
   m_Layer: 0
   m_Name: EvolAcademy
   m_TagString: Untagged
@@ -219,7 +218,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: -1066
+  instanceID: 19702
 --- !u!114 &114530053126441440
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -271,7 +270,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: -1072
+  instanceID: 19718
 --- !u!114 &114575627226621030
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -357,32 +356,6 @@ MonoBehaviour:
       value: 10
     - key: speed
       value: 50
---- !u!114 &114848087305653304
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1590617783822870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86645e398866ce140a294c3976cd5714, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WorkerCarniHerbi: {fileID: 11400000, guid: 30a419770e09f6940951d99abc1a908a, type: 2}
-  GroundScale: 10
-  Brains:
-  - {fileID: 114859714832689094}
-  - {fileID: 114094034598838896}
-  - {fileID: 114747797302771448}
-  - {fileID: 114530053126441440}
-  - {fileID: 114555813800974604}
-  ItemsToSpawn:
-  - {fileID: 1037065897526392, guid: 5bd61245a87d69e4db6e6a25d15a7432, type: 2}
-  - {fileID: 1777388096454044, guid: 85937eb0de212944c9f4fdb9a66cde4f, type: 2}
-  - {fileID: 1563969880686890, guid: 4e841b8558850db46908a10a8aa09f60, type: 2}
-  - {fileID: 1302233488139516, guid: 4a55e7d1179189e45836dbffd9af0ae3, type: 2}
-  ResetWorkers: 1
-  Curriculum: 0
 --- !u!114 &114859714832689094
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -409,4 +382,4 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: -1064
+  instanceID: 19692

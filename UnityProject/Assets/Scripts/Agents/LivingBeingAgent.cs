@@ -17,6 +17,8 @@ namespace Evol.Agents
         protected Perception perception;
         protected Counter eatCounter;
         protected Gauge cumulativeRewardGauge;
+        protected Counter reproductionCounter;
+        protected Gauge lifeGainGauge;
         
         
         public LivingBeing LivingBeing { get; protected set; }
@@ -25,6 +27,7 @@ namespace Evol.Agents
         public System.Action Action;
 
         public int AmountActions { get; set; } = 0;
+        public float LifeGain { get; set; } = 50f;
 
         public enum RewardMode
         {
@@ -34,6 +37,21 @@ namespace Evol.Agents
 
         [Header("Reward stuff")] [Space(10)] public RewardMode rewardMode = RewardMode.Dense;
 
+        public override void AgentAction(float[] vectorAction, string textAction)
+        {
+            lifeGainGauge.Set(LifeGain);
+            
+            Action();
+            AddReward(-0.01f);
+            
+
+            // Move
+            rigidBody.AddForce(LivingBeing.Speed * transform.forward * Mathf.Clamp(vectorAction[0], -1f, 1f),
+                ForceMode.VelocityChange);
+            transform.Rotate(new Vector3(0, 1f, 0), Time.fixedDeltaTime * 1000 * Mathf.Clamp(vectorAction[1], -1f, 1f));
+
+            AmountActions++;
+        }
 
         public void ResetPosition(Transform worker)
         {

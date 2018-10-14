@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1346998090479282}
+  m_IsPrefabAsset: 1
+--- !u!1 &1346998090479282
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4607735136967684}
+  - component: {fileID: 114314982664533344}
+  m_Layer: 0
+  m_Name: TrainManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4607735136967684
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1346998090479282}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114314982664533344
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1346998090479282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86645e398866ce140a294c3976cd5714, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WorkerCarniHerbi: {fileID: 11400000, guid: 30a419770e09f6940951d99abc1a908a, type: 2}
+  GroundScale: 10
+  Brains:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  ItemsToSpawn:
+  - {fileID: 1037065897526392, guid: 5bd61245a87d69e4db6e6a25d15a7432, type: 2}
+  - {fileID: 1777388096454044, guid: 85937eb0de212944c9f4fdb9a66cde4f, type: 2}
+  - {fileID: 1563969880686890, guid: 4e841b8558850db46908a10a8aa09f60, type: 2}
+  - {fileID: 1302233488139516, guid: 4a55e7d1179189e45836dbffd9af0ae3, type: 2}
+  ResetWorkers: 1
+  Curriculum: 0
