@@ -11,8 +11,9 @@ namespace Evol
         {
             base.Start();
             
-            actionsGauge = Metrics.CreateGauge("actionsHerbivorous", "Amount of actions done until death");
-            lifeLossGauge = Metrics.CreateGauge("lifeLossHerbivorous", "Herbivorous life loss per action");
+            actionsGauge = Metrics.CreateGauge("actionsHerbivorous", "Amount of actions done until death herbivorous");
+            lifeLossGauge = Metrics.CreateGauge("lifeLossHerbivorous", "Life loss per action herbivorous");
+            rewardOnDeathGauge = Metrics.CreateGauge("rewardOnDeathHerbivorous", "Reward on death herbivorous");
         }
     }
 }

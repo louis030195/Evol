@@ -18,11 +18,13 @@ namespace Evol
         public bool Evolve = true;
         public Pool Pool { get; set; }
         public float LifeLoss { get; set; } = 0.05f;
+        public float RewardOnDeath { get; set; } = -10f;
 
         protected LivingBeingAgent livingBeingAgent;
         protected float now;
         protected Gauge lifeLossGauge;
         protected Gauge actionsGauge;
+        protected Gauge rewardOnDeathGauge;
 
         // Use this for initialization
         protected virtual void Start()
@@ -49,12 +51,14 @@ namespace Evol
             // To avoid dying instantly before having his stats reset
             if (livingBeingAgent.LivingBeing.Life < 0)
             {
+                rewardOnDeathGauge.Set(RewardOnDeath);
+                
                 // Punish the death
-                livingBeingAgent.AddReward(-10f);
+                livingBeingAgent.AddReward(RewardOnDeath);
 
                 // Punish if it was the last agent of the specie (genocide)
-                // if(transform.parent.GetComponentsInChildren(livingBeingAgent.GetType()).Length == 1)
-                //    livingBeingAgent.AddReward(-50f);
+                if(transform.parent.GetComponentsInChildren(livingBeingAgent.GetType()).Length == 1)
+                    livingBeingAgent.AddReward(-50f);
 
                 // Remove the agent from the scene
                 Pool.ReleaseObject(gameObject);

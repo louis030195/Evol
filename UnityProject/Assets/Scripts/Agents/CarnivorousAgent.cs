@@ -32,12 +32,20 @@ namespace Evol.Agents
                 Metrics.CreateGauge("cumulativeRewardCarnivorous", "Cumulative reward of carnivorous");
             lifeGainGauge =
                 Metrics.CreateGauge("lifeGainCarnivorous", "Life gain on eat of carnivorous");
+            rewardOnActGauge =
+                Metrics.CreateGauge("rewardOnActCarnivorous", "Reward on act Carnivorous");
+            rewardOnEatGauge =
+                Metrics.CreateGauge("rewardOnEatCarnivorous", "Reward on eat Carnivorous");
+            rewardOnReproduceGauge =
+                Metrics.CreateGauge("rewardOnReproduceCarnivorous", "Reward on reproduce Carnivorous");
         }
 
 
         public override void CollectObservations()
         {
-            var rayDistance = transform.parent.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 2; // For example if ground is of scale 10 = size 100 / 2
+            var rayDistance = transform.parent.Find("Ground") != null ?
+                transform.parent.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 2
+                : 0; // For example if ground is of scale 10 = size 100 / 2
             float[] rayAngles = {0f, 45f, 90f, 135f, 180f, 110f, 70f};
             var detectableObjects = new[] {"herbivorous", "carnivorous", "food"};
             var detectableObjects2 = new[] {"ground"};
@@ -56,10 +64,11 @@ namespace Evol.Agents
             if (collision.collider.GetComponent<HerbivorousAgent>() != null)
             {
                 eatCounter.Inc(1.1);
+                rewardOnEatGauge.Set(RewardOnEat);
                 
                 LivingBeing.Satiety += 100;
                 LivingBeing.Life += LifeGain;
-                AddReward(20f);
+                AddReward(RewardOnEat);
                 Done();
             }
 
@@ -67,20 +76,22 @@ namespace Evol.Agents
             {
                 if (Evolve)
                 {
-                    if (LivingBeing.Life >= 90 &&
-                        collision.collider.GetComponent<CarnivorousAgent>().LivingBeing.Life > 90)
+                    
+                    if (LivingBeing.Life >= 70 &&
+                        collision.collider.GetComponent<CarnivorousAgent>().LivingBeing.Life > 70)
                     {
                         reproductionCounter.Inc(1.1);
+                        rewardOnReproduceGauge.Set(RewardOnReproduce);
                         
-                        LivingBeing.Life -= 50;
-                        collision.collider.GetComponent<CarnivorousAgent>().LivingBeing.Life -= 50;
+                        LivingBeing.Life -= 30;
+                        collision.collider.GetComponent<CarnivorousAgent>().LivingBeing.Life -= 30;
 
-                        AddReward(10f);
+                        AddReward(RewardOnReproduce);
 
                         GameObject go = Pool.GetObject();
                         go.transform.parent = transform.parent;
-                        go.transform.position = transform.position;
                         go.SetActive(true);
+                        go.transform.position = transform.position;
                         Done();
                     }
                 }

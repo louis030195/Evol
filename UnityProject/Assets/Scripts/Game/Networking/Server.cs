@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Evol.Game.Player;
 using Evol.Utils;
 using Photon.Pun;
 using Photon.Realtime;
@@ -15,6 +16,7 @@ namespace Evol.Game.Networking
 
         public bool IsServer = false;
         public Text Informations;
+        public Canvas Ui;
         
         public GameObject PlayerPrefab;
         public List<GameObject> SpawnablePrefabs;
@@ -37,12 +39,10 @@ namespace Evol.Game.Networking
 
         private void Start()
         {
+            if(!IsServer)
+                Destroy(this); // Destroy the server script if not server
             players = new List<GameObject>();
-            // PhotonNetwork.AutomaticallySyncScene = true;
-            
-            // Clients already passed on master via main menu
-            if(IsServer)
-                PhotonNetwork.ConnectUsingSettings();
+            PhotonNetwork.ConnectUsingSettings();
         }
 
         private void OnConnectedToServer()
@@ -61,7 +61,6 @@ namespace Evol.Game.Networking
             Informations.text = $"Created room { PhotonNetwork.CurrentRoom }";
             Debug.Log($"OnCreatedRoom()"); 
             
-            // Only server should reach this method
             evolAcademy = Instantiate(SpawnablePrefabs.Find(prefab => prefab.name.Contains("Academy")));
             PlayerPool = new Pool(PlayerPrefab);
             HerbivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("carnivorous")));
@@ -89,20 +88,26 @@ namespace Evol.Game.Networking
         public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
         {
             Informations.text = $"{ newPlayer.NickName } joined the game";
-            var player = PlayerPool.GetObject();
+            Destroy(Ui.gameObject);
+            //var player = PlayerPool.GetObject();
+            //player.SetActive(true);
+            
+            var player = PhotonNetwork.InstantiateSceneObject("Player", Vector3.zero, Quaternion.identity);
             player.name = newPlayer.NickName;
+            player.GetComponent<PhotonView>().TransferOwnership(player.GetComponent<PhotonView>().ViewID);
             players.Add(player);
+
+            
             Debug.Log($"OnPlayerEnteredRoom() { newPlayer.NickName }");
         }
 
         public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
         {
-            // Keep the server on the same scene ofc ...
-            if(!IsServer)
-                PhotonNetwork.LoadLevel("MainMenu");
-            
             Informations.text = $"{ otherPlayer.NickName } left the game";
             Debug.Log($"OnPlayerLeftRoom() { otherPlayer.NickName }"); 
+            
+            PlayerPool.ReleaseObject(players.Find(p => p.name.Equals(otherPlayer.NickName)));
+            players.Remove(players.Find(p => p.name.Equals(otherPlayer.NickName)));
         }
 
         public override void OnConnectedToMaster()
@@ -110,15 +115,13 @@ namespace Evol.Game.Networking
             Debug.Log($"OnConnectedToMaster()");
             
             // The server create the room
-            if (IsServer)
-            {
-                var newRoomOptions = new RoomOptions();
-                newRoomOptions.IsOpen = true;
-                newRoomOptions.IsVisible = true;
-                newRoomOptions.MaxPlayers = MaxPlayersPerRoom;
-                
-                PhotonNetwork.CreateRoom("Yolo", newRoomOptions);
-            }
+            var newRoomOptions = new RoomOptions();
+            newRoomOptions.IsOpen = true;
+            newRoomOptions.IsVisible = true;
+            newRoomOptions.MaxPlayers = MaxPlayersPerRoom;
+            
+            PhotonNetwork.CreateRoom("Yolo", newRoomOptions);
+            
         }
         
         private IEnumerator SpawnAgents()

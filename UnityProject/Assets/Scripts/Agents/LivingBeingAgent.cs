@@ -19,6 +19,9 @@ namespace Evol.Agents
         protected Gauge cumulativeRewardGauge;
         protected Counter reproductionCounter;
         protected Gauge lifeGainGauge;
+        protected Gauge rewardOnEatGauge;
+        protected Gauge rewardOnReproduceGauge;
+        protected Gauge rewardOnActGauge;
         
         
         public LivingBeing LivingBeing { get; protected set; }
@@ -28,6 +31,9 @@ namespace Evol.Agents
 
         public int AmountActions { get; set; } = 0;
         public float LifeGain { get; set; } = 50f;
+        public float RewardOnEat { get; set; } = 10f;
+        public float RewardOnReproduce { get; set; } = 50f;
+        public float RewardOnAct { get; set; } = -0.01f;
 
         public enum RewardMode
         {
@@ -40,9 +46,10 @@ namespace Evol.Agents
         public override void AgentAction(float[] vectorAction, string textAction)
         {
             lifeGainGauge.Set(LifeGain);
+            rewardOnActGauge.Set(RewardOnAct);
             
             Action();
-            AddReward(-0.01f);
+            AddReward(RewardOnAct);
             
 
             // Move

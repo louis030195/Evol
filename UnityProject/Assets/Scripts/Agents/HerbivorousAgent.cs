@@ -20,7 +20,6 @@ namespace Evol.Agents
         {
             // InitializeAgent seems to be called when gameobject is enabled, we only need to call it once
             if (LivingBeing != null) return;
-            
             LivingBeing = new Herbivorous(50, 0, 0, 50, 0, 50);
             perception = GetComponent<Perception>();
             rigidBody = GetComponent<Rigidbody>();
@@ -32,11 +31,19 @@ namespace Evol.Agents
                 Metrics.CreateGauge("cumulativeRewardHerbivorous", "Cumulative reward of herbivorous");
             lifeGainGauge =
                 Metrics.CreateGauge("lifeGainHerbivorous", "Life gain on eat of herbivorous");
+            rewardOnActGauge =
+                Metrics.CreateGauge("rewardOnActHerbivorous", "Reward on act herbivorous");
+            rewardOnEatGauge =
+                Metrics.CreateGauge("rewardOnEatHerbivorous", "Reward on eat herbivorous");
+            rewardOnReproduceGauge =
+                Metrics.CreateGauge("rewardOnReproduceHerbivorous", "Reward on reproduce herbivorous");
         }
 
         public override void CollectObservations()
         {
-            var rayDistance = transform.parent.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 2; // For example if ground is of scale 10 = size 100 / 2
+            var rayDistance = transform.parent.Find("Ground") != null ?
+                transform.parent.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 2
+                : 0; // For example if ground is of scale 10 = size 100 / 2
             float[] rayAngles = {0f, 45f, 90f, 135f, 180f, 110f, 70f};
             var detectableObjects = new[] {"food", "carnivorous", "herbivorous"};
             var detectableObjects2 = new[] {"ground"};
@@ -54,10 +61,11 @@ namespace Evol.Agents
             if (collision.collider.GetComponent<Herb>() != null)
             {
                 eatCounter.Inc(1.1);
+                rewardOnEatGauge.Set(RewardOnEat);
                 
                 LivingBeing.Satiety += 100;
                 LivingBeing.Life += LifeGain;
-                AddReward(20f);
+                AddReward(RewardOnEat);
                 Done();
             }
 
@@ -70,20 +78,22 @@ namespace Evol.Agents
             {
                 if (Evolve)
                 {
-                    if (LivingBeing.Life >= 90 &&
-                        collision.collider.GetComponent<HerbivorousAgent>().LivingBeing.Life >= 90)
+                    
+                    if (LivingBeing.Life >= 70 &&
+                        collision.collider.GetComponent<HerbivorousAgent>().LivingBeing.Life >= 70)
                     {
                         reproductionCounter.Inc(1.1);
+                        rewardOnReproduceGauge.Set(RewardOnReproduce);
 
-                        LivingBeing.Life -= 50;
-                        collision.collider.GetComponent<HerbivorousAgent>().LivingBeing.Life -= 50;
+                        LivingBeing.Life -= 30;
+                        collision.collider.GetComponent<HerbivorousAgent>().LivingBeing.Life -= 30;
 
-                        AddReward(10f);
+                        AddReward(RewardOnReproduce);
 
                         GameObject go = Pool.GetObject();
-                        go.transform.parent = transform.parent;
                         go.transform.position = transform.position;
                         go.SetActive(true);
+                        go.transform.position = transform.position;
                         Done();
 
                     }
