@@ -24,8 +24,9 @@ The sensor is returning either :
 
 # Rewards
 - Reward on eat
+- Reward on reproduction
 - Punish on death
-- Punish every actions (-0.01 to accelerate)
+- Punish every actions
 
 
 # Usage
