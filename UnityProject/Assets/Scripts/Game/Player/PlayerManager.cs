@@ -43,7 +43,7 @@ namespace Evol.Game.Player
         /// </summary>
         public void Start()
         {
-            /*
+            
             if (!photonView.IsMine)
             {
                 playerCamera.SetActive(false);
@@ -52,7 +52,7 @@ namespace Evol.Game.Player
                     m.enabled = false;
                 }
             }
-*/
+
         }
 
         private void Update()
