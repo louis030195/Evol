@@ -57,8 +57,8 @@ namespace Evol
                 livingBeingAgent.AddReward(RewardOnDeath);
 
                 // Punish if it was the last agent of the specie (genocide)
-                if(transform.parent.GetComponentsInChildren(livingBeingAgent.GetType()).Length == 1)
-                    livingBeingAgent.AddReward(-50f);
+                //if(transform.parent.GetComponentsInChildren(livingBeingAgent.GetType()).Length == 1)
+                //    livingBeingAgent.AddReward(-50f);
 
                 // Remove the agent from the scene
                 Pool.ReleaseObject(gameObject);
@@ -83,24 +83,6 @@ namespace Evol
         {
             livingBeingAgent.LivingBeing.Satiety = 50;
             livingBeingAgent.LivingBeing.Life = 50;
-        }
-
-        private void FixedUpdate()
-        {
-            /*
-                // Handling gravity manually ...
-                RaycastHit hit;
-                // Debug.DrawRay(transform.position,Vector3.down * 10,Color.green);
-                if(Physics.Raycast(transform.position, new Vector3(transform.position.x, -0.1f, transform.position.z), out hit, 0.1f))
-                {
-                    //the ray collided with something, you can interact
-                    // with the hit object now by using hit.collider.gameObject
-                }
-                else{
-                    //nothing was below your gameObject within 10m.
-                    transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, -0.1f, transform.position.z), Time.deltaTime * 2);
-                }
-                */
         }
 
         protected virtual void OnEnable()

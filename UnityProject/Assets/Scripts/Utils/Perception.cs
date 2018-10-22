@@ -28,7 +28,7 @@ namespace Evol.Utils
         public List<float> Perceive(float rayDistance,
             float[] rayAngles, string[] detectableObjects,
             float startOffset, float endOffset,
-            bool evolution)
+            bool evolution, float reproductionTreshold)
         {
             perceptionBuffer.Clear();
             // For each ray sublist stores categorial information on detected object
@@ -57,7 +57,7 @@ namespace Evol.Utils
                             {
                                 if (!hit.collider.gameObject.CompareTag(gameObject.tag)
                                     || hit.collider.gameObject.GetComponent<LivingBeingAgent>() == null
-                                    || hit.collider.gameObject.GetComponent<LivingBeingAgent>().LivingBeing.Life <= 90)
+                                    || hit.collider.gameObject.GetComponent<LivingBeingAgent>().LivingBeing.Life <= reproductionTreshold)
                                     subList[i] = 1;
                                 else
                                     subList[i] = 2;

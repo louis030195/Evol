@@ -9,6 +9,10 @@ namespace Evol.Game.UI
 	public class MainMenu : MonoBehaviour
 	{
 		public Text Nickname;
+
+		public Button Play;
+
+		public Text ConnectionState;
 		
 		private void Start()
 		{
@@ -17,12 +21,22 @@ namespace Evol.Game.UI
 
 		public void OnPlay()
 		{
-			PhotonNetwork.LocalPlayer.NickName = Nickname.text.Equals("") ? "Retard°" + PhotonNetwork.PlayerList.Length + 1
-				: Nickname.text;
+			PhotonNetwork.LocalPlayer.NickName = Nickname.text;
 			if(PhotonNetwork.JoinRoom("Yolo"))
 				PhotonNetwork.LoadLevel("Game");
+			else
+				ConnectionState.text = "Unable to find the server";
 		}
-		
-		
+
+		private void Update()
+		{
+			if (PhotonNetwork.IsConnected && !Nickname.text.Equals(""))
+			{
+				Play.interactable = true;
+			}
+			
+			if(PhotonNetwork.IsConnected)
+				ConnectionState.text = "Connected to the cloud ! ";
+		}
 	}
 }

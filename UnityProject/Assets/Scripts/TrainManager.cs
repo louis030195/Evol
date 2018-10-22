@@ -101,6 +101,7 @@ namespace Evol
                 Metrics.CreateGauge("carnivorousSpecieLifeExpectancy", "Life expectancy of carnivorous specie");
             
             evolAcademy = FindObjectOfType<EvolAcademy>();
+           
 
 
             workerObjects = new List<Utils.Tuple<int, GameObject>>();
@@ -308,8 +309,10 @@ namespace Evol
         {
             // Happens that after curriculum the scriptableobject worker isn't resetted
             // TODO: cleaner dynamic parameters reset
+            /*
             WorkerCarniHerbi.AmountOfAgentsToAdd = 5;
             WorkerCarniHerbi.AmountOfWorkers = 10;
+            */
             Debug.Log("Application ending after " + Time.time + " seconds");
         }
     }

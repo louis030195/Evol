@@ -18,11 +18,8 @@ namespace Evol.Agents
         
         public override void InitializeAgent()
         {
-            // InitializeAgent seems to be called when gameobject is enabled, we only need to call it once
-            if (LivingBeing != null) return;
+            base.InitializeAgent();
             LivingBeing = new Herbivorous(50, 0, 0, 50, 0, 50);
-            perception = GetComponent<Perception>();
-            rigidBody = GetComponent<Rigidbody>();
 
             eatCounter = Metrics.CreateCounter("eatHerbivorous", "How many times herbivorous has eaten");
             reproductionCounter = 
@@ -45,9 +42,9 @@ namespace Evol.Agents
                 transform.parent.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 2
                 : 0; // For example if ground is of scale 10 = size 100 / 2
             float[] rayAngles = {0f, 45f, 90f, 135f, 180f, 110f, 70f};
-            var detectableObjects = new[] {"food", "carnivorous", "herbivorous"};
+            detectableObjects = new[] {"food", "carnivorous", "herbivorous"};
             var detectableObjects2 = new[] {"ground"};
-            AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f, Evolve));
+            AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f, Evolve, ReproductionTreshold));
             //AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects2, 1f, -10f, Evolve));
             AddVectorObs(gameObject.transform.rotation.y);
             Vector3 localVelocity = transform.InverseTransformDirection(rigidBody.velocity);
@@ -79,8 +76,8 @@ namespace Evol.Agents
                 if (Evolve)
                 {
                     
-                    if (LivingBeing.Life >= 70 &&
-                        collision.collider.GetComponent<HerbivorousAgent>().LivingBeing.Life >= 70)
+                    if (LivingBeing.Life >= ReproductionTreshold &&
+                        collision.collider.GetComponent<HerbivorousAgent>().LivingBeing.Life >= ReproductionTreshold)
                     {
                         reproductionCounter.Inc(1.1);
                         rewardOnReproduceGauge.Set(RewardOnReproduce);
@@ -91,7 +88,7 @@ namespace Evol.Agents
                         AddReward(RewardOnReproduce);
 
                         GameObject go = Pool.GetObject();
-                        go.transform.position = transform.position;
+                        go.transform.parent = transform.parent;
                         go.SetActive(true);
                         go.transform.position = transform.position;
                         Done();

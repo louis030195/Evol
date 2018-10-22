@@ -1,6 +1,8 @@
 ﻿using MLAgents;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Evol.Agents;
 using UnityEngine;
 
 namespace Evol
@@ -10,6 +12,7 @@ namespace Evol
 
         public override void InitializeAcademy()
         {
+
         }
 
         public override void AcademyReset()

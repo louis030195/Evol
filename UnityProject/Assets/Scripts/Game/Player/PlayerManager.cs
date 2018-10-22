@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,19 +12,14 @@ namespace Evol.Game.Player
         [Tooltip("The current Health of our player")]
         public float Health = 1f;
         
-        public float speed = 10f;
+        public float WalkSpeed = 10f;
 
         public Text Informations;
 
-        private float lastSynchronizationTime = 0f;
-        private float syncDelay = 0f;
-        private float syncTime = 0f;
-        private Vector3 syncStartPosition = Vector3.zero;
-        private Vector3 syncEndPosition = Vector3.zero;
-
         private PhotonView photonView;
 
-        private Rigidbody rigidbody;
+        private Rigidbody rb;
+        private Vector3 moveDirection;
 
         [SerializeField] private GameObject playerCamera;
         [SerializeField] private MonoBehaviour[] playerControlScripts;
@@ -31,28 +27,41 @@ namespace Evol.Game.Player
         //True, when the user is firing
         private bool IsFiring;
 
+
         private void Awake()
         {
-            rigidbody = GetComponent<Rigidbody>();
             photonView = GetComponent<PhotonView>();
-            lastSynchronizationTime = Time.time;
         }
 
         /// <summary>
         /// MonoBehaviour method called on GameObject by Unity during initialization phase.
         /// </summary>
         public void Start()
+        {  
+            DeactivateNonLocal();
+
+            if (photonView.IsMine)
+            {
+                rb = GetComponent<Rigidbody>();
+            }
+        }
+
+        /// <summary>
+        /// Only the local player should access his own camera and control scripts
+        /// </summary>
+        private void DeactivateNonLocal()
         {
-            
             if (!photonView.IsMine)
             {
                 playerCamera.SetActive(false);
-                foreach (MonoBehaviour m in playerControlScripts)
+
+                enabled = false;
+                /*
+                foreach (var m in playerControlScripts)
                 {
                     m.enabled = false;
-                }
+                }*/
             }
-
         }
 
         private void Update()
@@ -69,40 +78,34 @@ namespace Evol.Game.Player
                     // Die
                 }
             }
-            */
             
-            InputMovement();
+            */
+            if (photonView.IsMine)
+            {
+                float horizonalMovement = Input.GetAxis("Horizontal");
+                float verticalMovement = Input.GetAxis("Vertical");
+
+                // Normalizing vectors make sure they all have a magnitude of 1.
+                // Since adding the two vectors together produces a vector whose magnitude is larger than 1,
+                // it means the player will move faster going diagonally. So we normalize it
+                moveDirection = (horizonalMovement * transform.right + verticalMovement * transform.forward).normalized;
+            }
         }
 
-  
-
-        private void InputMovement()
+        private void FixedUpdate()
         {
-            if (Input.GetKey(KeyCode.Z))
-            {
-                rigidbody.MovePosition(rigidbody.position + Vector3.forward * speed * Time.deltaTime);
-                Informations.text = $"photonView.IsMine {photonView.IsMine} - Z - cam {GetComponent<Camera>()?? GetComponent<Camera>().enabled}";
-            }
-
-            if (Input.GetKey(KeyCode.S))
-            {
-                rigidbody.MovePosition(rigidbody.position - Vector3.forward * speed * Time.deltaTime);
-                Informations.text = $"photonView.IsMine {photonView.IsMine} - S - cam {GetComponent<Camera>()?? GetComponent<Camera>().enabled}";
-            }
-
-            if (Input.GetKey(KeyCode.D))
-            {
-                rigidbody.MovePosition(rigidbody.position + Vector3.right * speed * Time.deltaTime);
-                Informations.text = $"photonView.IsMine {photonView.IsMine} - D - cam {GetComponent<Camera>()?? GetComponent<Camera>().enabled}";
-            }
-
-            if (Input.GetKey(KeyCode.Q))
-            {
-                rigidbody.MovePosition(rigidbody.position - Vector3.right * speed * Time.deltaTime);
-                Informations.text = $"photonView.IsMine {photonView.IsMine} - Q - cam {GetComponent<Camera>()?? GetComponent<Camera>().enabled}";
-            }
+            if(photonView.IsMine && rb != null)
+                Move();
         }
-        
+
+        private void Move()
+        {
+            Vector3 yVelFix = new Vector3(0, rb.velocity.y, 0);
+            // Time.deltaTime helps to give speed more manageable units. Think of it like appending "per second".
+            rb.AddForce(moveDirection * WalkSpeed * Time.deltaTime);
+            rb.velocity += yVelFix;
+        }
+
         /// <summary>
         /// Processes the inputs. This MUST ONLY BE USED when the player has authority over this Networked GameObject (photonView.isMine == true)
         /// </summary>

@@ -18,12 +18,8 @@ namespace Evol.Agents
 
         public override void InitializeAgent()
         {
-            // InitializeAgent seems to be called when gameobject is enabled, we only need to call it once
-            if (LivingBeing != null) return;
-            
+            base.InitializeAgent();
             LivingBeing = new Carnivorous(50, 0, 0, 50, 0, 50);
-            perception = GetComponent<Perception>();
-            rigidBody = GetComponent<Rigidbody>();
             
             eatCounter = Metrics.CreateCounter("eatCarnivorous", "How many times carnivorous has eaten");
             reproductionCounter = 
@@ -47,9 +43,9 @@ namespace Evol.Agents
                 transform.parent.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 2
                 : 0; // For example if ground is of scale 10 = size 100 / 2
             float[] rayAngles = {0f, 45f, 90f, 135f, 180f, 110f, 70f};
-            var detectableObjects = new[] {"herbivorous", "carnivorous", "food"};
+            detectableObjects = new[] {"herbivorous", "carnivorous", "food"};
             var detectableObjects2 = new[] {"ground"};
-            AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f, Evolve));
+            AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f, Evolve, ReproductionTreshold));
             //AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects2, 0f, -10f, Evolve));
             Vector3 localVelocity = transform.InverseTransformDirection(rigidBody.velocity);
             AddVectorObs(localVelocity.x);
@@ -77,8 +73,8 @@ namespace Evol.Agents
                 if (Evolve)
                 {
                     
-                    if (LivingBeing.Life >= 70 &&
-                        collision.collider.GetComponent<CarnivorousAgent>().LivingBeing.Life > 70)
+                    if (LivingBeing.Life >= ReproductionTreshold &&
+                        collision.collider.GetComponent<CarnivorousAgent>().LivingBeing.Life > ReproductionTreshold)
                     {
                         reproductionCounter.Inc(1.1);
                         rewardOnReproduceGauge.Set(RewardOnReproduce);

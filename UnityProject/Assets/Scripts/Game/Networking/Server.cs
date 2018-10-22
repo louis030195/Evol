@@ -15,10 +15,8 @@ namespace Evol.Game.Networking
     {
 
         public bool IsServer = false;
-        public Text Informations;
-        public Canvas Ui;
         
-        public GameObject PlayerPrefab;
+        public List<GameObject> PlayerPrefab;
         public List<GameObject> SpawnablePrefabs;
     
             
@@ -58,11 +56,10 @@ namespace Evol.Game.Networking
 
         public override void OnCreatedRoom()
         {
-            Informations.text = $"Created room { PhotonNetwork.CurrentRoom }";
             Debug.Log($"OnCreatedRoom()"); 
             
             evolAcademy = Instantiate(SpawnablePrefabs.Find(prefab => prefab.name.Contains("Academy")));
-            PlayerPool = new Pool(PlayerPrefab);
+            //PlayerPool = new Pool(PlayerPrefab);
             HerbivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("carnivorous")));
             CarnivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("herbivorous")));
         }
@@ -80,21 +77,17 @@ namespace Evol.Game.Networking
         public override void OnJoinedRoom()
         {
             Debug.Log($"OnJoinedRoom()"); 
-            Informations.text = $"Joined room { PhotonNetwork.CurrentRoom }";
-
-            
         }
 
         public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
         {
-            Informations.text = $"{ newPlayer.NickName } joined the game";
-            Destroy(Ui.gameObject);
             //var player = PlayerPool.GetObject();
             //player.SetActive(true);
-            
-            var player = PhotonNetwork.InstantiateSceneObject("Player", Vector3.zero, Quaternion.identity);
+            var player = PhotonNetwork.Instantiate(PlayerPrefab[PhotonNetwork.CurrentRoom.Players.Count - 1].name, Vector3.zero, Quaternion.identity);
             player.name = newPlayer.NickName;
-            player.GetComponent<PhotonView>().TransferOwnership(player.GetComponent<PhotonView>().ViewID);
+            
+            player.GetPhotonView().TransferOwnership(newPlayer);
+            
             players.Add(player);
 
             
@@ -103,10 +96,10 @@ namespace Evol.Game.Networking
 
         public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
         {
-            Informations.text = $"{ otherPlayer.NickName } left the game";
             Debug.Log($"OnPlayerLeftRoom() { otherPlayer.NickName }"); 
             
-            PlayerPool.ReleaseObject(players.Find(p => p.name.Equals(otherPlayer.NickName)));
+            // PlayerPool.ReleaseObject(players.Find(p => p.name.Equals(otherPlayer.NickName)));
+            Destroy(players.Find(p => p.name.Equals(otherPlayer.NickName)), 1f);
             players.Remove(players.Find(p => p.name.Equals(otherPlayer.NickName)));
         }
 

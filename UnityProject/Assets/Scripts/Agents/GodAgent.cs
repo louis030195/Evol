@@ -74,10 +74,10 @@ namespace Evol.Agents
                                 // Handle life gain on eat
                                 HerbivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().LifeGain =
-                                                Mathf.Clamp(vectorAction[2], 0f, 100f));
+                                                Mathf.Clamp(vectorAction[2], 30f, 100f));
                                 CarnivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().LifeGain =
-                                                Mathf.Clamp(vectorAction[3], 0f, 100f));
+                                                Mathf.Clamp(vectorAction[3], 30f, 100f));
                                 /*
                                 // Handle reward on act
                                 HerbivorousPool.inUse.ForEach(go =>
