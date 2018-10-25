@@ -76,7 +76,7 @@ namespace Evol.Agents
             transform.Rotate(new Vector3(0, 1f, 0), Time.fixedDeltaTime * 1000 * Mathf.Clamp(vectorAction[1], -1f, 1f));
 
             AmountActions++;
-/*
+
             if (brain.brainType == BrainType.Heuristic)
             {
                 bool detectedSomething = false;
@@ -92,12 +92,12 @@ namespace Evol.Agents
                     }
                 }
                 if(!detectedSomething)
-                    transform.position = Vector3.MoveTowards(transform.position,
-                        new Vector3(Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f),
+                    transform.position = Vector3.Lerp(transform.position,
+                        new Vector3(Random.Range(transform.position.x - 1f, transform.position.x + 1f),
                             transform.position.y, 
-                            Random.Range(transform.position.z - 0.5f, transform.position.z + 0.5f)),
+                            Random.Range(transform.position.z - 1f, transform.position.z + 1f)),
                         1f);
-            }*/
+            }
         }
 
         public void ResetPosition(Transform worker)

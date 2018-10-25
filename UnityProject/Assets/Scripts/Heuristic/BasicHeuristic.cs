@@ -22,7 +22,7 @@ namespace Heuristic
         {
             if(!isHeuristic) isHeuristic = true;
 
-            
+            /*
             for (int i = 0; i < 7; i++)
             {
                 if (vectorObs[i] == 1.0f || vectorObs[i] == 2.0f)
@@ -32,6 +32,8 @@ namespace Heuristic
             }
 
             return new float[2]{1f, 0.3f};
+            */
+            return new float[] {0, 0};
         }
 
         public List<float> MakeMemory(List<float> vectorObs, List<Texture2D> visualObs, float reward, bool done, List<float> memory)
