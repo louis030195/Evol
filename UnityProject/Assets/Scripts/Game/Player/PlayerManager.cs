@@ -40,10 +40,7 @@ namespace Evol.Game.Player
         {  
             DeactivateNonLocal();
 
-            if (photonView.IsMine)
-            {
-                rb = GetComponent<Rigidbody>();
-            }
+            rb = GetComponent<Rigidbody>();
         }
 
         /// <summary>
@@ -51,17 +48,8 @@ namespace Evol.Game.Player
         /// </summary>
         private void DeactivateNonLocal()
         {
-            if (!photonView.IsMine)
-            {
-                playerCamera.SetActive(false);
-
-                enabled = false;
-                /*
-                foreach (var m in playerControlScripts)
-                {
-                    m.enabled = false;
-                }*/
-            }
+            playerCamera.SetActive(photonView.IsMine);
+            enabled = photonView.IsMine;
         }
 
         private void Update()
@@ -82,25 +70,26 @@ namespace Evol.Game.Player
             */
             if (photonView.IsMine)
             {
-                float horizonalMovement = Input.GetAxis("Horizontal");
+                float horizontalMovement = Input.GetAxis("Horizontal");
                 float verticalMovement = Input.GetAxis("Vertical");
 
                 // Normalizing vectors make sure they all have a magnitude of 1.
                 // Since adding the two vectors together produces a vector whose magnitude is larger than 1,
                 // it means the player will move faster going diagonally. So we normalize it
-                moveDirection = (horizonalMovement * transform.right + verticalMovement * transform.forward).normalized;
+                moveDirection = (horizontalMovement * transform.right + verticalMovement * transform.forward).normalized;
             }
         }
 
         private void FixedUpdate()
         {
-            if(photonView.IsMine && rb != null)
+            if(photonView.IsMine)
                 Move();
         }
 
         private void Move()
         {
             Vector3 yVelFix = new Vector3(0, rb.velocity.y, 0);
+            
             // Time.deltaTime helps to give speed more manageable units. Think of it like appending "per second".
             rb.AddForce(moveDirection * WalkSpeed * Time.deltaTime);
             rb.velocity += yVelFix;

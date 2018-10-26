@@ -16,7 +16,7 @@ namespace Evol.Game.Networking
 
         public bool IsServer = false;
         
-        public List<GameObject> PlayerPrefab;
+        public GameObject PlayerPrefab;
         public List<GameObject> SpawnablePrefabs;
     
             
@@ -83,7 +83,7 @@ namespace Evol.Game.Networking
         {
             //var player = PlayerPool.GetObject();
             //player.SetActive(true);
-            var player = PhotonNetwork.Instantiate(PlayerPrefab[PhotonNetwork.CurrentRoom.Players.Count - 1].name, Vector3.zero, Quaternion.identity);
+            var player = PhotonNetwork.Instantiate(PlayerPrefab.name, Vector3.zero, Quaternion.identity);
             player.name = newPlayer.NickName;
             
             player.GetPhotonView().TransferOwnership(newPlayer);
@@ -116,7 +116,7 @@ namespace Evol.Game.Networking
             PhotonNetwork.CreateRoom("Yolo", newRoomOptions);
             
         }
-        
+
         private IEnumerator SpawnAgents()
         {
             while (true)
