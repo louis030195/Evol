@@ -88,6 +88,9 @@ namespace Evol.Agents
                         go.transform.parent = transform.parent;
                         go.SetActive(true);
                         go.transform.position = transform.position;
+                        go.GetComponent<LivingBeing>().Speed =(LivingBeing.Speed +
+                             (collision.collider.GetComponent<CarnivorousAgent>().LivingBeing.Speed) / 2 ) 
+                                * UnityEngine.Random.Range(-0.1f, 0.1f);
                         Done();
                     }
                 }
