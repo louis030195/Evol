@@ -49,7 +49,12 @@ namespace Evol.Game.Player
         private void DeactivateNonLocal()
         {
             playerCamera.SetActive(photonView.IsMine);
-            enabled = photonView.IsMine;
+
+            
+            foreach (var playerControlScript in playerControlScripts)
+            {
+                playerControlScript.enabled = photonView.IsMine;
+            }
         }
 
         private void Update()
@@ -70,6 +75,7 @@ namespace Evol.Game.Player
             */
             if (photonView.IsMine)
             {
+                
                 float horizontalMovement = Input.GetAxis("Horizontal");
                 float verticalMovement = Input.GetAxis("Vertical");
 
@@ -77,6 +83,7 @@ namespace Evol.Game.Player
                 // Since adding the two vectors together produces a vector whose magnitude is larger than 1,
                 // it means the player will move faster going diagonally. So we normalize it
                 moveDirection = (horizontalMovement * transform.right + verticalMovement * transform.forward).normalized;
+                
             }
         }
 
@@ -88,11 +95,18 @@ namespace Evol.Game.Player
 
         private void Move()
         {
+            
             Vector3 yVelFix = new Vector3(0, rb.velocity.y, 0);
             
             // Time.deltaTime helps to give speed more manageable units. Think of it like appending "per second".
             rb.AddForce(moveDirection * WalkSpeed * Time.deltaTime);
             rb.velocity += yVelFix;
+            
+            /*
+            GetComponent<CrawlerAgent>().target = transform.forward * Input.GetAxis("Vertical");
+            if (Input.GetKey(KeyCode.Space))
+                transform.Translate(Vector3.up);
+                */
         }
 
         /// <summary>

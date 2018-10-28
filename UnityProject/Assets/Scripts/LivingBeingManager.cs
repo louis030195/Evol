@@ -15,7 +15,8 @@ namespace Evol
     public abstract class LivingBeingManager : MonoBehaviour
     {
 
-        public bool Evolve = true;
+        public bool Reproduction = true;
+        public bool Evolution = false;
         public Pool Pool { get; set; }
         public float LifeLoss { get; set; } = 0.05f;
         public float RewardOnDeath { get; set; } = -10f;
@@ -30,7 +31,8 @@ namespace Evol
         protected virtual void Start()
         {
             livingBeingAgent = GetComponent<LivingBeingAgent>();
-            livingBeingAgent.Evolve = Evolve;
+            livingBeingAgent.Reproduction = Reproduction;
+            livingBeingAgent.Evolution = Evolution;
             livingBeingAgent.Action = DoAction;
             livingBeingAgent.Pool = Pool;
         }
@@ -40,7 +42,8 @@ namespace Evol
         {
             lifeLossGauge.Set(LifeLoss);
             
-            livingBeingAgent.LivingBeing.Life -= LifeLoss;
+            //if(livingBeingAgent.LivingBeing.Satiety < 90)
+                livingBeingAgent.LivingBeing.Life -= LifeLoss;
 
 
 

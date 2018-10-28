@@ -87,9 +87,13 @@ namespace Evol
         // Use this for initialization
         private void Start()
         {
-            metricServer = new MetricServer(port: 1234);
-            metricServer.Start();
+            if (!Application.isEditor)
+            {
+                metricServer = new MetricServer(port: 1234);
+                metricServer.Start();
+            }
             
+
             resetCounter = Metrics.CreateCounter("reset", "How many times the worker has been reset");
             herbivorousInUseGauge =
                 Metrics.CreateGauge("herbivorousInUse", "Current total amount of herbivorous agents");

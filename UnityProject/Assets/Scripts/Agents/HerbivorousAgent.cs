@@ -44,7 +44,7 @@ namespace Evol.Agents
             float[] rayAngles = {0f, 45f, 90f, 135f, 180f, 110f, 70f};
             detectableObjects = new[] {"food", "carnivorous", "herbivorous"};
             var detectableObjects2 = new[] {"ground"};
-            AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f, Evolve, ReproductionTreshold));
+            AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f, Reproduction, ReproductionTreshold));
             //AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects2, 1f, -10f, Evolve));
             AddVectorObs(gameObject.transform.rotation.y);
             Vector3 localVelocity = transform.InverseTransformDirection(rigidBody.velocity);
@@ -60,7 +60,7 @@ namespace Evol.Agents
                 eatCounter.Inc(1.1);
                 rewardOnEatGauge.Set(RewardOnEat);
                 
-                LivingBeing.Satiety += 100;
+                LivingBeing.Satiety += 30;
                 LivingBeing.Life += LifeGain;
                 AddReward(RewardOnEat);
                 Done();
@@ -73,7 +73,7 @@ namespace Evol.Agents
 
             if (collision.collider.GetComponent<HerbivorousAgent>() != null)
             {
-                if (Evolve)
+                if (Reproduction)
                 {
                     
                     if (LivingBeing.Life >= ReproductionTreshold &&
@@ -91,11 +91,17 @@ namespace Evol.Agents
                         go.transform.parent = transform.parent;
                         go.SetActive(true);
                         go.transform.position = transform.position;
-                        go.GetComponent<LivingBeingAgent>().LivingBeing.Speed = (LivingBeing.Speed +
-                                                                                 collision.collider.GetComponent<LivingBeingAgent>().LivingBeing.Speed) / 2
-                                                                                + UnityEngine.Random.Range(-0.1f, 0.1f);
 
-                        print(go.GetComponent<LivingBeingAgent>().LivingBeing.Speed);
+                        if (Evolution)
+                        {
+                            go.GetComponent<LivingBeingAgent>().LivingBeing.Speed = (LivingBeing.Speed +
+                                                                                     collision.collider
+                                                                                         .GetComponent<LivingBeingAgent
+                                                                                         >().LivingBeing.Speed) / 2
+                                                                                    + UnityEngine.Random.Range(-0.1f,
+                                                                                        0.1f);
+                        }
+
                         Done();
 
                     }

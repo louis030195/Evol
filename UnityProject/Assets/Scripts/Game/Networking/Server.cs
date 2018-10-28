@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Evol.Game.Player;
 using Evol.Utils;
+using MLAgents;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -18,13 +19,12 @@ namespace Evol.Game.Networking
         
         public GameObject PlayerPrefab;
         public List<GameObject> SpawnablePrefabs;
+        public List<Brain> Brains;
     
             
-        public Pool PlayerPool;
         public Pool HerbivorousPool;
         public Pool CarnivorousPool;
     
-        private GameObject evolAcademy;
         private List<GameObject> players;
 
 
@@ -58,7 +58,6 @@ namespace Evol.Game.Networking
         {
             Debug.Log($"OnCreatedRoom()"); 
             
-            evolAcademy = Instantiate(SpawnablePrefabs.Find(prefab => prefab.name.Contains("Academy")));
             //PlayerPool = new Pool(PlayerPrefab);
             HerbivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("carnivorous")));
             CarnivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("herbivorous")));
@@ -83,10 +82,13 @@ namespace Evol.Game.Networking
         {
             //var player = PlayerPool.GetObject();
             //player.SetActive(true);
-            var player = PhotonNetwork.Instantiate(PlayerPrefab.name, Vector3.zero, Quaternion.identity);
+            var player = PhotonNetwork.Instantiate(PlayerPrefab.name, Vector3.up, Quaternion.identity);
+            //player.GetComponent<Agent>().GiveBrain(Brains[0]);
+            //player.SetActive(true); // Required to give brain on disabled GO, then active it
             player.name = newPlayer.NickName;
             
             player.GetPhotonView().TransferOwnership(newPlayer);
+            
             
             players.Add(player);
 

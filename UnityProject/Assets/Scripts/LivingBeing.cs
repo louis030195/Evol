@@ -27,6 +27,8 @@ namespace Evol
         public float Tiredness { get; set; }
 
         public float Speed { get; set; }
+        
+        public float Size { get; set; }
 
         public override string ToString()
         {

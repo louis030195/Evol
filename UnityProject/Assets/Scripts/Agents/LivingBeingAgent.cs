@@ -31,7 +31,8 @@ namespace Evol.Agents
         
         
         public LivingBeing LivingBeing { get; protected set; }
-        public bool Evolve { get; set; }
+        public bool Reproduction { get; set; }
+        public bool Evolution { get; set; }
         public Pool Pool { get; set; }
         public System.Action Action;
 
