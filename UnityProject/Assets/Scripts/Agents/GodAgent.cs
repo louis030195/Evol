@@ -19,9 +19,14 @@ namespace Evol.Agents
 
                 private int carnivorousPreviousAmountActions;
                 private int herbivorousPreviousAmountActions;
+
+                private Gauge cumulativeRewardGauge;
                 
                 public override void InitializeAgent()
                 {
+                        if(cumulativeRewardGauge == null)
+                                cumulativeRewardGauge =
+                                        Metrics.CreateGauge("cumulativeRewardGod", "Cumulative reward of god");
                 }
 
                 public override void CollectObservations()
@@ -137,9 +142,9 @@ namespace Evol.Agents
                         HerbivorousPool.inUse
                                 .Select(go => go.GetComponent<LivingBeingAgent>().LivingBeing.LifeExpectancy)
                                 .Average() - herbivorousPreviousAmountActions > 0)
-                                AddReward(1f);
+                                AddReward(0.001f);
                         else
-                                AddReward(-1f);
+                                AddReward(-0.001f);
 
 
 
@@ -150,6 +155,12 @@ namespace Evol.Agents
                         
                         herbivorousPreviousAmountActions = (int)HerbivorousPool.inUse
                                 .Select(go => go.GetComponent<LivingBeingAgent>().LivingBeing.LifeExpectancy).Average();
+                        
+                }
+                
+                public override void AgentReset()
+                {
+                        cumulativeRewardGauge.Set(GetCumulativeReward());
                 }
 
         }
