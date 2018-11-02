@@ -43,7 +43,7 @@ namespace Evol
             lifeLossGauge.Set(LifeLoss);
             
             //if(livingBeingAgent.LivingBeing.Satiety < 90)
-                livingBeingAgent.LivingBeing.Life -= LifeLoss;
+            livingBeingAgent.LivingBeing.Life -= LifeLoss;
 
 
 
@@ -51,7 +51,6 @@ namespace Evol
                 livingBeingAgent.LivingBeing.Life = -1;
 
 
-            // To avoid dying instantly before having his stats reset
             if (livingBeingAgent.LivingBeing.Life < 0)
             {
                 rewardOnDeathGauge.Set(RewardOnDeath);
@@ -95,6 +94,7 @@ namespace Evol
 
         protected virtual void OnDisable()
         {
+            // Average between old life expectancy and current
             livingBeingAgent.LivingBeing.LifeExpectancy = 
                 (livingBeingAgent.LivingBeing.LifeExpectancy + livingBeingAgent.AmountActions) / 2;
             actionsGauge.Set(livingBeingAgent.LivingBeing.LifeExpectancy);

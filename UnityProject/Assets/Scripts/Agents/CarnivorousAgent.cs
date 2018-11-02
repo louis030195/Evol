@@ -29,11 +29,13 @@ namespace Evol.Agents
             lifeGainGauge =
                 Metrics.CreateGauge("lifeGainCarnivorous", "Life gain on eat of carnivorous");
             rewardOnActGauge =
-                Metrics.CreateGauge("rewardOnActCarnivorous", "Reward on act Carnivorous");
+                Metrics.CreateGauge("rewardOnActCarnivorous", "Reward on act carnivorous");
             rewardOnEatGauge =
-                Metrics.CreateGauge("rewardOnEatCarnivorous", "Reward on eat Carnivorous");
+                Metrics.CreateGauge("rewardOnEatCarnivorous", "Reward on eat carnivorous");
             rewardOnReproduceGauge =
-                Metrics.CreateGauge("rewardOnReproduceCarnivorous", "Reward on reproduce Carnivorous");
+                Metrics.CreateGauge("rewardOnReproduceCarnivorous", "Reward on reproduce carnivorous");
+            speedGauge =
+                Metrics.CreateGauge("speedCarnivorous", "Speed carnivorous");
         }
 
 

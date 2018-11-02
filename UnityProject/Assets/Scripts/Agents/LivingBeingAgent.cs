@@ -28,6 +28,7 @@ namespace Evol.Agents
         protected Gauge rewardOnEatGauge;
         protected Gauge rewardOnReproduceGauge;
         protected Gauge rewardOnActGauge;
+        protected Gauge speedGauge;
         
         
         public LivingBeing LivingBeing { get; protected set; }
@@ -67,6 +68,7 @@ namespace Evol.Agents
         {
             lifeGainGauge.Set(LifeGain);
             rewardOnActGauge.Set(RewardOnAct);
+            speedGauge.Set(LivingBeing.Speed);
             
             Action();
             AddReward(RewardOnAct);
@@ -116,40 +118,35 @@ namespace Evol.Agents
             cumulativeRewardGauge.Set(GetCumulativeReward());
         }
 
-        private void OnCollisionExit(Collision other)
-        {
-            // Custom gravity
-            /*
-            if(other.gameObject.CompareTag("ground"))
-                rigidBody.AddForce(Vector3.down * 50, ForceMode.VelocityChange);
-                */
-        }
 
         private void FixedUpdate()
         {
-            /*
+            
             // Handling gravity manually ...
             RaycastHit hit;
             // Debug.DrawRay(transform.position,Vector3.down * 10,Color.green);
             try // Just in case we try to get the collider while we are being deactivated
             {
-                if (Physics.Raycast(GetComponent<Collider>().bounds.min, -transform.up, out hit, 0.1f))
+                if (Physics.Raycast(transform.position, -transform.up, out hit, 100))
                 {
                     //the ray collided with something, you can interact
                     // with the hit object now by using hit.collider.gameObject
+                    if(hit.distance > 1)
+                        rigidBody.AddForce(Vector3.down * 50, ForceMode.VelocityChange);
                 }
                 else
                 {
                     //nothing was below your gameObject within 10m.
                     // transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, -0.1f, transform.position.z), Time.deltaTime * 2);
 
-                    rigidBody.AddForce(Vector3.down * 50, ForceMode.VelocityChange);
+                    
                 }
             }
             catch (ArgumentNullException e)
             {
                 print(e.Message);
-            }*/
+            }
+            
         }
     }
 }

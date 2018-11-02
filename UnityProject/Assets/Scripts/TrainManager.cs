@@ -137,26 +137,26 @@ namespace Evol
                 GameObject workerObject = Instantiate(WorkerCarniHerbi.WorkerPrefab,
                     new Vector3(2 * GroundScale * 10 * w, 0, 0),
                     new Quaternion(0, 0, 0, 0));
-                workerObject.transform.Find("Ground").localScale = new Vector3(GroundScale, 1, GroundScale);
+                //workerObject.transform.Find("Ground").localScale = new Vector3(GroundScale, 1, GroundScale);
                 for (int i = 0; i < WorkerCarniHerbi.AmountOfAgentsToAdd; i++)
                 {
                     try
                     {
-                        GameObject carnivorousChild = carnivorousPool.GetObject();
+                        var carnivorousChild = carnivorousPool.GetObject();
                         carnivorousChild.transform.parent = workerObject.transform;
                         carnivorousChild.SetActive(true);
                         carnivorousChild.GetComponent<LivingBeingAgent>().ResetPosition(workerObject.transform);
                         //carnivorousChild.GetComponent<LivingBeingAgent>().LivingBeing.Speed =
                         //    evolAcademy.resetParameters["speed"];
 
-                        GameObject herbivorousChild = herbivorousPool.GetObject();
+                        var herbivorousChild = herbivorousPool.GetObject();
                         herbivorousChild.transform.parent = workerObject.transform;
                         herbivorousChild.SetActive(true);
                         herbivorousChild.GetComponent<LivingBeingAgent>().ResetPosition(workerObject.transform);
                         
 
 
-                        GameObject herbChild = herbPool.GetObject();
+                        var herbChild = herbPool.GetObject();
                         herbChild.transform.parent = workerObject.transform;
                         herbChild.SetActive(true);
 
@@ -184,9 +184,11 @@ namespace Evol
         /// </summary>
         private void ConfigureAgent()
         {
+            /*
             GroundScale = (int) evolAcademy.resetParameters["ground_scale"];
             WorkerCarniHerbi.AmountOfAgentsToAdd = (int) evolAcademy.resetParameters["amount_of_agents"];
             WorkerCarniHerbi.AmountOfWorkers = (int) evolAcademy.resetParameters["amount_of_workers"];
+            */
         }
 
         /// <summary>
@@ -257,16 +259,16 @@ namespace Evol
 
                     resetCounter.Inc(1.1);
                     ReleaseAgentsInWorker(workerObject.second);
-                    for (int i = 0; i < WorkerCarniHerbi.AmountOfAgentsToAdd; i++)
+                    for (var i = 0; i < WorkerCarniHerbi.AmountOfAgentsToAdd; i++)
                     {
-                        GameObject carnivorousChild = carnivorousPool.GetObject();
+                        var carnivorousChild = carnivorousPool.GetObject();
                         carnivorousChild.transform.parent = workerObject.second.transform;
                         carnivorousChild.SetActive(true);
                         carnivorousChild.GetComponent<LivingBeingAgent>().ResetPosition(workerObject.second.transform);
                         carnivorousChild.GetComponent<LivingBeingAgent>().LivingBeing.Speed =
                             evolAcademy.resetParameters["speed"];
 
-                        GameObject herbivorousChild = herbivorousPool.GetObject();
+                        var herbivorousChild = herbivorousPool.GetObject();
                         herbivorousChild.transform.parent = workerObject.second.transform;
                         herbivorousChild.SetActive(true);
                         herbivorousChild.GetComponent<LivingBeingAgent>().ResetPosition(workerObject.second.transform);
@@ -277,7 +279,7 @@ namespace Evol
 
         private void ReleaseAgentsInWorker(GameObject currentWorker)
         {
-            foreach (HerbivorousAgent agent in currentWorker.GetComponentsInChildren<HerbivorousAgent>())
+            foreach (var agent in currentWorker.GetComponentsInChildren<HerbivorousAgent>())
             {
                 agent.GetComponent<LivingBeingManager>().ResetStats();
                 agent.Done();

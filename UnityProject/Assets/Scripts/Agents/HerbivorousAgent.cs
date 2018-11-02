@@ -34,6 +34,8 @@ namespace Evol.Agents
                 Metrics.CreateGauge("rewardOnEatHerbivorous", "Reward on eat herbivorous");
             rewardOnReproduceGauge =
                 Metrics.CreateGauge("rewardOnReproduceHerbivorous", "Reward on reproduce herbivorous");
+            speedGauge =
+                Metrics.CreateGauge("speedHerbivorous", "Speed herbivorous");
         }
 
         public override void CollectObservations()
@@ -68,7 +70,7 @@ namespace Evol.Agents
 
             if (collision.collider.GetComponent<CarnivorousAgent>() != null)
             {
-                LivingBeing.Life = -1;
+                LivingBeing.Life -= 40;
             }
 
             if (collision.collider.GetComponent<HerbivorousAgent>() != null)

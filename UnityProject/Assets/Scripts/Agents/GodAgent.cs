@@ -32,6 +32,8 @@ namespace Evol.Agents
                         
                         AddVectorObs(CarnivorousPool.inUse.First().GetComponent<LivingBeingAgent>().LifeGain);
                         
+                        AddVectorObs(CarnivorousPool.inUse.First().GetComponent<LivingBeingAgent>().LivingBeing.Speed);
+                        
                         //AddVectorObs(CarnivorousPool.inUse.First().GetComponent<LivingBeingAgent>().RewardOnAct);
                         
                         //AddVectorObs(CarnivorousPool.inUse.First().GetComponent<LivingBeingAgent>().RewardOnEat);
@@ -48,6 +50,8 @@ namespace Evol.Agents
                         AddVectorObs(HerbivorousPool.inUse.First().GetComponent<LivingBeingManager>().LifeLoss);
                         
                         AddVectorObs(HerbivorousPool.inUse.First().GetComponent<LivingBeingAgent>().LifeGain);
+                        
+                        AddVectorObs(HerbivorousPool.inUse.First().GetComponent<LivingBeingAgent>().LivingBeing.Speed);
                         
                         //AddVectorObs(HerbivorousPool.inUse.First().GetComponent<LivingBeingAgent>().RewardOnAct);
                         
@@ -78,6 +82,15 @@ namespace Evol.Agents
                                 CarnivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().LifeGain =
                                                 Mathf.Clamp(vectorAction[3], 30f, 100f));
+                                
+                                // Handle speed
+                                HerbivorousPool.inUse.ForEach(go =>
+                                        go.GetComponent<LivingBeingAgent>().LivingBeing.Speed =
+                                                Mathf.Clamp(vectorAction[2], 30f, 100f));
+                                CarnivorousPool.inUse.ForEach(go =>
+                                        go.GetComponent<LivingBeingAgent>().LivingBeing.Speed =
+                                                Mathf.Clamp(vectorAction[3], 30f, 100f));
+                                
                                 /*
                                 // Handle reward on act
                                 HerbivorousPool.inUse.ForEach(go =>

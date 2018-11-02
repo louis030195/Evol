@@ -10,8 +10,6 @@ namespace Evol.Game.Player
     public class PlayerManager : MonoBehaviourPun, IPunObservable
     {
         [Tooltip("The current Health of our player")]
-        public float Health = 1f;
-        
         public float WalkSpeed = 10f;
 
         public Text Informations;
@@ -24,8 +22,6 @@ namespace Evol.Game.Player
         [SerializeField] private GameObject playerCamera;
         [SerializeField] private MonoBehaviour[] playerControlScripts;
         
-        //True, when the user is firing
-        private bool IsFiring;
 
 
         private void Awake()
@@ -59,20 +55,6 @@ namespace Evol.Game.Player
 
         private void Update()
         {
-            /*
-            // we only process Inputs and check health if we are the local player
-            if (photonView.IsMine)
-            {
-                ProcessInputs();
-                InputMovement();
-
-                if (this.Health <= 0f)
-                {
-                    // Die
-                }
-            }
-            
-            */
             if (photonView.IsMine)
             {
                 
@@ -103,49 +85,18 @@ namespace Evol.Game.Player
             rb.velocity += yVelFix;
             
             /*
-            GetComponent<CrawlerAgent>().target = transform.forward * Input.GetAxis("Vertical");
-            if (Input.GetKey(KeyCode.Space))
-                transform.Translate(Vector3.up);
+            GetComponent<CrawlerAgent>().target.z = (transform.Find("Body").transform.localPosition.z == 0 ? 1 :
+                                                        transform.Find("Body").transform.localPosition.z) * 
+                                                    (Input.GetAxis("Horizontal") != 0 ? Input.GetAxis("Horizontal") * 10 : 1);
+            GetComponent<CrawlerAgent>().target.x = (transform.Find("Body").transform.localPosition.x == 0 ? 1 :
+                                                        transform.Find("Body").transform.localPosition.x) * 
+                                                    (Input.GetAxis("Vertical") != 0 ? Input.GetAxis("Vertical") * 10 : 1);
                 */
         }
 
-        /// <summary>
-        /// Processes the inputs. This MUST ONLY BE USED when the player has authority over this Networked GameObject (photonView.isMine == true)
-        /// </summary>
-        void ProcessInputs()
-        {
-            if (Input.GetButtonDown("Fire1"))
-            {
-
-                if (!IsFiring)
-                {
-                    IsFiring = true;
-                }
-            }
-
-            if (Input.GetButtonUp("Fire1"))
-            {
-                if (IsFiring)
-                {
-                    IsFiring = false;
-                }
-            }
-        }
-        
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
-            if (stream.IsWriting)
-            {
-                // We own this player: send the others our data
-                stream.SendNext(IsFiring);
-                stream.SendNext(Health);
-            }
-            else
-            {
-                // Network player, receive data
-                IsFiring = (bool)stream.ReceiveNext();
-                Health = (float)stream.ReceiveNext();
-            }
+            //throw new System.NotImplementedException();
         }
     }
 }

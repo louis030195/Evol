@@ -384,7 +384,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1911054742029192
 GameObject:
   m_ObjectHideFlags: 0
@@ -1826,7 +1826,7 @@ MonoBehaviour:
   leg3Upper: {fileID: 4865430367735864}
   leg3Lower: {fileID: 4919212990495056}
   rewardMovingTowardsTarget: 1
-  rewardFacingTarget: 1
+  rewardFacingTarget: 0
   rewardUseTimePenalty: 1
   useFootGroundedVisualization: 0
   foot0: {fileID: 23829339632090018}
@@ -1955,7 +1955,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e285e7dd27eabb4d90dd02b75f4ade4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 1
   WalkSpeed: 1000
   Informations: {fileID: 114615000084873348}
   playerCamera: {fileID: 1906246455837546}
