@@ -70,7 +70,7 @@ namespace Evol.Agents
 
             if (collision.collider.GetComponent<CarnivorousAgent>() != null)
             {
-                LivingBeing.Life -= 40;
+                LivingBeing.Life = -1;
             }
 
             if (collision.collider.GetComponent<HerbivorousAgent>() != null)

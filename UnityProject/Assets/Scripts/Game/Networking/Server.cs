@@ -12,7 +12,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.SocketServer;
-using UnityEditor.IMGUI.Controls;
 
 namespace Evol.Game.Networking
 {
