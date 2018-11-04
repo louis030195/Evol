@@ -69,8 +69,11 @@ namespace Evol.Agents
             lifeGainGauge.Set(LifeGain);
             rewardOnActGauge.Set(RewardOnAct);
             speedGauge.Set(LivingBeing.Speed);
-            
-            Action();
+
+            if (Action != null)
+            {
+                Action();
+            }
             AddReward(RewardOnAct);
 
             // Move
