@@ -45,6 +45,8 @@ plugin  and add it to the project
 
 Open solution with rider (see [rider + unity](https://blog.jetbrains.com/dotnet/2017/08/30/getting-started-rider-unity/) for details) and press "update" or "restore" in nuget window of rider.
 
+For networking, Evol uses Photon, find [pun 2 free](https://assetstore.unity.com/packages/tools/network/pun-2-free-119922?fbclid=IwAR180XMl887jvpNLv1xnrvVjiX6Esf-nZqTnQOJ2hQo3_fTO2V_1YFa1lH8) package in asset store (window/general/asset store) and install it.
+
 ### Train
 
 Make sure to copy paste the config from Evol/UnityProject/Python/trainer_config.yaml
