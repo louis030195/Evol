@@ -43,6 +43,8 @@ cp -R UnitySDK/Assets/ML-Agents/  ../Evol/UnityProject/Assets/
 - Execute [TensorflowSharp](https://s3.amazonaws.com/unity-ml-agents/0.5/TFSharpPlugin.unitypackage)
 plugin  and add it to the project
 
+Open solution with rider (see [rider + unity](https://blog.jetbrains.com/dotnet/2017/08/30/getting-started-rider-unity/) for details) so nuget are installed.
+
 ### Train
 
 Make sure to copy paste the config from Evol/UnityProject/Python/trainer_config.yaml
