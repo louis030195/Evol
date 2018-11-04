@@ -29,20 +29,19 @@ The sensor is returning either :
 - Punish every actions
 
 
-# Usage
+# Install
 
 ```
 git clone https://github.com/louis030195/Evol.git
+git clone https://github.com/Unity-Technologies/ml-agents.git
+cd ml-agents
+cp -R UnitySDK/Assets/ML-Agents/  ../Evol/UnityProject/Assets/
 ```
 
 - Open the project with Unity
 
 - Execute [TensorflowSharp](https://s3.amazonaws.com/unity-ml-agents/0.5/TFSharpPlugin.unitypackage)
 plugin  and add it to the project
-
-```
-git clone https://github.com/Unity-Technologies/ml-agents.git
-```
 
 ### Train
 
