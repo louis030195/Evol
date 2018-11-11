@@ -48,7 +48,7 @@ namespace Evol.Agents
             detectableObjects = new[] {"herbivorous", "carnivorous", "food"};
             var detectableObjects2 = new[] {"ground"};
             AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f, Reproduction, ReproductionTreshold));
-            //AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects2, 0f, -10f, Evolve));
+            AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects2, 1f, -10f, Reproduction, ReproductionTreshold));
             Vector3 localVelocity = transform.InverseTransformDirection(rigidBody.velocity);
             AddVectorObs(localVelocity.x);
             AddVectorObs(localVelocity.z);

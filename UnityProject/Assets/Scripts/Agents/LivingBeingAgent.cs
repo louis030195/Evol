@@ -69,11 +69,8 @@ namespace Evol.Agents
             lifeGainGauge.Set(LifeGain);
             rewardOnActGauge.Set(RewardOnAct);
             speedGauge.Set(LivingBeing.Speed);
-
-            if (Action != null)
-            {
-                Action();
-            }
+            
+            Action();
             AddReward(RewardOnAct);
 
             // Move
@@ -141,7 +138,7 @@ namespace Evol.Agents
                 {
                     //nothing was below your gameObject within 10m.
                     // transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, -0.1f, transform.position.z), Time.deltaTime * 2);
-
+                    rigidBody.AddForce(Vector3.down * 50, ForceMode.VelocityChange);
                     
                 }
             }

@@ -18,7 +18,7 @@ namespace Evol.Game.Networking
     public class Server : MonoBehaviourPunCallbacks
     {
 
-        public bool IsServer = false;
+        public bool IsServer;
         
         public GameObject PlayerPrefab;
         public List<GameObject> SpawnablePrefabs;

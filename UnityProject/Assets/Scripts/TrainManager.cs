@@ -45,9 +45,10 @@ namespace Evol
         public bool Curriculum;
 
         /// <summary>
-        /// List of instanciated workers and steps
+        /// List of instanciated workers and his life length in steps
+        /// The Tuple(int, int) represents the latest reset step, the second, the life length
         /// </summary>
-        private List<Utils.Tuple<int, GameObject>> workerObjects;
+        private List<Utils.Tuple<Utils.Tuple<int, int>, GameObject>> workerObjects;
         private int frames;
         
         /// <summary>
@@ -74,6 +75,11 @@ namespace Evol
         /// Academy handling communication with python
         /// </summary>
         private Academy evolAcademy;
+
+        /// <summary>
+        /// Object of the god agent
+        /// </summary>
+        private GameObject godChild;
         
         // Monitoring
         private MetricServer metricServer;
@@ -108,7 +114,7 @@ namespace Evol
            
 
 
-            workerObjects = new List<Utils.Tuple<int, GameObject>>();
+            workerObjects = new List<Utils.Tuple<Utils.Tuple<int, int>, GameObject>>();
 
             // Instanciate pools to spawn / release objects
             herbivorousPool = new Pool(ItemsToSpawn.FirstOrDefault(go => go.CompareTag("herbivorous")));
@@ -169,11 +175,11 @@ namespace Evol
 
                 }
 
-                workerObjects.Add(new Utils.Tuple<int, GameObject>(0, workerObject));
+                workerObjects.Add(new Utils.Tuple<Utils.Tuple<int, int>, GameObject>(new Utils.Tuple<int, int>(0, 0), workerObject));
 
             }
             
-            GameObject godChild = godPool.GetObject();
+            godChild = godPool.GetObject();
             godChild.GetComponent<GodAgent>().CarnivorousPool = carnivorousPool;
             godChild.GetComponent<GodAgent>().HerbivorousPool = herbivorousPool;
             godChild.SetActive(true);
@@ -242,20 +248,30 @@ namespace Evol
 
 
 
-                // The last condition is only useful in evolution mode
+                // The last condition is only useful in reproduction mode
                 if (workerObject.second.GetComponentsInChildren<CarnivorousAgent>().Length == 0
                     || workerObject.second.GetComponentsInChildren<HerbivorousAgent>().Length == 0
                     || workerObject.second.GetComponentsInChildren<LivingBeingAgent>().Length >
                     WorkerCarniHerbi.AmountOfAgentsToAdd * 10)
                 {
-                    // Length of the worker
-                    workerObject.first = evolAcademy.GetStepCount() - workerObject.first;
+                    // Life length of the worker
+                    workerObject.first.second = evolAcademy.GetStepCount() - workerObject.first.first;
                     
+                    // Latest reset in term of steps
+                    workerObject.first.first = evolAcademy.GetStepCount();
+
                     if (workerObject.second.GetComponentsInChildren<CarnivorousAgent>().Length == 0)
-                        carnivorousSpecieLifeExpectancyGauge.Set(workerObject.first);
+                    {
+                        carnivorousSpecieLifeExpectancyGauge.Set(workerObject.first.second);
+                        godChild.GetComponent<GodAgent>().CarnivorousSpeciesLifeExpectency = workerObject.first.second;
+                    }
+
                     if (workerObject.second.GetComponentsInChildren<HerbivorousAgent>().Length == 0)
-                        herbivorousSpecieLifeExpectancyGauge.Set(workerObject.first);
-                    
+                    {
+                        herbivorousSpecieLifeExpectancyGauge.Set(workerObject.first.second);
+                        godChild.GetComponent<GodAgent>().HerbivorousSpeciesLifeExpectency = workerObject.first.second;
+                    }
+
 
                     resetCounter.Inc(1.1);
                     ReleaseAgentsInWorker(workerObject.second);
@@ -265,8 +281,8 @@ namespace Evol
                         carnivorousChild.transform.parent = workerObject.second.transform;
                         carnivorousChild.SetActive(true);
                         carnivorousChild.GetComponent<LivingBeingAgent>().ResetPosition(workerObject.second.transform);
-                        carnivorousChild.GetComponent<LivingBeingAgent>().LivingBeing.Speed =
-                            evolAcademy.resetParameters["speed"];
+                        // carnivorousChild.GetComponent<LivingBeingAgent>().LivingBeing.Speed =
+                        //    evolAcademy.resetParameters["speed"];
 
                         var herbivorousChild = herbivorousPool.GetObject();
                         herbivorousChild.transform.parent = workerObject.second.transform;

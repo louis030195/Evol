@@ -18,7 +18,7 @@ public class TestPlayerCrawler : MonoBehaviour {
 
 	private void FixedUpdate()
 	{
-		/*
+		
 		#if UNITY_STANDALONE
 			GetComponent<CrawlerAgent>().target.z = (transform.Find("Body").transform.localPosition.z == 0 ? 1 :
 				                                        transform.Find("Body").transform.localPosition.z) * 
@@ -26,7 +26,7 @@ public class TestPlayerCrawler : MonoBehaviour {
 			GetComponent<CrawlerAgent>().target.x = (transform.Find("Body").transform.localPosition.x == 0 ? 1 :
 				                                        transform.Find("Body").transform.localPosition.x) * 
 			                                        (Input.GetAxis("Vertical") != 0 ? Input.GetAxis("Vertical") * 10 : 1);
-		#endif*/
+		#endif
 
 
 		#if UNITY_ANDROID

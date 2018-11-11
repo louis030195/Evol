@@ -19,13 +19,18 @@ namespace Evol.Game.UI
 			PhotonNetwork.ConnectUsingSettings();
 		}
 
-		public void OnPlay()
+		public void OnMultiPlayer()
 		{
 			PhotonNetwork.LocalPlayer.NickName = Nickname.text;
 			if(PhotonNetwork.JoinRoom("Yolo"))
 				PhotonNetwork.LoadLevel("Game");
 			else
 				ConnectionState.text = "Unable to find the server";
+		}
+		
+		public void OnSinglePlayer()
+		{
+
 		}
 
 		private void Update()

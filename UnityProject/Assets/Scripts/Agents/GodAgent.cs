@@ -17,8 +17,15 @@ namespace Evol.Agents
                 
                 public Pool CarnivorousPool { get; set; }
 
-                private int carnivorousPreviousAmountActions;
+                public int HerbivorousSpeciesLifeExpectency { get; set; }
+                
+                public int CarnivorousSpeciesLifeExpectency { get; set; }
+
+
                 private int herbivorousPreviousAmountActions;
+                private int carnivorousPreviousAmountActions;
+                private int herbivorousPreviousSpeciesLifeExpectency;
+                private int carnivorousPreviousSpeciesLifeExpectency;
 
                 private Gauge cumulativeRewardGauge;
                 
@@ -31,7 +38,7 @@ namespace Evol.Agents
 
                 public override void CollectObservations()
                 {
-                        AddVectorObs(carnivorousPreviousAmountActions);
+                        AddVectorObs(carnivorousPreviousSpeciesLifeExpectency);
                         
                         AddVectorObs(CarnivorousPool.inUse.First().GetComponent<LivingBeingManager>().LifeLoss);
                         
@@ -50,7 +57,7 @@ namespace Evol.Agents
                         
                         // ---------------------------------------------------------------------------------------------
                         
-                        AddVectorObs(herbivorousPreviousAmountActions);
+                        AddVectorObs(herbivorousPreviousSpeciesLifeExpectency);
                         
                         AddVectorObs(HerbivorousPool.inUse.First().GetComponent<LivingBeingManager>().LifeLoss);
                         
@@ -131,30 +138,44 @@ namespace Evol.Agents
                                                 */
                         }
 
-                        // If the cumulative reward is higher than the previous cumulative reward,
-                        // we reward the god agent so that he learns to adjust well the stats of the agents
-                        
-                        
+                        /*
+                        // Reward the god agent if he succeed to make the agents live longer over time
                         if(CarnivorousPool.inUse
                                 .Select(go => go.GetComponent<LivingBeingAgent>().LivingBeing.LifeExpectancy)
-                                          .Average() - carnivorousPreviousAmountActions > 0
-                                &&
-                        HerbivorousPool.inUse
-                                .Select(go => go.GetComponent<LivingBeingAgent>().LivingBeing.LifeExpectancy)
-                                .Average() - herbivorousPreviousAmountActions > 0)
-                                AddReward(0.001f);
+                                          .Average() > carnivorousPreviousAmountActions)
+                                AddReward(0.0005f);
                         else
-                                AddReward(-0.001f);
+                                AddReward(-0.0005f);
 
-
-
+                        if(HerbivorousPool.inUse
+                                   .Select(go => go.GetComponent<LivingBeingAgent>().LivingBeing.LifeExpectancy)
+                                   .Average() > herbivorousPreviousAmountActions)
+                                AddReward(0.0005f);
+                        else
+                                AddReward(-0.0005f);
+*/
                         
+                        
+                        // Reward the god agent if he succeed to make the species live longer over time
+                        if(CarnivorousSpeciesLifeExpectency > carnivorousPreviousAmountActions)
+                                AddReward(0.0005f);
+                        else
+                                AddReward(-0.0005f);
+
+
+                        if(HerbivorousSpeciesLifeExpectency > herbivorousPreviousAmountActions)
+                                AddReward(0.0005f);
+                        else
+                                AddReward(-0.0005f);
+                        
+                        /*
                         // Store the previous amount of actions
                         carnivorousPreviousAmountActions = (int)CarnivorousPool.inUse
                                 .Select(go => go.GetComponent<LivingBeingAgent>().LivingBeing.LifeExpectancy).Average();
                         
                         herbivorousPreviousAmountActions = (int)HerbivorousPool.inUse
                                 .Select(go => go.GetComponent<LivingBeingAgent>().LivingBeing.LifeExpectancy).Average();
+                                */
                         
                 }
                 
