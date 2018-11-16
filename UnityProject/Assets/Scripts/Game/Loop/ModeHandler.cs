@@ -1,23 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
-public class ModeHandler : MonoBehaviour
+namespace Evol.Game.Loop
 {
+	public class ModeHandler : MonoBehaviour
+	{
+		
+		// Use this for initialization
+		private void Start () {
 	
-	// Use this for initialization
-	private void Start () {
-
-		if (PlayerPrefs.GetInt("mode") == 0)
-		{
-			GetComponent<ServerOffline>().enabled = true;
+			if (PhotonNetwork.OfflineMode)
+			{
+				GetComponent<ServerOffline>().enabled = true;
+			}
+			else if (!PhotonNetwork.OfflineMode)
+			{
+				GetComponent<ServerOnline>().enabled = true;
+			}
+				
 		}
-		else if (PlayerPrefs.GetInt("mode") == 1)
-		{
-			GetComponent<ServerOnline>().enabled = true;
-		}
-			
+		
+	
 	}
-	
-
 }

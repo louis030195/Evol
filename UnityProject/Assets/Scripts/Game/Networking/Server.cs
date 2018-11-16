@@ -72,18 +72,21 @@ namespace Evol.Game.Networking
         /// <param name="player">Instantiated player</param>
         protected void Mode(GameObject player)
         {
-            if (PlayerPrefs.GetInt("mode") == 0)
+            
+            if (PhotonNetwork.OfflineMode)
             {
-                player.GetComponent<PlayerManagerOffline>().enabled = true;
+                //player.GetComponent<PlayerManagerOffline>().enabled = true;
             }
-            else if (PlayerPrefs.GetInt("mode") == 1)
+            else if (!PhotonNetwork.OfflineMode)
             {
-                player.GetComponent<PlayerManagerOnline>().enabled = true;
+                //player.GetComponent<PlayerManagerOnline>().enabled = true;
+                /*
                 player.AddComponent<PhotonView>();
                 player.AddComponent<PhotonTransformView>();
                 player.GetComponent<PhotonTransformView>().m_SynchronizePosition = true;
                 player.GetComponent<PhotonTransformView>().m_SynchronizeRotation = true;
                 player.GetPhotonView().ObservedComponents.Add(player.GetComponent<PhotonTransformView>());
+                */
             }
         }
         

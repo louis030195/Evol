@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
+using Photon.Pun;
 
 namespace RPGCharacterAnims{
 	
@@ -20,6 +22,21 @@ namespace RPGCharacterAnims{
 		[HideInInspector] public float inputVertical = 0;
 		[HideInInspector] public bool inputAiming;
 		[HideInInspector] public bool inputRoll;
+		
+		private PhotonView photonView;
+		
+		
+		private void Awake()
+		{
+			try
+			{
+				photonView = GetComponent<PhotonView>();
+			}
+			catch (Exception e)
+			{
+				print("Offline mode");
+			}
+		}
 
 		/// <summary>
 		/// Input abstraction for easier asset updates using outside control schemes.
@@ -41,8 +58,11 @@ namespace RPGCharacterAnims{
 		}
 
 		void Update(){
+			if(photonView) // If online
+				if (!photonView.IsMine) return; // Prevent players from controlling each other
 			Inputs();
-			current = new RPGInput(){
+			current = new RPGInput()
+			{
 				moveInput = CameraRelativeInput(inputHorizontal, inputVertical),
 				aimInput = new Vector2(inputAimHorizontal, inputAimVertical),
 				jumpInput = inputJump

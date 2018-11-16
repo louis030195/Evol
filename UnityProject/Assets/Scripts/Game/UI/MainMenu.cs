@@ -7,37 +7,25 @@ using UnityEngine.UI;
 
 namespace Evol.Game.UI
 {
-	public class MainMenu : MonoBehaviour
+	public class MainMenu : MonoBehaviourPunCallbacks
 	{
 		public Text Nickname;
-
 		public Button Multiplayer;
 		public Button Singleplayer;
-
 		public Text ConnectionState;
 		
-		private void Start()
-		{
-			
-		}
 
 		public void OnMultiPlayer()
 		{
+			PhotonNetwork.OfflineMode = false;
 			PhotonNetwork.ConnectUsingSettings();
-			PhotonNetwork.LocalPlayer.NickName = Nickname.text;
-			if (PhotonNetwork.JoinRoom("Yolo"))
-			{
-				PhotonNetwork.LoadLevel("Game");
-				PlayerPrefs.SetInt("mode", 1); // Multiplayer or singleplayer ?
-			}
-			else
-				ConnectionState.text = "Unable to find the server";
+			ConnectionState.text = "Connecting ...";
 		}
 		
 		public void OnSinglePlayer()
 		{
+			PhotonNetwork.OfflineMode = true;
 			SceneManager.LoadScene("Game");
-			PlayerPrefs.SetInt("mode", 0); // Multiplayer or singleplayer ?
 		}
 
 		private void Update()
@@ -47,9 +35,26 @@ namespace Evol.Game.UI
 				Singleplayer.interactable = true;
 				Multiplayer.interactable = true;
 			}
+				
+		}
+
+		private void OnFailedToConnectToMasterServer( )
+		{
+			ConnectionState.text = "Failed to connect";
+		}
+
+		public override void OnConnectedToMaster()
+		{
+			ConnectionState.text = "Connected ! Loading game ... ";
 			
-			if(PhotonNetwork.IsConnected)
-				ConnectionState.text = "Connected to the cloud ! ";
+			if (PhotonNetwork.JoinRoom("Yolo"))
+			{
+				PhotonNetwork.LocalPlayer.NickName = Nickname.text;
+				PhotonNetwork.LoadLevel("Game");
+			}
+			else
+				ConnectionState.text = "Can't join room";
+
 		}
 	}
 }
