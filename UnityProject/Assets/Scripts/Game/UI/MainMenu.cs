@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Evol.Game.UI
@@ -10,34 +11,41 @@ namespace Evol.Game.UI
 	{
 		public Text Nickname;
 
-		public Button Play;
+		public Button Multiplayer;
+		public Button Singleplayer;
 
 		public Text ConnectionState;
 		
 		private void Start()
 		{
-			PhotonNetwork.ConnectUsingSettings();
+			
 		}
 
 		public void OnMultiPlayer()
 		{
+			PhotonNetwork.ConnectUsingSettings();
 			PhotonNetwork.LocalPlayer.NickName = Nickname.text;
-			if(PhotonNetwork.JoinRoom("Yolo"))
+			if (PhotonNetwork.JoinRoom("Yolo"))
+			{
 				PhotonNetwork.LoadLevel("Game");
+				PlayerPrefs.SetInt("mode", 1); // Multiplayer or singleplayer ?
+			}
 			else
 				ConnectionState.text = "Unable to find the server";
 		}
 		
 		public void OnSinglePlayer()
 		{
-
+			SceneManager.LoadScene("Game");
+			PlayerPrefs.SetInt("mode", 0); // Multiplayer or singleplayer ?
 		}
 
 		private void Update()
 		{
-			if (PhotonNetwork.IsConnected && !Nickname.text.Equals(""))
+			if (Nickname.text.Length > 0)
 			{
-				Play.interactable = true;
+				Singleplayer.interactable = true;
+				Multiplayer.interactable = true;
 			}
 			
 			if(PhotonNetwork.IsConnected)

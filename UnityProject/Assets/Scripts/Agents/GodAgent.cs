@@ -20,10 +20,7 @@ namespace Evol.Agents
                 public int HerbivorousSpeciesLifeExpectency { get; set; }
                 
                 public int CarnivorousSpeciesLifeExpectency { get; set; }
-
-
-                private int herbivorousPreviousAmountActions;
-                private int carnivorousPreviousAmountActions;
+                
                 private int herbivorousPreviousSpeciesLifeExpectency;
                 private int carnivorousPreviousSpeciesLifeExpectency;
 
@@ -157,26 +154,24 @@ namespace Evol.Agents
                         
                         
                         // Reward the god agent if he succeed to make the species live longer over time
-                        if(CarnivorousSpeciesLifeExpectency > carnivorousPreviousAmountActions)
+                        if(CarnivorousSpeciesLifeExpectency > carnivorousPreviousSpeciesLifeExpectency)
                                 AddReward(0.0005f);
                         else
                                 AddReward(-0.0005f);
 
 
-                        if(HerbivorousSpeciesLifeExpectency > herbivorousPreviousAmountActions)
+                        if(HerbivorousSpeciesLifeExpectency > herbivorousPreviousSpeciesLifeExpectency)
                                 AddReward(0.0005f);
                         else
                                 AddReward(-0.0005f);
                         
-                        /*
+                        
                         // Store the previous amount of actions
-                        carnivorousPreviousAmountActions = (int)CarnivorousPool.inUse
-                                .Select(go => go.GetComponent<LivingBeingAgent>().LivingBeing.LifeExpectancy).Average();
-                        
-                        herbivorousPreviousAmountActions = (int)HerbivorousPool.inUse
-                                .Select(go => go.GetComponent<LivingBeingAgent>().LivingBeing.LifeExpectancy).Average();
-                                */
-                        
+                        carnivorousPreviousSpeciesLifeExpectency = CarnivorousSpeciesLifeExpectency;
+
+                        herbivorousPreviousSpeciesLifeExpectency = HerbivorousSpeciesLifeExpectency;
+
+
                 }
                 
                 public override void AgentReset()

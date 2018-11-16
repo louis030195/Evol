@@ -121,6 +121,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 69478021}
+  - component: {fileID: 69478022}
+  - component: {fileID: 69478023}
   - component: {fileID: 69478020}
   m_Layer: 0
   m_Name: Server
@@ -135,16 +137,16 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 69478019}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9406fcb24dd14cd47b54deb843af58a1, type: 3}
+  m_Script: {fileID: 11500000, guid: 9dcbc667c3849442794fbe43a7bc7a00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   IsServer: 1
   PlayerPrefab: {fileID: 1056166718859902, guid: 7748ac0013b4e63499c01e60069ec3f7,
     type: 2}
   SpawnablePrefabs:
-  - {fileID: 1777388096454044, guid: 55fe2545c00c446d3aaaf424e7f84e68, type: 2}
+  - {fileID: 1777388096454044, guid: 85937eb0de212944c9f4fdb9a66cde4f, type: 2}
   - {fileID: 1037065897526392, guid: 5bd61245a87d69e4db6e6a25d15a7432, type: 2}
   - {fileID: 1563969880686890, guid: 4e841b8558850db46908a10a8aa09f60, type: 2}
   Brains:
@@ -168,6 +170,43 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &69478022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 69478019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8947d10eb447e470eb2efd9725910176, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &69478023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 69478019}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5130ed1c1020f4bee9bd5016bea6b6ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsServer: 1
+  PlayerPrefab: {fileID: 1056166718859902, guid: 7748ac0013b4e63499c01e60069ec3f7,
+    type: 2}
+  SpawnablePrefabs:
+  - {fileID: 1777388096454044, guid: 55fe2545c00c446d3aaaf424e7f84e68, type: 2}
+  - {fileID: 1037065897526392, guid: 5bd61245a87d69e4db6e6a25d15a7432, type: 2}
+  - {fileID: 1563969880686890, guid: 4e841b8558850db46908a10a8aa09f60, type: 2}
+  Brains:
+  - {fileID: 1642404366}
+  - {fileID: 196487639}
+  - {fileID: 430739865}
+  - {fileID: 1036138508}
+  Ground: {fileID: 1935913381}
+  Test: {fileID: 2045569565}
+  MaxPlayersPerRoom: 4
 --- !u!114 &85168373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,7 +388,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &473792986
 AudioListener:
   m_ObjectHideFlags: 0

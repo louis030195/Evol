@@ -11,73 +11,54 @@ namespace Evol.Game.Player
     {
         [Tooltip("The current Health of our player")]
         public float WalkSpeed = 10f;
-
         public Text Informations;
+        public AudioClip[] Clips;
 
-        private PhotonView photonView;
 
         private Rigidbody rb;
         private Vector3 moveDirection;
 
-        [SerializeField] private GameObject playerCamera;
-        [SerializeField] private MonoBehaviour[] playerControlScripts;
-        
-
-
-        private void Awake()
+        private AudioSource audioSource;
+	
+        protected virtual void Awake()
         {
-            photonView = GetComponent<PhotonView>();
+            audioSource = GetComponent<AudioSource>();
         }
+
 
         /// <summary>
         /// MonoBehaviour method called on GameObject by Unity during initialization phase.
         /// </summary>
-        public void Start()
+        protected virtual void Start()
         {  
-            DeactivateNonLocal();
-
             rb = GetComponent<Rigidbody>();
         }
 
-        /// <summary>
-        /// Only the local player should access his own camera and control scripts
-        /// </summary>
-        private void DeactivateNonLocal()
-        {
-            playerCamera.SetActive(photonView.IsMine);
 
+
+        protected virtual void Update()
+        {
+                
+            float horizontalMovement = Input.GetAxis("Horizontal");
+            float verticalMovement = Input.GetAxis("Vertical");
+    
+            // Normalizing vectors make sure they all have a magnitude of 1.
+            // Since adding the two vectors together produces a vector whose magnitude is larger than 1,
+            // it means the player will move faster going diagonally. So we normalize it
+            moveDirection = (horizontalMovement * transform.right + verticalMovement * transform.forward).normalized;
+            if((horizontalMovement != 0 || verticalMovement != 0) && !audioSource.isPlaying)
+                audioSource.PlayOneShot(Clips[0]);
             
-            foreach (var playerControlScript in playerControlScripts)
-            {
-                playerControlScript.enabled = photonView.IsMine;
-            }
         }
+        
 
-        private void Update()
+        protected virtual void FixedUpdate()
         {
-            if (photonView.IsMine)
-            {
-                
-                float horizontalMovement = Input.GetAxis("Horizontal");
-                float verticalMovement = Input.GetAxis("Vertical");
-
-                // Normalizing vectors make sure they all have a magnitude of 1.
-                // Since adding the two vectors together produces a vector whose magnitude is larger than 1,
-                // it means the player will move faster going diagonally. So we normalize it
-                moveDirection = (horizontalMovement * transform.right + verticalMovement * transform.forward).normalized;
-                
-            }
-        }
-
-        private void FixedUpdate()
-        {
-            if(photonView.IsMine)
-                Move();
+            Move();
         }
 
         private void Move()
         {
-            
             Vector3 yVelFix = new Vector3(0, rb.velocity.y, 0);
             
             // Time.deltaTime helps to give speed more manageable units. Think of it like appending "per second".
@@ -94,9 +75,11 @@ namespace Evol.Game.Player
                 */
         }
 
+
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
             //throw new System.NotImplementedException();
         }
+        
     }
 }

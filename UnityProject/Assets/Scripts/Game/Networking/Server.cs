@@ -19,21 +19,16 @@ namespace Evol.Game.Networking
     {
 
         public bool IsServer;
-        
         public GameObject PlayerPrefab;
         public List<GameObject> SpawnablePrefabs;
         public List<Brain> Brains;
         public GameObject Ground;
-
         public GameObject Test;
-        
-        
         public Pool HerbivorousPool;
         public Pool CarnivorousPool;
         public Pool HerbPool;
     
-        private List<GameObject> players;
-
+        protected List<GameObject> players;
 
         /// <summary>
         /// The maximum number of players in game
@@ -42,29 +37,18 @@ namespace Evol.Game.Networking
         public byte MaxPlayersPerRoom = 4;
 
 
-        private void Start()
+        protected virtual void Start()
         {
             if(!IsServer)
                 Destroy(this); // Destroy the server script if not server
-            players = new List<GameObject>();
-            PhotonNetwork.ConnectUsingSettings();
-        }
-
-        private void OnConnectedToServer()
-        {
-            Debug.Log($"OnConnectedToServer()");
-        }
-
-
-        public override void OnJoinedLobby()
-        {
-            Debug.Log($"OnJoinedLobby()"); 
-        }
-
-        public override void OnCreatedRoom()
-        {
-            Debug.Log($"OnCreatedRoom()"); 
+            players = new List<GameObject>();  
             
+            
+        }
+
+
+        protected void Initialize()
+        {
             //PlayerPool = new Pool(PlayerPrefab);
             HerbivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("herbivorous")));
             CarnivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("carnivorous")));
@@ -82,67 +66,29 @@ namespace Evol.Game.Networking
             StartCoroutine(SpawnTree());
         }
 
-        public override void OnJoinRandomFailed(short returnCode, string message)
+        /// <summary>
+        /// Remove the appropriate script following online / offline mode
+        /// </summary>
+        /// <param name="player">Instantiated player</param>
+        protected void Mode(GameObject player)
         {
-            Debug.Log($"OnJoinRandomFailed() - {returnCode} - {message}"); 
+            if (PlayerPrefs.GetInt("mode") == 0)
+            {
+                player.GetComponent<PlayerManagerOffline>().enabled = true;
+            }
+            else if (PlayerPrefs.GetInt("mode") == 1)
+            {
+                player.GetComponent<PlayerManagerOnline>().enabled = true;
+                player.AddComponent<PhotonView>();
+                player.AddComponent<PhotonTransformView>();
+                player.GetComponent<PhotonTransformView>().m_SynchronizePosition = true;
+                player.GetComponent<PhotonTransformView>().m_SynchronizeRotation = true;
+                player.GetPhotonView().ObservedComponents.Add(player.GetComponent<PhotonTransformView>());
+            }
         }
-
-        public override void OnJoinRoomFailed(short returnCode, string message)
-        {
-            Debug.Log($"OnJoinRoomFailed() - {returnCode} - {message}"); 
-        }
-
-        public override void OnJoinedRoom()
-        {
-            Debug.Log($"OnJoinedRoom()"); 
-        }
-
-        public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
-        {
-            //var player = PlayerPool.GetObject();
-            //player.SetActive(true);
-            // PhotonNetwork.Instantiate("Actors/PlayerControlled/Player") 
-            var player = PhotonNetwork.Instantiate(PlayerPrefab.name, Vector3.up, Quaternion.identity);
-            //player.GetComponent<Agent>().brain.InitializeBrain(FindObjectOfType<Academy>(), null);
-            //player.GetComponent<Agent>().GiveBrain(Brains[0]);
-            //player.SetActive(true); // Required to give brain on disabled GO, then active it
-            player.name = newPlayer.NickName;
-            
-            player.GetPhotonView().TransferOwnership(newPlayer);
-            
-            
-            players.Add(player);
-
-            
-            Debug.Log($"OnPlayerEnteredRoom() { newPlayer.NickName }");
-        }
-
         
-
-        public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
-        {
-            Debug.Log($"OnPlayerLeftRoom() { otherPlayer.NickName }"); 
-            
-            // PlayerPool.ReleaseObject(players.Find(p => p.name.Equals(otherPlayer.NickName)));
-            Destroy(players.Find(p => p.name.Equals(otherPlayer.NickName)), 1f);
-            players.Remove(players.Find(p => p.name.Equals(otherPlayer.NickName)));
-        }
-
-        public override void OnConnectedToMaster()
-        {
-            Debug.Log($"OnConnectedToMaster()");
-            
-            // The server create the room
-            var newRoomOptions = new RoomOptions();
-            newRoomOptions.IsOpen = true;
-            newRoomOptions.IsVisible = true;
-            newRoomOptions.MaxPlayers = MaxPlayersPerRoom;
-            
-            PhotonNetwork.CreateRoom("Yolo", newRoomOptions);
-            
-        }
-
-        private IEnumerator SpawnTree()
+        
+        protected IEnumerator SpawnTree()
         {
             while (true)
             {
@@ -164,7 +110,7 @@ namespace Evol.Game.Networking
             }
         }
 
-        private IEnumerator SpawnAgents()
+        protected IEnumerator SpawnAgents()
         {
             while (true)
             {
