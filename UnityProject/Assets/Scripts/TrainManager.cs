@@ -117,10 +117,10 @@ namespace Evol
             workerObjects = new List<Utils.Tuple<Utils.Tuple<int, int>, GameObject>>();
 
             // Instanciate pools to spawn / release objects
-            herbivorousPool = new Pool(ItemsToSpawn.FirstOrDefault(go => go.CompareTag("herbivorous")));
-            carnivorousPool = new Pool(ItemsToSpawn.FirstOrDefault(go => go.CompareTag("carnivorous")));
-            herbPool = new Pool(ItemsToSpawn.FirstOrDefault(go => go.CompareTag("food")));
-            godPool = new Pool(ItemsToSpawn.FirstOrDefault(go => go.CompareTag("god")));
+            herbivorousPool = new Pool(ItemsToSpawn.Find(go => go.name.Equals("HerbivorousAgent")));
+            carnivorousPool = new Pool(ItemsToSpawn.Find(go => go.name.Equals("CarnivorousAgent")));
+            herbPool = new Pool(ItemsToSpawn.Find(go => go.name.Equals("Herb")));
+            godPool = new Pool(ItemsToSpawn.Find(go => go.name.Equals("GodAgent")));
            
 
             // Find the brains in the list

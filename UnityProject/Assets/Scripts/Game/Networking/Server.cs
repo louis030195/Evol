@@ -50,9 +50,9 @@ namespace Evol.Game.Networking
         protected void Initialize()
         {
             //PlayerPool = new Pool(PlayerPrefab);
-            HerbivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("herbivorous")));
-            CarnivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("carnivorous")));
-            HerbPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("food")));
+            HerbivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Herbivorous")));
+            CarnivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Carnivorous")));
+            HerbPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Herb")));
             
             // Find the brains in the list
             HerbivorousPool.Brain =
@@ -61,9 +61,9 @@ namespace Evol.Game.Networking
                 Brains.FirstOrDefault(brain => "Carnivorous" == Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]);
 
             // TODO: Fix this shit (animals not sync in network)
-            //StartCoroutine(SpawnAgents());
+            StartCoroutine(SpawnAgents());
 
-            StartCoroutine(SpawnTree());
+            //StartCoroutine(SpawnTree());
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Evol.Game.Networking
             }
         }
 
-        protected IEnumerator SpawnAgents()
+        protected virtual IEnumerator SpawnAgents()
         {
             while (true)
             {
@@ -126,7 +126,7 @@ namespace Evol.Game.Networking
                 object[] instantiationData = { torque, true};
 
                 //var herbivorousObject = HerbivorousPool.GetObject();
-                var herbivorousObject = PhotonNetwork.InstantiateSceneObject(SpawnablePrefabs.Find(go => go.CompareTag("herbivorous")).name, Vector3.zero, Quaternion.identity);
+                var herbivorousObject = PhotonNetwork.InstantiateSceneObject(SpawnablePrefabs.Find(go => go.name.Equals("HerbivorousAgent")).name, Vector3.zero, Quaternion.identity);
                 herbivorousObject.GetComponent<Agent>().GiveBrain(Brains.FirstOrDefault(brain => "Herbivorous" == Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]));
                 //herbivorousObject.GetComponent<Agent>().brain.InitializeBrain(FindObjectOfType<Academy>(), null);
                 herbivorousObject.transform.parent = Ground.transform;

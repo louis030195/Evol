@@ -28,7 +28,7 @@ GameObject:
   - component: {fileID: 114255042813341328}
   m_Layer: 0
   m_Name: HerbivorousAgent
-  m_TagString: herbivorous
+  m_TagString: Herbivorous
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -156,4 +156,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eee03c7d0ec64b4b82df7a48caab040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Evolve: 1
+  Reproduction: 1
+  Evolution: 0

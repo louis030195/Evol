@@ -24,8 +24,8 @@ namespace Evol.Game.UI
 		
 		public void OnSinglePlayer()
 		{
-			PhotonNetwork.OfflineMode = true;
 			SceneManager.LoadScene("Game");
+			PhotonNetwork.OfflineMode = true;
 		}
 
 		private void Update()
@@ -38,10 +38,6 @@ namespace Evol.Game.UI
 				
 		}
 
-		private void OnFailedToConnectToMasterServer( )
-		{
-			ConnectionState.text = "Failed to connect";
-		}
 
 		public override void OnConnectedToMaster()
 		{

@@ -45,8 +45,8 @@ namespace Evol.Agents
                 transform.parent.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 2
                 : 0; // For example if ground is of scale 10 = size 100 / 2
             float[] rayAngles = {0f, 45f, 90f, 135f, 180f, 110f, 70f};
-            detectableObjects = new[] {"herbivorous", "carnivorous", "food"};
-            var detectableObjects2 = new[] {"ground"};
+            detectableObjects = new[] {"Herbivorous", "Carnivorous", "Herb"};
+            var detectableObjects2 = new[] {"Ground"};
             AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f, Reproduction, ReproductionTreshold));
             AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects2, 1f, -10f, Reproduction, ReproductionTreshold));
             Vector3 localVelocity = transform.InverseTransformDirection(rigidBody.velocity);
