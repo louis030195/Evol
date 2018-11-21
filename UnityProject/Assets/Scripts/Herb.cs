@@ -14,7 +14,9 @@ namespace Evol
 
         private void Start()
         {
-            groundSize = transform.parent.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 2 * 0.8f;
+            groundSize = transform.parent.Find("Ground").GetComponent<MeshRenderer>() == null
+                ? transform.parent.Find("Ground").GetComponent<Terrain>().terrainData.size.x / 2
+                : transform.parent.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 2;
             offsetX = transform.parent.position.x;
             transform.position = new Vector3(Random.Range(-groundSize, groundSize) + offsetX, transform.position.y,
                 Random.Range(-groundSize, groundSize));

@@ -140,8 +140,12 @@ namespace Evol
             int w = 0;
             for (; w < WorkerCarniHerbi.AmountOfWorkers; w++)
             {
+                var groundSize = WorkerCarniHerbi.WorkerPrefab.transform.Find("Ground").GetComponent<MeshRenderer>() == null
+                    ? WorkerCarniHerbi.WorkerPrefab.transform.Find("Ground").GetComponent<Terrain>().terrainData.size.x / 2
+                    : WorkerCarniHerbi.WorkerPrefab.transform.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 2;
+
                 GameObject workerObject = Instantiate(WorkerCarniHerbi.WorkerPrefab,
-                    new Vector3(2 * GroundScale * 10 * w, 0, 0),
+                    new Vector3(2 * groundSize * 10 * w, 0, 0),
                     new Quaternion(0, 0, 0, 0));
                 //workerObject.transform.Find("Ground").localScale = new Vector3(GroundScale, 1, GroundScale);
                 for (int i = 0; i < WorkerCarniHerbi.AmountOfAgentsToAdd; i++)

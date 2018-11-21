@@ -41,7 +41,9 @@ namespace Evol.Agents
         public override void CollectObservations()
         {
             var rayDistance = transform.parent.Find("Ground") != null ?
-                transform.parent.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 2
+                transform.parent.Find("Ground").GetComponent<MeshRenderer>() == null ?
+                    transform.parent.Find("Ground").GetComponent<Terrain>().terrainData.size.x / 4 :
+                    transform.parent.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 4
                 : 0; // For example if ground is of scale 10 = size 100 / 2
             float[] rayAngles = {0f, 45f, 90f, 135f, 180f, 110f, 70f};
             detectableObjects = new[] {"Herb", "Carnivorous", "Herbivorous"};
@@ -70,7 +72,7 @@ namespace Evol.Agents
 
             if (collision.collider.GetComponent<CarnivorousAgent>() != null)
             {
-                LivingBeing.Life = -1;
+                LivingBeing.Life -= 50;
             }
 
             if (collision.collider.GetComponent<HerbivorousAgent>() != null)

@@ -106,7 +106,9 @@ namespace Evol.Agents
         public void ResetPosition(Transform worker)
         {
             rigidBody.velocity = Vector3.zero;
-            float groundSize = worker.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 2;
+            float groundSize = worker.Find("Ground").GetComponent<MeshRenderer>() == null ? 
+                worker.Find("Ground").GetComponent<Terrain>().terrainData.size.x / 2 : // Depend what kind of env
+                worker.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 2;
             float offsetX = transform.parent.position.x;
             transform.position = new Vector3(Random.Range(-groundSize, groundSize) + offsetX, 0.5f,
                 Random.Range(-groundSize, groundSize));
@@ -121,7 +123,7 @@ namespace Evol.Agents
 
         private void FixedUpdate()
         {
-            /*
+            
             // Handling gravity manually ...
             RaycastHit hit;
             // Debug.DrawRay(transform.position,Vector3.down * 10,Color.green);
@@ -146,7 +148,6 @@ namespace Evol.Agents
             {
                 print(e.Message);
             }
-            */
         }
     }
 }
