@@ -14,7 +14,10 @@ namespace Evol
 
         private void Start()
         {
-            groundSize = transform.parent.Find("Ground").GetComponent<MeshRenderer>() == null
+            // TODO: give the ground to every object that need the size / give size directly
+            groundSize = transform.parent.Find("Ground") == null ? // This is different when training / testing ...
+                FindObjectOfType<Terrain>().terrainData.size.x / 2 :
+                transform.parent.Find("Ground").GetComponent<MeshRenderer>() == null
                 ? transform.parent.Find("Ground").GetComponent<Terrain>().terrainData.size.x / 2
                 : transform.parent.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 2;
             offsetX = transform.parent.position.x;

@@ -13,6 +13,7 @@ public class ServerOffline : Server
         base.Start();
         Initialize();
         var player = Instantiate(PlayerPrefab, Vector3.up, Quaternion.identity);
+        var camera = Instantiate(CameraPrefab);
         Mode(player);
     }
 

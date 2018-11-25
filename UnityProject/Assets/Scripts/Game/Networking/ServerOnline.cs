@@ -23,6 +23,7 @@ public class ServerOnline : Server
 		//player.SetActive(true);
 		// PhotonNetwork.Instantiate("Actors/PlayerControlled/Player") 
 		var player = PhotonNetwork.Instantiate(PlayerPrefab.name, Vector3.up, Quaternion.identity);
+		var camera = Instantiate(CameraPrefab);
 		//player.GetComponent<Agent>().brain.InitializeBrain(FindObjectOfType<Academy>(), null);
 		//player.GetComponent<Agent>().GiveBrain(Brains[0]);
 		//player.SetActive(true); // Required to give brain on disabled GO, then active it

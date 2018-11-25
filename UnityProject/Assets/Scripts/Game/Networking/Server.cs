@@ -20,6 +20,7 @@ namespace Evol.Game.Networking
 
         public bool IsServer;
         public GameObject PlayerPrefab;
+        public GameObject CameraPrefab;
         public List<GameObject> SpawnablePrefabs;
         public List<Brain> Brains;
         public GameObject Ground;
@@ -72,7 +73,6 @@ namespace Evol.Game.Networking
         /// <param name="player">Instantiated player</param>
         protected void Mode(GameObject player)
         {
-            
             if (PhotonNetwork.OfflineMode)
             {
                 //player.GetComponent<PlayerManagerOffline>().enabled = true;
