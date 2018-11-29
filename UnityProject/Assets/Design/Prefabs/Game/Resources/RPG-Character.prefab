@@ -957,6 +957,7 @@ GameObject:
   - component: {fileID: 114625226891273824}
   - component: {fileID: 114368591668563746}
   - component: {fileID: 114742563769119088}
+  - component: {fileID: 114204518787107748}
   - component: {fileID: 114815790835272418}
   m_Layer: 0
   m_Name: RPG-Character
@@ -3443,6 +3444,95 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &114204518787107748
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1503491749967708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 2
+    Name: Moving
+  - Type: 4
+    SynchronizeType: 1
+    Name: Strafing
+  - Type: 4
+    SynchronizeType: 1
+    Name: Stunned
+  - Type: 1
+    SynchronizeType: 0
+    Name: AnimationSpeed
+  - Type: 3
+    SynchronizeType: 1
+    Name: Weapon
+  - Type: 3
+    SynchronizeType: 1
+    Name: LeftRight
+  - Type: 3
+    SynchronizeType: 1
+    Name: AttackSide
+  - Type: 3
+    SynchronizeType: 1
+    Name: Jumping
+  - Type: 1
+    SynchronizeType: 0
+    Name: Velocity X
+  - Type: 1
+    SynchronizeType: 0
+    Name: Velocity Z
+  - Type: 3
+    SynchronizeType: 0
+    Name: Action
+  - Type: 9
+    SynchronizeType: 1
+    Name: IdleTrigger
+  - Type: 9
+    SynchronizeType: 1
+    Name: ActionTrigger
+  - Type: 9
+    SynchronizeType: 1
+    Name: AttackTrigger
+  - Type: 9
+    SynchronizeType: 1
+    Name: AttackKickTrigger
+  - Type: 9
+    SynchronizeType: 1
+    Name: AttackDualTrigger
+  - Type: 9
+    SynchronizeType: 1
+    Name: GetHitTrigger
+  - Type: 9
+    SynchronizeType: 1
+    Name: RollTrigger
+  - Type: 9
+    SynchronizeType: 1
+    Name: TurnLeftTrigger
+  - Type: 9
+    SynchronizeType: 1
+    Name: TurnRightTrigger
+  - Type: 9
+    SynchronizeType: 1
+    Name: DodgeTrigger
+  - Type: 9
+    SynchronizeType: 1
+    Name: JumpTrigger
+  - Type: 9
+    SynchronizeType: 1
+    Name: Death1Trigger
+  - Type: 9
+    SynchronizeType: 1
+    Name: Revive1Trigger
+  m_SynchronizeLayers:
+  - SynchronizeType: 1
+    LayerIndex: 0
 --- !u!114 &114223826394339908
 MonoBehaviour:
   m_ObjectHideFlags: 1

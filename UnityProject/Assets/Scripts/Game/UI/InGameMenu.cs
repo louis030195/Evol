@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using RPGCharacterAnims;
 using UnityEngine;
 
 namespace Evol.Game.UI
@@ -30,6 +31,9 @@ namespace Evol.Game.UI
 		{
 			if (Input.GetKeyDown(KeyCode.Escape))
 			{
+				
+				
+				
 				// In case we exited the menu from settings, reset stuff
 				if (SettingsPauseUI.active)
 				{
@@ -39,6 +43,9 @@ namespace Evol.Game.UI
 				
 				PauseUI.SetActive(!PauseUI.active);
 				PlayUI.SetActive(!PlayUI.active);
+
+				// Disable / enable the character movement
+				GetComponent<RPGCharacterControllerFREE>().Lock(true, true, !PauseUI.active, 0, 0);
 			}
 		}
 

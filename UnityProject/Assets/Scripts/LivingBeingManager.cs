@@ -68,6 +68,11 @@ namespace Evol
                 livingBeingAgent.Done();
             }
 
+            ClipStats();
+        }
+
+        protected void ClipStats()
+        {
             livingBeingAgent.LivingBeing.Life =
                 livingBeingAgent.LivingBeing.Life > 100 ? 100 : livingBeingAgent.LivingBeing.Life;
 
