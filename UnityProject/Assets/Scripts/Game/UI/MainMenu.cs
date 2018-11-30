@@ -28,6 +28,11 @@ namespace Evol.Game.UI
 			PhotonNetwork.OfflineMode = true;
 		}
 
+		public void CharacterSelection()
+		{
+			
+		}
+
 		private void Update()
 		{
 			if (Nickname.text.Length > 0)
