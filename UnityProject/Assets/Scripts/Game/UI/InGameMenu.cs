@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using RPGCharacterAnims;
+using UnityEditor.Animations;
 using UnityEngine;
 
 namespace Evol.Game.UI
 {
 	public class InGameMenu : MonoBehaviour
 	{
-
+		
 		public GameObject PlayUI;
 		public GameObject PauseUI;
 
@@ -66,6 +67,18 @@ namespace Evol.Game.UI
 		{
 			SettingsPauseUI.SetActive(!SettingsPauseUI.active);
 			MainMenuPauseUI.SetActive(!MainMenuPauseUI.active);
+		}
+		
+		/// <summary>
+		/// Exit game
+		/// </summary>
+		public void OnExitGame()
+		{
+			#if UNITY_EDITOR
+				UnityEditor.EditorApplication.isPlaying = false;
+			#else
+				Application.Quit();
+			#endif
 		}
 
 		/// <summary>

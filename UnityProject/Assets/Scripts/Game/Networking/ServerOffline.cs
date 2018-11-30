@@ -14,6 +14,7 @@ public class ServerOffline : Server
         Initialize();
         var player = Instantiate(PlayerPrefab, Vector3.up, Quaternion.identity);
         var camera = Instantiate(CameraPrefab);
+        camera.GetComponent<SmoothFollow>().target = player.transform;
         Mode(player);
     }
 
