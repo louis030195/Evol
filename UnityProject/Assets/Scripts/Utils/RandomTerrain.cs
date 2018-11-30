@@ -10,6 +10,9 @@ namespace Evol.Utils
 	{
 
 
+		[Tooltip("Frequency of terrain randomization follow formula. \nUpdate every 10^UpdateRate frames")]
+		public int UpdateRate = 8;
+		
 		public int Depth = 10;
 		public int Width = 100;
 		public int Height = 100;
@@ -26,7 +29,7 @@ namespace Evol.Utils
 		private void FixedUpdate()
 		{
 			frames++;
-			if (frames % Mathf.Pow(10, 8) == 0)
+			if (frames % Mathf.Pow(10, UpdateRate) == 0)
 			{
 				frames = 0;
 				var terrain = GetComponent<Terrain>();

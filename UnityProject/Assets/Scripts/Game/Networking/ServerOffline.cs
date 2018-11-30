@@ -43,7 +43,6 @@ public class ServerOffline : Server
             carnivorousObject.transform.parent = Ground.transform;
             carnivorousObject.SetActive(true);
             
-            
             var herbObject = HerbPool.GetObject();
             herbObject.transform.parent = Ground.transform;
             herbObject.SetActive(true);

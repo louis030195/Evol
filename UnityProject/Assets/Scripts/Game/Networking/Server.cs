@@ -119,6 +119,7 @@ namespace Evol.Game.Networking
             {
                 yield return new WaitForSeconds(Random.Range(0, 10));
 
+                /*
                 Vector2 direction = Random.insideUnitCircle;
                 Vector3 position = Vector3.zero;
 
@@ -138,17 +139,18 @@ namespace Evol.Game.Networking
                 
                 
                 
-                /*
+                
                 var carnivorousObject = CarnivorousPool.GetObject();
                 carnivorousObject.transform.parent = Ground.transform;
                 carnivorousObject.SetActive(true);
                 carnivorousObject.GetComponent<LivingBeingAgent>().ResetPosition(Ground.transform);
-                */
+                
                 
                 var herbObject = HerbPool.GetObject();
                 herbObject.transform.parent = Ground.transform;
                 herbObject.SetActive(true);
                 //PhotonNetwork.InstantiateSceneObject("Agent", position, Quaternion.Euler(Random.value * 360.0f, Random.value * 360.0f, Random.value * 360.0f), 0, instantiationData);
+                */
             }
         }
         

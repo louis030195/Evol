@@ -129,7 +129,9 @@ namespace Evol.Agents
             // Debug.DrawRay(transform.position,Vector3.down * 10,Color.green);
             try // Just in case we try to get the collider while we are being deactivated
             {
-                if (Physics.Raycast(transform.position, -transform.up, out hit, 100))
+                
+                //if (Physics.Raycast(transform.position, -transform.up, out hit, 100))
+                if(Physics.Raycast(GetComponent<Collider>().bounds.min, -transform.up, out hit, 100))
                 {
                     //the ray collided with something, you can interact
                     // with the hit object now by using hit.collider.gameObject
