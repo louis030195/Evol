@@ -19,6 +19,7 @@ namespace Evol.Agents
         public override void InitializeAgent()
         {
             base.InitializeAgent();
+            if (LivingBeing != null) return;
             LivingBeing = new Herbivorous(50, 0, 0, 50, 0, 50);
 
             eatCounter = Metrics.CreateCounter("eatHerbivorous", "How many times herbivorous has eaten");
@@ -42,8 +43,8 @@ namespace Evol.Agents
         {
             var rayDistance = transform.parent.Find("Ground") != null ?
                 transform.parent.Find("Ground").GetComponent<MeshRenderer>() == null ?
-                    transform.parent.Find("Ground").GetComponent<Terrain>().terrainData.size.x / 4 :
-                    transform.parent.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 4
+                    transform.parent.Find("Ground").GetComponent<Terrain>().terrainData.size.x / 2 :
+                    transform.parent.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 2
                 : 0; // For example if ground is of scale 10 = size 100 / 2
             float[] rayAngles = {0f, 45f, 90f, 135f, 180f, 110f, 70f};
             detectableObjects = new[] {"Herb", "Carnivorous", "Herbivorous"};

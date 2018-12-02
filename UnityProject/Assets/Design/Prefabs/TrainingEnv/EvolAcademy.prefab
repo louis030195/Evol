@@ -28,22 +28,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1067924177323952
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4100142639248410}
-  - component: {fileID: 114013471954363690}
-  m_Layer: 0
-  m_Name: CrawlerBrain
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1116304101031432
 GameObject:
   m_ObjectHideFlags: 0
@@ -55,22 +39,6 @@ GameObject:
   - component: {fileID: 114555813800974604}
   m_Layer: 0
   m_Name: BrainGod
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1512304687093500
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4232205203749172}
-  - component: {fileID: 114747797302771448}
-  m_Layer: 0
-  m_Name: BrainCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -122,19 +90,6 @@ Transform:
   m_Father: {fileID: 4856651493469528}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4100142639248410
-Transform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1067924177323952}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4856651493469528}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4153199761480242
 Transform:
   m_ObjectHideFlags: 1
@@ -148,19 +103,6 @@ Transform:
   m_Father: {fileID: 4856651493469528}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4232205203749172
-Transform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1512304687093500}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4856651493469528}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4237516108872270
 Transform:
   m_ObjectHideFlags: 1
@@ -172,7 +114,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4856651493469528}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4856651493469528
 Transform:
@@ -186,57 +128,10 @@ Transform:
   m_Children:
   - {fileID: 4153199761480242}
   - {fileID: 4010749345161656}
-  - {fileID: 4232205203749172}
   - {fileID: 4237516108872270}
-  - {fileID: 4100142639248410}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114013471954363690
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1067924177323952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c676a8ddf5a5f4f64b35e9ed5028679d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  brainParameters:
-    vectorObservationSize: 129
-    numStackedVectorObservations: 1
-    vectorActionSize: 14000000
-    cameraResolutions: []
-    vectorActionDescriptions:
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    vectorActionSpaceType: 1
-  brainType: 3
-  CoreBrains:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  instanceID: -90036
 --- !u!114 &114094034598838896
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -263,7 +158,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: -239836
+  instanceID: -1058
 --- !u!114 &114555813800974604
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -276,11 +171,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 4
+    vectorObservationSize: 8
     numStackedVectorObservations: 1
-    vectorActionSize: 02000000
+    vectorActionSize: 06000000
     cameraResolutions: []
     vectorActionDescriptions:
+    - 
+    - 
+    - 
+    - 
     - 
     - 
     vectorActionSpaceType: 1
@@ -290,7 +189,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: -26792
+  instanceID: -1062
 --- !u!114 &114575627226621030
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -317,31 +216,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Tag: herb
   Speed: 50
---- !u!114 &114747797302771448
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1512304687093500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c676a8ddf5a5f4f64b35e9ed5028679d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  brainParameters:
-    vectorObservationSize: 7
-    numStackedVectorObservations: 1
-    vectorActionSize: 00000000
-    cameraResolutions: []
-    vectorActionDescriptions: []
-    vectorActionSpaceType: 1
-  brainType: 0
-  CoreBrains:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  instanceID: -26790
 --- !u!114 &114830505798622882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -402,4 +276,4 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  instanceID: -239834
+  instanceID: -1056

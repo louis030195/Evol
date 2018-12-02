@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using RPGCharacterAnims;
-using UnityEditor.Animations;
 using UnityEngine;
 
 namespace Evol.Game.UI
@@ -32,9 +31,6 @@ namespace Evol.Game.UI
 		{
 			if (Input.GetKeyDown(KeyCode.Escape))
 			{
-				
-				
-				
 				// In case we exited the menu from settings, reset stuff
 				if (SettingsPauseUI.active)
 				{

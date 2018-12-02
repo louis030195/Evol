@@ -123,7 +123,7 @@ namespace Evol.Agents
 
         private void FixedUpdate()
         {
-            /*
+            
             // Handling gravity manually ...
             RaycastHit hit;
             // Debug.DrawRay(transform.position,Vector3.down * 10,Color.green);
@@ -149,7 +149,7 @@ namespace Evol.Agents
             catch (ArgumentNullException e)
             {
                 print(e.Message);
-            }*/
+            }
         }
     }
 }

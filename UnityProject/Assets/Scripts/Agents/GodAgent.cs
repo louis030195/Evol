@@ -31,6 +31,7 @@ namespace Evol.Agents
                         if(cumulativeRewardGauge == null)
                                 cumulativeRewardGauge =
                                         Metrics.CreateGauge("cumulativeRewardGod", "Cumulative reward of god");
+
                 }
 
                 public override void CollectObservations()
@@ -87,18 +88,18 @@ namespace Evol.Agents
                                 // Handle life gain on eat
                                 HerbivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().LifeGain =
-                                                Mathf.Clamp(vectorAction[2], 30f, 100f));
+                                                Mathf.Clamp(vectorAction[2] * 100, 30f, 100f));
                                 CarnivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().LifeGain =
-                                                Mathf.Clamp(vectorAction[3], 30f, 100f));
+                                                Mathf.Clamp(vectorAction[3] * 100, 30f, 100f));
                                 
                                 // Handle speed
                                 HerbivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().LivingBeing.Speed =
-                                                Mathf.Clamp(vectorAction[2], 30f, 100f));
+                                                Mathf.Clamp(vectorAction[4] * 100, 30f, 100f));
                                 CarnivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().LivingBeing.Speed =
-                                                Mathf.Clamp(vectorAction[3], 30f, 100f));
+                                                Mathf.Clamp(vectorAction[5] * 100, 30f, 100f));
                                 
                                 /*
                                 // Handle reward on act
@@ -151,7 +152,7 @@ namespace Evol.Agents
                         else
                                 AddReward(-0.0005f);
 */
-                        
+                        //print($"{carnivorousPreviousSpeciesLifeExpectency} | {CarnivorousSpeciesLifeExpectency}");
                         
                         // Reward the god agent if he succeed to make the species live longer over time
                         if(CarnivorousSpeciesLifeExpectency > carnivorousPreviousSpeciesLifeExpectency)
@@ -166,10 +167,17 @@ namespace Evol.Agents
                                 AddReward(-0.0005f);
                         
                         
-                        // Store the previous amount of actions
-                        carnivorousPreviousSpeciesLifeExpectency = CarnivorousSpeciesLifeExpectency;
+                        // Store the previous species life expectency if different
+                        // else -1 to push the goal forward
+                        carnivorousPreviousSpeciesLifeExpectency =  
+                                carnivorousPreviousSpeciesLifeExpectency != CarnivorousSpeciesLifeExpectency ?
+                                        CarnivorousSpeciesLifeExpectency :
+                                        carnivorousPreviousSpeciesLifeExpectency - 1;
 
-                        herbivorousPreviousSpeciesLifeExpectency = HerbivorousSpeciesLifeExpectency;
+                        herbivorousPreviousSpeciesLifeExpectency =  
+                                herbivorousPreviousSpeciesLifeExpectency != HerbivorousSpeciesLifeExpectency ?
+                                        HerbivorousSpeciesLifeExpectency :
+                                        herbivorousPreviousSpeciesLifeExpectency - 1;
 
 
                 }
