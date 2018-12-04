@@ -12,25 +12,59 @@ namespace Evol.Game.UI
 		public Text Nickname;
 		public Button Multiplayer;
 		public Button Singleplayer;
+		public Button Play;
 		public Text ConnectionState;
-		
 
+		public GameObject MainMenuu;
+		public GameObject CharacterMenu;
+		public GameObject SelectionEffect;
+
+		private bool multiplayerGame;
+		private int character;
+		private GameObject selectionEffectObject;
+
+		private void SwitchMenu()
+		{
+			MainMenuu.SetActive(false);
+			CharacterMenu.SetActive(true);
+		}
+		
 		public void OnMultiPlayer()
 		{
-			PhotonNetwork.OfflineMode = false;
-			PhotonNetwork.ConnectUsingSettings();
-			ConnectionState.text = "Connecting ...";
+			multiplayerGame = true;
+			SwitchMenu();
 		}
 		
 		public void OnSinglePlayer()
 		{
-			SceneManager.LoadScene("Game");
-			PhotonNetwork.OfflineMode = true;
+			multiplayerGame = false;
+			SwitchMenu();
 		}
 
-		public void CharacterSelection()
+		public void OnPlay()
 		{
+			if (multiplayerGame)
+			{
+				PhotonNetwork.OfflineMode = false;
+				PhotonNetwork.ConnectUsingSettings();
+				ConnectionState.text = "Connecting ...";
+			}
+			else
+			{
+				SceneManager.LoadScene("Game");
+				PhotonNetwork.OfflineMode = true;
+			}
+				
+		}
+
+		public void OnCharacterSelection(int character)
+		{
+			Destroy(selectionEffectObject);
 			
+			this.character = character;
+			// TODO: find cleaner solution for the position xDDDDD
+			selectionEffectObject = Instantiate(SelectionEffect, new Vector3(character == 0 ? -40 : 30, -30, 90), new Quaternion(90, 0, 0, 90), transform.parent);
+			Play.interactable = true;
 		}
 
 		private void Update()

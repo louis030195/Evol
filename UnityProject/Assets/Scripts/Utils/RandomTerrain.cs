@@ -45,13 +45,15 @@ namespace Evol.Utils
 			terrainData.heightmapResolution = Width + 1;
 			terrainData.size = new Vector3(Width, Depth, Height);
 			
-			terrainData.SetHeights(0, 0, GenerateHeights());
+			terrainData.SetHeights(0, 0, GenerateHeights(true));
 			return terrainData;
 		}
 
 
-		private float[,] GenerateHeights()
+		private float[,] GenerateHeights(bool walls = false)
 		{
+
+			
 			var heights = new float[Width, Height];
 			foreach (var i in Enumerable.Range(0, NumberOfBumps))
 			{
@@ -64,6 +66,21 @@ namespace Evol.Utils
 					var b = Random.Range(-y / NeighboringBumps, y / NeighboringBumps);
 					heights[x+a, y+b] = CalculateHeight(x + a, y + b);
 				}
+			}
+
+			if (walls)
+			{
+				foreach (var i in Enumerable.Range(0, Width))
+					heights[i, 0] = 10000;
+
+				foreach (var i in Enumerable.Range(0, Width))
+					heights[0, i] = 10000;
+
+				foreach (var i in Enumerable.Range(0, Width))
+					heights[i, Width - 1] = 10000;
+
+				foreach (var i in Enumerable.Range(0, Width))
+					heights[Width - 1, i] = 10000;
 			}
 
 			return heights;

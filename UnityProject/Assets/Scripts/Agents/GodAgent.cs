@@ -44,13 +44,13 @@ namespace Evol.Agents
                         
                         AddVectorObs(CarnivorousPool.inUse.First().GetComponent<LivingBeingAgent>().LivingBeing.Speed);
                         
-                        //AddVectorObs(CarnivorousPool.inUse.First().GetComponent<LivingBeingAgent>().RewardOnAct);
+                        AddVectorObs(CarnivorousPool.inUse.First().GetComponent<LivingBeingAgent>().RewardOnAct);
                         
-                        //AddVectorObs(CarnivorousPool.inUse.First().GetComponent<LivingBeingAgent>().RewardOnEat);
+                        AddVectorObs(CarnivorousPool.inUse.First().GetComponent<LivingBeingAgent>().RewardOnEat);
                         
-                        //AddVectorObs(CarnivorousPool.inUse.First().GetComponent<LivingBeingAgent>().RewardOnReproduce);
+                        AddVectorObs(CarnivorousPool.inUse.First().GetComponent<LivingBeingAgent>().RewardOnReproduce);
                         
-                        //AddVectorObs(CarnivorousPool.inUse.First().GetComponent<LivingBeingManager>().RewardOnDeath);
+                        AddVectorObs(CarnivorousPool.inUse.First().GetComponent<LivingBeingManager>().RewardOnDeath);
                         
                         
                         // ---------------------------------------------------------------------------------------------
@@ -63,13 +63,13 @@ namespace Evol.Agents
                         
                         AddVectorObs(HerbivorousPool.inUse.First().GetComponent<LivingBeingAgent>().LivingBeing.Speed);
                         
-                        //AddVectorObs(HerbivorousPool.inUse.First().GetComponent<LivingBeingAgent>().RewardOnAct);
+                        AddVectorObs(HerbivorousPool.inUse.First().GetComponent<LivingBeingAgent>().RewardOnAct);
                         
-                        //AddVectorObs(HerbivorousPool.inUse.First().GetComponent<LivingBeingAgent>().RewardOnEat);
+                        AddVectorObs(HerbivorousPool.inUse.First().GetComponent<LivingBeingAgent>().RewardOnEat);
                         
-                        //AddVectorObs(HerbivorousPool.inUse.First().GetComponent<LivingBeingAgent>().RewardOnReproduce);
+                        AddVectorObs(HerbivorousPool.inUse.First().GetComponent<LivingBeingAgent>().RewardOnReproduce);
                         
-                        //AddVectorObs(HerbivorousPool.inUse.First().GetComponent<LivingBeingManager>().RewardOnDeath);
+                        AddVectorObs(HerbivorousPool.inUse.First().GetComponent<LivingBeingManager>().RewardOnDeath);
                 }
 
                 public override void AgentAction(float[] vectorAction, string textAction)
@@ -101,39 +101,39 @@ namespace Evol.Agents
                                         go.GetComponent<LivingBeingAgent>().LivingBeing.Speed =
                                                 Mathf.Clamp(vectorAction[5] * 100, 30f, 100f));
                                 
-                                /*
+                                
                                 // Handle reward on act
                                 HerbivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().RewardOnAct =
-                                                Mathf.Clamp(vectorAction[4], -1f, 0f));
+                                                Mathf.Clamp(vectorAction[6], -1f, 0f));
                                 CarnivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().RewardOnAct =
-                                                Mathf.Clamp(vectorAction[5], -1f, 0f));
+                                                Mathf.Clamp(vectorAction[7], -1f, 0f));
                                 
                                 // Handle reward on eat
                                 HerbivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().RewardOnEat =
-                                                Mathf.Clamp(vectorAction[6], 0f, 10f));
+                                                Mathf.Clamp(vectorAction[8] * 10, 0f, 10f));
                                 CarnivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().RewardOnEat =
-                                                Mathf.Clamp(vectorAction[7], 0f, 10f));
+                                                Mathf.Clamp(vectorAction[9] * 10, 0f, 10f));
                                 
                                 // Handle reward on reproduce
                                 HerbivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().RewardOnReproduce =
-                                                Mathf.Clamp(vectorAction[8], 0f, 10f));
+                                                Mathf.Clamp(vectorAction[10] * 10, 0f, 10f));
                                 CarnivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().RewardOnReproduce =
-                                                Mathf.Clamp(vectorAction[9], 0f, 10f));
+                                                Mathf.Clamp(vectorAction[11] * 10, 0f, 10f));
                                 
                                 // Handle reward on death
                                 HerbivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingManager>().RewardOnDeath =
-                                                Mathf.Clamp(vectorAction[10], 0f, 20f));
+                                                Mathf.Clamp(vectorAction[12] * 20, 0f, 20f));
                                 CarnivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingManager>().RewardOnDeath =
-                                                Mathf.Clamp(vectorAction[11], 0f, 20f));
-                                                */
+                                                Mathf.Clamp(vectorAction[13] * 20, 0f, 20f));
+                                                
                         }
 
                         /*

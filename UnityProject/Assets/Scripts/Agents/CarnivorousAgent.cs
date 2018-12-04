@@ -43,11 +43,11 @@ namespace Evol.Agents
         {
             var rayDistance = transform.parent.Find("Ground") != null ?
                 transform.parent.Find("Ground").GetComponent<MeshRenderer>() == null ?
-                    transform.parent.Find("Ground").GetComponent<Terrain>().terrainData.size.x / 2 :
-                    transform.parent.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 2
+                    transform.parent.Find("Ground").GetComponent<Terrain>().terrainData.size.x / 4 :
+                    transform.parent.Find("Ground").GetComponent<MeshRenderer>().bounds.size.x / 4
                 : 0; // For example if ground is of scale 10 = size 100 / 2
             float[] rayAngles = {0f, 45f, 90f, 135f, 180f, 110f, 70f};
-            detectableObjects = new[] {"Herbivorous", "Carnivorous", "Herb"};
+            detectableObjects = new[] {"Herbivorous", "Carnivorous", "Herb", "Ground"};
             var detectableObjects2 = new[] {"Ground"};
             AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f, Reproduction, ReproductionTreshold));
             //AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects2, 1f, -10f, Reproduction, ReproductionTreshold));
