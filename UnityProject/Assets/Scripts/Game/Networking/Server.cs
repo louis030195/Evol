@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Evol.Agents;
-using Evol.Game.Player;
 using Evol.Utils;
 using MLAgents;
 using Photon.Pun;
@@ -204,6 +203,125 @@ namespace Evol.Game.Networking
             }
         }
         
+        /*
+        // This is called from start and will run each phase of the game one after another.
+        private IEnumerator GameLoop()
+        {
+
+            // Start off by running the 'GameStarting' coroutine but don't return until it's finished.
+            yield return StartCoroutine(GameStarting());
+
+            // Once the 'GameStarting' coroutine is finished, run the 'RoundPlaying' coroutine but don't return until it's finished.
+            yield return StartCoroutine(GamePlaying());
+
+            // Once execution has returned here, run the 'GameEnding' coroutine, again don't return until it's finished.
+            yield return StartCoroutine(GameEnding());
+
+            // This code is not run until 'RoundEnding' has finished.  At which point, check if a game winner has been found.
+            switch (gameState)
+            {
+                case GameState.Won:
+                    // If there is a game winner, restart the level.
+
+                    // Forces the server to shutdown.
+                    NetworkManager.singleton.StopHost();
+                    NetworkManager.singleton.StopClient();
+                    Shutdown();
+
+                    // Reset internal state of the server and start the server again.
+                    Start();
+                    ServerChangeScene("Main");
+
+                    break;
+                case GameState.Lost:
+                    // If game is lost, restart the level.
+
+
+                    NetworkManager.singleton.StopHost();
+                    NetworkManager.singleton.StopClient();
+                    Shutdown();
+
+                    // Reset internal state of the server and start the server again.
+                    Start();
+                    ServerChangeScene("Main");
+
+                    //NetworkManager.singleton.StopHost();
+                    //NetworkManager.singleton.StopClient();
+                    break;
+                case GameState.Playing:
+                    // If there isn't a winner yet, restart this coroutine so the loop continues.
+                    // Note that this coroutine doesn't yield.  This means that the current version of the GameLoop will end.
+                    StartCoroutine(GameLoop());
+                    break;
+            }
+        }
+
+        private IEnumerator GameStarting()
+        {
+
+            countAi = 0;
+            roundNumber = 0;
+
+            messageText.text = "Waiting more players or press Space to play solo";
+
+
+            // Wait other players
+            
+            while (NetworkServer.connections.Count < 2)
+            {
+                yield return null;
+                if (Input.GetKeyDown(KeyCode.Space))
+                    break;
+            }
+            
+            gameState = GameState.Playing;
+            messageText.text = "Kill them all";
+
+
+            // Wait for the specified length of time until yielding control back to the game loop.
+            yield return startWait;
+        }
+
+
+        private IEnumerator GamePlaying()
+        {
+
+            nexus = (GameObject)Instantiate(spawnPrefabs[9], new Vector3(0, 0.5f, 0), Quaternion.identity);
+            NetworkServer.Spawn(nexus);
+
+            while (true)
+            {
+                // Start off by running the 'RoundStarting' coroutine but don't return until it's finished.
+                yield return StartCoroutine(RoundStarting());
+
+                // ... return on the next frame.
+                yield return StartCoroutine(RoundPlaying());
+                if (GameFinished())
+                    yield break;
+
+                yield return StartCoroutine(RoundEnding());
+            }
+        }
+
+        private IEnumerator GameEnding()
+        {
+            // Stop from moving.
+            // DisableControl();
+            if (GameFinished() && !victory)
+            {
+                messageText.text = "GAME OVER";
+                gameState = GameState.Lost;
+            }
+            if(victory)
+            {
+                messageText.text = "Win";
+                gameState = GameState.Won;
+            }
+
+            // Wait for the specified length of time until yielding control back to the game loop.
+            yield return endWait;
+        }
+        */
 
     }
 }

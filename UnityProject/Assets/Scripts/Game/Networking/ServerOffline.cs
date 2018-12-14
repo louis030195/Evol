@@ -26,8 +26,8 @@ public class ServerOffline : Server
                 => brain.name.Contains("Teacher")).GetComponent<Brain>().brainType = BrainType.External;
         }
 
-        var camera = Instantiate(CameraPrefab);
-        camera.GetComponent<SmoothFollow>().target = player.transform;
+        //var camera = Instantiate(CameraPrefab);
+        //camera.GetComponent<SmoothFollow>().target = player.transform;
         Mode(player);
         /*
         for (var i = 0; i < 6; i++)
