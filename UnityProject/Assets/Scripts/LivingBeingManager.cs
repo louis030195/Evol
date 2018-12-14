@@ -18,7 +18,7 @@ namespace Evol
         public bool Reproduction = true;
         public bool Evolution = false;
         public Pool Pool { get; set; }
-        public float LifeLoss { get; set; } = 0.05f;
+        public float LifeLoss { get; set; } = 0.0f;
         public float RewardOnDeath { get; set; } = -10f;
 
         protected LivingBeingAgent livingBeingAgent;

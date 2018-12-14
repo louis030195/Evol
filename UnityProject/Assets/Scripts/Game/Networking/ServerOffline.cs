@@ -4,7 +4,10 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Evol.Game.Networking;
 using MLAgents;
+using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class ServerOffline : Server 
 {
@@ -12,10 +15,27 @@ public class ServerOffline : Server
     {
         base.Start();
         Initialize();
-        var player = Instantiate(PlayerPrefab, Vector3.up, Quaternion.identity);
+        var player = Instantiate(PlayerPrefabs[PhotonNetwork.LocalPlayer.CustomProperties.Values.First() is int ? 
+            (int) PhotonNetwork.LocalPlayer.CustomProperties.Values.First() :
+            0], Vector3.up, Quaternion.identity);
+        if (player.GetComponent<Agent>())
+        {
+            player.GetComponent<Agent>().GiveBrain(Brains.Find(brain
+                => brain.name.Contains("Teacher")).GetComponent<Brain>());
+            Brains.Find(brain
+                => brain.name.Contains("Teacher")).GetComponent<Brain>().brainType = BrainType.External;
+        }
+
         var camera = Instantiate(CameraPrefab);
         camera.GetComponent<SmoothFollow>().target = player.transform;
         Mode(player);
+        /*
+        for (var i = 0; i < 6; i++)
+        {
+            var carnivorous = SpawnCarnivorous();
+            carnivorous.GetComponent<Agent>().GiveBrain(Brains.Find(brain 
+                => brain.name.Contains("Student")).GetComponent<Brain>());
+        }*/
     }
 
 
@@ -24,29 +44,10 @@ public class ServerOffline : Server
         while (true)
         {
             yield return new WaitForSeconds(Random.Range(0, 10));
+            SpawnCarnivorous();
+            SpawnHerbivorous();
+            SpawnHerb();
 
-            Vector2 direction = Random.insideUnitCircle;
-            Vector3 position = Vector3.zero;
-            Vector3 torque = Random.insideUnitSphere * Random.Range(500.0f, 1500.0f);
-
-            var herbivorousObject = HerbivorousPool.GetObject();
-            herbivorousObject.GetComponent<Agent>().GiveBrain(Brains.FirstOrDefault(brain => "Herbivorous" == Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]));
-            //herbivorousObject.GetComponent<Agent>().brain.InitializeBrain(FindObjectOfType<Academy>(), null);
-            herbivorousObject.transform.parent = Ground.transform;
-            herbivorousObject.SetActive(true);
-            //herbivorousObject.GetComponent<LivingBeingAgent>().ResetPosition(Ground.transform);
-            
-            
-            
-            
-            var carnivorousObject = CarnivorousPool.GetObject();
-            carnivorousObject.GetComponent<Agent>().GiveBrain(Brains.FirstOrDefault(brain => "Carnivorous" == Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]));
-            carnivorousObject.transform.parent = Ground.transform;
-            carnivorousObject.SetActive(true);
-            
-            var herbObject = HerbPool.GetObject();
-            herbObject.transform.parent = Ground.transform;
-            herbObject.SetActive(true);
             
         }
     }

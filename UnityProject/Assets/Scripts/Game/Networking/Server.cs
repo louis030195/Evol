@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Evol.Agents;
@@ -12,6 +15,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.SocketServer;
+using Random = UnityEngine.Random;
 
 namespace Evol.Game.Networking
 {
@@ -19,7 +23,10 @@ namespace Evol.Game.Networking
     {
 
         public bool IsServer;
-        public GameObject PlayerPrefab;
+        /// <summary>
+        /// Prefabs for the different characters, set in the same order than mainmenu int value
+        /// </summary>
+        public GameObject[] PlayerPrefabs;
         public GameObject CameraPrefab;
         public List<GameObject> SpawnablePrefabs;
         public List<Brain> Brains;
@@ -42,9 +49,24 @@ namespace Evol.Game.Networking
         {
             if(!IsServer)
                 Destroy(this); // Destroy the server script if not server
-            players = new List<GameObject>();  
+            players = new List<GameObject>();
+
+
+            //Arguments = "mlagents-learn /mnt/sdb/ML/ml-agents-master/config/trainer_config.yaml --train --slow"
+            /*
+            var process = new Process
+            {
+                StartInfo =
+                {
+                    FileName = "/mnt/sdb/ML/ml-agents-master/evol/bin/python3",
+                    WindowStyle = ProcessWindowStyle.Maximized,
+                    UseShellExecute = false,
+                    Arguments = "mlagents-learn /mnt/sdb/ML/ml-agents-master/config/trainer_config.yaml --train --slow"
+                }
+            };
+            process.Start();*/
             
-            
+
         }
 
 
@@ -89,7 +111,35 @@ namespace Evol.Game.Networking
                 */
             }
         }
+
+        protected GameObject SpawnHerbivorous()
+        {
+            var herbivorousObject = HerbivorousPool.GetObject();
+            herbivorousObject.GetComponent<Agent>().GiveBrain(Brains.FirstOrDefault(brain => "Herbivorous" == Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]));
+            herbivorousObject.transform.parent = Ground.transform;
+            herbivorousObject.SetActive(true);
+
+            return herbivorousObject;
+        }
         
+        protected GameObject SpawnCarnivorous()
+        {
+            var carnivorousObject = CarnivorousPool.GetObject();
+            carnivorousObject.GetComponent<Agent>().GiveBrain(Brains.FirstOrDefault(brain => "Carnivorous" == Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]));
+            carnivorousObject.transform.parent = Ground.transform;
+            carnivorousObject.SetActive(true);
+
+            return carnivorousObject;
+        }
+        
+        protected GameObject SpawnHerb()
+        {
+            var herbObject = HerbPool.GetObject();
+            herbObject.transform.parent = Ground.transform;
+            herbObject.SetActive(true);
+
+            return herbObject;
+        }
         
         protected IEnumerator SpawnTree()
         {

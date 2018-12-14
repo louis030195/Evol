@@ -29,8 +29,10 @@ namespace Evol.Agents
         protected Gauge rewardOnReproduceGauge;
         protected Gauge rewardOnActGauge;
         protected Gauge speedGauge;
+
+        private Animator animator;
         
-        
+        public Animation[] animations;
         public LivingBeing LivingBeing { get; protected set; }
         public bool Reproduction { get; set; }
         public bool Evolution { get; set; }
@@ -59,6 +61,7 @@ namespace Evol.Agents
             if (LivingBeing != null) return;
             perception = GetComponent<Perception>();
             rigidBody = GetComponent<Rigidbody>();
+            animator = GetComponent<Animator>();
 
         }
 
@@ -77,6 +80,7 @@ namespace Evol.Agents
             rigidBody.AddForce(LivingBeing.Speed * transform.forward * Mathf.Clamp(vectorAction[0], -1f, 1f),
                 ForceMode.VelocityChange);
             transform.Rotate(new Vector3(0, 1f, 0), Time.fixedDeltaTime * 1000 * Mathf.Clamp(vectorAction[1], -1f, 1f));
+
 
             AmountActions++;
 
@@ -101,6 +105,17 @@ namespace Evol.Agents
                             Random.Range(transform.position.z - 1f, transform.position.z + 1f)),
                         1f);
             }
+            /*
+            if (!animator.enabled) return;
+            if (Mathf.Clamp(vectorAction[0], -1f, 1f) > 0)
+            {
+                animator.SetBool("run", true);
+            }
+            else
+            {
+                animator.SetBool("run", false);
+            }
+            */
         }
 
         public void ResetPosition(Transform worker)
@@ -123,7 +138,7 @@ namespace Evol.Agents
 
         private void FixedUpdate()
         {
-            
+            /*
             // Handling gravity manually ...
             RaycastHit hit;
             // Debug.DrawRay(transform.position,Vector3.down * 10,Color.green);
@@ -149,7 +164,7 @@ namespace Evol.Agents
             catch (ArgumentNullException e)
             {
                 print(e.Message);
-            }
+            }*/
         }
     }
 }

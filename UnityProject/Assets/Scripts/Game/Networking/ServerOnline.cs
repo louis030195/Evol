@@ -22,7 +22,7 @@ public class ServerOnline : Server
 		//var player = PlayerPool.GetObject();
 		//player.SetActive(true);
 		// PhotonNetwork.Instantiate("Actors/PlayerControlled/Player") 
-		var player = PhotonNetwork.Instantiate(PlayerPrefab.name, Vector3.up, Quaternion.identity);
+		/*var player = PhotonNetwork.Instantiate(PlayerPrefab.name, Vector3.up, Quaternion.identity);
 		var camera = Instantiate(CameraPrefab);
 		//player.GetComponent<Agent>().brain.InitializeBrain(FindObjectOfType<Academy>(), null);
 		//player.GetComponent<Agent>().GiveBrain(Brains[0]);
@@ -33,7 +33,7 @@ public class ServerOnline : Server
 		player.GetPhotonView().TransferOwnership(newPlayer);
             
             
-		players.Add(player);
+		players.Add(player);*/
 
             
 		Debug.Log($"OnPlayerEnteredRoom() { newPlayer.NickName }");

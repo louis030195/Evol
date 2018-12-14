@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -51,8 +52,11 @@ namespace Evol.Game.UI
 			}
 			else
 			{
-				SceneManager.LoadScene("Game");
+				//SceneManager.LoadScene("Game");
 				PhotonNetwork.OfflineMode = true;
+				//PhotonNetwork.ConnectUsingSettings();
+				PhotonNetwork.LeaveRoom();
+				OnConnectedToMaster();
 			}
 				
 		}
@@ -62,6 +66,7 @@ namespace Evol.Game.UI
 			Destroy(selectionEffectObject);
 			
 			this.character = character;
+			PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable(){{"character", character}});
 			// TODO: find cleaner solution for the position xDDDDD
 			selectionEffectObject = Instantiate(SelectionEffect, new Vector3(character == 0 ? -40 : 30, -30, 90), new Quaternion(90, 0, 0, 90), transform.parent);
 			Play.interactable = true;
