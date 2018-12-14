@@ -182,7 +182,7 @@ namespace RPGCharacterAnims{
 				isStrafing = true;
 			}
 			else{
-				isStrafing = false;
+				isStrafing = true;	//was false, locked for always following cursor
 				animator.SetBool("Strafing", false);
 			}
 		}
