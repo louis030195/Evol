@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0) && spells.Length > 0 && Time.time > nextSpell[0])
         {
             nextSpell[0] = Time.time + spellCooldowns[0];
-            CmdSpell(spells[0]);
+            StartCoroutine(CmdSpell(spells[0]));
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1) && spells.Length > 1 && Time.time > nextSpell[1])
@@ -119,17 +119,18 @@ public class PlayerController : MonoBehaviour
     // This [PunRPC] code is called on the Client …
     // … but it is run on the Server!
     [PunRPC]
-    protected void CmdSpell(GameObject spell)
+    protected IEnumerator CmdSpell(GameObject spell)
     {
         
         GetComponent<Animator>().SetTrigger("Attack1Trigger");
-        GetComponent<Animator>().ResetTrigger("Attack1Trigger");
+        //GetComponent<Animator>().ResetTrigger("Attack1Trigger");
         
-
+        yield return new WaitForSeconds(0.7f);
         // Spawn the spellInstance on the Clients
         PhotonNetwork.InstantiateSceneObject(spell.name, bulletSpawn.position, bulletSpawn.rotation);
 
         
     }
+
 
 }

@@ -15,9 +15,9 @@ public class ServerOffline : Server
     {
         base.Start();
         Initialize();
-        var player = Instantiate(PlayerPrefabs[PhotonNetwork.LocalPlayer.CustomProperties.Values.First() is int ? 
-            (int) PhotonNetwork.LocalPlayer.CustomProperties.Values.First() :
-            0], Vector3.up, Quaternion.identity);
+        var player = Instantiate(PlayerPrefabs.ToList().Find(p => p.name.Contains(PhotonNetwork.LocalPlayer.CustomProperties.Values.First() as string)), 
+            Vector3.up,
+            Quaternion.identity);
         if (player.GetComponent<Agent>())
         {
             player.GetComponent<Agent>().GiveBrain(Brains.Find(brain

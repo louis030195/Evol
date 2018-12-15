@@ -105,7 +105,7 @@ namespace Evol.Agents
                             Random.Range(transform.position.z - 1f, transform.position.z + 1f)),
                         1f);
             }
-            /*
+            
             if (!animator.enabled) return;
             if (Mathf.Clamp(vectorAction[0], -1f, 1f) > 0)
             {
@@ -115,7 +115,7 @@ namespace Evol.Agents
             {
                 animator.SetBool("run", false);
             }
-            */
+            
         }
 
         public void ResetPosition(Transform worker)
@@ -138,7 +138,7 @@ namespace Evol.Agents
 
         private void FixedUpdate()
         {
-            /*
+            
             // Handling gravity manually ...
             RaycastHit hit;
             // Debug.DrawRay(transform.position,Vector3.down * 10,Color.green);
@@ -164,7 +164,7 @@ namespace Evol.Agents
             catch (ArgumentNullException e)
             {
                 print(e.Message);
-            }*/
+            }
         }
     }
 }

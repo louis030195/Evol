@@ -21,7 +21,6 @@ namespace Evol.Game.UI
 		public GameObject SelectionEffect;
 
 		private bool multiplayerGame;
-		private int character;
 		private GameObject selectionEffectObject;
 
 		private void SwitchMenu()
@@ -61,14 +60,12 @@ namespace Evol.Game.UI
 				
 		}
 
-		public void OnCharacterSelection(int character)
+		public void OnCharacterSelection(GameObject character)
 		{
 			Destroy(selectionEffectObject);
 			
-			this.character = character;
-			PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable(){{"character", character}});
-			// TODO: find cleaner solution for the position xDDDDD
-			selectionEffectObject = Instantiate(SelectionEffect, new Vector3(character == 0 ? -40 : 30, -30, 90), new Quaternion(90, 0, 0, 90), transform.parent);
+			PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable(){{"character", character.name}});
+			selectionEffectObject = Instantiate(SelectionEffect, new Vector3(character.transform.position.x, -30, 90), new Quaternion(90, 0, 0, 90), transform.parent);
 			Play.interactable = true;
 		}
 

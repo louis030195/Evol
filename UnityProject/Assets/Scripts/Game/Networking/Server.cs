@@ -166,7 +166,7 @@ namespace Evol.Game.Networking
         {
             while (true)
             {
-                yield return new WaitForSeconds(Random.Range(0, 10));
+                yield return new WaitForSeconds(Random.Range(100000, 1000000));
 
                 /*
                 Vector2 direction = Random.insideUnitCircle;

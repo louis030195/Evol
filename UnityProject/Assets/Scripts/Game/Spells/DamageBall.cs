@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Evol.Agents;
 using UnityEngine;
 
-namespace Heroes
+namespace Evol.Game.Spell
 {
-    public class FireBall : MonoBehaviour
+    public class DamageBall : MonoBehaviour
     {
         private void Start()
         {
@@ -15,14 +16,11 @@ namespace Heroes
 
         void OnTriggerEnter(Collider collider)
         {
-            if (collider.gameObject.CompareTag("Enemy"))
-            {
-                Health health = collider.gameObject.GetComponent<Health>();
-                if (health)
-                {
-                    health.TakeDamage(10);
-                }
-            }
+            if (collider.gameObject.GetComponent<LivingBeingAgent>() != null)
+                collider.gameObject.GetComponent<LivingBeingAgent>().LivingBeing.Life -= 10;
+            else if(collider.gameObject.GetComponent<Health>() != null)
+                    collider.gameObject.GetComponent<Health>().TakeDamage(10);
+                
             Destroy(gameObject);
         }
     }

@@ -1438,8 +1438,9 @@ GameObject:
   - component: {fileID: 114858689022017238}
   - component: {fileID: 114522085478644644}
   - component: {fileID: 54453826603486744}
+  - component: {fileID: 65502899676110334}
   m_Layer: 0
-  m_Name: Mage Warrior
+  m_Name: Mage Ice
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2817,7 +2818,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1647962671677056}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -3}
+  m_LocalPosition: {x: -1.44, y: 0, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4650955120816174}
@@ -2897,8 +2898,20 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!65 &65502899676110334
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1647962671677056}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2, z: 1}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!95 &95860432556451088
 Animator:
   serializedVersion: 3
@@ -5242,7 +5255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spells:
-  - {fileID: 100004, guid: e80858857bb25463b82ed690e0f7c14d, type: 2}
+  - {fileID: 100004, guid: fe31ce231b9a94e46946236cae210aab, type: 2}
   spellCooldowns:
   - 0.5
   bulletSpawn: {fileID: 4797199059280138}
@@ -5825,7 +5838,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 114990972789684798}
   viewIdField: 0
-  InstantiationId: 1
+  InstantiationId: 2
   isRuntimeInstantiated: 0
 --- !u!114 &114995097380616358
 MonoBehaviour:
@@ -5909,7 +5922,7 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 477b1ce20530f594b87bce7fe5ba012a, type: 2}
+  - {fileID: 2100000, guid: 76ea31681da984572a454ec076c1ddd1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
