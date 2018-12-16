@@ -19,7 +19,7 @@ namespace Evol.Agents
         public override void InitializeAgent()
         {
             base.InitializeAgent();
-            LivingBeing = new Carnivorous(50, 0, 0, 50, 0, 50);
+            LivingBeing = new Carnivorous(50, 0, 0, 50, 0, 10);
             
             eatCounter = Metrics.CreateCounter("eatCarnivorous", "How many times carnivorous has eaten");
             reproductionCounter = 

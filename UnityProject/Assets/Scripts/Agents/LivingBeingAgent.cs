@@ -138,7 +138,8 @@ namespace Evol.Agents
 
         private void FixedUpdate()
         {
-            
+            rigidBody.AddForce(Vector3.down * Physics.gravity.y * rigidBody.mass * -10);
+            /*
             // Handling gravity manually ...
             RaycastHit hit;
             // Debug.DrawRay(transform.position,Vector3.down * 10,Color.green);
@@ -146,7 +147,7 @@ namespace Evol.Agents
             {
                 
                 //if (Physics.Raycast(transform.position, -transform.up, out hit, 100))
-                if(Physics.Raycast(GetComponent<Collider>().bounds.min, -transform.up, out hit, 100))
+                if(Physics.Raycast(GetComponent<Collider>().bounds.min, -transform.up, out hit, 10))
                 {
                     //the ray collided with something, you can interact
                     // with the hit object now by using hit.collider.gameObject
@@ -164,7 +165,7 @@ namespace Evol.Agents
             catch (ArgumentNullException e)
             {
                 print(e.Message);
-            }
+            }*/
         }
     }
 }

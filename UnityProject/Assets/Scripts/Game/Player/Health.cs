@@ -64,6 +64,7 @@ public class Health : MonoBehaviour
         //    return;
 
         currentHealth -= amount;
+        OnChangeHealth();
         if (currentHealth <= 0 && !dead)
         {
 
@@ -97,10 +98,14 @@ public class Health : MonoBehaviour
         }
     }
 
-    void OnChangeHealth(int currentHealth)
+    void OnChangeHealth()
     {
         healthBar.sizeDelta = new Vector2(currentHealth, healthBar.sizeDelta.y);
     }
 
-   
+    private void OnCollisionEnter(Collision other)
+    {
+        if(other.collider.CompareTag("Carnivorous"))
+            TakeDamage(10);
+    }
 }
