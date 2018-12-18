@@ -90,7 +90,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100004}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 14.53, y: -10.94, z: 18.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -107,7 +107,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 2
-  m_Color: {r: 1, g: 0.50020283, b: 0.17647058, a: 1}
+  m_Color: {r: 0.19607843, g: 0.5882353, b: 1, a: 1}
   m_Intensity: 1.5
   m_Range: 6
   m_SpotAngle: 30
@@ -298,8 +298,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 1, g: 0.39607844, b: 0.1254902, a: 0.36078432}
-      maxColor: {r: 1, g: 0.5568628, b: 0, a: 0.39215687}
+      minColor: {r: 0.19607843, g: 0.19607843, b: 1, a: 1}
+      maxColor: {r: 0.19607843, g: 0.5882353, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 0.8784314, b: 0.1882353, a: 0}
@@ -4688,7 +4688,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 114580883929644334}
   viewIdField: 0
-  InstantiationId: 0
+  InstantiationId: 1
   isRuntimeInstantiated: 0
 --- !u!135 &135157978582134608
 SphereCollider:

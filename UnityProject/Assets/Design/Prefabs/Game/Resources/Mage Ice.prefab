@@ -3351,6 +3351,9 @@ MonoBehaviour:
   - Type: 1
     SynchronizeType: 0
     Name: Input Z
+  - Type: 9
+    SynchronizeType: 0
+    Name: Attack2Trigger
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -5256,8 +5259,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spells:
   - {fileID: 100004, guid: fe31ce231b9a94e46946236cae210aab, type: 2}
+  - {fileID: 100000, guid: 644be27d88e5941da83e00333761c43c, type: 2}
   spellCooldowns:
-  - 0.5
+  - 0
+  - 0
   bulletSpawn: {fileID: 4797199059280138}
   anim: {fileID: 95860432556451088}
   health: {fileID: 0}

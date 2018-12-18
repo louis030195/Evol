@@ -83,7 +83,7 @@ namespace Evol.Game.Networking
                 Brains.FirstOrDefault(brain => "Carnivorous" == Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]);
 
             // TODO: Fix this shit (animals not sync in network)
-            StartCoroutine(SpawnAgents());
+            //StartCoroutine(SpawnAgents());
 
             //StartCoroutine(SpawnTree());
         }

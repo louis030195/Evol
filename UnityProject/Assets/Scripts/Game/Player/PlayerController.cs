@@ -19,10 +19,7 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
 
         nextSpell = new float[spellCooldowns.Length];
-
-        PlayerPrefs.SetInt("form", 0); // Start with light form
         
-        //GetComponent<MeshRenderer>().material.color = Color.blue;
         health = GetComponent<Health>();
         gameObject.AddComponent<AudioListener>();
 
@@ -46,7 +43,7 @@ public class PlayerController : MonoBehaviour
 
         if (!photonView.IsMine)
         {
-            this.transform.GetChild(0).GetComponent<Camera>().enabled = false;
+            this.transform.GetChild(0).GetComponent<Camera>().enabled = false; // TODO: cleaner solution ?
             return;
         }
 
@@ -64,7 +61,8 @@ public class PlayerController : MonoBehaviour
         else
             anim.SetBool("Moving", false);
         transform.Rotate(0, x, 0);
-        transform.Translate(0, 0, z);
+        //transform.Translate(0, 0, z);
+        GetComponent<Rigidbody>().AddForce(transform.forward * z);
 
         SpellInput();
 
@@ -72,22 +70,25 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void SpellInput()
     {
+        // TODO: input from input parameters
         if (Input.GetKeyDown(KeyCode.Mouse0) && spells.Length > 0 && Time.time > nextSpell[0])
         {
             nextSpell[0] = Time.time + spellCooldowns[0];
+            GetComponent<Animator>().SetTrigger("Attack1Trigger");
             StartCoroutine(CmdSpell(spells[0]));
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1) && spells.Length > 1 && Time.time > nextSpell[1])
         {
             nextSpell[1] = Time.time + spellCooldowns[1];
-            CmdSpell(spells[1]);
+            GetComponent<Animator>().SetTrigger("Attack2Trigger");
+            StartCoroutine(CmdSpell(spells[1]));
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2) && spells.Length > 2 && Time.time > nextSpell[2])
         {
             nextSpell[2] = Time.time + spellCooldowns[2];
-            CmdSpell(spells[2]);
+            StartCoroutine(CmdSpell(spells[2]));
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha3) && spells.Length > 3 && Time.time > nextSpell[3])
@@ -122,14 +123,14 @@ public class PlayerController : MonoBehaviour
     protected IEnumerator CmdSpell(GameObject spell)
     {
         
-        GetComponent<Animator>().SetTrigger("Attack1Trigger");
+        
         //GetComponent<Animator>().ResetTrigger("Attack1Trigger");
         
         yield return new WaitForSeconds(0.7f);
         // Spawn the spellInstance on the Clients
-        PhotonNetwork.InstantiateSceneObject(spell.name, bulletSpawn.position, bulletSpawn.rotation);
+        var go = PhotonNetwork.InstantiateSceneObject(spell.name, bulletSpawn.position, bulletSpawn.rotation);
+        go.GetComponent<SpellBase>().Caster = gameObject; // this is useful for some spells that need the position of the caster
 
-        
     }
 
 

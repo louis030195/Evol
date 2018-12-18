@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Evol.Game.Spell
 {
-    public class DamageBall : MonoBehaviour
+    public class DamageBall : SpellBase
     {
         private void Start()
         {

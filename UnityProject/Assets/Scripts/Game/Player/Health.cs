@@ -1,6 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Random = UnityEngine.Random;
 
 public class Health : MonoBehaviour
 {
@@ -8,6 +12,11 @@ public class Health : MonoBehaviour
     public bool destroyOnDeath;
 
     public int currentHealth = maxHealth;
+    
+    /// <summary>
+    /// List of shields with the spell name which did this shield
+    /// </summary>
+    public List<Tuple<string,int>> currentShields;
 
     public RectTransform healthBar;
 
@@ -17,16 +26,6 @@ public class Health : MonoBehaviour
     public AudioClip[] gettingHit;                      // Audio to play when the bot is getting hit.
     public AudioClip dying;                           // Audio to play when the bot is dying.
     public GameObject[] deathEffects;
-
-    public float getHealth()                          // can get, not set
-    {
-        return currentHealth;
-    }
-
-    private void Awake()
-    {
-
-    }
 
 
     private void OnEnable()
@@ -51,11 +50,18 @@ public class Health : MonoBehaviour
     }
 
 
+    private void Update()
+    {
+        // Clipping shields and life
+        currentHealth = currentHealth > 100 ? 100 : currentHealth;
+        for(var i = 0; i < currentShields.Count; i++)
+            currentShields[i] = Tuple.Create(currentShields[i].Item1, currentShields[i].Item2 < 0 ? 0 : currentShields[i].Item2);
+    }
 
-    void Start()
+    private void Start()
     {
         anim = GetComponent<Animator>();
-
+        currentShields = new List<Tuple<string, int>>();
     }
 
     public void TakeDamage(int amount)
@@ -63,8 +69,24 @@ public class Health : MonoBehaviour
         //if (!isServer)
         //    return;
 
-        currentHealth -= amount;
+        // Lose life if all the shields have been broken
+        currentHealth -= amount > currentShields.Sum(s => s.Item2) ? amount - currentShields.Sum(s => s.Item2) : 0;
+        
+        // Substract to the shields
+        var rest = amount;
+        var tmp = 0;
+        for (var i = 0; i < currentShields.Count; i++)
+        {
+            if (rest > 0)
+                continue;
+            tmp = currentShields[i].Item2;
+            currentShields[i] = Tuple.Create(currentShields[i].Item1, currentShields[i].Item2 - rest);
+            rest -= tmp;
+        }
+
+        // Update UI
         OnChangeHealth();
+        
         if (currentHealth <= 0 && !dead)
         {
 
@@ -81,8 +103,8 @@ public class Health : MonoBehaviour
                 currentHealth = maxHealth;
             }
         }
-        else
-            anim.SetTrigger("isAttacked");
+        //else
+        //    anim.SetTrigger("isAttacked");
 
         Audio();
     }
@@ -98,13 +120,14 @@ public class Health : MonoBehaviour
         }
     }
 
-    void OnChangeHealth()
+    private void OnChangeHealth()
     {
         healthBar.sizeDelta = new Vector2(currentHealth, healthBar.sizeDelta.y);
     }
 
     private void OnCollisionEnter(Collision other)
     {
+        // Lose life when hit by a carnivorous animal
         if(other.collider.CompareTag("Carnivorous"))
             TakeDamage(10);
     }
