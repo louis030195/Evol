@@ -1,13 +1,24 @@
 # Evol
-Ecosystem of animals having an AIs trained with reinforcement learning.
 
-These animals will evolve like the evolution of the species.
+Current state of the project (sorry kinda buggy gif)
 
+<img src="Screenshots/current_state1.gif" width="350" height="350">
+<img src="Screenshots/current_state2.gif" width="350" height="350">
+
+# Roadmap
+
+- [ ] Mental control mage (take control of agents by switching to player brain, imitation learning to teach a herd of wolfes ...)
+- [ ] Game loop
+- [ ] Forest propagation
+
+...
+
+# Carnivorous & Herbivorous agents
+Their goal is to survive & reproduce
 
 [![Evol](https://img.youtube.com/vi/GqquQTyQLno/0.jpg)](https://www.youtube.com/watch?v=GqquQTyQLno)
 
-
-# Inputs
+## Inputs
 * Sensor-like at angles 0, 45, 90, 135, 180, 110, 70
 The sensor is returning either : 
     - 0 Nothing
@@ -18,15 +29,18 @@ The sensor is returning either :
 * Own z velocity
 * Own life
 
-# Outputs
+## Outputs
 * Force forward
 * Rotation on y axis
 
-# Rewards
+## Rewards
 - Reward on eat
 - Reward on reproduction
 - Punish on death
 - Punish every actions
+
+# God agent
+His goal is to tweak agents parameters to achieve a goal = increase the life expectancy of the species, he is only used for training
 
 
 # Install

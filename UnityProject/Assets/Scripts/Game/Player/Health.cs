@@ -52,8 +52,7 @@ public class Health : MonoBehaviour
 
     private void Update()
     {
-        // Clipping shields and life
-        currentHealth = currentHealth > 100 ? 100 : currentHealth;
+        // Clipping shields
         for(var i = 0; i < currentShields.Count; i++)
             currentShields[i] = Tuple.Create(currentShields[i].Item1, currentShields[i].Item2 < 0 ? 0 : currentShields[i].Item2);
     }
@@ -118,6 +117,9 @@ public class Health : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
+        
+        // Update UI
+        OnChangeHealth();
     }
 
     private void OnChangeHealth()

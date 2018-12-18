@@ -25,6 +25,7 @@ namespace Evol.Game.Spell
                 Caster.transform.position.y + 0.1f,
                 Caster.transform.position.z); 
             transform.Rotate(-90, 0, 0);
+            // TODO: implement a shield class, its better
             Caster.GetComponent<Health>().currentShields.Add(Tuple.Create("FireShield", 50));
             
             Destroy(gameObject, 5.0f);
