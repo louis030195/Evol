@@ -32,7 +32,6 @@ namespace Evol.Agents
 
         private Animator animator;
         
-        public Animation[] animations;
         public LivingBeing LivingBeing { get; protected set; }
         public bool Reproduction { get; set; }
         public bool Evolution { get; set; }
@@ -84,6 +83,8 @@ namespace Evol.Agents
 
             AmountActions++;
 
+            // TODO: ml-agents 0.6 needed to comment this
+            /*
             if (brain.brainType == BrainType.Heuristic)
             {
                 bool detectedSomething = false;
@@ -104,9 +105,9 @@ namespace Evol.Agents
                             transform.position.y, 
                             Random.Range(transform.position.z - 1f, transform.position.z + 1f)),
                         1f);
-            }
+            }*/
             
-            if (!animator.enabled) return;
+            if (animator == null || !animator.enabled) return;
             if (Mathf.Clamp(vectorAction[0], -1f, 1f) > 0)
             {
                 animator.SetBool("run", true);

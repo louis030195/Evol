@@ -10,6 +10,7 @@ Current state of the project (sorry kinda buggy gif)
 - [ ] Mental control mage (take control of agents by switching to player brain, imitation learning to teach a herd of wolfes ...)
 - [ ] Game loop
 - [ ] Forest propagation
+- [ ] Account system (Photon + NodeJs + Mongodb)
 
 ...
 

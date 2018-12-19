@@ -18,24 +18,30 @@ public class ServerOffline : Server
         var player = Instantiate(PlayerPrefabs.ToList().Find(p => p.name.Contains(PhotonNetwork.LocalPlayer.CustomProperties.Values.First() as string)), 
             Vector3.up,
             Quaternion.identity);
+        // TODO: make it work for 0.6
+
+
         if (player.GetComponent<Agent>())
         {
-            player.GetComponent<Agent>().GiveBrain(Brains.Find(brain
-                => brain.name.Contains("Teacher")).GetComponent<Brain>());
-            Brains.Find(brain
-                => brain.name.Contains("Teacher")).GetComponent<Brain>().brainType = BrainType.External;
+            player.GetComponent<Agent>().GiveBrain(Brains.Find(brain => brain.name.Contains("Player")));
+            player.AddComponent<DemonstrationRecorder>();
+            player.GetComponent<DemonstrationRecorder>().demonstrationName = "AgentDemo";
+            player.GetComponent<DemonstrationRecorder>().record = true;
+            
+            /*
+            for (var i = 0; i < 6; i++)
+            {
+                var carnivorous = SpawnCarnivorous();
+                carnivorous.GetComponent<Agent>().GiveBrain(Brains.Find(brain => brain.name.Contains("Student")));
+            }*/
         }
+
 
         //var camera = Instantiate(CameraPrefab);
         //camera.GetComponent<SmoothFollow>().target = player.transform;
         Mode(player);
-        /*
-        for (var i = 0; i < 6; i++)
-        {
-            var carnivorous = SpawnCarnivorous();
-            carnivorous.GetComponent<Agent>().GiveBrain(Brains.Find(brain 
-                => brain.name.Contains("Student")).GetComponent<Brain>());
-        }*/
+        
+
     }
 
 

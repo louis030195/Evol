@@ -13,6 +13,8 @@ namespace Evol.Agents
         /// </summary>
         public class GodAgent : Agent
         {
+                public bool Enable;
+                
                 public Pool HerbivorousPool { get; set; }
                 
                 public Pool CarnivorousPool { get; set; }
@@ -74,8 +76,8 @@ namespace Evol.Agents
 
                 public override void AgentAction(float[] vectorAction, string textAction)
                 {
-                        // Not sure if we even use godai in test
-                        if (brain.brainType == BrainType.External || brain.brainType == BrainType.Internal)
+                        // This is just to disable the god agent in game mode
+                        if (Enable)
                         {
                                 // Handle life loss per action
                                 HerbivorousPool.inUse.ForEach(go =>
@@ -92,7 +94,7 @@ namespace Evol.Agents
                                 CarnivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().LifeGain =
                                                 Mathf.Clamp(vectorAction[3] * 100, 30f, 100f));
-                                
+
                                 // Handle speed
                                 HerbivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().LivingBeing.Speed =
@@ -100,8 +102,8 @@ namespace Evol.Agents
                                 CarnivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().LivingBeing.Speed =
                                                 Mathf.Clamp(vectorAction[5] * 100, 30f, 100f));
-                                
-                                
+
+
                                 // Handle reward on act
                                 HerbivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().RewardOnAct =
@@ -109,7 +111,7 @@ namespace Evol.Agents
                                 CarnivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().RewardOnAct =
                                                 Mathf.Clamp(vectorAction[7], -1f, 0f));
-                                
+
                                 // Handle reward on eat
                                 HerbivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().RewardOnEat =
@@ -117,7 +119,7 @@ namespace Evol.Agents
                                 CarnivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().RewardOnEat =
                                                 Mathf.Clamp(vectorAction[9] * 10, 0f, 10f));
-                                
+
                                 // Handle reward on reproduce
                                 HerbivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().RewardOnReproduce =
@@ -125,7 +127,7 @@ namespace Evol.Agents
                                 CarnivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().RewardOnReproduce =
                                                 Mathf.Clamp(vectorAction[11] * 10, 0f, 10f));
-                                
+
                                 // Handle reward on death
                                 HerbivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingManager>().RewardOnDeath =
@@ -133,26 +135,7 @@ namespace Evol.Agents
                                 CarnivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingManager>().RewardOnDeath =
                                                 Mathf.Clamp(vectorAction[13] * 20, 0f, 20f));
-                                                
                         }
-
-                        /*
-                        // Reward the god agent if he succeed to make the agents live longer over time
-                        if(CarnivorousPool.inUse
-                                .Select(go => go.GetComponent<LivingBeingAgent>().LivingBeing.LifeExpectancy)
-                                          .Average() > carnivorousPreviousAmountActions)
-                                AddReward(0.0005f);
-                        else
-                                AddReward(-0.0005f);
-
-                        if(HerbivorousPool.inUse
-                                   .Select(go => go.GetComponent<LivingBeingAgent>().LivingBeing.LifeExpectancy)
-                                   .Average() > herbivorousPreviousAmountActions)
-                                AddReward(0.0005f);
-                        else
-                                AddReward(-0.0005f);
-*/
-                        //print($"{carnivorousPreviousSpeciesLifeExpectency} | {CarnivorousSpeciesLifeExpectency}");
                         
                         // Reward the god agent if he succeed to make the species live longer over time
                         if(CarnivorousSpeciesLifeExpectency > carnivorousPreviousSpeciesLifeExpectency)

@@ -11,7 +11,7 @@ namespace Evol.Game.Spell
     {
 
         
-        private void Start()
+        protected override void Start()
         {
             // TODO: maybe see for common class base for shields ?
             // We're allowed to only one shield of this kind per character

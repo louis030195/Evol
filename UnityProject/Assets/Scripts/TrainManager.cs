@@ -26,11 +26,6 @@ namespace Evol
         /// Scale of the carnivorous-herbivorous worker's ground
         /// </summary>
         public int GroundScale = 10;
-        
-        /// <summary>
-        /// List of all the brains needed
-        /// </summary>
-        public List<Brain> Brains; 
 
         [Header("Items To Spawn")] [Space(10)] public List<GameObject> ItemsToSpawn;
 
@@ -121,17 +116,6 @@ namespace Evol
             carnivorousPool = new Pool(ItemsToSpawn.Find(go => go.name.Equals("CarnivorousAgent")));
             herbPool = new Pool(ItemsToSpawn.Find(go => go.name.Equals("Herb")));
             godPool = new Pool(ItemsToSpawn.Find(go => go.name.Equals("GodAgent")));
-           
-
-            // Find the brains in the list
-            herbivorousPool.Brain =
-                Brains.FirstOrDefault(brain => "Herbivorous" == Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]);
-            carnivorousPool.Brain =
-                Brains.FirstOrDefault(brain => "Carnivorous" == Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]);
-            godPool.Brain =
-                Brains.FirstOrDefault(brain => "God" == Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]);
-
-
             SpawnWorkers();
         }
 

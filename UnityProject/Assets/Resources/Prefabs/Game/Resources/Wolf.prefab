@@ -2709,14 +2709,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 541f5b206ee342c4c89f5b65891d79ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brain: {fileID: 114094034598838896, guid: a233e8e6c6be3dc4aa8847cfad7cb193, type: 2}
+  brain: {fileID: 11400000, guid: b0d2969e61036489c8b92496581fd54e, type: 2}
   agentParameters:
     agentCameras: []
-    maxStep: 2000
+    maxStep: 1000
     resetOnDone: 1
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
-  animations: []
   rewardMode: 1
 --- !u!114 &114834794170803310
 MonoBehaviour:

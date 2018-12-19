@@ -19,7 +19,7 @@ namespace Evol.Agents
         public override void InitializeAgent()
         {
             base.InitializeAgent();
-            LivingBeing = new Carnivorous(50, 0, 0, 50, 0, 10);
+            LivingBeing = new Carnivorous(50, 0, 0, 50, 0, 50);
             
             eatCounter = Metrics.CreateCounter("eatCarnivorous", "How many times carnivorous has eaten");
             reproductionCounter = 
@@ -46,8 +46,7 @@ namespace Evol.Agents
             detectableObjects = new[] {"Herbivorous", "Carnivorous", "Herb", "Ground"};
             var detectableObjects2 = new[] {"Ground"};
             AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f, Reproduction, ReproductionTreshold));
-            //AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects2, 1f, -10f, Reproduction, ReproductionTreshold));
-            Vector3 localVelocity = transform.InverseTransformDirection(rigidBody.velocity);
+            var localVelocity = transform.InverseTransformDirection(rigidBody.velocity);
             AddVectorObs(localVelocity.x);
             AddVectorObs(localVelocity.z);
             AddVectorObs(gameObject.transform.rotation.y);

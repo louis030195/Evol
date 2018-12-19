@@ -40,10 +40,9 @@ namespace Evol.Utils
         {
             if (available.Count != 0)
             {
-                GameObject go = available[0];
+                var go = available[0];
                 inUse.Add(go);
                 available.RemoveAt(0);
-                //go.transform.parent = null;
                     
                 return go;
             }
@@ -52,8 +51,6 @@ namespace Evol.Utils
                 GameObject go = UnityEngine.Object.Instantiate(prefab);
                 if (go.GetComponent<LivingBeingManager>() != null)
                     go.GetComponent<LivingBeingManager>().Pool = this;
-                if (go.GetComponent<Agent>() != null)
-                    go.GetComponent<Agent>().GiveBrain(Brain);
                 
                 inUse.Add(go);
                 return go;

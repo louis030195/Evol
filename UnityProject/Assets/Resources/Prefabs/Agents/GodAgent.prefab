@@ -51,10 +51,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31994b8b36a9c19459091d5245838e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brain: {fileID: 114555813800974604, guid: a233e8e6c6be3dc4aa8847cfad7cb193, type: 2}
+  brain: {fileID: 11400000, guid: e4373a306ac7746558af69eb8da6e237, type: 2}
   agentParameters:
     agentCameras: []
     maxStep: 1000
     resetOnDone: 1
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 10
+  Enable: 0

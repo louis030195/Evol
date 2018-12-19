@@ -7,7 +7,7 @@ using UnityEditor;
 
 namespace Heuristic
 {
-    public class BasicHeuristic : MonoBehaviour, Decision
+    public class BasicHeuristic : Decision
     {
         private bool isHeuristic = false;
         private float[] rayAngles = {0f, 45f, 90f, 135f, 180f, 110f, 70f};
@@ -18,7 +18,7 @@ namespace Heuristic
 
         private Collider[] hitColliders;
         
-        public float[] Decide(List<float> vectorObs, List<Texture2D> visualObs, float reward, bool done, List<float> memory)
+        public override float[] Decide(List<float> vectorObs, List<Texture2D> visualObs, float reward, bool done, List<float> memory)
         {
             if(!isHeuristic) isHeuristic = true;
 
@@ -36,7 +36,7 @@ namespace Heuristic
             return new float[] {0, 0};
         }
 
-        public List<float> MakeMemory(List<float> vectorObs, List<Texture2D> visualObs, float reward, bool done, List<float> memory)
+        public override List<float> MakeMemory(List<float> vectorObs, List<Texture2D> visualObs, float reward, bool done, List<float> memory)
         {
             return new List<float>();
         }

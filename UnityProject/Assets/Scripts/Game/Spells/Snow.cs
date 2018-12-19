@@ -9,7 +9,7 @@ public class Snow : SpellBase
 	public GameObject SnowPrefab;
 	
 	// Use this for initialization
-	private void Start () {
+	protected override void Start () {
 		base.Start();
 		
 		// For some reason the position is random ?

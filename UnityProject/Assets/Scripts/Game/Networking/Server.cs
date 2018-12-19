@@ -14,6 +14,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.SocketServer;
+using WebSocketSharp;
 using Random = UnityEngine.Random;
 
 namespace Evol.Game.Networking
@@ -22,13 +23,22 @@ namespace Evol.Game.Networking
     {
 
         public bool IsServer;
+
+        public Academy Academy;
         /// <summary>
         /// Prefabs for the different characters, set in the same order than mainmenu int value
         /// </summary>
         public GameObject[] PlayerPrefabs;
         public GameObject CameraPrefab;
         public List<GameObject> SpawnablePrefabs;
+        
+        /// <summary>
+        /// This list of brains will be used when we want to switch for example from a trained model to an imitation learning
+        /// or switching from trained model to training model (control ON)
+        /// </summary>
         public List<Brain> Brains;
+        
+        
         public GameObject Ground;
         public GameObject Test;
         public Pool HerbivorousPool;
@@ -49,8 +59,11 @@ namespace Evol.Game.Networking
             if(!IsServer)
                 Destroy(this); // Destroy the server script if not server
             players = new List<GameObject>();
+            
+            // Basically turning off communication with python, we only want these brains to use the pre-trained model
+            //Academy.broadcastHub.SetControlled(Academy.broadcastHub.broadcastingBrains.Find(brain => brain.name.Contains("Learning")), false);
 
-
+            // TODO: this is for imitation learning, doesn't work, doesn't start the process ???
             //Arguments = "mlagents-learn /mnt/sdb/ML/ml-agents-master/config/trainer_config.yaml --train --slow"
             /*
             var process = new Process
@@ -75,15 +88,8 @@ namespace Evol.Game.Networking
             HerbivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Herbivorous")));
             CarnivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Carnivorous")));
             HerbPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Herb")));
-            
-            // Find the brains in the list
-            HerbivorousPool.Brain =
-                Brains.FirstOrDefault(brain => "Herbivorous" == Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]);
-            CarnivorousPool.Brain =
-                Brains.FirstOrDefault(brain => "Carnivorous" == Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]);
 
-            // TODO: Fix this shit (animals not sync in network)
-            StartCoroutine(SpawnAgents());
+            //StartCoroutine(SpawnAgents());
 
             //StartCoroutine(SpawnTree());
         }
@@ -114,7 +120,6 @@ namespace Evol.Game.Networking
         protected GameObject SpawnHerbivorous()
         {
             var herbivorousObject = HerbivorousPool.GetObject();
-            herbivorousObject.GetComponent<Agent>().GiveBrain(Brains.FirstOrDefault(brain => "Herbivorous" == Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]));
             herbivorousObject.transform.parent = Ground.transform;
             herbivorousObject.SetActive(true);
 
@@ -124,7 +129,6 @@ namespace Evol.Game.Networking
         protected GameObject SpawnCarnivorous()
         {
             var carnivorousObject = CarnivorousPool.GetObject();
-            carnivorousObject.GetComponent<Agent>().GiveBrain(Brains.FirstOrDefault(brain => "Carnivorous" == Regex.Split(brain.name, @"(?<!^)(?=[A-Z])")[1]));
             carnivorousObject.transform.parent = Ground.transform;
             carnivorousObject.SetActive(true);
 
