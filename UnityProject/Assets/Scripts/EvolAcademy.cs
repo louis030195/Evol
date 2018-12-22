@@ -9,10 +9,9 @@ namespace Evol
 {
     public class EvolAcademy : Academy
     {
-
         public override void InitializeAcademy()
         {
-
+            
         }
 
         public override void AcademyReset()

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Evol.Game.Networking;
 using Photon.Pun;
 using Photon.Realtime;
@@ -22,18 +23,21 @@ public class ServerOnline : Server
 		//var player = PlayerPool.GetObject();
 		//player.SetActive(true);
 		// PhotonNetwork.Instantiate("Actors/PlayerControlled/Player") 
-		/*var player = PhotonNetwork.Instantiate(PlayerPrefab.name, Vector3.up, Quaternion.identity);
-		var camera = Instantiate(CameraPrefab);
+		print(newPlayer.CustomProperties.Values.First());
+		var player = PhotonNetwork.Instantiate(
+			PlayerPrefabs.ToList().Find(p => p.name.Contains(newPlayer.CustomProperties.Values.First() as string)).name,
+			Vector3.up, 
+			Quaternion.identity);
+		//var camera = Instantiate(CameraPrefab);
 		//player.GetComponent<Agent>().brain.InitializeBrain(FindObjectOfType<Academy>(), null);
 		//player.GetComponent<Agent>().GiveBrain(Brains[0]);
 		//player.SetActive(true); // Required to give brain on disabled GO, then active it
-		Mode(player);
 		player.name = newPlayer.NickName;
             
 		player.GetPhotonView().TransferOwnership(newPlayer);
             
             
-		players.Add(player);*/
+		players.Add(player);
 
             
 		Debug.Log($"OnPlayerEnteredRoom() { newPlayer.NickName }");

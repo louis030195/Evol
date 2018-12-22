@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Photon.Pun;
 using Random = UnityEngine.Random;
 
 public class Health : MonoBehaviour
@@ -26,12 +27,6 @@ public class Health : MonoBehaviour
     public AudioClip[] gettingHit;                      // Audio to play when the bot is getting hit.
     public AudioClip dying;                           // Audio to play when the bot is dying.
     public GameObject[] deathEffects;
-
-
-    private void OnEnable()
-    {
-        dead = false;
-    }
 
     private void Audio()
     {
@@ -65,8 +60,8 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        //if (!isServer)
-        //    return;
+        if (!transform.parent.GetComponent<PhotonView>().IsMine)
+            return;
 
         // Lose life if all the shields have been broken
         currentHealth -= amount > currentShields.Sum(s => s.Item2) ? amount - currentShields.Sum(s => s.Item2) : 0;
@@ -110,8 +105,10 @@ public class Health : MonoBehaviour
 
     public void GetHealed(int amount)
     {
-        //if (!isServer)
-        //    return;
+        if (!transform.parent.GetComponent<PhotonView>().IsMine)
+            return;
+        
+        
         currentHealth += amount;
         if (currentHealth > maxHealth)
         {
@@ -132,5 +129,16 @@ public class Health : MonoBehaviour
         // Lose life when hit by a carnivorous animal
         if(other.collider.CompareTag("Carnivorous"))
             TakeDamage(10);
+    }
+    
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        // Synchronize life
+        if (stream.IsWriting) {
+            stream.SendNext(currentHealth);
+        } else
+        {
+            currentHealth = (int)stream.ReceiveNext();
+        }
     }
 }

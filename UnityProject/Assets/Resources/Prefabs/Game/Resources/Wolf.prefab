@@ -891,7 +891,7 @@ GameObject:
   - component: {fileID: 114834794170803310}
   - component: {fileID: 114059153167867584}
   - component: {fileID: 65096561027571590}
-  - component: {fileID: 64840179371013402}
+  - component: {fileID: 114052728990566648}
   m_Layer: 0
   m_Name: Wolf
   m_TagString: Carnivorous
@@ -2634,20 +2634,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!64 &64840179371013402
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 177940}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300006, guid: 91d2fb8fbb39fab44b86ce07763f1e74, type: 3}
 --- !u!65 &65096561027571590
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -2660,6 +2646,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5, z: 1}
   m_Center: {x: 0, y: 0.2, z: 0}
+--- !u!114 &114052728990566648
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 177940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50f710d360a49461cad67ff5e6bcefe1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  record: 1
+  demonstrationName: yay
 --- !u!114 &114059153167867584
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2709,7 +2708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 541f5b206ee342c4c89f5b65891d79ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brain: {fileID: 11400000, guid: b0d2969e61036489c8b92496581fd54e, type: 2}
+  brain: {fileID: 11400000, guid: 39b091f301012488686619d5dafe153f, type: 2}
   agentParameters:
     agentCameras: []
     maxStep: 1000

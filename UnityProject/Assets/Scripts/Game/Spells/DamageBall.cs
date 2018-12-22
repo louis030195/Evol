@@ -9,6 +9,8 @@ namespace Evol.Game.Spell
     {
         protected override void Start()
         {
+            // TODO: wait the good time of animation to throw spell
+            Caster.GetComponent<Animator>().SetTrigger("Attack1Trigger");
             gameObject.GetComponent<Rigidbody>().velocity = gameObject.transform.forward * 15;
             // Destroy the bullet after 5 seconds
             Destroy(gameObject, 5.0f);

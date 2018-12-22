@@ -19,6 +19,8 @@ namespace Evol.Game.Spell
                 .Any(currentShield => currentShield.Item1.Equals("FireShield")))
                 Destroy(gameObject);
             
+            Caster.GetComponent<Animator>().SetTrigger("Attack2Trigger");
+            
             transform.parent = Caster.transform;
             // For some reason the position is random ?
             transform.position = new Vector3(Caster.transform.position.x,

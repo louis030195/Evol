@@ -11,7 +11,7 @@ public class Snow : SpellBase
 	// Use this for initialization
 	protected override void Start () {
 		base.Start();
-		
+		Caster.GetComponent<Animator>().SetTrigger("Attack2Trigger");
 		// For some reason the position is random ?
 		transform.position = new Vector3(Caster.transform.position.x,
 			Caster.transform.position.y + 0.1f,

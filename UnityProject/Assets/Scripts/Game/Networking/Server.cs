@@ -14,7 +14,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.SocketServer;
-using WebSocketSharp;
 using Random = UnityEngine.Random;
 
 namespace Evol.Game.Networking
@@ -94,32 +93,10 @@ namespace Evol.Game.Networking
             //StartCoroutine(SpawnTree());
         }
 
-        /// <summary>
-        /// Remove the appropriate script following online / offline mode
-        /// </summary>
-        /// <param name="player">Instantiated player</param>
-        protected void Mode(GameObject player)
-        {
-            if (PhotonNetwork.OfflineMode)
-            {
-                //player.GetComponent<PlayerManagerOffline>().enabled = true;
-            }
-            else if (!PhotonNetwork.OfflineMode)
-            {
-                //player.GetComponent<PlayerManagerOnline>().enabled = true;
-                /*
-                player.AddComponent<PhotonView>();
-                player.AddComponent<PhotonTransformView>();
-                player.GetComponent<PhotonTransformView>().m_SynchronizePosition = true;
-                player.GetComponent<PhotonTransformView>().m_SynchronizeRotation = true;
-                player.GetPhotonView().ObservedComponents.Add(player.GetComponent<PhotonTransformView>());
-                */
-            }
-        }
-
         protected GameObject SpawnHerbivorous()
         {
             var herbivorousObject = HerbivorousPool.GetObject();
+            //var herbivorousObject = PhotonNetwork.InstantiateSceneObject(SpawnablePrefabs.Find(go => go.CompareTag("Herbivorous")).name, Vector3.zero, Quaternion.identity);
             herbivorousObject.transform.parent = Ground.transform;
             herbivorousObject.SetActive(true);
 
@@ -170,7 +147,7 @@ namespace Evol.Game.Networking
         {
             while (true)
             {
-                yield return new WaitForSeconds(Random.Range(100000, 1000000));
+                yield return new WaitForSeconds(Random.Range(0, 10));
 
                 /*
                 Vector2 direction = Random.insideUnitCircle;

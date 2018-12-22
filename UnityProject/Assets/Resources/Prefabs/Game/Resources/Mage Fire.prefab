@@ -1434,11 +1434,11 @@ GameObject:
   - component: {fileID: 114595073288752818}
   - component: {fileID: 114992632291942406}
   - component: {fileID: 114990972789684798}
-  - component: {fileID: 114164529326677836}
   - component: {fileID: 114858689022017238}
   - component: {fileID: 114522085478644644}
   - component: {fileID: 54453826603486744}
   - component: {fileID: 65502899676110334}
+  - component: {fileID: 114164529326677836}
   m_Layer: 0
   m_Name: Mage Fire
   m_TagString: Herbivorous
@@ -2501,13 +2501,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1238978451737660}
-  m_LocalRotation: {x: 0.1341783, y: -0, z: -0, w: 0.99095726}
-  m_LocalPosition: {x: 0, y: 4.2000012, z: -2.690001}
+  m_LocalRotation: {x: 0.13052616, y: 0, z: 0, w: 0.9914449}
+  m_LocalPosition: {x: 0, y: 4, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4996802113016404}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 15.422001, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 15, y: 0, z: 0}
 --- !u!4 &4654832747688522
 Transform:
   m_ObjectHideFlags: 1
@@ -2851,7 +2851,7 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1238978451737660}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
@@ -2898,7 +2898,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &65502899676110334
 BoxCollider:
@@ -3035,7 +3035,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 114595073288752818}
         m_MethodName: OnSettings
         m_Mode: 1
         m_Arguments:
@@ -3143,11 +3143,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -3340,19 +3340,22 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Attack1Trigger
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Moving
   - Type: 1
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Input X
   - Type: 1
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Input Z
+  - Type: 9
+    SynchronizeType: 2
+    Name: Attack2Trigger
   m_SynchronizeLayers:
-  - SynchronizeType: 0
+  - SynchronizeType: 2
     LayerIndex: 0
 --- !u!114 &114177871037070536
 MonoBehaviour:
@@ -3899,7 +3902,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 114595073288752818}
         m_MethodName: OnExitGame
         m_Mode: 1
         m_Arguments:
@@ -4127,7 +4130,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 114595073288752818}
         m_MethodName: OnGraphics
         m_Mode: 1
         m_Arguments:
@@ -4293,7 +4296,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 114595073288752818}
         m_MethodName: OnControls
         m_Mode: 1
         m_Arguments:
@@ -4549,18 +4552,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dda129a4991545d2988105728ecfec5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayUI: {fileID: 1107665607007046, guid: 43fd04ad08284412bb3e37507c9cd224, type: 2}
-  PauseUI: {fileID: 1739871285909560, guid: 43fd04ad08284412bb3e37507c9cd224, type: 2}
-  MainMenuPauseUI: {fileID: 1320116193559814, guid: 43fd04ad08284412bb3e37507c9cd224,
-    type: 2}
-  SettingsPauseUI: {fileID: 1960163032430820, guid: 43fd04ad08284412bb3e37507c9cd224,
-    type: 2}
-  SettingsControlsUI: {fileID: 1983588190843330, guid: 43fd04ad08284412bb3e37507c9cd224,
-    type: 2}
-  SettingsGraphicsUI: {fileID: 1629067538582010, guid: 43fd04ad08284412bb3e37507c9cd224,
-    type: 2}
-  SettingsAudioUI: {fileID: 1795809140081572, guid: 43fd04ad08284412bb3e37507c9cd224,
-    type: 2}
+  PlayUI: {fileID: 1660439938923842}
+  PauseUI: {fileID: 1419416634937392}
+  MainMenuPauseUI: {fileID: 1345358184453148}
+  SettingsPauseUI: {fileID: 1178153448529566}
+  SettingsControlsUI: {fileID: 1850063778371598}
+  SettingsGraphicsUI: {fileID: 1570122933685520}
+  SettingsAudioUI: {fileID: 1694928405328540}
 --- !u!114 &114598485592814706
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4779,7 +4777,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 114595073288752818}
         m_MethodName: OnResume
         m_Mode: 1
         m_Arguments:
@@ -4993,7 +4991,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 114595073288752818}
         m_MethodName: OnAudio
         m_Mode: 1
         m_Arguments:
@@ -5254,15 +5252,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bffd5fd0d83c486497cf8d6f512fd08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spells:
+  Spells:
   - {fileID: 100004, guid: e80858857bb25463b82ed690e0f7c14d, type: 2}
   - {fileID: 1727626132299242, guid: 5275f4969fd974a748bdaca3cfdceac1, type: 2}
-  spellCooldowns:
+  SpellCooldowns:
   - 0
   - 0
-  bulletSpawn: {fileID: 4797199059280138}
-  anim: {fileID: 95860432556451088}
-  health: {fileID: 0}
+  BulletSpawn: {fileID: 4797199059280138}
+  Lock: 0
+  Health: {fileID: 0}
 --- !u!114 &114860184455905636
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5839,6 +5837,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 114990972789684798}
+  - {fileID: 114164529326677836}
   viewIdField: 0
   InstantiationId: 1
   isRuntimeInstantiated: 0

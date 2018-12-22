@@ -87,7 +87,7 @@ namespace Evol.Agents
             /*
             if (brain.brainType == BrainType.Heuristic)
             {
-                bool detectedSomething = false;
+                bool detectedSomn faitething = false;
                 Collider[] hitColliders = Physics.OverlapSphere(transform.position, 10);
                 int i = 0;
                 foreach (var collider in hitColliders)
@@ -139,7 +139,7 @@ namespace Evol.Agents
 
         private void FixedUpdate()
         {
-            rigidBody.AddForce(Vector3.down * Physics.gravity.y * rigidBody.mass * -10);
+            //rigidBody.AddForce(Vector3.down * Physics.gravity.y * rigidBody.mass * -10);
             /*
             // Handling gravity manually ...
             RaycastHit hit;

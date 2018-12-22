@@ -32,17 +32,20 @@ namespace Evol.Game.UI
 			if (Input.GetKeyDown(KeyCode.Escape))
 			{
 				// In case we exited the menu from settings, reset stuff
-				if (SettingsPauseUI.activeInHierarchy)
+				if (SettingsPauseUI.active)
 				{
 					OnSettings();
 					OnControls();
 				}
 				
-				PauseUI.SetActive(!PauseUI.activeInHierarchy);
-				PlayUI.SetActive(!PlayUI.activeInHierarchy);
+				PauseUI.SetActive(!PauseUI.active);
+				PlayUI.SetActive(!PlayUI.active);
 
 				// Disable / enable the character movement
-				GetComponent<RPGCharacterControllerFREE>().Lock(true, true, !PauseUI.activeInHierarchy, 0, 0);
+				if(GetComponent<RPGCharacterControllerFREE>() != null)
+					GetComponent<RPGCharacterControllerFREE>().Lock(true, true, !PauseUI.active, 0, 0);
+				if (GetComponent<PlayerController>() != null)
+					GetComponent<PlayerController>().Lock = !GetComponent<PlayerController>().Lock;
 			}
 		}
 
@@ -54,6 +57,12 @@ namespace Evol.Game.UI
 		{
 			PauseUI.SetActive(false);
 			PlayUI.SetActive(true);
+			
+			
+			if(GetComponent<RPGCharacterControllerFREE>() != null)
+				GetComponent<RPGCharacterControllerFREE>().Lock(true, true, !PauseUI.active, 0, 0);
+			if (GetComponent<PlayerController>() != null)
+				GetComponent<PlayerController>().Lock = !GetComponent<PlayerController>().Lock;
 		}
 
 		/// <summary>
@@ -61,8 +70,8 @@ namespace Evol.Game.UI
 		/// </summary>
 		public void OnSettings()
 		{
-			SettingsPauseUI.SetActive(!SettingsPauseUI.activeInHierarchy);
-			MainMenuPauseUI.SetActive(!MainMenuPauseUI.activeInHierarchy);
+			SettingsPauseUI.SetActive(!SettingsPauseUI.active);
+			MainMenuPauseUI.SetActive(!MainMenuPauseUI.active);
 		}
 		
 		/// <summary>
