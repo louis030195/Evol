@@ -23,7 +23,6 @@ public class ServerOnline : Server
 		//var player = PlayerPool.GetObject();
 		//player.SetActive(true);
 		// PhotonNetwork.Instantiate("Actors/PlayerControlled/Player") 
-		print(newPlayer.CustomProperties.Values.First());
 		var player = PhotonNetwork.Instantiate(
 			PlayerPrefabs.ToList().Find(p => p.name.Contains(newPlayer.CustomProperties.Values.First() as string)).name,
 			Vector3.up, 

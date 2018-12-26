@@ -148,6 +148,10 @@ namespace Evol.Game.Networking
             }
         }
 
+        
+
+
+
         protected void Initialize()
         {
             //PlayerPool = new Pool(PlayerPrefab);
@@ -159,7 +163,7 @@ namespace Evol.Game.Networking
 
             //StartCoroutine(SpawnTree());
         }
-
+        
         protected GameObject SpawnHerbivorous()
         {
             var herbivorousObject = HerbivorousPool.GetObject();

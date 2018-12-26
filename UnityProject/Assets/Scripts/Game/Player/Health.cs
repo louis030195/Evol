@@ -60,7 +60,7 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        if (!transform.parent.GetComponent<PhotonView>().IsMine)
+        if (!GetComponent<PhotonView>().IsMine)
             return;
 
         // Lose life if all the shields have been broken

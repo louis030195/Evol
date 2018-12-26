@@ -16,12 +16,13 @@ namespace Evol.Game.Spell
             Destroy(gameObject, 5.0f);
         }
 
-        private void OnTriggerEnter(Collider collider)
+
+        private void OnCollisionEnter(Collision other)
         {
-            if (collider.gameObject.GetComponent<LivingBeingAgent>() != null)
-                collider.gameObject.GetComponent<LivingBeingAgent>().LivingBeing.Life -= 10;
-            else if(collider.gameObject.GetComponent<Health>() != null)
-                    collider.gameObject.GetComponent<Health>().TakeDamage(10);
+            if (other.gameObject.GetComponent<LivingBeingAgent>() != null)
+                other.gameObject.GetComponent<LivingBeingAgent>().LivingBeing.Life -= 10;
+            else if(other.gameObject.GetComponent<Health>() != null)
+                other.gameObject.GetComponent<Health>().TakeDamage(10);
                 
             Destroy(gameObject);
         }

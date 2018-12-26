@@ -84,6 +84,7 @@ namespace Evol.Game.UI
 		{
 			ConnectionState.text = "Connected ! Loading game ... ";
 			
+			// If offline mode joinroom return true even if we're not on master
 			if (PhotonNetwork.JoinRoom("Yolo"))
 			{
 				PhotonNetwork.LocalPlayer.NickName = Nickname.text;

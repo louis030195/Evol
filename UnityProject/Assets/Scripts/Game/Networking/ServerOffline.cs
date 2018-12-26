@@ -11,16 +11,30 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class ServerOffline : Server 
 {
+    
     protected override void Start()
     {
+        
         base.Start();
         Initialize();
-        var player = Instantiate(PlayerPrefabs.ToList().Find(p => p.name.Contains(PhotonNetwork.LocalPlayer.CustomProperties.Values.First() as string)), 
+        /*var player = Instantiate(PlayerPrefabs.ToList().Find(p => p.name.Contains(PhotonNetwork.LocalPlayer.CustomProperties.Values.First() as string)), 
             Vector3.up,
             Quaternion.identity);
+        */
+        
+        var player = PhotonNetwork.Instantiate(
+            PlayerPrefabs.ToList().Find(p => p.name.Contains(PhotonNetwork.LocalPlayer.CustomProperties.Values.First() as string)).name,
+            Vector3.up, 
+            Quaternion.identity);
+        
+            
+        player.GetPhotonView().TransferOwnership(PhotonNetwork.LocalPlayer);
+            
+            
+        players.Add(player);
+        
+        
         // TODO: make it work for 0.6
-
-
         if (player.GetComponent<Agent>())
         {
             
@@ -31,12 +45,7 @@ public class ServerOffline : Server
             player.GetComponent<DemonstrationRecorder>().record = true;
             //player.GetComponent<DemonstrationRecorder>().
             
-            /*
-            for (var i = 0; i < 6; i++)
-            {
-                var carnivorous = SpawnCarnivorous();
-                carnivorous.GetComponent<Agent>().GiveBrain(Brains.Find(brain => brain.name.Contains("Student")));
-            }*/
+
         }
 
 

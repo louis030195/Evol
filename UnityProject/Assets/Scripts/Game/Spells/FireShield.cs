@@ -10,6 +10,7 @@ namespace Evol.Game.Spell
     public class FireShield : SpellBase
     {
 
+        public GameObject BurningSteps;
         
         protected override void Start()
         {
@@ -18,7 +19,8 @@ namespace Evol.Game.Spell
             if (Caster.GetComponent<Health>().currentShields
                 .Any(currentShield => currentShield.Item1.Equals("FireShield")))
                 Destroy(gameObject);
-            
+
+            Instantiate(BurningSteps, transform);
             Caster.GetComponent<Animator>().SetTrigger("Attack2Trigger");
             
             transform.parent = Caster.transform;
@@ -30,7 +32,7 @@ namespace Evol.Game.Spell
             // TODO: implement a shield class, its better
             Caster.GetComponent<Health>().currentShields.Add(Tuple.Create("FireShield", 50));
             
-            Destroy(gameObject, 5.0f);
+            Destroy(gameObject, 10.0f);
         }
 
         private void OnDestroy()
