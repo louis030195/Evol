@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using DigitalRuby.LightningBolt;
+using DigitalRuby.RainMaker;
 using Evol.Agents;
 using Evol.Utils;
 using MLAgents;
@@ -36,8 +38,10 @@ namespace Evol.Game.Networking
         /// or switching from trained model to training model (control ON)
         /// </summary>
         public List<Brain> Brains;
-        
-        
+
+        public Light light;
+        public GameObject Lightning;
+        public RainScript rainScript;
         public GameObject Ground;
         public GameObject Test;
         public Pool HerbivorousPool;
@@ -45,6 +49,7 @@ namespace Evol.Game.Networking
         public Pool HerbPool;
     
         protected List<GameObject> players;
+        private bool rainFinished = true;
 
         /// <summary>
         /// The maximum number of players in game
@@ -58,7 +63,8 @@ namespace Evol.Game.Networking
             if(!IsServer)
                 Destroy(this); // Destroy the server script if not server
             players = new List<GameObject>();
-            
+
+
             // Basically turning off communication with python, we only want these brains to use the pre-trained model
             //Academy.broadcastHub.SetControlled(Academy.broadcastHub.broadcastingBrains.Find(brain => brain.name.Contains("Learning")), false);
 
@@ -76,10 +82,72 @@ namespace Evol.Game.Networking
                 }
             };
             process.Start();*/
-            
+
 
         }
 
+
+        protected virtual void Update()
+        {
+            if(Time.frameCount % Random.Range(3, 6) == 0 && rainFinished)
+                StartCoroutine(SlowlyStartRaining());
+        }
+        
+        /// <summary>
+        /// TODO: Larger rain zone ? laggy ?
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator SlowlyStartRaining ()
+        {
+            rainFinished = false;
+            var rainIntensity = Random.Range(0.1f, 1.0f);
+            while(rainScript.RainIntensity < rainIntensity)
+            {
+                rainScript.RainIntensity += 0.01f;
+                light.intensity -= 0.01f;
+            
+                yield return new WaitForSeconds(0.1f);
+            }
+
+
+            var duration = Random.Range(3f, 60f);
+            
+            if (rainIntensity > 0.5f)
+            {
+                StartCoroutine(ThrowLightning(duration));
+            }
+            
+            print($"Reached the target : {rainIntensity}, raining for {duration}");
+            
+            yield return new WaitForSeconds(duration);
+        
+            while(rainScript.RainIntensity >= 0)
+            {
+                rainScript.RainIntensity -= 0.01f;
+                light.intensity += 0.01f;
+            
+                yield return new WaitForSeconds(0.1f);
+            }
+
+            rainFinished = true;
+            
+            print($"Rain is now finished.");
+        }
+
+        private IEnumerator ThrowLightning(float duration)
+        {
+            var i = 0;
+            while(i < duration){
+                var lightning = Instantiate(Lightning);
+                var randomX = Random.Range(-100, 100);
+                var randomZ = Random.Range(-100, 100);
+                lightning.GetComponent<LightningBoltScript>().StartPosition = new Vector3(randomX, 100, randomZ);
+                lightning.GetComponent<LightningBoltScript>().EndPosition = new Vector3(randomX, 0, randomZ);
+                Destroy(lightning, 2f);
+                i--;
+                yield return new WaitForSeconds(Random.Range(1f, 10f));
+            }
+        }
 
         protected void Initialize()
         {

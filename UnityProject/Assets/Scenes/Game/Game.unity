@@ -215,6 +215,36 @@ Prefab:
       propertyPath: IsServer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114739921348141042, guid: 49e705c04be9347a992c707ea4eed86c,
+        type: 2}
+      propertyPath: rainScript
+      value: 
+      objectReference: {fileID: 1984482241}
+    - target: {fileID: 114988004666055914, guid: 49e705c04be9347a992c707ea4eed86c,
+        type: 2}
+      propertyPath: rainScript
+      value: 
+      objectReference: {fileID: 1984482241}
+    - target: {fileID: 114739921348141042, guid: 49e705c04be9347a992c707ea4eed86c,
+        type: 2}
+      propertyPath: Lightning
+      value: 
+      objectReference: {fileID: 106988, guid: 25991dfa3d97e415ea159210b6391765, type: 2}
+    - target: {fileID: 114988004666055914, guid: 49e705c04be9347a992c707ea4eed86c,
+        type: 2}
+      propertyPath: Lightning
+      value: 
+      objectReference: {fileID: 106988, guid: 25991dfa3d97e415ea159210b6391765, type: 2}
+    - target: {fileID: 114739921348141042, guid: 49e705c04be9347a992c707ea4eed86c,
+        type: 2}
+      propertyPath: light
+      value: 
+      objectReference: {fileID: 937936867}
+    - target: {fileID: 114988004666055914, guid: 49e705c04be9347a992c707ea4eed86c,
+        type: 2}
+      propertyPath: light
+      value: 
+      objectReference: {fileID: 937936867}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49e705c04be9347a992c707ea4eed86c, type: 2}
   m_IsPrefabAsset: 0
@@ -543,6 +573,66 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1642404365}
   m_Script: {fileID: 11500000, guid: c2629a1097955374ba445e916c614087, type: 3}
+--- !u!1001 &1718793077
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 470886, guid: 69b40ef7ee16c834c844b3fa26e0fdda, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 470886, guid: 69b40ef7ee16c834c844b3fa26e0fdda, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 470886, guid: 69b40ef7ee16c834c844b3fa26e0fdda, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 470886, guid: 69b40ef7ee16c834c844b3fa26e0fdda, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 470886, guid: 69b40ef7ee16c834c844b3fa26e0fdda, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 470886, guid: 69b40ef7ee16c834c844b3fa26e0fdda, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 470886, guid: 69b40ef7ee16c834c844b3fa26e0fdda, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 470886, guid: 69b40ef7ee16c834c844b3fa26e0fdda, type: 2}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 11437536, guid: 69b40ef7ee16c834c844b3fa26e0fdda, type: 2}
+      propertyPath: Camera
+      value: 
+      objectReference: {fileID: 473792987}
+    - target: {fileID: 11437536, guid: 69b40ef7ee16c834c844b3fa26e0fdda, type: 2}
+      propertyPath: RainIntensity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11437536, guid: 69b40ef7ee16c834c844b3fa26e0fdda, type: 2}
+      propertyPath: RainMistHeight
+      value: -50
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69b40ef7ee16c834c844b3fa26e0fdda, type: 2}
+  m_IsPrefabAsset: 0
+--- !u!114 &1984482241 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 11437536, guid: 69b40ef7ee16c834c844b3fa26e0fdda,
+    type: 2}
+  m_PrefabInternal: {fileID: 1718793077}
+  m_Script: {fileID: 11500000, guid: 6ff5b1f04dece7440b6f0886ee13f147, type: 3}
 --- !u!1 &2045569565
 GameObject:
   m_ObjectHideFlags: 0
