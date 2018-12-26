@@ -114,6 +114,8 @@ public class PlayerController : MonoBehaviour
     [PunRPC]
     protected void CmdSpell(int spell)
     {
+        // TODO: USE EVENT IN ANIMATION TO PROC THE ANIMATION AT SPECIFIC TIME OF THE ANIMATION,
+        // TODO: SAME FOR FOOT STEP NOISE WHEN FOOT HIT GROUND DURING ANIMATION
         // Spawn the spellInstance on the Clients
         var go = PhotonNetwork.Instantiate(Spells[spell].name, BulletSpawn.position, BulletSpawn.rotation);
         //var go = Instantiate(Spells[spell], BulletSpawn.position, BulletSpawn.rotation);

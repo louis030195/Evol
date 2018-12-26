@@ -22,17 +22,17 @@ namespace Heuristic
         {
             if(!isHeuristic) isHeuristic = true;
 
-            /*
+            
             for (int i = 0; i < 7; i++)
             {
                 if (vectorObs[i] == 1.0f || vectorObs[i] == 2.0f)
                 {
-                    return new float[2] {1, Vector3.Angle(new Vector3(0, rayAngles[i], 0), transform.forward)};
+                    return new float[2] {1, Vector3.Angle(new Vector3(0, rayAngles[i], 0), Vector3.forward)};
                 }
             }
 
             return new float[2]{1f, 0.3f};
-            */
+            
             return new float[] {0, 0};
         }
 

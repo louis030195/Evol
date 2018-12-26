@@ -104,7 +104,7 @@ namespace Evol.Game.Networking
             while(rainScript.RainIntensity < rainIntensity)
             {
                 rainScript.RainIntensity += 0.01f;
-                light.intensity -= 0.01f;
+                light.intensity -= 0.005f;
             
                 yield return new WaitForSeconds(0.1f);
             }
@@ -124,7 +124,7 @@ namespace Evol.Game.Networking
             while(rainScript.RainIntensity >= 0)
             {
                 rainScript.RainIntensity -= 0.01f;
-                light.intensity += 0.01f;
+                light.intensity += 0.005f;
             
                 yield return new WaitForSeconds(0.1f);
             }
@@ -136,15 +136,14 @@ namespace Evol.Game.Networking
 
         private IEnumerator ThrowLightning(float duration)
         {
-            var i = 0;
-            while(i < duration){
+            while(duration > 0){
                 var lightning = Instantiate(Lightning);
                 var randomX = Random.Range(-100, 100);
                 var randomZ = Random.Range(-100, 100);
                 lightning.GetComponent<LightningBoltScript>().StartPosition = new Vector3(randomX, 100, randomZ);
                 lightning.GetComponent<LightningBoltScript>().EndPosition = new Vector3(randomX, 0, randomZ);
-                Destroy(lightning, 2f);
-                i--;
+                Destroy(lightning, 3f);
+                duration--;
                 yield return new WaitForSeconds(Random.Range(1f, 10f));
             }
         }
@@ -156,7 +155,7 @@ namespace Evol.Game.Networking
             CarnivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Carnivorous")));
             HerbPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Herb")));
 
-            //StartCoroutine(SpawnAgents());
+            StartCoroutine(SpawnAgents());
 
             //StartCoroutine(SpawnTree());
         }
