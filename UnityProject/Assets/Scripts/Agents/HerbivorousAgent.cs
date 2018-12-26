@@ -79,6 +79,7 @@ namespace Evol.Agents
                     if (LivingBeing.Life >= ReproductionTreshold &&
                         collision.collider.GetComponent<HerbivorousAgent>().LivingBeing.Life >= ReproductionTreshold)
                     {
+                        AmountReproductions++;
                         reproductionCounter.Inc(1.1);
                         rewardOnReproduceGauge.Set(RewardOnReproduce);
 

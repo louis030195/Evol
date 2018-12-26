@@ -38,7 +38,10 @@ namespace Evol.Agents
         public Pool Pool { get; set; }
         public System.Action Action;
 
-        public int AmountActions { get; set; } = 0;
+        public int AmountActions { get; set; }
+        public int AmountReproductions { get; set; }
+        
+        public int ReproductionsExpectancy { get; set; }
         
         // Parameters
         public float LifeGain { get; set; } = 50f;

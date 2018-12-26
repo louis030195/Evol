@@ -2,15 +2,19 @@
 
 Current state of the project (sorry kinda buggy gif)
 
-<img src="Screenshots/current_state1.gif" width="350" height="350">
-<img src="Screenshots/current_state2.gif" width="350" height="350">
+<img src="Screenshots/rl_scene.gif" width="300" height="300">
+
+This agents are wolves / chickens in the next scene (broken due to ml-agents 0.6 atm)
+
+<img src="Screenshots/ice_mage.gif" width="300" height="300">
+<img src="Screenshots/fire_mage.gif" width="300" height="300">
 
 # Roadmap
 
 - [ ] Mental control mage (take control of agents by switching to player brain, imitation learning to teach a herd of wolfes ...)
 - [ ] Game loop
 - [ ] Forest propagation
-- [ ] Account system (Photon + NodeJs + Mongodb)
+- [ ] Account system (Steam ?)
 
 ...
 

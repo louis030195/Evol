@@ -891,7 +891,6 @@ GameObject:
   - component: {fileID: 114834794170803310}
   - component: {fileID: 114059153167867584}
   - component: {fileID: 65096561027571590}
-  - component: {fileID: 114052728990566648}
   m_Layer: 0
   m_Name: Wolf
   m_TagString: Carnivorous
@@ -2646,19 +2645,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5, z: 1}
   m_Center: {x: 0, y: 0.2, z: 0}
---- !u!114 &114052728990566648
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 177940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50f710d360a49461cad67ff5e6bcefe1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  record: 1
-  demonstrationName: yay
 --- !u!114 &114059153167867584
 MonoBehaviour:
   m_ObjectHideFlags: 1

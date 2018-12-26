@@ -113,67 +113,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &39590954
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 976298559}
-    m_Modifications:
-    - target: {fileID: 421720, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -4.61
-      objectReference: {fileID: 0}
-    - target: {fileID: 421720, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 421720, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 421720, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 421720, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 421720, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 421720, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 421720, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114834794170803310, guid: f5aaf1c6b5d9746588a990ccc7fce65e,
-        type: 2}
-      propertyPath: viewIdField
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 177940, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
-      propertyPath: m_Name
-      value: Wolf (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 114834794170803310, guid: f5aaf1c6b5d9746588a990ccc7fce65e,
-        type: 2}
-      propertyPath: InstantiationId
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114751524310128202, guid: f5aaf1c6b5d9746588a990ccc7fce65e,
-        type: 2}
-      propertyPath: brain
-      value: 
-      objectReference: {fileID: 862663559}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
-  m_IsPrefabAsset: 0
 --- !u!1 &48643192 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1228419803925864, guid: 21cba551342e0284a87bcb1672a662d2,
@@ -217,18 +156,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b23992c8eb17439887f5e944bf04a40, type: 3}
   m_Name: (Clone)
   m_EditorClassIdentifier: 
-  broadcast: 1
-  graphModel: {fileID: 0}
-  graphScope: 
-  graphPlaceholders: []
-  BatchSizePlaceholderName: batch_size
-  VectorObservationPlacholderName: vector_observation
-  RecurrentInPlaceholderName: recurrent_in
-  RecurrentOutPlaceholderName: recurrent_out
-  VisualObservationPlaceholderName: []
-  ActionPlaceholderName: action
-  PreviousActionPlaceholderName: prev_action
-  brain: {fileID: 0}
+  brainParameters:
+    vectorObservationSize: 1
+    numStackedVectorObservations: 1
+    vectorActionSize: 01000000
+    cameraResolutions: []
+    vectorActionDescriptions: []
+    vectorActionSpaceType: 0
+  model: {fileID: 0}
 --- !u!1001 &82347399
 Prefab:
   m_ObjectHideFlags: 0
@@ -266,7 +201,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4844902911259396, guid: 01bdef6597b249b44a9530ab656246fc, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01bdef6597b249b44a9530ab656246fc, type: 2}
@@ -308,7 +243,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4844902911259396, guid: 01bdef6597b249b44a9530ab656246fc, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1562575627230960, guid: 01bdef6597b249b44a9530ab656246fc, type: 2}
       propertyPath: m_Name
@@ -354,7 +289,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 470440, guid: 8ed1fa325ca228645ad26dd6eff14768, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 185286, guid: 8ed1fa325ca228645ad26dd6eff14768, type: 2}
       propertyPath: m_Name
@@ -501,12 +436,6 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a233e8e6c6be3dc4aa8847cfad7cb193, type: 2}
   m_IsPrefabAsset: 0
---- !u!114 &231451998 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114555813800974604, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-    type: 2}
-  m_PrefabInternal: {fileID: 231451996}
-  m_Script: {fileID: 11500000, guid: c676a8ddf5a5f4f64b35e9ed5028679d, type: 3}
 --- !u!1001 &289971476
 Prefab:
   m_ObjectHideFlags: 0
@@ -544,16 +473,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4340555707901484, guid: 48ad265f338caaf4da3a864816595b22, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48ad265f338caaf4da3a864816595b22, type: 2}
   m_IsPrefabAsset: 0
---- !u!4 &308253915 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 421720, guid: f5aaf1c6b5d9746588a990ccc7fce65e,
-    type: 2}
-  m_PrefabInternal: {fileID: 39590954}
 --- !u!1001 &389984963
 Prefab:
   m_ObjectHideFlags: 0
@@ -591,7 +515,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 470440, guid: 8ed1fa325ca228645ad26dd6eff14768, type: 2}
       propertyPath: m_RootOrder
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 185286, guid: 8ed1fa325ca228645ad26dd6eff14768, type: 2}
       propertyPath: m_Name
@@ -653,7 +577,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4508970561002598, guid: 21cba551342e0284a87bcb1672a662d2, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21cba551342e0284a87bcb1672a662d2, type: 2}
@@ -770,8 +694,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943466ab374444748a364f9d6c3e2fe2, type: 3}
   m_Name: (Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
-  broadcast: 1
-  brain: {fileID: 0}
+  brainParameters:
+    vectorObservationSize: 1
+    numStackedVectorObservations: 1
+    vectorActionSize: 01000000
+    cameraResolutions: []
+    vectorActionDescriptions: []
+    vectorActionSpaceType: 0
+  decision: {fileID: 0}
+  decisionScript: {fileID: 0}
+  c_decision: 
 --- !u!114 &660028390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -783,11 +715,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41e9bda8f3cf1492fa74926a530f6f70, type: 3}
   m_Name: (Clone)(Clone)
   m_EditorClassIdentifier: 
-  broadcast: 1
+  brainParameters:
+    vectorObservationSize: 1
+    numStackedVectorObservations: 1
+    vectorActionSize: 01000000
+    cameraResolutions: []
+    vectorActionDescriptions: []
+    vectorActionSpaceType: 0
   keyContinuousPlayerActions: []
   axisContinuousPlayerActions: []
   discretePlayerActions: []
-  brain: {fileID: 862663559}
 --- !u!1 &664967017 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1539544152721592, guid: 48ad265f338caaf4da3a864816595b22,
@@ -881,8 +818,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943466ab374444748a364f9d6c3e2fe2, type: 3}
   m_Name: (Clone)
   m_EditorClassIdentifier: 
-  broadcast: 1
-  brain: {fileID: 0}
+  brainParameters:
+    vectorObservationSize: 1
+    numStackedVectorObservations: 1
+    vectorActionSize: 01000000
+    cameraResolutions: []
+    vectorActionDescriptions: []
+    vectorActionSpaceType: 0
+  decision: {fileID: 0}
+  decisionScript: {fileID: 0}
+  c_decision: 
 --- !u!1 &827124370 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1228419803925864, guid: 21cba551342e0284a87bcb1672a662d2,
@@ -915,12 +860,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 116d5c861c8e61646b0f78e0841807b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &862663559 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114094034598838896, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-    type: 2}
-  m_PrefabInternal: {fileID: 231451996}
-  m_Script: {fileID: 11500000, guid: c676a8ddf5a5f4f64b35e9ed5028679d, type: 3}
 --- !u!1001 &942265301
 Prefab:
   m_ObjectHideFlags: 0
@@ -958,7 +897,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 470440, guid: 8ed1fa325ca228645ad26dd6eff14768, type: 2}
       propertyPath: m_RootOrder
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ed1fa325ca228645ad26dd6eff14768, type: 2}
@@ -974,18 +913,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b23992c8eb17439887f5e944bf04a40, type: 3}
   m_Name: (Clone)(Clone)
   m_EditorClassIdentifier: 
-  broadcast: 1
-  graphModel: {fileID: 0}
-  graphScope: 
-  graphPlaceholders: []
-  BatchSizePlaceholderName: batch_size
-  VectorObservationPlacholderName: vector_observation
-  RecurrentInPlaceholderName: recurrent_in
-  RecurrentOutPlaceholderName: recurrent_out
-  VisualObservationPlaceholderName: []
-  ActionPlaceholderName: action
-  PreviousActionPlaceholderName: prev_action
-  brain: {fileID: 862663559}
+  brainParameters:
+    vectorObservationSize: 1
+    numStackedVectorObservations: 1
+    vectorActionSize: 01000000
+    cameraResolutions: []
+    vectorActionDescriptions: []
+    vectorActionSpaceType: 0
+  model: {fileID: 0}
 --- !u!1 &976298556
 GameObject:
   m_ObjectHideFlags: 0
@@ -1057,8 +992,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1663276929}
-  - {fileID: 308253915}
-  - {fileID: 1865907970}
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1093,8 +1026,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943466ab374444748a364f9d6c3e2fe2, type: 3}
   m_Name: (Clone)(Clone)
   m_EditorClassIdentifier: 
-  broadcast: 1
-  brain: {fileID: 0}
+  brainParameters:
+    vectorObservationSize: 1
+    numStackedVectorObservations: 1
+    vectorActionSize: 01000000
+    cameraResolutions: []
+    vectorActionDescriptions: []
+    vectorActionSpaceType: 0
+  decision: {fileID: 0}
+  decisionScript: {fileID: 0}
+  c_decision: 
 --- !u!1 &1123596105
 GameObject:
   m_ObjectHideFlags: 0
@@ -1170,7 +1111,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 36.882, y: 0, z: 0}
 --- !u!114 &1137638904
 MonoBehaviour:
@@ -1183,24 +1124,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b23992c8eb17439887f5e944bf04a40, type: 3}
   m_Name: (Clone)(Clone)
   m_EditorClassIdentifier: 
-  broadcast: 1
-  graphModel: {fileID: 0}
-  graphScope: 
-  graphPlaceholders: []
-  BatchSizePlaceholderName: batch_size
-  VectorObservationPlacholderName: vector_observation
-  RecurrentInPlaceholderName: recurrent_in
-  RecurrentOutPlaceholderName: recurrent_out
-  VisualObservationPlaceholderName: []
-  ActionPlaceholderName: action
-  PreviousActionPlaceholderName: prev_action
-  brain: {fileID: 1153823151}
---- !u!114 &1153823151 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114859714832689094, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-    type: 2}
-  m_PrefabInternal: {fileID: 231451996}
-  m_Script: {fileID: 11500000, guid: c676a8ddf5a5f4f64b35e9ed5028679d, type: 3}
+  brainParameters:
+    vectorObservationSize: 1
+    numStackedVectorObservations: 1
+    vectorActionSize: 01000000
+    cameraResolutions: []
+    vectorActionDescriptions: []
+    vectorActionSpaceType: 0
+  model: {fileID: 0}
 --- !u!114 &1193599839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1212,11 +1143,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41e9bda8f3cf1492fa74926a530f6f70, type: 3}
   m_Name: (Clone)(Clone)
   m_EditorClassIdentifier: 
-  broadcast: 1
+  brainParameters:
+    vectorObservationSize: 1
+    numStackedVectorObservations: 1
+    vectorActionSize: 01000000
+    cameraResolutions: []
+    vectorActionDescriptions: []
+    vectorActionSpaceType: 0
   keyContinuousPlayerActions: []
   axisContinuousPlayerActions: []
   discretePlayerActions: []
-  brain: {fileID: 1153823151}
 --- !u!114 &1209166370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1228,7 +1164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35813a1be64e144f887d7d5f15b963fa, type: 3}
   m_Name: (Clone)(Clone)
   m_EditorClassIdentifier: 
-  brain: {fileID: 862663559}
 --- !u!1001 &1268686698
 Prefab:
   m_ObjectHideFlags: 0
@@ -1266,7 +1201,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4508970561002598, guid: 21cba551342e0284a87bcb1672a662d2, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1228419803925864, guid: 21cba551342e0284a87bcb1672a662d2, type: 2}
       propertyPath: m_Name
@@ -1291,62 +1226,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a261dd92fa946884cac018e1f40c410f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &1451147497
-Prefab:
+--- !u!1 &1351238148 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 177940, guid: f5aaf1c6b5d9746588a990ccc7fce65e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1777562599}
+--- !u!114 &1351238149
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 976298559}
-    m_Modifications:
-    - target: {fileID: 421720, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 421720, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 421720, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 421720, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 421720, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 421720, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 421720, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 421720, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114834794170803310, guid: f5aaf1c6b5d9746588a990ccc7fce65e,
-        type: 2}
-      propertyPath: viewIdField
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 177940, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
-      propertyPath: m_Name
-      value: Wolf (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 114751524310128202, guid: f5aaf1c6b5d9746588a990ccc7fce65e,
-        type: 2}
-      propertyPath: brain
-      value: 
-      objectReference: {fileID: 862663559}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
-  m_IsPrefabAsset: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1351238148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50f710d360a49461cad67ff5e6bcefe1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  record: 1
+  demonstrationName: testDemo
 --- !u!1 &1467557466 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 185286, guid: 8ed1fa325ca228645ad26dd6eff14768,
@@ -1374,18 +1271,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b23992c8eb17439887f5e944bf04a40, type: 3}
   m_Name: (Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
-  broadcast: 1
-  graphModel: {fileID: 0}
-  graphScope: 
-  graphPlaceholders: []
-  BatchSizePlaceholderName: batch_size
-  VectorObservationPlacholderName: vector_observation
-  RecurrentInPlaceholderName: recurrent_in
-  RecurrentOutPlaceholderName: recurrent_out
-  VisualObservationPlaceholderName: []
-  ActionPlaceholderName: action
-  PreviousActionPlaceholderName: prev_action
-  brain: {fileID: 862663559}
+  brainParameters:
+    vectorObservationSize: 1
+    numStackedVectorObservations: 1
+    vectorActionSize: 01000000
+    cameraResolutions: []
+    vectorActionDescriptions: []
+    vectorActionSpaceType: 0
+  model: {fileID: 0}
 --- !u!114 &1497676414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1397,11 +1290,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41e9bda8f3cf1492fa74926a530f6f70, type: 3}
   m_Name: (Clone)
   m_EditorClassIdentifier: 
-  broadcast: 1
+  brainParameters:
+    vectorObservationSize: 1
+    numStackedVectorObservations: 1
+    vectorActionSize: 01000000
+    cameraResolutions: []
+    vectorActionDescriptions: []
+    vectorActionSpaceType: 0
   keyContinuousPlayerActions: []
   axisContinuousPlayerActions: []
   discretePlayerActions: []
-  brain: {fileID: 231451998}
 --- !u!1 &1582900087 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1808644162293686, guid: 1a6a34cedc83b654099dbb403ec40524,
@@ -1455,7 +1353,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 470440, guid: 8ed1fa325ca228645ad26dd6eff14768, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 185286, guid: 8ed1fa325ca228645ad26dd6eff14768, type: 2}
       propertyPath: m_Name
@@ -1475,7 +1373,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41e9bda8f3cf1492fa74926a530f6f70, type: 3}
   m_Name: (Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
-  broadcast: 1
+  brainParameters:
+    vectorObservationSize: 1
+    numStackedVectorObservations: 1
+    vectorActionSize: 01000000
+    cameraResolutions: []
+    vectorActionDescriptions: []
+    vectorActionSpaceType: 0
   keyContinuousPlayerActions:
   - key: 122
     index: 0
@@ -1491,7 +1395,6 @@ MonoBehaviour:
     value: -1
   axisContinuousPlayerActions: []
   discretePlayerActions: []
-  brain: {fileID: 2013945541}
 --- !u!1 &1627624946 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1562575627230960, guid: 01bdef6597b249b44a9530ab656246fc,
@@ -1519,8 +1422,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943466ab374444748a364f9d6c3e2fe2, type: 3}
   m_Name: (Clone)(Clone)
   m_EditorClassIdentifier: 
-  broadcast: 1
-  brain: {fileID: 0}
+  brainParameters:
+    vectorObservationSize: 1
+    numStackedVectorObservations: 1
+    vectorActionSize: 01000000
+    cameraResolutions: []
+    vectorActionDescriptions: []
+    vectorActionSpaceType: 0
+  decision: {fileID: 0}
+  decisionScript: {fileID: 0}
+  c_decision: 
 --- !u!4 &1663276929 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 421720, guid: f5aaf1c6b5d9746588a990ccc7fce65e,
@@ -1579,7 +1490,8 @@ Prefab:
         type: 2}
       propertyPath: brain
       value: 
-      objectReference: {fileID: 2013945541}
+      objectReference: {fileID: 11400000, guid: 39b091f301012488686619d5dafe153f,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
   m_IsPrefabAsset: 0
@@ -1620,7 +1532,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 470440, guid: 8ed1fa325ca228645ad26dd6eff14768, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 185286, guid: 8ed1fa325ca228645ad26dd6eff14768, type: 2}
       propertyPath: m_Name
@@ -1629,11 +1541,6 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ed1fa325ca228645ad26dd6eff14768, type: 2}
   m_IsPrefabAsset: 0
---- !u!4 &1865907970 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 421720, guid: f5aaf1c6b5d9746588a990ccc7fce65e,
-    type: 2}
-  m_PrefabInternal: {fileID: 1451147497}
 --- !u!114 &1978003597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1645,13 +1552,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35813a1be64e144f887d7d5f15b963fa, type: 3}
   m_Name: (Clone)(Clone)
   m_EditorClassIdentifier: 
-  brain: {fileID: 0}
---- !u!114 &2013945541 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114352594079019664, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-    type: 2}
-  m_PrefabInternal: {fileID: 231451996}
-  m_Script: {fileID: 11500000, guid: c676a8ddf5a5f4f64b35e9ed5028679d, type: 3}
 --- !u!1001 &2038687500
 Prefab:
   m_ObjectHideFlags: 0
@@ -1689,7 +1589,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 470440, guid: 8ed1fa325ca228645ad26dd6eff14768, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 185286, guid: 8ed1fa325ca228645ad26dd6eff14768, type: 2}
       propertyPath: m_Name
@@ -1735,7 +1635,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4456754640281814, guid: 1a6a34cedc83b654099dbb403ec40524, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a6a34cedc83b654099dbb403ec40524, type: 2}
@@ -1751,7 +1651,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35813a1be64e144f887d7d5f15b963fa, type: 3}
   m_Name: (Clone)
   m_EditorClassIdentifier: 
-  brain: {fileID: 0}
 --- !u!114 &2136328161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1763,4 +1662,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35813a1be64e144f887d7d5f15b963fa, type: 3}
   m_Name: (Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
-  brain: {fileID: 0}

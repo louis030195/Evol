@@ -19,26 +19,46 @@ namespace Evol.Agents
                 
                 public Pool CarnivorousPool { get; set; }
 
-                public int HerbivorousSpeciesLifeExpectency { get; set; }
+                public int HerbivorousSpeciesLifeExpectancy { get; set; }
                 
-                public int CarnivorousSpeciesLifeExpectency { get; set; }
+                public int CarnivorousSpeciesLifeExpectancy { get; set; }
                 
-                private int herbivorousPreviousSpeciesLifeExpectency;
-                private int carnivorousPreviousSpeciesLifeExpectency;
+                private int herbivorousPreviousSpeciesLifeExpectancy;
+                private int carnivorousPreviousSpeciesLifeExpectancy;
+                
+                public int HerbivorousReproductionExpectancy { get; set; }
+                
+                public int CarnivorousReproductionExpectancy { get; set; }
+                
+                private int herbivorousPreviousReproductionExpectancy;
+                private int carnivorousPreviousReproductionExpectancy;
 
                 private Gauge cumulativeRewardGauge;
+                private Gauge herbivorousReproductionExpectancyGauge;
+                private Gauge carnivorousReproductionExpectancyGauge;
                 
                 public override void InitializeAgent()
                 {
-                        if(cumulativeRewardGauge == null)
+                        if (cumulativeRewardGauge == null)
+                        {
                                 cumulativeRewardGauge =
                                         Metrics.CreateGauge("cumulativeRewardGod", "Cumulative reward of god");
+
+                                herbivorousReproductionExpectancyGauge =
+                                        Metrics.CreateGauge("herbivorousReproductionExpectancyGod", "herbivorous Reproduction Expectancy God");
+
+                                carnivorousReproductionExpectancyGauge =
+                                        Metrics.CreateGauge("carnivorousReproductionExpectancyGod", "carnivorous Reproductio nExpectancy God");
+
+                        }
 
                 }
 
                 public override void CollectObservations()
                 {
-                        AddVectorObs(carnivorousPreviousSpeciesLifeExpectency);
+                        AddVectorObs(carnivorousPreviousReproductionExpectancy);
+                        
+                        AddVectorObs(carnivorousPreviousSpeciesLifeExpectancy);
                         
                         AddVectorObs(CarnivorousPool.inUse.First().GetComponent<LivingBeingManager>().LifeLoss);
                         
@@ -57,7 +77,9 @@ namespace Evol.Agents
                         
                         // ---------------------------------------------------------------------------------------------
                         
-                        AddVectorObs(herbivorousPreviousSpeciesLifeExpectency);
+                        AddVectorObs(herbivorousPreviousReproductionExpectancy);
+                        
+                        AddVectorObs(herbivorousPreviousSpeciesLifeExpectancy);
                         
                         AddVectorObs(HerbivorousPool.inUse.First().GetComponent<LivingBeingManager>().LifeLoss);
                         
@@ -115,36 +137,48 @@ namespace Evol.Agents
                                 // Handle reward on eat
                                 HerbivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().RewardOnEat =
-                                                Mathf.Clamp(vectorAction[8] * 10, 0f, 10f));
+                                                Mathf.Clamp(vectorAction[8] * 20, 10f, 20f));
                                 CarnivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().RewardOnEat =
-                                                Mathf.Clamp(vectorAction[9] * 10, 0f, 10f));
+                                                Mathf.Clamp(vectorAction[9] * 20, 10f, 20f));
 
                                 // Handle reward on reproduce
                                 HerbivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().RewardOnReproduce =
-                                                Mathf.Clamp(vectorAction[10] * 10, 0f, 10f));
+                                                Mathf.Clamp(vectorAction[10] * 20, 10f, 20f));
                                 CarnivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingAgent>().RewardOnReproduce =
-                                                Mathf.Clamp(vectorAction[11] * 10, 0f, 10f));
+                                                Mathf.Clamp(vectorAction[11] * 20, 10f, 20f));
 
                                 // Handle reward on death
                                 HerbivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingManager>().RewardOnDeath =
-                                                Mathf.Clamp(vectorAction[12] * 20, 0f, 20f));
+                                                Mathf.Clamp(vectorAction[12] * -10, -5f, -10f));
                                 CarnivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingManager>().RewardOnDeath =
-                                                Mathf.Clamp(vectorAction[13] * 20, 0f, 20f));
+                                                Mathf.Clamp(vectorAction[13] * -10, -5f, -10f));
                         }
                         
                         // Reward the god agent if he succeed to make the species live longer over time
-                        if(CarnivorousSpeciesLifeExpectency > carnivorousPreviousSpeciesLifeExpectency)
+                        if(CarnivorousSpeciesLifeExpectancy > carnivorousPreviousSpeciesLifeExpectancy)
                                 AddReward(0.0005f);
                         else
                                 AddReward(-0.0005f);
 
 
-                        if(HerbivorousSpeciesLifeExpectency > herbivorousPreviousSpeciesLifeExpectency)
+                        if(HerbivorousSpeciesLifeExpectancy > herbivorousPreviousSpeciesLifeExpectancy)
+                                AddReward(0.0005f);
+                        else
+                                AddReward(-0.0005f);
+                        
+                        
+                        if(CarnivorousReproductionExpectancy > carnivorousPreviousReproductionExpectancy)
+                                AddReward(0.0005f);
+                        else
+                                AddReward(-0.0005f);
+
+
+                        if(HerbivorousReproductionExpectancy > herbivorousPreviousReproductionExpectancy)
                                 AddReward(0.0005f);
                         else
                                 AddReward(-0.0005f);
@@ -152,15 +186,25 @@ namespace Evol.Agents
                         
                         // Store the previous species life expectency if different
                         // else -1 to push the goal forward
-                        carnivorousPreviousSpeciesLifeExpectency =  
-                                carnivorousPreviousSpeciesLifeExpectency != CarnivorousSpeciesLifeExpectency ?
-                                        CarnivorousSpeciesLifeExpectency :
-                                        carnivorousPreviousSpeciesLifeExpectency - 1;
+                        carnivorousPreviousSpeciesLifeExpectancy =  
+                                carnivorousPreviousSpeciesLifeExpectancy != CarnivorousSpeciesLifeExpectancy ?
+                                        CarnivorousSpeciesLifeExpectancy :
+                                        carnivorousPreviousSpeciesLifeExpectancy - 1;
 
-                        herbivorousPreviousSpeciesLifeExpectency =  
-                                herbivorousPreviousSpeciesLifeExpectency != HerbivorousSpeciesLifeExpectency ?
-                                        HerbivorousSpeciesLifeExpectency :
-                                        herbivorousPreviousSpeciesLifeExpectency - 1;
+                        herbivorousPreviousSpeciesLifeExpectancy =  
+                                herbivorousPreviousSpeciesLifeExpectancy != HerbivorousSpeciesLifeExpectancy ?
+                                        HerbivorousSpeciesLifeExpectancy :
+                                        herbivorousPreviousSpeciesLifeExpectancy - 1;
+                        
+                        carnivorousPreviousReproductionExpectancy =  
+                                carnivorousPreviousReproductionExpectancy != CarnivorousReproductionExpectancy ?
+                                        CarnivorousReproductionExpectancy :
+                                        carnivorousPreviousReproductionExpectancy - 1;
+
+                        herbivorousPreviousReproductionExpectancy =  
+                                herbivorousPreviousReproductionExpectancy != HerbivorousReproductionExpectancy ?
+                                        HerbivorousReproductionExpectancy :
+                                        herbivorousPreviousReproductionExpectancy - 1;
 
 
                 }
@@ -168,6 +212,8 @@ namespace Evol.Agents
                 public override void AgentReset()
                 {
                         cumulativeRewardGauge.Set(GetCumulativeReward());
+                        herbivorousReproductionExpectancyGauge.Set(herbivorousPreviousReproductionExpectancy);
+                        carnivorousReproductionExpectancyGauge.Set(carnivorousPreviousReproductionExpectancy);
                 }
 
         }

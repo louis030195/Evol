@@ -251,13 +251,13 @@ namespace Evol
                     if (workerObject.second.GetComponentsInChildren<CarnivorousAgent>().Length == 0)
                     {
                         carnivorousSpecieLifeExpectancyGauge.Set(workerObject.first.second);
-                        godChild.GetComponent<GodAgent>().CarnivorousSpeciesLifeExpectency = workerObject.first.second;
+                        godChild.GetComponent<GodAgent>().CarnivorousSpeciesLifeExpectancy = workerObject.first.second;
                     }
 
                     if (workerObject.second.GetComponentsInChildren<HerbivorousAgent>().Length == 0)
                     {
                         herbivorousSpecieLifeExpectancyGauge.Set(workerObject.first.second);
-                        godChild.GetComponent<GodAgent>().HerbivorousSpeciesLifeExpectency = workerObject.first.second;
+                        godChild.GetComponent<GodAgent>().HerbivorousSpeciesLifeExpectancy = workerObject.first.second;
                     }
 
 

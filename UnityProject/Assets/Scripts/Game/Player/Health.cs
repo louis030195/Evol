@@ -105,7 +105,7 @@ public class Health : MonoBehaviour
 
     public void GetHealed(int amount)
     {
-        if (!transform.parent.GetComponent<PhotonView>().IsMine)
+        if (!GetComponent<PhotonView>().IsMine)
             return;
         
         

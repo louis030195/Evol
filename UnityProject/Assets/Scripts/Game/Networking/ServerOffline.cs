@@ -24,11 +24,11 @@ public class ServerOffline : Server
         if (player.GetComponent<Agent>())
         {
             
-            //player.GetComponent<Agent>().GiveBrain(Brains.Find(brain => brain.name.Contains("Player")));
-            /*
+            player.GetComponent<Agent>().GiveBrain(Brains.Find(brain => brain.name.Contains("Player")));
+            
             player.AddComponent<DemonstrationRecorder>();
             player.GetComponent<DemonstrationRecorder>().demonstrationName = "AgentDemo";
-            player.GetComponent<DemonstrationRecorder>().record = true;*/
+            player.GetComponent<DemonstrationRecorder>().record = true;
             //player.GetComponent<DemonstrationRecorder>().
             
             /*

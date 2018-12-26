@@ -99,6 +99,9 @@ namespace Evol
 
         protected virtual void OnDisable()
         {
+            livingBeingAgent.ReproductionsExpectancy = 
+                (livingBeingAgent.ReproductionsExpectancy + livingBeingAgent.AmountReproductions) / 2;
+            livingBeingAgent.AmountReproductions = 0;
             // Average between old life expectancy and current
             livingBeingAgent.LivingBeing.LifeExpectancy = 
                 (livingBeingAgent.LivingBeing.LifeExpectancy + livingBeingAgent.AmountActions) / 2;
