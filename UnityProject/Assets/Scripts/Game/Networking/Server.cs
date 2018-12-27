@@ -159,7 +159,7 @@ namespace Evol.Game.Networking
             CarnivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Carnivorous")));
             HerbPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Herb")));
 
-            StartCoroutine(SpawnAgents());
+            //StartCoroutine(SpawnAgents());
 
             //StartCoroutine(SpawnTree());
         }

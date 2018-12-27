@@ -9,15 +9,19 @@ namespace Evol.Game.Spell
     {
         protected override void Start()
         {
-            // TODO: wait the good time of animation to throw spell
+            // TODO: wait the good time of animation to throw spell (animation event)
+            // Play animation
             Caster.GetComponent<Animator>().SetTrigger("Attack1Trigger");
+            
+            // Throw forward
             gameObject.GetComponent<Rigidbody>().velocity = gameObject.transform.forward * 15;
+            
             // Destroy the bullet after 5 seconds
             Destroy(gameObject, 5.0f);
         }
 
 
-        private void OnCollisionEnter(Collision other)
+        private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.GetComponent<LivingBeingAgent>() != null)
                 other.gameObject.GetComponent<LivingBeingAgent>().LivingBeing.Life -= 10;

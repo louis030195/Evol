@@ -5,17 +5,14 @@ using UnityEngine;
 
 namespace Evol.Game.Spell
 {
-	public class BurningSteps : DamageBall
+	public class BurningSteps : SpellBase
 	{
-
-		private void OnCollisionEnter(Collision other)
+		private void OnTriggerStay(Collider other)
 		{
 			if (other.gameObject.GetComponent<LivingBeingAgent>() != null)
 				other.gameObject.GetComponent<LivingBeingAgent>().LivingBeing.Life -= 1;
 			else if(other.gameObject.GetComponent<Health>() != null)
 				other.gameObject.GetComponent<Health>().TakeDamage(1);
-                
-			Destroy(gameObject);
 		}
 	}
 }

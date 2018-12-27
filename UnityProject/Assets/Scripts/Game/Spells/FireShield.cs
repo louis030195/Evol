@@ -44,7 +44,9 @@ namespace Evol.Game.Spell
 
         private void Update()
         {
-            Caster.GetComponent<Health>().GetHealed(1);
+            // TODO: Balance this heal
+            if(Time.frameCount % 100 == 0)
+                Caster.GetComponent<Health>().GetHealed(1);
         }
     }
 }

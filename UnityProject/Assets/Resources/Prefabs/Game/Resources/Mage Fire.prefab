@@ -2818,7 +2818,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1647962671677056}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -3}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4650955120816174}
@@ -5255,12 +5255,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bffd5fd0d83c486497cf8d6f512fd08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentMana: 100
   Spells:
-  - {fileID: 100004, guid: e80858857bb25463b82ed690e0f7c14d, type: 2}
-  - {fileID: 1727626132299242, guid: 5275f4969fd974a748bdaca3cfdceac1, type: 2}
-  SpellCooldowns:
-  - 0
-  - 0
+  - {fileID: 11400000, guid: cb722f370efd747cd8b0046122712fff, type: 2}
+  - {fileID: 11400000, guid: 030d2005f004b44c8a44d1e1e28c5578, type: 2}
+  - {fileID: 11400000, guid: 6dd58dcf03afd43a4a272b9fe2567c87, type: 2}
   BulletSpawn: {fileID: 4797199059280138}
   Lock: 0
   Health: {fileID: 0}
