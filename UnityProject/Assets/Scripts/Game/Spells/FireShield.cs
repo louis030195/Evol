@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Evol.Agents;
+using Evol.Game.Player;
 using UnityEngine;
 
 namespace Evol.Game.Spell
@@ -45,7 +46,7 @@ namespace Evol.Game.Spell
         private void Update()
         {
             // TODO: Balance this heal
-            if(Time.frameCount % 100 == 0)
+            if(Time.frameCount % 20 == 0)
                 Caster.GetComponent<Health>().GetHealed(1);
         }
     }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Heroes
+namespace Evol.Game.Player
 {
     public class MageController : PlayerController
     {
