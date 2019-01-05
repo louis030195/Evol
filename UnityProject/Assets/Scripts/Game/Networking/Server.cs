@@ -159,16 +159,49 @@ namespace Evol.Game.Networking
             CarnivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Carnivorous")));
             HerbPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Herb")));
 
-            //StartCoroutine(SpawnAgents());
+            StartCoroutine(SpawnAgents());
 
             //StartCoroutine(SpawnTree());
+        }
+        
+        private Vector3 RandomCircle (Vector3 center , float radius){
+            var ang = Random.value * 360;
+            Vector3 pos;
+            pos.x = center.x + radius * Mathf.Sin(ang * Mathf.Deg2Rad);
+            pos.y = center.y;
+            pos.z = center.z + radius * Mathf.Cos(ang * Mathf.Deg2Rad);
+            
+            // Check if the object is above ground, if not, we lift it to the ground
+            RaycastHit hit;
+            if (Physics.Raycast(pos, Vector3.up, out hit, Mathf.Infinity))
+            {
+                transform.position = new Vector3(pos.x, hit.distance + 0.1f, pos.z);
+            }
+            
+            return pos;
+        }
+
+        private Vector3 RandomPositionAround()
+        {
+            var pos = Random.insideUnitCircle * Ground.GetComponent<Terrain>().terrainData.size.x / 4;
+            
+            // Check if the object is above ground, if not, we lift it to the ground
+            RaycastHit hit;
+            if (Physics.Raycast(new Vector3(pos.x, 0, pos.y), Vector3.up, out hit, Mathf.Infinity))
+            {
+                transform.position = new Vector3(pos.x, hit.distance + 0.1f, pos.y);
+            }
+
+            return pos;
         }
         
         protected GameObject SpawnHerbivorous()
         {
             var herbivorousObject = HerbivorousPool.GetObject();
+            herbivorousObject.transform.position = RandomCircle(Vector3.zero, Ground.GetComponent<Terrain>().terrainData.size.x / 4);
             //var herbivorousObject = PhotonNetwork.InstantiateSceneObject(SpawnablePrefabs.Find(go => go.CompareTag("Herbivorous")).name, Vector3.zero, Quaternion.identity);
             herbivorousObject.transform.parent = Ground.transform;
+            
             herbivorousObject.SetActive(true);
 
             return herbivorousObject;
@@ -177,7 +210,9 @@ namespace Evol.Game.Networking
         protected GameObject SpawnCarnivorous()
         {
             var carnivorousObject = CarnivorousPool.GetObject();
+            carnivorousObject.transform.position = RandomCircle(Vector3.zero, Ground.GetComponent<Terrain>().terrainData.size.x / 4);
             carnivorousObject.transform.parent = Ground.transform;
+            
             carnivorousObject.SetActive(true);
 
             return carnivorousObject;
@@ -186,7 +221,9 @@ namespace Evol.Game.Networking
         protected GameObject SpawnHerb()
         {
             var herbObject = HerbPool.GetObject();
+            herbObject.transform.position = RandomCircle(Vector3.zero, Ground.GetComponent<Terrain>().terrainData.size.x / 4);
             herbObject.transform.parent = Ground.transform;
+            
             herbObject.SetActive(true);
 
             return herbObject;

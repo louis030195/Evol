@@ -25,15 +25,13 @@ namespace Heuristic
             
             for (int i = 0; i < 7; i++)
             {
-                if (vectorObs[i] == 1.0f || vectorObs[i] == 2.0f)
+                if (vectorObs[i] == 1.0f)
                 {
                     return new float[2] {1, Vector3.Angle(new Vector3(0, rayAngles[i], 0), Vector3.forward)};
                 }
             }
 
-            return new float[2]{1f, 0.3f};
-            
-            return new float[] {0, 0};
+            return new float[2]{1f, Time.frameCount % 100 == 0 ? Random.Range(0.1f, 0.3f) : 0};
         }
 
         public override List<float> MakeMemory(List<float> vectorObs, List<Texture2D> visualObs, float reward, bool done, List<float> memory)

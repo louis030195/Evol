@@ -53,7 +53,6 @@ namespace Evol.Game.Player
 
         private void OnChangeMana()
         {
-            print(CurrentMana);
             manaBar.sizeDelta = new Vector2(CurrentMana, manaBar.sizeDelta.y);
         }
 
