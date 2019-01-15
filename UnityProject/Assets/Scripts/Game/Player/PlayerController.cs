@@ -18,6 +18,10 @@ namespace Evol.Game.Player
         public List<SpellObject> Spells;
         public Transform BulletSpawn;
         [HideInInspector] public bool Lock;
+            
+        //public Texture2D cursorTexture;
+        //private Vector2 cursorHotspot;
+        
 
 
         protected virtual void Start()
@@ -28,7 +32,8 @@ namespace Evol.Game.Player
             gameObject.AddComponent<AudioListener>();
             anim = GetComponent<Animator>();
             photonView = GetComponent<PhotonView>();
-
+            
+            //cursorHotspot = new Vector2 (cursorTexture.width / 2, cursorTexture.height / 2);
 
             if (!photonView.IsMine)
             {
@@ -40,28 +45,34 @@ namespace Evol.Game.Player
         void Update()
         {
 
-
             if (!Lock)
             {
                 var x = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f;
                 var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
                 if (Input.GetAxis("Vertical") > 0)
                 {
-
                     anim.SetFloat("Input X", Input.GetAxis("Vertical"));
                     anim.SetFloat("Input Z", Input.GetAxis("Horizontal"));
                     anim.SetBool("Moving", true);
                 }
                 else
                     anim.SetBool("Moving", false);
-
+               
+                
+                Screen.lockCursor = false;
+                Cursor.visible = false;
+                
                 transform.Rotate(0, x, 0);
                 GetComponent<Rigidbody>().AddForce(transform.forward * z);
-
+                
                 SpellInput();
             }
         }
 
+        float AngleBetweenTwoPoints(Vector3 a, Vector3 b) {
+            return Mathf.Atan2(a.y - b.y, a.x - b.x) * Mathf.Rad2Deg;
+        }
+        
         protected virtual void SpellInput()
         {
             // TODO: input from input parameters
