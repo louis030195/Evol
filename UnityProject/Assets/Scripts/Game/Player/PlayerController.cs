@@ -18,11 +18,7 @@ namespace Evol.Game.Player
         public List<SpellObject> Spells;
         public Transform BulletSpawn;
         [HideInInspector] public bool Lock;
-            
-        //public Texture2D cursorTexture;
-        //private Vector2 cursorHotspot;
         
-
 
         protected virtual void Start()
         {
@@ -40,6 +36,9 @@ namespace Evol.Game.Player
                 transform.GetChild(0).GetComponent<Camera>().enabled = false; // TODO: cleaner solution ?
                 Destroy(this);
             }
+            
+            Screen.lockCursor = false;
+            Cursor.visible = false;
         }
 
         void Update()
@@ -47,8 +46,12 @@ namespace Evol.Game.Player
 
             if (!Lock)
             {
-                var x = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f;
-                var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
+               
+                var x = Input.GetAxis("Mouse X") * Time.deltaTime * 50.0f; 
+                var y = Input.GetAxis("Horizontal") * Time.deltaTime * 4.0f; 
+                var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;  
+                
+                
                 if (Input.GetAxis("Vertical") > 0)
                 {
                     anim.SetFloat("Input X", Input.GetAxis("Vertical"));
@@ -57,21 +60,16 @@ namespace Evol.Game.Player
                 }
                 else
                     anim.SetBool("Moving", false);
-               
-                
-                Screen.lockCursor = false;
-                Cursor.visible = false;
+         
                 
                 transform.Rotate(0, x, 0);
+                transform.Translate(y, 0, 0);
                 GetComponent<Rigidbody>().AddForce(transform.forward * z);
                 
                 SpellInput();
             }
         }
-
-        float AngleBetweenTwoPoints(Vector3 a, Vector3 b) {
-            return Mathf.Atan2(a.y - b.y, a.x - b.x) * Mathf.Rad2Deg;
-        }
+        
         
         protected virtual void SpellInput()
         {
