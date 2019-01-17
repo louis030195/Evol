@@ -1,7 +1,6 @@
 # Evol
 
-Current state of the project (sorry kinda buggy gif)
-
+Current state of the project
 <img src="Screenshots/rl_scene.gif" width="300" height="300">
 
 This agents are wolves / chickens in the next scene (broken due to ml-agents 0.6 atm)
