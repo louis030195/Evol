@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Evol.Game.Player;
 using UnityEngine;
 using MLAgents;
 using UnityEngine.Serialization;
 using Evol.Utils;
 using Prometheus;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace Evol.Agents
@@ -108,6 +111,8 @@ namespace Evol.Agents
                             Random.Range(transform.position.z - 1f, transform.position.z + 1f)),
                         1f);
             }*/
+
+            
             
             if (animator == null || !animator.enabled) return;
             if (Mathf.Clamp(vectorAction[0], -1f, 1f) > 0)

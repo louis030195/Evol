@@ -65,7 +65,7 @@ namespace Evol.Game.UI
 			Destroy(selectionEffectObject);
 			
 			PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable(){{"character", character.name}});
-			selectionEffectObject = Instantiate(SelectionEffect, new Vector3(character.transform.position.x, -30, 90), new Quaternion(90, 0, 0, 90), transform.parent);
+			selectionEffectObject = Instantiate(SelectionEffect, new Vector3(character.transform.position.x, -20, 70), new Quaternion(90, 0, 0, 90), transform.parent);
 			Play.interactable = true;
 		}
 
