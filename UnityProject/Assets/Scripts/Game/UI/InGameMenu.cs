@@ -32,6 +32,8 @@ namespace Evol.Game.UI
 		{
 			if (Input.GetKeyDown(KeyCode.Escape))
 			{
+				Cursor.visible = !Cursor.visible;
+
 				// In case we exited the menu from settings, reset stuff
 				if (SettingsPauseUI.active)
 				{
@@ -43,8 +45,6 @@ namespace Evol.Game.UI
 				PlayUI.SetActive(!PlayUI.active);
 
 				// Disable / enable the character movement
-				if(GetComponent<RPGCharacterControllerFREE>() != null)
-					GetComponent<RPGCharacterControllerFREE>().Lock(true, true, !PauseUI.active, 0, 0);
 				if (GetComponent<PlayerController>() != null)
 					GetComponent<PlayerController>().Lock = !GetComponent<PlayerController>().Lock;
 			}
@@ -59,9 +59,6 @@ namespace Evol.Game.UI
 			PauseUI.SetActive(false);
 			PlayUI.SetActive(true);
 			
-			
-			if(GetComponent<RPGCharacterControllerFREE>() != null)
-				GetComponent<RPGCharacterControllerFREE>().Lock(true, true, !PauseUI.active, 0, 0);
 			if (GetComponent<PlayerController>() != null)
 				GetComponent<PlayerController>().Lock = !GetComponent<PlayerController>().Lock;
 		}
