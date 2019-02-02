@@ -1,13 +1,22 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Evol.Game.Spell;
+using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.Networking;
 
 
 namespace Evol.Game.Player
 {
+
+    public enum Element
+    {
+        Fire,
+        Ice
+    }
     public class PlayerController : MonoBehaviour
     {
         private PhotonView photonView;
@@ -15,6 +24,10 @@ namespace Evol.Game.Player
         private Animator anim;
         private Mana mana;
 
+        /// <summary>
+        /// Used for spell specific stuff
+        /// </summary>
+        public Element Element;
         public List<SpellObject> Spells;
         public Transform BulletSpawn;
         [HideInInspector] public bool Lock;
@@ -60,6 +73,15 @@ namespace Evol.Game.Player
                 }
                 else
                     anim.SetBool("Moving", false);
+
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    print("yoloclient");
+                    byte evCode = 0; // Custom Event 0: Used as "Ready" event
+                    object[] content = { true }; // Who is ready ?
+                    var raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
+                    PhotonNetwork.RaiseEvent(evCode, content, raiseEventOptions, SendOptions.SendReliable);
+                }
          
                 
                 transform.Rotate(0, x, 0);
@@ -78,37 +100,43 @@ namespace Evol.Game.Player
             {
 
                 // TODO: make RPC work
-                //photonView.RPC(nameof(CmdSpell), RpcTarget.All, 0);
+                // photonView.RPC(nameof(CmdSpell), RpcTarget.All, 0);
                 CmdSpell(0);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
+                // photonView.RPC(nameof(CmdSpell), RpcTarget.All, 1);
                 CmdSpell(1);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
+                // photonView.RPC(nameof(CmdSpell), RpcTarget.All, 2);
                 CmdSpell(2);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
+                // photonView.RPC(nameof(CmdSpell), RpcTarget.All, 3);
                 CmdSpell(3);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha4))
             {
+                // photonView.RPC(nameof(CmdSpell), RpcTarget.All, 4);
                 CmdSpell(4);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha5))
             {
+                // photonView.RPC(nameof(CmdSpell), RpcTarget.All, 5);
                 CmdSpell(5);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha6))
             {
+                // photonView.RPC(nameof(CmdSpell), RpcTarget.All, 6);
                 CmdSpell(6);
             }
         }
@@ -129,10 +157,20 @@ namespace Evol.Game.Player
             mana.UseMana(Spells[spell].ManaCost);
 
             // Spawn the spellInstance on the Clients
+            /*
+            var go = Instantiate(Spells[spell].SpellPrefab, BulletSpawn.position,
+                BulletSpawn.rotation);
+            go.GetComponent<SpellBase>().Caster =
+                Tuple.Create(gameObject,
+                    Element); // this is useful for some spells that need the position of the caster
+            */
+            
             var go = PhotonNetwork.Instantiate(Spells[spell].SpellPrefab.name, BulletSpawn.position,
                 BulletSpawn.rotation);
             go.GetComponent<SpellBase>().Caster =
-                gameObject; // this is useful for some spells that need the position of the caster
+                Tuple.Create(gameObject,
+                    Element); // this is useful for some spells that need the position of the caster
+            
 
         }
 

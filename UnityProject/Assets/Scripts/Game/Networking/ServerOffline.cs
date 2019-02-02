@@ -54,18 +54,4 @@ public class ServerOffline : Server
 
         //SpawnHerbivorous();
     }
-
-
-    protected override IEnumerator SpawnAgents()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(Random.Range(0, 10));
-            SpawnCarnivorous();
-            SpawnHerbivorous();
-            SpawnHerb();
-
-            
-        }
-    }
 }

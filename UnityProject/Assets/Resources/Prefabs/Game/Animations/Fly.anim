@@ -29,7 +29,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.33333334
+        time: 10
         value: -0.32805622
         inSlope: 0.04034591
         outSlope: 0.04034591
@@ -38,7 +38,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 1
       - serializedVersion: 3
-        time: 0.6666667
+        time: 20
         value: 0.5916847
         inSlope: 0
         outSlope: 0
@@ -66,7 +66,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.33333334
+        time: 10
         value: -0.32427812
         inSlope: 0
         outSlope: 0
@@ -75,7 +75,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.6666667
+        time: 20
         value: 0.5824723
         inSlope: 0.6422935
         outSlope: 0.6422935
@@ -90,14 +90,49 @@ AnimationClip:
     path: 
     classID: 95
     script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -0.19999886
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 16
+        value: -47.4
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: Left Lower Leg Stretch
+    path: 
+    classID: 95
+    script: {fileID: 0}
   m_PPtrCurves: []
-  m_SampleRate: 30
+  m_SampleRate: 1
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
     genericBindings:
+    - serializedVersion: 2
+      path: 0
+      attribute: 66
+      script: {fileID: 0}
+      typeID: 95
+      customType: 8
+      isPPtrCurve: 0
     - serializedVersion: 2
       path: 0
       attribute: 81
@@ -118,7 +153,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.6666667
+    m_StopTime: 20
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -147,7 +182,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.33333334
+        time: 10
         value: -0.32805622
         inSlope: 0.04034591
         outSlope: 0.04034591
@@ -156,7 +191,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 1
       - serializedVersion: 3
-        time: 0.6666667
+        time: 20
         value: 0.5916847
         inSlope: 0
         outSlope: 0
@@ -184,7 +219,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.33333334
+        time: 10
         value: -0.32427812
         inSlope: 0
         outSlope: 0
@@ -193,7 +228,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.6666667
+        time: 20
         value: 0.5824723
         inSlope: 0.6422935
         outSlope: 0.6422935
@@ -205,6 +240,34 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: Right Arm Down-Up
+    path: 
+    classID: 95
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -0.19999886
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 16
+        value: -47.4
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: Left Lower Leg Stretch
     path: 
     classID: 95
     script: {fileID: 0}
@@ -220,14 +283,14 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.53333336
+  - time: 16
     functionName: 
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.53333336
+  - time: 16
     functionName: Hit
     data: 
     objectReferenceParameter: {fileID: 0}

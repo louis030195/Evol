@@ -1,12 +1,11 @@
 # Evol
 
-Current state of the project
 <img src="Screenshots/rl_scene.gif" width="300" height="300">
 
-This agents are wolves / chickens in the next scene (broken due to ml-agents 0.6 atm)
+These agents are wolves / chickens in the next scene
 
-<img src="Screenshots/ice_mage.gif" width="300" height="300">
-<img src="Screenshots/fire_mage.gif" width="300" height="300">
+<img src="Screenshots/ui.gif" width="300" height="300">
+<img src="Screenshots/game.gif" width="300" height="300">
 
 # Roadmap
 
@@ -14,6 +13,7 @@ This agents are wolves / chickens in the next scene (broken due to ml-agents 0.6
 - [ ] Game loop
 - [ ] Forest propagation
 - [ ] Account system (Steam ?)
+- [ ] More ml stuff
 
 ...
 
@@ -128,4 +128,4 @@ scrape_configs:
 ```
 
 - Run prometheus / Restart if it was already started
-- Run Grafana and start monitoring !
+- Run Grafana and start monitoring ! (load the Grafana/json file)

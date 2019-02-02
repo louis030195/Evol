@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Evol.Agents;
 using Evol.Game.Player;
+using Photon.Pun;
 using UnityEngine;
 
 namespace Evol.Game.Spell
@@ -12,13 +13,18 @@ namespace Evol.Game.Spell
         {
             // TODO: wait the good time of animation to throw spell (animation event)
             // Play animation
-            Caster.GetComponent<Animator>().SetTrigger("Attack1Trigger");
+            Caster.Item1.GetComponent<Animator>().SetTrigger("Attack1Trigger");
             
             // Throw forward
             gameObject.GetComponent<Rigidbody>().velocity = gameObject.transform.forward * 15;
             
             // Destroy the bullet after 5 seconds
-            Destroy(gameObject, 5.0f);
+            Invoke(nameof(DestroyAfter), 5);
+        }
+
+        private void DestroyAfter()
+        {
+            PhotonNetwork.Destroy(gameObject.GetPhotonView());
         }
 
 

@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Evol.Game.Player;
 using UnityEngine;
 
 /// <summary>
@@ -9,7 +11,7 @@ public class SpellBase : MonoBehaviour {
 
 	protected float initializationTime;
 	
-	public GameObject Caster { get; set; }
+	public Tuple<GameObject, Element> Caster { get; set; }
 
 	protected virtual void Start()
 	{

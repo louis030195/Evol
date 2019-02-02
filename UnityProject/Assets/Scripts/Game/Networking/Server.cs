@@ -16,21 +16,28 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Photon.SocketServer;
+using TMPro;
+using UnityEngine.Experimental.UIElements;
 using Random = UnityEngine.Random;
 
 namespace Evol.Game.Networking
 {
+    public enum GameState
+    {
+        Playing,
+        Won,
+        Lost
+    }
+    
     public class Server : MonoBehaviourPunCallbacks
     {
 
         public bool IsServer;
 
-        public Academy Academy;
         /// <summary>
         /// Prefabs for the different characters, set in the same order than mainmenu int value
         /// </summary>
         public GameObject[] PlayerPrefabs;
-        public GameObject CameraPrefab;
         public List<GameObject> SpawnablePrefabs;
         
         /// <summary>
@@ -43,27 +50,32 @@ namespace Evol.Game.Networking
         public GameObject Lightning;
         public RainScript rainScript;
         public GameObject Ground;
-        public GameObject Test;
         public Pool HerbivorousPool;
         public Pool CarnivorousPool;
         public Pool HerbPool;
-    
-        protected List<GameObject> players;
-        private bool rainFinished = true;
-
         /// <summary>
         /// The maximum number of players in game
         /// </summary>
         [Tooltip("The maximum number of players in game")]
         public byte MaxPlayersPerRoom = 4;
 
+        public GameObject mainCanvas;
 
+        [Header("Game loop parameters")]
+        public float startWait = 2;
+        public float endWait = 2;
+    
+        protected List<GameObject> players;
+        private bool rainFinished = true;
+        private GameState gameState = GameState.Playing;
+        private TextMeshPro mainText;
+        
         protected virtual void Start()
         {
             if(!IsServer)
                 Destroy(this); // Destroy the server script if not server
             players = new List<GameObject>();
-
+            mainText = mainCanvas.GetComponentInChildren<TextMeshPro>();
 
             // Basically turning off communication with python, we only want these brains to use the pre-trained model
             //Academy.broadcastHub.SetControlled(Academy.broadcastHub.broadcastingBrains.Find(brain => brain.name.Contains("Learning")), false);
@@ -159,9 +171,7 @@ namespace Evol.Game.Networking
             CarnivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Carnivorous")));
             HerbPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Herb")));
 
-            StartCoroutine(SpawnAgents());
-
-            //StartCoroutine(SpawnTree());
+            // StartCoroutine(SpawnAgents());
         }
         
         private Vector3 RandomCircle (Vector3 center , float radius){
@@ -229,33 +239,15 @@ namespace Evol.Game.Networking
             return herbObject;
         }
         
-        protected IEnumerator SpawnTree()
-        {
-            while (true)
-            {
-                yield return new WaitForSeconds(Random.Range(0, 10));
-
-                var meshObject = Test.GetComponent<MeshFilter>().mesh;
-
-                // Randomly change vertices
-                var vertices = meshObject.vertices;
-                var p = 0;
-                while (p < vertices.Length)
-                {
-                    vertices[p] += new Vector3(0, Random.Range(-0.3F, 0.3F), 0);
-                    p++;
-                }
-
-                meshObject.vertices = vertices;
-                meshObject.RecalculateNormals();
-            }
-        }
 
         protected virtual IEnumerator SpawnAgents()
         {
             while (true)
             {
                 yield return new WaitForSeconds(Random.Range(0, 10));
+                SpawnCarnivorous();
+                // SpawnHerbivorous();
+                // SpawnHerb();
 
                 /*
                 Vector2 direction = Random.insideUnitCircle;
@@ -291,8 +283,7 @@ namespace Evol.Game.Networking
                 */
             }
         }
-        
-        /*
+           
         // This is called from start and will run each phase of the game one after another.
         private IEnumerator GameLoop()
         {
@@ -310,32 +301,12 @@ namespace Evol.Game.Networking
             switch (gameState)
             {
                 case GameState.Won:
-                    // If there is a game winner, restart the level.
-
-                    // Forces the server to shutdown.
-                    NetworkManager.singleton.StopHost();
-                    NetworkManager.singleton.StopClient();
-                    Shutdown();
-
-                    // Reset internal state of the server and start the server again.
-                    Start();
-                    ServerChangeScene("Main");
+                    // If there is a game winner, what are we doing ?
 
                     break;
                 case GameState.Lost:
-                    // If game is lost, restart the level.
+                    // If game is lost, what are we doing ?
 
-
-                    NetworkManager.singleton.StopHost();
-                    NetworkManager.singleton.StopClient();
-                    Shutdown();
-
-                    // Reset internal state of the server and start the server again.
-                    Start();
-                    ServerChangeScene("Main");
-
-                    //NetworkManager.singleton.StopHost();
-                    //NetworkManager.singleton.StopClient();
                     break;
                 case GameState.Playing:
                     // If there isn't a winner yet, restart this coroutine so the loop continues.
@@ -347,24 +318,20 @@ namespace Evol.Game.Networking
 
         private IEnumerator GameStarting()
         {
-
-            countAi = 0;
-            roundNumber = 0;
-
-            messageText.text = "Waiting more players or press Space to play solo";
+            mainText.text = "Waiting more players or press Space to play solo";
 
 
             // Wait other players
             
-            while (NetworkServer.connections.Count < 2)
+            while (PhotonNetwork.CountOfPlayers < 2)
             {
                 yield return null;
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Space)) // Use photon event to detect player pressing space
                     break;
             }
             
             gameState = GameState.Playing;
-            messageText.text = "Kill them all";
+            mainText.text = "Kill them all";
 
 
             // Wait for the specified length of time until yielding control back to the game loop.
@@ -374,12 +341,9 @@ namespace Evol.Game.Networking
 
         private IEnumerator GamePlaying()
         {
-
-            nexus = (GameObject)Instantiate(spawnPrefabs[9], new Vector3(0, 0.5f, 0), Quaternion.identity);
-            NetworkServer.Spawn(nexus);
-
             while (true)
             {
+                /*
                 // Start off by running the 'RoundStarting' coroutine but don't return until it's finished.
                 yield return StartCoroutine(RoundStarting());
 
@@ -389,6 +353,7 @@ namespace Evol.Game.Networking
                     yield break;
 
                 yield return StartCoroutine(RoundEnding());
+                */
             }
         }
 
@@ -396,21 +361,31 @@ namespace Evol.Game.Networking
         {
             // Stop from moving.
             // DisableControl();
+            /*
             if (GameFinished() && !victory)
             {
-                messageText.text = "GAME OVER";
+                mainText.text = "GAME OVER";
                 gameState = GameState.Lost;
             }
             if(victory)
             {
-                messageText.text = "Win";
+                mainText.text = "Win";
                 gameState = GameState.Won;
             }
-
+            */
             // Wait for the specified length of time until yielding control back to the game loop.
             yield return endWait;
         }
-        */
 
+        private readonly byte Ready = 0;
+        
+        public void OnEvent(byte eventCode, object content, int senderId)
+        {
+            print("yoloserver");
+            if (eventCode == Ready)
+            {
+                mainText.text = $"{content} $ {senderId}";
+            }
+        }
     }
 }
