@@ -1422,6 +1422,7 @@ GameObject:
   - component: {fileID: 114593114571012642}
   - component: {fileID: 54453826603486744}
   - component: {fileID: 65502899676110334}
+  - component: {fileID: 114642536635236344}
   - component: {fileID: 114164529326677836}
   m_Layer: 0
   m_Name: Mage Ice
@@ -4809,6 +4810,21 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &114642536635236344
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1647962671677056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!114 &114651987768894864
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5945,6 +5961,10 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 114990972789684798}
   - {fileID: 114164529326677836}
+  - {fileID: 114858689022017238}
+  - {fileID: 114522085478644644}
+  - {fileID: 114593114571012642}
+  - {fileID: 114642536635236344}
   viewIdField: 0
   InstantiationId: 1
   isRuntimeInstantiated: 0

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Evol.Agents;
 using Evol.Game.Player;
+using Photon.Pun;
 using UnityEngine;
 
 namespace Evol.Game.Spell
@@ -15,6 +16,9 @@ namespace Evol.Game.Spell
         
         protected override void Start()
         {
+            if (!gameObject.GetPhotonView().IsMine)
+                return;
+            base.Start();
             // TODO: maybe see for common class base for shields ?
             // We're allowed to only one shield of this kind per character
             if (Caster.Item1.GetComponent<Health>().currentShields
@@ -38,6 +42,8 @@ namespace Evol.Game.Spell
 
         private void OnDestroy()
         {
+            if (!gameObject.GetPhotonView().IsMine)
+                return;
             // Remove the FireShield
             Caster.Item1.GetComponent<Health>().currentShields
                 .Remove(Caster.Item1.GetComponent<Health>().currentShields.Find(currentShield => currentShield.Item1.Equals("FireShield")));
@@ -45,6 +51,8 @@ namespace Evol.Game.Spell
 
         private void Update()
         {
+            if (!gameObject.GetPhotonView().IsMine)
+                return;
             // TODO: Balance this heal
             if(Time.frameCount % 20 == 0)
                 Caster.Item1.GetComponent<Health>().GetHealed(1);

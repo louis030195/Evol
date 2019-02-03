@@ -17,12 +17,13 @@ namespace Evol.Game.Player
         Fire,
         Ice
     }
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IPunObservable
     {
         private PhotonView photonView;
         protected float[] nextSpell;
         private Animator anim;
         private Mana mana;
+        private Rigidbody rigidBody;
 
         /// <summary>
         /// Used for spell specific stuff
@@ -31,11 +32,10 @@ namespace Evol.Game.Player
         public List<SpellObject> Spells;
         public Transform BulletSpawn;
         [HideInInspector] public bool Lock;
-        
 
         protected virtual void Start()
         {
-
+            rigidBody = GetComponent<Rigidbody>();
             nextSpell = new float[Spells.Count];
             mana = GetComponent<Mana>();
             gameObject.AddComponent<AudioListener>();
@@ -47,7 +47,6 @@ namespace Evol.Game.Player
             if (!photonView.IsMine)
             {
                 transform.GetChild(0).GetComponent<Camera>().enabled = false; // TODO: cleaner solution ?
-                Destroy(this);
             }
             
             Screen.lockCursor = false;
@@ -57,7 +56,7 @@ namespace Evol.Game.Player
         void Update()
         {
 
-            if (!Lock)
+            if (!Lock && photonView.IsMine)
             {
                
                 var x = Input.GetAxis("Mouse X") * Time.deltaTime * 50.0f; 
@@ -85,8 +84,8 @@ namespace Evol.Game.Player
          
                 
                 transform.Rotate(0, x, 0);
-                transform.Translate(y, 0, 0);
-                GetComponent<Rigidbody>().AddForce(transform.forward * z);
+                // transform.Translate(y, 0, 0);
+                rigidBody.AddForce(transform.forward * z);
                 
                 SpellInput();
             }
@@ -174,6 +173,28 @@ namespace Evol.Game.Player
 
         }
 
-
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            if (stream.IsWriting)
+            {
+                /*
+                stream.SendNext(transform.position);
+                stream.SendNext(transform.rotation);
+                stream.SendNext(rigidBody.velocity);
+                stream.SendNext(rigidBody.position);
+                stream.SendNext(rigidBody.rotation);
+                */
+            }
+            else
+            {
+                /*
+                transform.position = (Vector3) stream.ReceiveNext();
+                transform.rotation = (Quaternion) stream.ReceiveNext();
+                rigidBody.velocity = (Vector3) stream.ReceiveNext();
+                rigidBody.position = (Vector3) stream.ReceiveNext();
+                rigidBody.rotation = (Quaternion) stream.ReceiveNext();
+                */
+            }
+        }
     }
 }

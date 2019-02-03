@@ -11,6 +11,9 @@ namespace Evol.Game.Spell
     {
         protected override void Start()
         {
+            if (!gameObject.GetPhotonView().IsMine)
+                return;
+            base.Start();
             // TODO: wait the good time of animation to throw spell (animation event)
             // Play animation
             Caster.Item1.GetComponent<Animator>().SetTrigger("Attack1Trigger");
@@ -35,7 +38,7 @@ namespace Evol.Game.Spell
             else if(other.gameObject.GetComponent<Health>() != null)
                 other.gameObject.GetComponent<Health>().TakeDamage(10);
                 
-            Destroy(gameObject);
+            DestroyAfter();
         }
     }
 }

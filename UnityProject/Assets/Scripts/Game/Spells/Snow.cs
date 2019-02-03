@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class Snow : SpellBase
@@ -10,6 +11,8 @@ public class Snow : SpellBase
 	
 	// Use this for initialization
 	protected override void Start () {
+		if (!gameObject.GetPhotonView().IsMine)
+			return;
 		base.Start();
 		Caster.Item1.GetComponent<Animator>().SetTrigger("Attack2Trigger");
 		// For some reason the position is random ?

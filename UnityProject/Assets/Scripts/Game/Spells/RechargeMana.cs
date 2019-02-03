@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Evol.Game.Player;
 using Evol.Game.Spell;
+using Photon.Pun;
 using UnityEngine;
 
 public class RechargeMana : SpellBase
@@ -14,8 +15,11 @@ public class RechargeMana : SpellBase
 	private List<GameObject> stream;
 	
 	// Use this for initialization
-	private void Start () 
+	protected override void Start () 
 	{
+		if (!gameObject.GetPhotonView().IsMine)
+			return;
+		base.Start();
 		stream = new List<GameObject>();
 		Caster.Item1.GetComponent<Animator>().SetTrigger("Attack2Trigger");
         
@@ -34,6 +38,8 @@ public class RechargeMana : SpellBase
 		// TODO: Balance this
 		// print("ok");
 		// If there is a power source close enough
+		if (!gameObject.GetPhotonView().IsMine)
+			return;
 		var hitColliders = Physics.OverlapSphere(transform.position, 10f);
 		if (hitColliders.Any(c => (Caster.Item2 == Element.Fire && c.CompareTag("FireSource")) 
 		                          || (Caster.Item2 == Element.Ice && c.CompareTag("IceSource"))))

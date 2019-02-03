@@ -9,18 +9,21 @@ using Random = UnityEngine.Random;
 
 namespace Evol.Game.Player
 {
-    public class Health : MonoBehaviour
+    public class Health : MonoBehaviour, IPunObservable
     {
         public const int maxHealth = 100;
         public bool destroyOnDeath;
 
+        [SerializeField]
         public int CurrentHealth { get; private set; } = maxHealth;
 
         /// <summary>
         /// List of shields with the spell name which did this shield
         /// </summary>
+        [SerializeField]
         public List<Tuple<string, int>> currentShields;
 
+        [SerializeField]
         public RectTransform healthBar;
 
         private Animator anim;
@@ -143,10 +146,12 @@ namespace Evol.Game.Player
             if (stream.IsWriting)
             {
                 stream.SendNext(CurrentHealth);
+                stream.SendNext(healthBar.sizeDelta);
             }
             else
             {
                 CurrentHealth = (int) stream.ReceiveNext();
+                healthBar.sizeDelta = (Vector2) stream.ReceiveNext();
             }
         }
     }

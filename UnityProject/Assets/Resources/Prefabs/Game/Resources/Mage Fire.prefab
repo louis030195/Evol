@@ -1434,12 +1434,13 @@ GameObject:
   - component: {fileID: 95860432556451088}
   - component: {fileID: 114595073288752818}
   - component: {fileID: 114992632291942406}
-  - component: {fileID: 114990972789684798}
   - component: {fileID: 114858689022017238}
   - component: {fileID: 114522085478644644}
   - component: {fileID: 114560313571305798}
   - component: {fileID: 54453826603486744}
   - component: {fileID: 65502899676110334}
+  - component: {fileID: 114275346312307162}
+  - component: {fileID: 114545365050215382}
   - component: {fileID: 114164529326677836}
   m_Layer: 0
   m_Name: Mage Fire
@@ -3857,6 +3858,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114275346312307162
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1647962671677056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
 --- !u!114 &114278301726829168
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4578,6 +4593,21 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 5}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &114545365050215382
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1647962671677056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 1
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!114 &114559287469060086
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5912,20 +5942,6 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &114990972789684798
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1647962671677056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
 --- !u!114 &114992632291942406
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5943,8 +5959,12 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 114990972789684798}
   - {fileID: 114164529326677836}
+  - {fileID: 114858689022017238}
+  - {fileID: 114522085478644644}
+  - {fileID: 114560313571305798}
+  - {fileID: 114275346312307162}
+  - {fileID: 114545365050215382}
   viewIdField: 0
   InstantiationId: 1
   isRuntimeInstantiated: 0

@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 
 namespace Evol.Game.Player
 {
-    public class Mana : MonoBehaviour
+    public class Mana : MonoBehaviour, IPunObservable
     {
         public const int maxMana = 100;
 
@@ -59,14 +59,16 @@ namespace Evol.Game.Player
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
-            // Synchronize life
+            // Synchronize mana
             if (stream.IsWriting)
             {
                 stream.SendNext(CurrentMana);
+                stream.SendNext(manaBar.sizeDelta);
             }
             else
             {
                 CurrentMana = (int) stream.ReceiveNext();
+                manaBar.sizeDelta = (Vector2) stream.ReceiveNext();
             }
         }
     }

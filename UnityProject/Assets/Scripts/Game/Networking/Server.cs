@@ -74,6 +74,8 @@ namespace Evol.Game.Networking
         {
             if(!IsServer)
                 Destroy(this); // Destroy the server script if not server
+            // PhotonNetwork.SendRate = 60;
+            // PhotonNetwork.SerializationRate = 60;
             players = new List<GameObject>();
             mainText = mainCanvas.GetComponentInChildren<TextMeshPro>();
 
