@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using Evol.Agents;
+using Photon.Pun;
 
 namespace Evol.Utils
 {
@@ -17,16 +18,22 @@ namespace Evol.Utils
     {
         public List<GameObject> available { get; }
         public List<GameObject> inUse { get; }
-        private GameObject prefab;
-        private GameObject parent;
 
         public Brain Brain { get; set; } // Auto because not all items are agents
+        
+        private GameObject prefab;
+        private GameObject parent;
+        /// <summary>
+        /// Whether it's spawning in networked mode
+        /// </summary>
+        private bool network;
 
-        public Pool(GameObject prefab)
+        public Pool(GameObject prefab, bool network)
         {
             available = new List<GameObject>();
             inUse = new List<GameObject>();
             this.prefab = prefab;
+            this.network = network;
 
             parent = new GameObject($"Pool_{prefab.name}");
         }
@@ -48,7 +55,9 @@ namespace Evol.Utils
             }
             else
             {
-                GameObject go = UnityEngine.Object.Instantiate(prefab);
+                var go = network
+                    ? PhotonNetwork.InstantiateSceneObject(prefab.name, Vector3.zero, Quaternion.identity)
+                    : UnityEngine.Object.Instantiate(prefab);
                 if (go.GetComponent<LivingBeingManager>() != null)
                     go.GetComponent<LivingBeingManager>().Pool = this;
                 

@@ -44,7 +44,6 @@ namespace Evol.Agents
             var rayDistance = 50;
             float[] rayAngles = {0f, 45f, 90f, 135f, 180f, 110f, 70f};
             detectableObjects = new[] {"Herbivorous", "Carnivorous", "Herb", "Ground"};
-            var detectableObjects2 = new[] {"Ground"};
             AddVectorObs(perception.Perceive(rayDistance, rayAngles, detectableObjects, 0f, 0f, Reproduction, ReproductionTreshold));
             var localVelocity = transform.InverseTransformDirection(rigidBody.velocity);
             AddVectorObs(localVelocity.x);

@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 54884918759087418}
   - component: {fileID: 65750154053772712}
   - component: {fileID: 114282549204886860}
+  - component: {fileID: 114570983918351768}
   m_Layer: 0
   m_Name: Herb
   m_TagString: Herb
@@ -124,3 +125,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dabffece9dbba545a65c4eea59936d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114570983918351768
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1563969880686890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

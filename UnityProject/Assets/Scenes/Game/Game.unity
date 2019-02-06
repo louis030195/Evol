@@ -621,6 +621,16 @@ Prefab:
     m_Modifications:
     - target: {fileID: 114739921348141042, guid: 49e705c04be9347a992c707ea4eed86c,
         type: 2}
+      propertyPath: Brains.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114988004666055914, guid: 49e705c04be9347a992c707ea4eed86c,
+        type: 2}
+      propertyPath: Brains.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114739921348141042, guid: 49e705c04be9347a992c707ea4eed86c,
+        type: 2}
       propertyPath: SpawnablePrefabs.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -754,6 +764,24 @@ Prefab:
       propertyPath: mainCanvas
       value: 
       objectReference: {fileID: 1322613717}
+    - target: {fileID: 114739921348141042, guid: 49e705c04be9347a992c707ea4eed86c,
+        type: 2}
+      propertyPath: Brains.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: bb966aabca5774b178a540f98204cc12,
+        type: 2}
+    - target: {fileID: 114988004666055914, guid: 49e705c04be9347a992c707ea4eed86c,
+        type: 2}
+      propertyPath: Brains.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: bb966aabca5774b178a540f98204cc12,
+        type: 2}
+    - target: {fileID: 114988004666055914, guid: 49e705c04be9347a992c707ea4eed86c,
+        type: 2}
+      propertyPath: SpawnablePrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 1563969880686890, guid: 4e841b8558850db46908a10a8aa09f60,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49e705c04be9347a992c707ea4eed86c, type: 2}
   m_IsPrefabAsset: 0

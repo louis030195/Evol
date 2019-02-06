@@ -166,14 +166,13 @@ namespace Evol.Game.Networking
 
 
 
-        protected void Initialize()
+        public void Initialize(bool network = false)
         {
-            //PlayerPool = new Pool(PlayerPrefab);
-            HerbivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Herbivorous")));
-            CarnivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Carnivorous")));
-            HerbPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Herb")));
-
-            // StartCoroutine(SpawnAgents());
+            HerbivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Herbivorous")), network);
+            CarnivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Carnivorous")), network);
+            HerbPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Herb")), network);
+            StartCoroutine(SpawnAgents());
+            // StartCoroutine(GameLoop());
         }
         
         private Vector3 RandomCircle (Vector3 center , float radius){
@@ -248,8 +247,8 @@ namespace Evol.Game.Networking
             {
                 yield return new WaitForSeconds(Random.Range(0, 10));
                 SpawnCarnivorous();
-                // SpawnHerbivorous();
-                // SpawnHerb();
+                SpawnHerbivorous();
+                SpawnHerb();
 
                 /*
                 Vector2 direction = Random.insideUnitCircle;

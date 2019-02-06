@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Evol.Game.Networking;
+using Evol.Utils;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -13,9 +14,6 @@ public class ServerOnline : Server
 		base.Start();
 		PhotonNetwork.ConnectUsingSettings();
 	}
-
-
-
 	
 	public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
 	{
@@ -46,7 +44,7 @@ public class ServerOnline : Server
 	{
 		Debug.Log($"OnCreatedRoom()"); 
             
-		Initialize();
+		Initialize(true);
 	}
 	
 	

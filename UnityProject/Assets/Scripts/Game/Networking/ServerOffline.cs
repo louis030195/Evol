@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Evol.Game.Networking;
+using Evol.Utils;
 using MLAgents;
 using Photon.Pun;
 using Photon.Realtime;
@@ -37,7 +38,6 @@ public class ServerOffline : Server
         // TODO: make it work for 0.6
         if (player.GetComponent<Agent>())
         {
-            
             player.GetComponent<Agent>().GiveBrain(Brains.Find(brain => brain.name.Contains("Player")));
             
             player.AddComponent<DemonstrationRecorder>();
@@ -54,4 +54,5 @@ public class ServerOffline : Server
 
         //SpawnHerbivorous();
     }
+
 }
