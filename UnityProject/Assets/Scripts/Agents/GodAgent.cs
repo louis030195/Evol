@@ -30,12 +30,15 @@ namespace Evol.Agents
                 
                 public int CarnivorousReproductionExpectancy { get; set; }
                 
+                public int ElementsToSpawn { get; set; }
+                
                 private int herbivorousPreviousReproductionExpectancy;
                 private int carnivorousPreviousReproductionExpectancy;
 
                 private Gauge cumulativeRewardGauge;
                 private Gauge herbivorousReproductionExpectancyGauge;
                 private Gauge carnivorousReproductionExpectancyGauge;
+                private Gauge elementsToSpawnGauge;
                 
                 public override void InitializeAgent()
                 {
@@ -48,7 +51,10 @@ namespace Evol.Agents
                                         Metrics.CreateGauge("herbivorousReproductionExpectancyGod", "herbivorous Reproduction Expectancy God");
 
                                 carnivorousReproductionExpectancyGauge =
-                                        Metrics.CreateGauge("carnivorousReproductionExpectancyGod", "carnivorous Reproductio nExpectancy God");
+                                        Metrics.CreateGauge("carnivorousReproductionExpectancyGod", "carnivorous Reproduction Expectancy God");
+                                
+                                elementsToSpawnGauge =
+                                        Metrics.CreateGauge("elementsToSpawn", "elements to spawn");
 
                         }
 
@@ -56,6 +62,8 @@ namespace Evol.Agents
 
                 public override void CollectObservations()
                 {
+                        AddVectorObs(ElementsToSpawn);
+                        
                         AddVectorObs(carnivorousPreviousReproductionExpectancy);
                         
                         AddVectorObs(carnivorousPreviousSpeciesLifeExpectancy);
@@ -157,6 +165,8 @@ namespace Evol.Agents
                                 CarnivorousPool.inUse.ForEach(go =>
                                         go.GetComponent<LivingBeingManager>().RewardOnDeath =
                                                 Mathf.Clamp(vectorAction[13] * -10, -5f, -10f));
+
+                                ElementsToSpawn = (int)Mathf.Clamp(vectorAction[14] * 10, 1, 10);
                         }
                         
                         // Reward the god agent if he succeed to make the species live longer over time
@@ -214,6 +224,7 @@ namespace Evol.Agents
                         cumulativeRewardGauge.Set(GetCumulativeReward());
                         herbivorousReproductionExpectancyGauge.Set(herbivorousPreviousReproductionExpectancy);
                         carnivorousReproductionExpectancyGauge.Set(carnivorousPreviousReproductionExpectancy);
+                        elementsToSpawnGauge.Set(ElementsToSpawn);
                 }
 
         }

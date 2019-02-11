@@ -38,6 +38,8 @@ namespace Evol.Agents
         public LivingBeing LivingBeing { get; protected set; }
         public bool Reproduction { get; set; }
         public bool Evolution { get; set; }
+
+        public bool Gravity;
         public Pool Pool { get; set; }
         public System.Action Action;
 
@@ -146,7 +148,11 @@ namespace Evol.Agents
 
         private void FixedUpdate()
         {
-            rigidBody.AddForce(Vector3.down * Physics.gravity.y * rigidBody.mass * -10);
+            if (Gravity)
+            {
+                rigidBody.AddForce(Vector3.down * Physics.gravity.y * rigidBody.mass * -10);
+            }
+
             /*
             // Handling gravity manually ...
             RaycastHit hit;

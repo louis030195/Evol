@@ -170,6 +170,7 @@ namespace Evol
             godChild = godPool.GetObject();
             godChild.GetComponent<GodAgent>().CarnivorousPool = carnivorousPool;
             godChild.GetComponent<GodAgent>().HerbivorousPool = herbivorousPool;
+            godChild.GetComponent<GodAgent>().ElementsToSpawn = WorkerCarniHerbi.AmountOfAgentsToAdd;
             godChild.SetActive(true);
         }
 
@@ -242,6 +243,9 @@ namespace Evol
                     || workerObject.second.GetComponentsInChildren<LivingBeingAgent>().Length >
                     WorkerCarniHerbi.AmountOfAgentsToAdd * 10)
                 {
+                    // The god agent can tweak number of elements to add
+                    WorkerCarniHerbi.AmountOfAgentsToAdd = godChild.GetComponent<GodAgent>().ElementsToSpawn;
+                    
                     // Life length of the worker
                     workerObject.first.second = evolAcademy.GetStepCount() - workerObject.first.first;
                     
