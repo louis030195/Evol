@@ -143,7 +143,7 @@ namespace Evol.Game.Player
 
         // TODO: USE EVENT IN ANIMATION TO PROC THE SPELL AT SPECIFIC TIME OF THE ANIMATION,
         // TODO: SAME FOR FOOT STEP NOISE WHEN FOOT HIT GROUND DURING ANIMATION
-        [PunRPC]
+        // [PunRPC]
         protected void CmdSpell(int spell)
         {
             // If the player try to throw 5th spell but ain't got a 5th spell for example or spell not rdy
@@ -159,13 +159,10 @@ namespace Evol.Game.Player
             /*
             var go = Instantiate(Spells[spell].SpellPrefab, BulletSpawn.position,
                 BulletSpawn.rotation);
-            go.GetComponent<SpellBase>().Caster =
-                Tuple.Create(gameObject,
-                    Element); // this is useful for some spells that need the position of the caster
             */
-            
             var go = PhotonNetwork.Instantiate(Spells[spell].SpellPrefab.name, BulletSpawn.position,
                 BulletSpawn.rotation);
+                
             go.GetComponent<SpellBase>().Caster =
                 Tuple.Create(gameObject,
                     Element); // this is useful for some spells that need the position of the caster

@@ -68,7 +68,7 @@ namespace Evol.Game.Networking
         protected List<GameObject> players;
         private bool rainFinished = true;
         private GameState gameState = GameState.Playing;
-        private TextMeshPro mainText;
+        private Text mainText;
         
         protected virtual void Start()
         {
@@ -77,8 +77,7 @@ namespace Evol.Game.Networking
             // PhotonNetwork.SendRate = 60;
             // PhotonNetwork.SerializationRate = 60;
             players = new List<GameObject>();
-            mainText = mainCanvas.GetComponentInChildren<TextMeshPro>();
-
+            mainText = mainCanvas.GetComponentInChildren<Text>();
             // Basically turning off communication with python, we only want these brains to use the pre-trained model
             //Academy.broadcastHub.SetControlled(Academy.broadcastHub.broadcastingBrains.Find(brain => brain.name.Contains("Learning")), false);
 
@@ -171,8 +170,8 @@ namespace Evol.Game.Networking
             HerbivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Herbivorous")), network);
             CarnivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Carnivorous")), network);
             HerbPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Herb")), network);
-            //StartCoroutine(SpawnAgents());
-            // StartCoroutine(GameLoop());
+            // StartCoroutine(SpawnAgents());
+            StartCoroutine(GameLoop());
         }
         
         private Vector3 RandomCircle (Vector3 center , float radius){
@@ -291,7 +290,7 @@ namespace Evol.Game.Networking
 
             // Start off by running the 'GameStarting' coroutine but don't return until it's finished.
             yield return StartCoroutine(GameStarting());
-
+            /*
             // Once the 'GameStarting' coroutine is finished, run the 'RoundPlaying' coroutine but don't return until it's finished.
             yield return StartCoroutine(GamePlaying());
 
@@ -314,7 +313,7 @@ namespace Evol.Game.Networking
                     // Note that this coroutine doesn't yield.  This means that the current version of the GameLoop will end.
                     StartCoroutine(GameLoop());
                     break;
-            }
+            }*/
         }
 
         private IEnumerator GameStarting()
@@ -323,12 +322,11 @@ namespace Evol.Game.Networking
 
 
             // Wait other players
-            
             while (PhotonNetwork.CountOfPlayers < 2)
             {
-                yield return null;
                 if (Input.GetKeyDown(KeyCode.Space)) // Use photon event to detect player pressing space
                     break;
+                yield return null;
             }
             
             gameState = GameState.Playing;
@@ -336,7 +334,7 @@ namespace Evol.Game.Networking
 
 
             // Wait for the specified length of time until yielding control back to the game loop.
-            yield return startWait;
+            yield return new WaitForSeconds(startWait);
         }
 
 
@@ -375,15 +373,14 @@ namespace Evol.Game.Networking
             }
             */
             // Wait for the specified length of time until yielding control back to the game loop.
-            yield return endWait;
+            yield return new WaitForSeconds(endWait);
         }
-
-        private readonly byte Ready = 0;
         
-        public void OnEvent(byte eventCode, object content, int senderId)
+        
+        public void OnPhotonEvent(byte eventCode, object content, int senderId)
         {
             print("yoloserver");
-            if (eventCode == Ready)
+            if (eventCode == 0)
             {
                 mainText.text = $"{content} $ {senderId}";
             }

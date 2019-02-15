@@ -4,7 +4,9 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Realtime;
 using Random = UnityEngine.Random;
 
 namespace Evol.Game.Player
@@ -100,10 +102,11 @@ namespace Evol.Game.Player
                                 new Vector3(transform.position.x, transform.position.y, transform.position.z),
                                 new Quaternion(0, 0, 0, 0)), 3);
                 }
-
                 else
                 {
-                    CurrentHealth = maxHealth;
+                    var content = new object[] { "lol" }; // Array contains the target position and the IDs of the selected units
+                    var raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
+                    PhotonNetwork.RaiseEvent(0, content, raiseEventOptions, SendOptions.SendReliable);
                 }
             }
             //else
