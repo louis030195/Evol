@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Evol.Game.Loop
@@ -8,6 +9,9 @@ namespace Evol.Game.Loop
 	{
 		private List<GameObject> forestArea;
 		public GameObject areaPrefab;
+
+		[Tooltip("Maximum number of area on the map")]
+		public int MaximumNumberOfArea = 5;
 
 		// Use this for initialization
 		private void Start () {
@@ -18,13 +22,15 @@ namespace Evol.Game.Loop
 
 		private IEnumerator SpawnAreas()
 		{
-			var origin = 1;
-			while (true)
+			var i = 1;
+			while (i < MaximumNumberOfArea)
 			{
 				// Instanciate area
-				forestArea.Add(Instantiate(areaPrefab, new Vector3(origin * 100, 0, 0), Quaternion.identity));
+				forestArea.Add(Instantiate(areaPrefab));
+				forestArea[forestArea.Count - 1].GetComponent<ForestArea>().Size = i * 100;
+				print(forestArea[forestArea.Count - 1].GetComponent<ForestArea>().Size);
 				yield return new WaitForSeconds(10f);
-				origin++;
+				i++;
 			}
 		}
 

@@ -52,6 +52,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpacingBetweenTrees: 5
-  prefabTree:
+  SpawnTreeDelay: 1
+  CheckFullDelay: 1
+  PrefabTree:
   - {fileID: 1714766007780236, guid: 2b0ce4b31bb29c54b8c255dac1d4b0b9, type: 2}
   Full: 0
+  Size: 0

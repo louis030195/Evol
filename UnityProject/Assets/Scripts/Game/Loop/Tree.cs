@@ -8,7 +8,7 @@ namespace Evol.Game.Loop
 
 		private void OnDestroy()
 		{
-			GetComponentInParent<ForestArea>().Full = false;
+			// GetComponentInParent<ForestArea>().Full = false;
 		}
 	}
 }
