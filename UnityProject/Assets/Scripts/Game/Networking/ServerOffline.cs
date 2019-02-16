@@ -31,10 +31,6 @@ public class ServerOffline : Server
             
         player.GetPhotonView().TransferOwnership(PhotonNetwork.LocalPlayer);
             
-            
-        players.Add(player);
-        
-        
         // TODO: make it work for 0.6
         if (player.GetComponent<Agent>())
         {

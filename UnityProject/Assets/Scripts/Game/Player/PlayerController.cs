@@ -75,11 +75,9 @@ namespace Evol.Game.Player
 
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    print("yoloclient");
-                    byte evCode = 0; // Custom Event 0: Used as "Ready" event
-                    object[] content = { true }; // Who is ready ?
+                    object[] content = { photonView.name, true }; // Who is ready ?
                     var raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
-                    PhotonNetwork.RaiseEvent(evCode, content, raiseEventOptions, SendOptions.SendReliable);
+                    PhotonNetwork.RaiseEvent(0, content, raiseEventOptions, SendOptions.SendReliable);
                 }
          
                 

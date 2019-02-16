@@ -32,10 +32,8 @@ public class ServerOnline : Server
 		player.name = newPlayer.NickName;
             
 		player.GetPhotonView().TransferOwnership(newPlayer);
-            
-            
-		players.Add(player);
 
+		PhotonNetwork.PlayerList.First(p => p.NickName.Equals(player.name)).CustomProperties["gameObject"] = player; 
             
 		Debug.Log($"OnPlayerEnteredRoom() { newPlayer.NickName }");
 	}
@@ -51,10 +49,7 @@ public class ServerOnline : Server
 	public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
 	{
 		Debug.Log($"OnPlayerLeftRoom() { otherPlayer.NickName }"); 
-            
-		// PlayerPool.ReleaseObject(players.Find(p => p.name.Equals(otherPlayer.NickName)));
-		Destroy(players.Find(p => p.name.Equals(otherPlayer.NickName)), 1f);
-		players.Remove(players.Find(p => p.name.Equals(otherPlayer.NickName)));
+		// Destroy(PhotonNetwork.PlayerList.First(p => p.NickName.Equals(otherPlayer.NickName)).CustomProperties["gameObject"] as GameObject, 1f);
 	}
 
 	public override void OnConnectedToMaster()

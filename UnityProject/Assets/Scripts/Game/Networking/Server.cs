@@ -9,6 +9,7 @@ using DigitalRuby.LightningBolt;
 using DigitalRuby.RainMaker;
 using Evol.Agents;
 using Evol.Utils;
+using ExitGames.Client.Photon;
 using MLAgents;
 using Photon.Pun;
 using Photon.Realtime;
@@ -29,7 +30,7 @@ namespace Evol.Game.Networking
         Lost
     }
     
-    public class Server : MonoBehaviourPunCallbacks
+    public class Server : MonoBehaviourPunCallbacks, IOnEventCallback
     {
 
         public bool IsServer;
@@ -45,7 +46,6 @@ namespace Evol.Game.Networking
         /// or switching from trained model to training model (control ON)
         /// </summary>
         public List<Brain> Brains;
-
         public Light light;
         public GameObject Lightning;
         public RainScript rainScript;
@@ -58,14 +58,11 @@ namespace Evol.Game.Networking
         /// </summary>
         [Tooltip("The maximum number of players in game")]
         public byte MaxPlayersPerRoom = 4;
-
         public GameObject mainCanvas;
-
         [Header("Game loop parameters")]
         public float startWait = 2;
         public float endWait = 2;
     
-        protected List<GameObject> players;
         private bool rainFinished = true;
         private GameState gameState = GameState.Playing;
         private Text mainText;
@@ -76,7 +73,6 @@ namespace Evol.Game.Networking
                 Destroy(this); // Destroy the server script if not server
             // PhotonNetwork.SendRate = 60;
             // PhotonNetwork.SerializationRate = 60;
-            players = new List<GameObject>();
             mainText = mainCanvas.GetComponentInChildren<Text>();
             // Basically turning off communication with python, we only want these brains to use the pre-trained model
             //Academy.broadcastHub.SetControlled(Academy.broadcastHub.broadcastingBrains.Find(brain => brain.name.Contains("Learning")), false);
@@ -95,8 +91,6 @@ namespace Evol.Game.Networking
                 }
             };
             process.Start();*/
-
-
         }
 
 
@@ -130,8 +124,6 @@ namespace Evol.Game.Networking
                 StartCoroutine(ThrowLightning(duration));
             }
             
-            print($"Reached the target : {rainIntensity}, raining for {duration}");
-            
             yield return new WaitForSeconds(duration);
         
             while(rainScript.RainIntensity >= 0)
@@ -143,8 +135,6 @@ namespace Evol.Game.Networking
             }
 
             rainFinished = true;
-            
-            print($"Rain is now finished.");
         }
 
         private IEnumerator ThrowLightning(float duration)
@@ -290,13 +280,13 @@ namespace Evol.Game.Networking
 
             // Start off by running the 'GameStarting' coroutine but don't return until it's finished.
             yield return StartCoroutine(GameStarting());
-            /*
+            
             // Once the 'GameStarting' coroutine is finished, run the 'RoundPlaying' coroutine but don't return until it's finished.
             yield return StartCoroutine(GamePlaying());
 
             // Once execution has returned here, run the 'GameEnding' coroutine, again don't return until it's finished.
             yield return StartCoroutine(GameEnding());
-
+            /*
             // This code is not run until 'RoundEnding' has finished.  At which point, check if a game winner has been found.
             switch (gameState)
             {
@@ -318,20 +308,18 @@ namespace Evol.Game.Networking
 
         private IEnumerator GameStarting()
         {
-            mainText.text = "Waiting more players or press Space to play solo";
-
+            // photonView.RPC("UpdateText", RpcTarget.All, "Waiting more players or press Space to play solo");
 
             // Wait other players
-            while (PhotonNetwork.CountOfPlayers < 2)
+            while (PhotonNetwork.PlayerList.Count(p => p.CustomProperties.ContainsKey("ready") && p.CustomProperties["ready"].Equals("true"))
+                   < PhotonNetwork.CountOfPlayers)
             {
-                if (Input.GetKeyDown(KeyCode.Space)) // Use photon event to detect player pressing space
-                    break;
                 yield return null;
             }
             
             gameState = GameState.Playing;
-            mainText.text = "Kill them all";
-
+            // photonView.RPC("UpdateText", RpcTarget.Others, "Kill them all");
+            mainText.text = "gogogo";
 
             // Wait for the specified length of time until yielding control back to the game loop.
             yield return new WaitForSeconds(startWait);
@@ -340,8 +328,9 @@ namespace Evol.Game.Networking
 
         private IEnumerator GamePlaying()
         {
-            while (true)
+            while (!GameFinished())
             {
+                yield return null;
                 /*
                 // Start off by running the 'RoundStarting' coroutine but don't return until it's finished.
                 yield return StartCoroutine(RoundStarting());
@@ -360,12 +349,13 @@ namespace Evol.Game.Networking
         {
             // Stop from moving.
             // DisableControl();
-            /*
-            if (GameFinished() && !victory)
+            
+            if (PhotonNetwork.CountOfPlayers == 0)
             {
                 mainText.text = "GAME OVER";
                 gameState = GameState.Lost;
             }
+            /*
             if(victory)
             {
                 mainText.text = "Win";
@@ -375,15 +365,49 @@ namespace Evol.Game.Networking
             // Wait for the specified length of time until yielding control back to the game loop.
             yield return new WaitForSeconds(endWait);
         }
-        
-        
-        public void OnPhotonEvent(byte eventCode, object content, int senderId)
+
+        public void OnEvent(EventData photonEvent)
         {
-            print("yoloserver");
-            if (eventCode == 0)
+            // Ready event
+            if (photonEvent.Code == 0)
             {
-                mainText.text = $"{content} $ {senderId}";
+                foreach (var player in PhotonNetwork.PlayerList)
+                {
+                    print($"{player.ActorNumber} : {photonEvent.Sender}");
+                }
+                // If the player is not ready
+                if (!PhotonNetwork.PlayerList.First(p => p.ActorNumber == photonEvent.Sender).CustomProperties.ContainsKey("ready") ||
+                    PhotonNetwork.PlayerList.First(p => p.ActorNumber == photonEvent.Sender).CustomProperties["ready"].Equals("false"))
+                {
+                    PhotonNetwork.PlayerList.First(p => p.ActorNumber == photonEvent.Sender).CustomProperties["ready"] =
+                        "true"; // We add him to ready players
+                    print($"Player ${ photonEvent.Sender } is ready");
+                }
+                else
+                {
+                    PhotonNetwork.PlayerList.First(p => p.ActorNumber == photonEvent.Sender).CustomProperties["ready"] =
+                        "false"; // Else we remove him from ready players
+                    print($"Player ${ photonEvent.Sender } is not ready anymore");
+                }
             }
+
+            if (photonEvent.Code == 1)
+            {
+                print($"Player ${ photonEvent.Sender } died");
+            }
+        }
+
+        [PunRPC]
+        public void UpdateText(string text)
+        {
+            mainText.text = text;
+        }
+
+        public bool GameFinished()
+        {
+            // Atm if all players are dead, its over
+            // Have to add win condition
+            return PhotonNetwork.CountOfPlayers == 0;
         }
     }
 }

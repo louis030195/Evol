@@ -104,9 +104,8 @@ namespace Evol.Game.Player
                 }
                 else
                 {
-                    var content = new object[] { "lol" }; // Array contains the target position and the IDs of the selected units
-                    var raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
-                    PhotonNetwork.RaiseEvent(0, content, raiseEventOptions, SendOptions.SendReliable);
+                    // Dead, say to server this player is dead
+                    PhotonNetwork.RaiseEvent(1, new object[] { }, new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendReliable);
                 }
             }
             //else
