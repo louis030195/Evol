@@ -619,21 +619,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114739921348141042, guid: 49e705c04be9347a992c707ea4eed86c,
-        type: 2}
-      propertyPath: Brains.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114988004666055914, guid: 49e705c04be9347a992c707ea4eed86c,
-        type: 2}
-      propertyPath: Brains.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114739921348141042, guid: 49e705c04be9347a992c707ea4eed86c,
-        type: 2}
-      propertyPath: SpawnablePrefabs.Array.size
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4789489194973468, guid: 49e705c04be9347a992c707ea4eed86c, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -668,9 +653,14 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114988004666055914, guid: 49e705c04be9347a992c707ea4eed86c,
         type: 2}
-      propertyPath: Academy
+      propertyPath: light
       value: 
-      objectReference: {fileID: 1642404366}
+      objectReference: {fileID: 937936867}
+    - target: {fileID: 114988004666055914, guid: 49e705c04be9347a992c707ea4eed86c,
+        type: 2}
+      propertyPath: rainScript
+      value: 
+      objectReference: {fileID: 1984482241}
     - target: {fileID: 114988004666055914, guid: 49e705c04be9347a992c707ea4eed86c,
         type: 2}
       propertyPath: Ground
@@ -678,14 +668,19 @@ Prefab:
       objectReference: {fileID: 1088971068}
     - target: {fileID: 114988004666055914, guid: 49e705c04be9347a992c707ea4eed86c,
         type: 2}
-      propertyPath: Test
+      propertyPath: mainCanvas
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1322613717}
     - target: {fileID: 114739921348141042, guid: 49e705c04be9347a992c707ea4eed86c,
         type: 2}
-      propertyPath: Academy
+      propertyPath: light
       value: 
-      objectReference: {fileID: 1642404366}
+      objectReference: {fileID: 937936867}
+    - target: {fileID: 114739921348141042, guid: 49e705c04be9347a992c707ea4eed86c,
+        type: 2}
+      propertyPath: rainScript
+      value: 
+      objectReference: {fileID: 1984482241}
     - target: {fileID: 114739921348141042, guid: 49e705c04be9347a992c707ea4eed86c,
         type: 2}
       propertyPath: Ground
@@ -693,99 +688,18 @@ Prefab:
       objectReference: {fileID: 1088971068}
     - target: {fileID: 114739921348141042, guid: 49e705c04be9347a992c707ea4eed86c,
         type: 2}
-      propertyPath: Test
+      propertyPath: mainCanvas
       value: 
+      objectReference: {fileID: 1322613717}
+    - target: {fileID: 114750128212064214, guid: 49e705c04be9347a992c707ea4eed86c,
+        type: 2}
+      propertyPath: viewIdField
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114739921348141042, guid: 49e705c04be9347a992c707ea4eed86c,
-        type: 2}
-      propertyPath: SpawnablePrefabs.Array.data[3]
-      value: 
-      objectReference: {fileID: 1777388096454044, guid: 55fe2545c00c446d3aaaf424e7f84e68,
-        type: 2}
-    - target: {fileID: 114739921348141042, guid: 49e705c04be9347a992c707ea4eed86c,
-        type: 2}
-      propertyPath: SpawnablePrefabs.Array.data[0]
-      value: 
-      objectReference: {fileID: 177940, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
-    - target: {fileID: 114739921348141042, guid: 49e705c04be9347a992c707ea4eed86c,
-        type: 2}
-      propertyPath: SpawnablePrefabs.Array.data[1]
-      value: 
-      objectReference: {fileID: 1563969880686890, guid: 4e841b8558850db46908a10a8aa09f60,
-        type: 2}
-    - target: {fileID: 114739921348141042, guid: 49e705c04be9347a992c707ea4eed86c,
-        type: 2}
-      propertyPath: SpawnablePrefabs.Array.data[2]
-      value: 
-      objectReference: {fileID: 1406882954958800, guid: 747f513774eb3428e8d3aca54bb4a523,
-        type: 2}
     - target: {fileID: 114988004666055914, guid: 49e705c04be9347a992c707ea4eed86c,
         type: 2}
       propertyPath: IsServer
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114739921348141042, guid: 49e705c04be9347a992c707ea4eed86c,
-        type: 2}
-      propertyPath: rainScript
-      value: 
-      objectReference: {fileID: 1984482241}
-    - target: {fileID: 114988004666055914, guid: 49e705c04be9347a992c707ea4eed86c,
-        type: 2}
-      propertyPath: rainScript
-      value: 
-      objectReference: {fileID: 1984482241}
-    - target: {fileID: 114739921348141042, guid: 49e705c04be9347a992c707ea4eed86c,
-        type: 2}
-      propertyPath: Lightning
-      value: 
-      objectReference: {fileID: 106988, guid: 25991dfa3d97e415ea159210b6391765, type: 2}
-    - target: {fileID: 114988004666055914, guid: 49e705c04be9347a992c707ea4eed86c,
-        type: 2}
-      propertyPath: Lightning
-      value: 
-      objectReference: {fileID: 106988, guid: 25991dfa3d97e415ea159210b6391765, type: 2}
-    - target: {fileID: 114739921348141042, guid: 49e705c04be9347a992c707ea4eed86c,
-        type: 2}
-      propertyPath: light
-      value: 
-      objectReference: {fileID: 937936867}
-    - target: {fileID: 114988004666055914, guid: 49e705c04be9347a992c707ea4eed86c,
-        type: 2}
-      propertyPath: light
-      value: 
-      objectReference: {fileID: 937936867}
-    - target: {fileID: 114739921348141042, guid: 49e705c04be9347a992c707ea4eed86c,
-        type: 2}
-      propertyPath: mainCanvas
-      value: 
-      objectReference: {fileID: 1322613717}
-    - target: {fileID: 114988004666055914, guid: 49e705c04be9347a992c707ea4eed86c,
-        type: 2}
-      propertyPath: mainCanvas
-      value: 
-      objectReference: {fileID: 1322613717}
-    - target: {fileID: 114739921348141042, guid: 49e705c04be9347a992c707ea4eed86c,
-        type: 2}
-      propertyPath: Brains.Array.data[3]
-      value: 
-      objectReference: {fileID: 11400000, guid: bb966aabca5774b178a540f98204cc12,
-        type: 2}
-    - target: {fileID: 114988004666055914, guid: 49e705c04be9347a992c707ea4eed86c,
-        type: 2}
-      propertyPath: Brains.Array.data[3]
-      value: 
-      objectReference: {fileID: 11400000, guid: bb966aabca5774b178a540f98204cc12,
-        type: 2}
-    - target: {fileID: 114988004666055914, guid: 49e705c04be9347a992c707ea4eed86c,
-        type: 2}
-      propertyPath: SpawnablePrefabs.Array.data[2]
-      value: 
-      objectReference: {fileID: 1563969880686890, guid: 4e841b8558850db46908a10a8aa09f60,
-        type: 2}
-    - target: {fileID: 114988004666055914, guid: 49e705c04be9347a992c707ea4eed86c,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49e705c04be9347a992c707ea4eed86c, type: 2}
@@ -1372,6 +1286,26 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 984943016}
   m_CullTransparentMesh: 0
+--- !u!1 &1029870348 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1368142767466638, guid: 49e705c04be9347a992c707ea4eed86c,
+    type: 2}
+  m_PrefabInternal: {fileID: 468951257}
+--- !u!114 &1029870354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1029870348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 788e0959b4b7d71469b628181911b8fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  areaPrefab: {fileID: 1331997804194504, guid: 17a8d84e1b01346409ce1ca28843f895, type: 2}
+  MaximumNumberOfArea: 5
+  Origin: {x: 700, y: 0, z: 1100}
+  Target: {x: 0, y: 0, z: 0}
 --- !u!1 &1088971068
 GameObject:
   m_ObjectHideFlags: 0
@@ -2013,12 +1947,6 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a233e8e6c6be3dc4aa8847cfad7cb193, type: 2}
   m_IsPrefabAsset: 0
---- !u!114 &1642404366 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114679805030900776, guid: a233e8e6c6be3dc4aa8847cfad7cb193,
-    type: 2}
-  m_PrefabInternal: {fileID: 1642404365}
-  m_Script: {fileID: 11500000, guid: c2629a1097955374ba445e916c614087, type: 3}
 --- !u!1001 &1660946551
 Prefab:
   m_ObjectHideFlags: 0

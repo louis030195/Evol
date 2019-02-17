@@ -17,7 +17,7 @@ public class ServerOnline : Server
 	
 	public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
 	{
-
+		base.OnPlayerEnteredRoom(newPlayer);
 		//var player = PlayerPool.GetObject();
 		//player.SetActive(true);
 		// PhotonNetwork.Instantiate("Actors/PlayerControlled/Player") 

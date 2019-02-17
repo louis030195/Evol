@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 114306606107340540}
   - component: {fileID: 114739921348141042}
   - component: {fileID: 114988004666055914}
+  - component: {fileID: 114750128212064214}
   m_Layer: 0
   m_Name: Server
   m_TagString: Untagged
@@ -65,24 +66,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsServer: 1
-  Academy: {fileID: 0}
   PlayerPrefabs:
   - {fileID: 177940, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
   - {fileID: 1503491749967708, guid: 43fd04ad08284412bb3e37507c9cd224, type: 2}
   - {fileID: 1647962671677056, guid: fb4f8dc935185426384ec6a765bf8693, type: 2}
   - {fileID: 1647962671677056, guid: e16ee2345d51148f5ac1d15488ec66d1, type: 2}
-  CameraPrefab: {fileID: 189288, guid: 16dc4b51d7b30f74a9fd33417596daa7, type: 2}
   SpawnablePrefabs:
-  - {fileID: 1406882954958800, guid: 747f513774eb3428e8d3aca54bb4a523, type: 2}
   - {fileID: 177940, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
   - {fileID: 1563969880686890, guid: 4e841b8558850db46908a10a8aa09f60, type: 2}
+  - {fileID: 1406882954958800, guid: 747f513774eb3428e8d3aca54bb4a523, type: 2}
   Brains:
   - {fileID: 11400000, guid: b0d2969e61036489c8b92496581fd54e, type: 2}
   - {fileID: 11400000, guid: 39b091f301012488686619d5dafe153f, type: 2}
   - {fileID: 11400000, guid: 2873cc9e647ce476e869da33d2c7936c, type: 2}
+  - {fileID: 11400000, guid: bb966aabca5774b178a540f98204cc12, type: 2}
+  light: {fileID: 0}
+  Lightning: {fileID: 106988, guid: 25991dfa3d97e415ea159210b6391765, type: 2}
+  rainScript: {fileID: 0}
   Ground: {fileID: 0}
-  Test: {fileID: 0}
   MaxPlayersPerRoom: 4
+  mainCanvas: {fileID: 0}
+  startWait: 2
+  endWait: 2
+--- !u!114 &114750128212064214
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1368142767466638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 0
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  viewIdField: 0
+  InstantiationId: 1
+  isRuntimeInstantiated: 0
 --- !u!114 &114988004666055914
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -95,13 +121,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsServer: 1
-  Academy: {fileID: 0}
   PlayerPrefabs:
   - {fileID: 177940, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
   - {fileID: 1503491749967708, guid: 43fd04ad08284412bb3e37507c9cd224, type: 2}
   - {fileID: 1647962671677056, guid: fb4f8dc935185426384ec6a765bf8693, type: 2}
   - {fileID: 1647962671677056, guid: e16ee2345d51148f5ac1d15488ec66d1, type: 2}
-  CameraPrefab: {fileID: 189288, guid: 16dc4b51d7b30f74a9fd33417596daa7, type: 2}
   SpawnablePrefabs:
   - {fileID: 1406882954958800, guid: 747f513774eb3428e8d3aca54bb4a523, type: 2}
   - {fileID: 177940, guid: f5aaf1c6b5d9746588a990ccc7fce65e, type: 2}
@@ -110,6 +134,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b0d2969e61036489c8b92496581fd54e, type: 2}
   - {fileID: 11400000, guid: 39b091f301012488686619d5dafe153f, type: 2}
   - {fileID: 11400000, guid: 2873cc9e647ce476e869da33d2c7936c, type: 2}
+  - {fileID: 11400000, guid: bb966aabca5774b178a540f98204cc12, type: 2}
+  light: {fileID: 0}
+  Lightning: {fileID: 106988, guid: 25991dfa3d97e415ea159210b6391765, type: 2}
+  rainScript: {fileID: 0}
   Ground: {fileID: 0}
-  Test: {fileID: 0}
   MaxPlayersPerRoom: 4
+  mainCanvas: {fileID: 0}
+  startWait: 2
+  endWait: 2

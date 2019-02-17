@@ -43,18 +43,31 @@ public class ForestArea : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	/// This function will find a position to spawn a tree above ground and far enough from other trees
+	/// TODO: find a better function name
+	/// </summary>
+	/// <param name="prefabSize"></param>
+	/// <returns></returns>
 	private Vector3 FindPosition(float prefabSize)
 	{
 		var position = Vector3.zero;
 		var tries = 0;
+		
+		// While we didn't find a suitable position
 		while (tries < 10)
 		{
-			position = new Vector3(Random.Range(-100, Size), 5,
-				Random.Range(-100, Size));
+			// We pick a random position and take the above ground position of it
+			position = AboveGround(transform.position + new Vector3(Random.Range(-100, Size), 0,
+				Random.Range(-100, Size)), prefabSize);
+			
+			// Then we throw an overlap sphere
 			var hitColliders = Physics.OverlapSphere(transform.position + position, SpacingBetweenTrees);
+			
+			// Which checks if there is already a ready around
 			if (!hitColliders.Any(c => c.gameObject.name.Contains("tree")))
 			{
-				return AboveGround(transform.position + position, prefabSize);
+				return position;
 			}
 
 			tries++;
@@ -62,15 +75,24 @@ public class ForestArea : MonoBehaviour
 		return Vector3.zero;
 	}
 
+	/// <summary>
+	///  Will adjust the position above ground relatively from the prefab size
+	/// </summary>
+	/// <param name="position"></param>
+	/// <param name="prefabSize"></param>
+	/// <returns></returns>
 	private Vector3 AboveGround(Vector3 position, float prefabSize)
 	{
 		RaycastHit hit;
+		// Below ground
 		if (Physics.Raycast(position, transform.TransformDirection(Vector3.up), out hit, Mathf.Infinity))
 		{
+			print(hit.distance);
 			position.y += hit.distance + prefabSize / 2;
 		}
 
 		hit = new RaycastHit();
+		// Above ground
 		if (Physics.Raycast(position, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity))
 		{
 			position.y -= hit.distance - prefabSize / 2;

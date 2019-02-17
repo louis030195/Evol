@@ -66,14 +66,21 @@ namespace Evol.Game.Networking
         private bool rainFinished = true;
         private GameState gameState = GameState.Playing;
         private Text mainText;
+        /// <summary>
+        /// Just a variable to check if anybody joined the game yet
+        /// </summary>
+        private bool nobodyJoinedYet = true;
         
         protected virtual void Start()
         {
+            
             if(!IsServer)
-                Destroy(this); // Destroy the server script if not server
+               Destroy(this); // Destroy the server script if not server
+            
+            mainText = mainCanvas.GetComponentInChildren<Text>();
             // PhotonNetwork.SendRate = 60;
             // PhotonNetwork.SerializationRate = 60;
-            mainText = mainCanvas.GetComponentInChildren<Text>();
+            
             // Basically turning off communication with python, we only want these brains to use the pre-trained model
             //Academy.broadcastHub.SetControlled(Academy.broadcastHub.broadcastingBrains.Find(brain => brain.name.Contains("Learning")), false);
 
@@ -99,7 +106,12 @@ namespace Evol.Game.Networking
             if(Time.frameCount % Random.Range(3, 6) == 0 && rainFinished)
                 StartCoroutine(SlowlyStartRaining());
         }
-        
+
+        public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
+        {
+            nobodyJoinedYet = false;
+        }
+
         /// <summary>
         /// TODO: Larger rain zone ? laggy ?
         /// </summary>
@@ -309,16 +321,17 @@ namespace Evol.Game.Networking
         private IEnumerator GameStarting()
         {
             // photonView.RPC("UpdateText", RpcTarget.All, "Waiting more players or press Space to play solo");
-
-            // Wait other players
-            while (PhotonNetwork.PlayerList.Count(p => p.CustomProperties.ContainsKey("ready") && p.CustomProperties["ready"].Equals("true"))
-                   < PhotonNetwork.CountOfPlayers)
+            mainText.text = "loll";
+            // Wait other players and that everyone is ready, we also check if nobody has every joined
+            while (nobodyJoinedYet && 
+                   (PhotonNetwork.PlayerList.Count(p => p.CustomProperties.ContainsKey("ready") && p.CustomProperties["ready"].Equals("true"))
+                   < PhotonNetwork.CountOfPlayers))
             {
                 yield return null;
             }
             
             gameState = GameState.Playing;
-            // photonView.RPC("UpdateText", RpcTarget.Others, "Kill them all");
+            // photonView.RPC("UpdateText", RpcTarget.All, "Kill them all");
             mainText.text = "gogogo";
 
             // Wait for the specified length of time until yielding control back to the game loop.
@@ -403,7 +416,7 @@ namespace Evol.Game.Networking
             mainText.text = text;
         }
 
-        public bool GameFinished()
+        private bool GameFinished()
         {
             // Atm if all players are dead, its over
             // Have to add win condition
