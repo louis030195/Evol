@@ -12,17 +12,19 @@ public class ForestArea : MonoBehaviour
 	public List<GameObject> PrefabTree;
 	[HideInInspector] public bool Full;
 	[HideInInspector] public int Size = 100;
+	[HideInInspector] public Vector3 Target;
 
 	private void Start()
 	{
 		CheckFullDelay *= 60;
+		StartCoroutine(SpawnTree()); // Starting once at start
 	}
 
 	// Update is called once per frame
 	private void Update () {
 		if (Time.frameCount % CheckFullDelay == 0)
 		{
-			StartCoroutine(SpawnTree());
+			StartCoroutine(SpawnTree()); // To fill the destroyed trees
 		}
 	}
 	
@@ -33,7 +35,7 @@ public class ForestArea : MonoBehaviour
 		{
 			yield return new WaitForSeconds(SpawnTreeDelay);
 			var prefab = PrefabTree[Random.Range(0, PrefabTree.Count - 1)];
-			var pos = FindPosition(prefab.GetComponent<MeshRenderer>().bounds.size.y);
+			var pos = FindPosition(prefab.GetComponent<Collider>().bounds.size.y);
 			if (pos != Vector3.zero)
 			{
 				
@@ -57,8 +59,8 @@ public class ForestArea : MonoBehaviour
 		// While we didn't find a suitable position
 		while (tries < 10)
 		{
-			// We pick a random position and take the above ground position of it
-			position = AboveGround(transform.position + new Vector3(Random.Range(-100, Size), 0,
+			// We pick a random position above ground
+			position = AboveGround(transform.position + Target - new Vector3(Random.Range(-100, Size), 0,
 				Random.Range(-100, Size)), prefabSize);
 			
 			// Then we throw an overlap sphere
@@ -87,15 +89,14 @@ public class ForestArea : MonoBehaviour
 		// Below ground
 		if (Physics.Raycast(position, transform.TransformDirection(Vector3.up), out hit, Mathf.Infinity))
 		{
-			print(hit.distance);
-			position.y += hit.distance + prefabSize / 2;
+			position.y += hit.distance + prefabSize * 0.5f;
 		}
 
 		hit = new RaycastHit();
 		// Above ground
 		if (Physics.Raycast(position, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity))
 		{
-			position.y -= hit.distance - prefabSize / 2;
+			position.y -= hit.distance - prefabSize * 0.5f;
 		}
 
 		return position;

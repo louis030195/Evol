@@ -1,51 +1,18 @@
 # Evol
 
-<img src="Screenshots/rl_scene.gif" width="300" height="300">
-
-These agents are wolves / chickens in the next scene
-
-<img src="Screenshots/ui.gif" width="300" height="300">
-<img src="Screenshots/game.gif" width="300" height="300">
+<img src="docs/images/rl_scene.gif" width="300" height="300">
+<img src="docs/images/ui.gif" width="300" height="300">
+<img src="docs/images/mana.gif" width="300" height="300">
+<img src="docs/images/forest_gen.gif" width="300" height="300">
 
 # Roadmap
 
 - [ ] Mental control mage (take control of agents by switching to player brain, imitation learning to teach a herd of wolfes ...)
 - [ ] Game loop
-- [ ] Forest propagation
+- [x] Forest propagation
+- [ ] Well working multiplayer
 - [ ] Account system (Steam ?)
-- [ ] More ml stuff
-
-...
-
-# Carnivorous & Herbivorous agents
-Their goal is to survive & reproduce
-
-[![Evol](https://img.youtube.com/vi/GqquQTyQLno/0.jpg)](https://www.youtube.com/watch?v=GqquQTyQLno)
-
-## Inputs
-* Sensor-like at angles 0, 45, 90, 135, 180, 110, 70
-The sensor is returning either : 
-    - 0 Nothing
-    - 1 Something
-    - 2 Something with which i can reproduce (only when Evolution ON)
-* Own y rotation
-* Own x velocity
-* Own z velocity
-* Own life
-
-## Outputs
-* Force forward
-* Rotation on y axis
-
-## Rewards
-- Reward on eat
-- Reward on reproduction
-- Punish on death
-- Punish every actions
-
-# God agent
-His goal is to tweak agents parameters to achieve a goal = increase the life expectancy of the species, he is only used for training
-
+- [ ] ML stuff
 
 # Install
 
@@ -77,7 +44,7 @@ Run `mlagents-learn config/trainer_config.yaml --train` then press play in unity
 
 ### Monitoring performances with Grafana & Prometheus
 
-![Grafana](Screenshots/grafana_agents.png)
+![Grafana](docs/images/grafana_agents.png)
 
 - Download and install [Grafana](https://grafana.com/grafana/download)
 - Download and install [Prometheus](https://prometheus.io/download/)

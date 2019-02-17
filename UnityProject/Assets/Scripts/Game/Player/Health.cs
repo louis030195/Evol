@@ -135,13 +135,6 @@ namespace Evol.Game.Player
             healthBar.sizeDelta = new Vector2(CurrentHealth, healthBar.sizeDelta.y);
         }
 
-        private void OnCollisionEnter(Collision other)
-        {
-            // Lose life when hit by a carnivorous animal
-            if (other.collider.CompareTag("Carnivorous"))
-                TakeDamage(10);
-        }
-
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
             // Synchronize life

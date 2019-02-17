@@ -23,6 +23,7 @@ namespace Evol.Game.Player
         protected float[] nextSpell;
         private Animator anim;
         private Mana mana;
+        private Health health;
         private Rigidbody rigidBody;
 
         /// <summary>
@@ -31,6 +32,7 @@ namespace Evol.Game.Player
         public Element Element;
         public List<SpellObject> Spells;
         public Transform BulletSpawn;
+        public float Speed = 1;
         [HideInInspector] public bool Lock;
 
         protected virtual void Start()
@@ -38,6 +40,7 @@ namespace Evol.Game.Player
             rigidBody = GetComponent<Rigidbody>();
             nextSpell = new float[Spells.Count];
             mana = GetComponent<Mana>();
+            health = GetComponent<Health>();
             gameObject.AddComponent<AudioListener>();
             anim = GetComponent<Animator>();
             photonView = GetComponent<PhotonView>();
@@ -61,7 +64,7 @@ namespace Evol.Game.Player
                
                 var x = Input.GetAxis("Mouse X") * Time.deltaTime * 50.0f; 
                 var y = Input.GetAxis("Horizontal") * Time.deltaTime * 4.0f; 
-                var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;  
+                var z = Input.GetAxis("Vertical") * Time.deltaTime * Speed;  
                 
                 
                 if (Input.GetAxis("Vertical") > 0)
@@ -190,6 +193,13 @@ namespace Evol.Game.Player
                 rigidBody.rotation = (Quaternion) stream.ReceiveNext();
                 */
             }
+        }
+        
+        private void OnCollisionEnter(Collision other)
+        {
+            // Lose life when hit by a carnivorous animal
+            if (other.collider.CompareTag("Carnivorous"))
+                health.TakeDamage(10);
         }
     }
 }
