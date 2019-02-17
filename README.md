@@ -1,9 +1,7 @@
 # Evol
 
-<img src="docs/images/rl_scene.gif" width="300" height="300">
-<img src="docs/images/ui.gif" width="300" height="300">
-<img src="docs/images/mana.gif" width="300" height="300">
-<img src="docs/images/forest_gen.gif" width="300" height="300">
+<img src="docs/images/rl_scene.gif" width="300" height="300"><img src="docs/images/ui.gif" width="300" height="300">
+<img src="docs/images/mana.gif" width="300" height="300"><img src="docs/images/forest_gen.gif" width="300" height="300">
 
 # Roadmap
 
