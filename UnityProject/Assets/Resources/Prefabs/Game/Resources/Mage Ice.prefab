@@ -1426,7 +1426,7 @@ GameObject:
   - component: {fileID: 114164529326677836}
   m_Layer: 0
   m_Name: Mage Ice
-  m_TagString: Herbivorous
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5335,6 +5335,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fde49a31f58c34f07aca921ab61a32ca, type: 2}
   - {fileID: 11400000, guid: 6dd58dcf03afd43a4a272b9fe2567c87, type: 2}
   BulletSpawn: {fileID: 4797199059280138}
+  Speed: 1
   Lock: 0
 --- !u!114 &114860072283218796
 MonoBehaviour:

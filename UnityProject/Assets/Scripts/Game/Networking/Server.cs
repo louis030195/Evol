@@ -341,7 +341,7 @@ namespace Evol.Game.Networking
 
         private IEnumerator GamePlaying()
         {
-            while (!GameFinished())
+            while (gameState == GameState.Playing)
             {
                 yield return null;
                 /*
@@ -363,18 +363,16 @@ namespace Evol.Game.Networking
             // Stop from moving.
             // DisableControl();
             
-            if (PhotonNetwork.CountOfPlayers == 0)
+            if (gameState == GameState.Lost)
             {
                 mainText.text = "GAME OVER";
-                gameState = GameState.Lost;
             }
-            /*
-            if(victory)
+            
+            if(gameState == GameState.Won)
             {
-                mainText.text = "Win";
-                gameState = GameState.Won;
+                mainText.text = "VICTORY";
             }
-            */
+            
             // Wait for the specified length of time until yielding control back to the game loop.
             yield return new WaitForSeconds(endWait);
         }
@@ -406,7 +404,14 @@ namespace Evol.Game.Networking
 
             if (photonEvent.Code == 1)
             {
-                print($"Player ${ photonEvent.Sender } died");
+                // Boss died ?
+                if((photonEvent.CustomData as object[])[0].Equals("Boss"))
+                    gameState = GameState.Won;
+                // If all player are dead (CountOfPlayers = 0 always in single player ? to investigate that)
+                // checking that its a player that died just in case (and required for single player)
+                if (PhotonNetwork.CountOfPlayers == 0 && (photonEvent.CustomData as object[])[0].Equals("Player"))
+                    gameState = GameState.Lost;
+                print($"Player ${ photonEvent.Sender } : { (photonEvent.CustomData as object[])[0] } died");
             }
         }
 
@@ -414,13 +419,6 @@ namespace Evol.Game.Networking
         public void UpdateText(string text)
         {
             mainText.text = text;
-        }
-
-        private bool GameFinished()
-        {
-            // Atm if all players are dead, its over
-            // Have to add win condition
-            return PhotonNetwork.CountOfPlayers == 0;
         }
     }
 }

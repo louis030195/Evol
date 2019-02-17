@@ -1,12 +1,14 @@
 # Evol
 
+[Video here](https://www.youtube.com/watch?v=xbMLg1NVD90&feature=youtu.be)
+
 <img src="docs/images/rl_scene.gif" width="300" height="300"><img src="docs/images/ui.gif" width="300" height="300">
 <img src="docs/images/mana.gif" width="300" height="300"><img src="docs/images/forest_gen.gif" width="300" height="300">
 
 # Roadmap
 
 - [ ] Mental control mage (take control of agents by switching to player brain, imitation learning to teach a herd of wolfes ...)
-- [ ] Game loop
+- [x] Game loop
 - [x] Forest propagation
 - [ ] Well working multiplayer
 - [ ] Account system (Steam ?)

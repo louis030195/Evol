@@ -105,7 +105,7 @@ namespace Evol.Game.Player
                 else
                 {
                     // Dead, say to server this player is dead
-                    PhotonNetwork.RaiseEvent(1, new object[] { }, new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendReliable);
+                    PhotonNetwork.RaiseEvent(1, new object[] { gameObject.tag }, new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendReliable);
                 }
             }
             //else
