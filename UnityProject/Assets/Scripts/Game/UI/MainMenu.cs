@@ -79,7 +79,8 @@ namespace Evol.Game.UI
 			
 			PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable(){{"character", character.name}});
 			// selectionEffectObject = Instantiate(SelectionEffect, new Vector3(character.transform.position.x, -20, 70), new Quaternion(90, 0, 0, 90), transform.parent);
-			//character.transform.position = Vector3.Lerp(character.transform.position, Vector3.right, Time.deltaTime);
+			/*
+			// TODO: FINISH THIS ANIMATION
 			// Character in a free spot
 			var destination = Vector3.zero;
 			var positionIndex = charactersOffsets.FindIndex(
@@ -93,13 +94,14 @@ namespace Evol.Game.UI
 			else // Character in the middle
 			{
 				// Free the spot
-				charactersOffsets[positionIndex] = Tuple.Create(charactersOffsets[positionIndex].Item1, false);
 				charactersOffsets[0] = Tuple.Create(charactersOffsets[0].Item1, true);
 				// Find a free spot
-				destination = charactersOffsets.Find(offset => offset.Item2 == false).Item1;
+				var next = charactersOffsets.FindIndex(offset => offset.Item2 == true && offset.Item1 != Vector3.zero);
+				destination = charactersOffsets[next].Item1;
+				charactersOffsets[next] = Tuple.Create(charactersOffsets[next].Item1, false);;
 			}
 			StartCoroutine(SlowlyMoveTo(character, character.transform.localPosition, destination));
-
+			*/
 			character.GetComponent<Animator>().SetTrigger("Attack1Trigger");
 			// character.transform.Translate(Vector3.right * 10);
 			// character.transform.position = Vector3.MoveTowards(character.transform.position, Vector3.zero, Time.deltaTime * 100);
