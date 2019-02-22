@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Evol.Utils;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -60,7 +61,7 @@ public class ForestArea : MonoBehaviour
 		while (tries < 10)
 		{
 			// We pick a random position above ground
-			position = AboveGround(transform.position + Target - new Vector3(Random.Range(-100, Size), 0,
+			position = Position.AboveGround(transform.position + Target - new Vector3(Random.Range(-100, Size), 0,
 				Random.Range(-100, Size)), prefabSize);
 			
 			// Then we throw an overlap sphere
@@ -75,30 +76,5 @@ public class ForestArea : MonoBehaviour
 			tries++;
 		}
 		return Vector3.zero;
-	}
-
-	/// <summary>
-	///  Will adjust the position above ground relatively from the prefab size
-	/// </summary>
-	/// <param name="position"></param>
-	/// <param name="prefabSize"></param>
-	/// <returns></returns>
-	private Vector3 AboveGround(Vector3 position, float prefabSize)
-	{
-		RaycastHit hit;
-		// Below ground
-		if (Physics.Raycast(position, transform.TransformDirection(Vector3.up), out hit, Mathf.Infinity))
-		{
-			position.y += hit.distance + prefabSize * 0.5f;
-		}
-
-		hit = new RaycastHit();
-		// Above ground
-		if (Physics.Raycast(position, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity))
-		{
-			position.y -= hit.distance - prefabSize * 0.5f;
-		}
-
-		return position;
 	}
 }

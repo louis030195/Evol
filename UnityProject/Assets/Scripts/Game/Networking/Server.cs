@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using DigitalRuby.LightningBolt;
 using DigitalRuby.RainMaker;
 using Evol.Agents;
+using Evol.Heuristic.StateMachine;
 using Evol.Utils;
 using ExitGames.Client.Photon;
 using MLAgents;
@@ -173,6 +174,16 @@ namespace Evol.Game.Networking
             CarnivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Carnivorous")), network);
             HerbPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Herb")), network);
             // StartCoroutine(SpawnAgents());
+            foreach(var i in Enumerable.Range(0, 10))
+            {
+                var go = Instantiate(SpawnablePrefabs.Last(),
+                    Position.AboveGround(RandomCircle(Vector3.zero, 200),
+                        SpawnablePrefabs.Last().GetComponent<Collider>().bounds.size.y),
+                    Quaternion.identity);
+                go.GetComponent<StateController>().SetupAi(true, new List<Transform>());
+            }
+
+            //StartCoroutine(SpawnAgents());
             StartCoroutine(GameLoop());
         }
         
@@ -247,9 +258,10 @@ namespace Evol.Game.Networking
             while (true)
             {
                 yield return new WaitForSeconds(Random.Range(0, 10));
-                SpawnCarnivorous();
-                SpawnHerbivorous();
-                SpawnHerb();
+                // SpawnCarnivorous();
+                // SpawnHerbivorous();
+                // SpawnHerb();
+                
 
                 /*
                 Vector2 direction = Random.insideUnitCircle;
@@ -321,7 +333,7 @@ namespace Evol.Game.Networking
         private IEnumerator GameStarting()
         {
             // photonView.RPC("UpdateText", RpcTarget.All, "Waiting more players or press Space to play solo");
-            mainText.text = "loll";
+            mainText.text = "Press space to start";
             // Wait other players and that everyone is ready, we also check if nobody has every joined
             while (nobodyJoinedYet && 
                    (PhotonNetwork.PlayerList.Count(p => p.CustomProperties.ContainsKey("ready") && p.CustomProperties["ready"].Equals("true"))
@@ -332,7 +344,7 @@ namespace Evol.Game.Networking
             
             gameState = GameState.Playing;
             // photonView.RPC("UpdateText", RpcTarget.All, "Kill them all");
-            mainText.text = "gogogo";
+            mainText.text = "Game starting";
 
             // Wait for the specified length of time until yielding control back to the game loop.
             yield return new WaitForSeconds(startWait);

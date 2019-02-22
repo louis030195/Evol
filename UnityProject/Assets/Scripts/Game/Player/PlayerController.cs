@@ -194,12 +194,5 @@ namespace Evol.Game.Player
                 */
             }
         }
-        
-        private void OnCollisionEnter(Collision other)
-        {
-            // Lose life when hit by a carnivorous animal
-            if (other.collider.CompareTag("Carnivorous"))
-                health.TakeDamage(10);
-        }
     }
 }
