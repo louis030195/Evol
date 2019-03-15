@@ -172,7 +172,7 @@ namespace Evol.Game.Networking
             HerbivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Herbivorous")), network);
             CarnivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Carnivorous")), network);
             HerbPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Herb")), network);
-            // StartCoroutine(SpawnAgents());
+            StartCoroutine(SpawnAgents());
             StartCoroutine(GameLoop());
         }
         
@@ -321,7 +321,7 @@ namespace Evol.Game.Networking
         private IEnumerator GameStarting()
         {
             // photonView.RPC("UpdateText", RpcTarget.All, "Waiting more players or press Space to play solo");
-            mainText.text = "loll";
+            mainText.text = "Press space to start";
             // Wait other players and that everyone is ready, we also check if nobody has every joined
             while (nobodyJoinedYet && 
                    (PhotonNetwork.PlayerList.Count(p => p.CustomProperties.ContainsKey("ready") && p.CustomProperties["ready"].Equals("true"))
@@ -332,7 +332,7 @@ namespace Evol.Game.Networking
             
             gameState = GameState.Playing;
             // photonView.RPC("UpdateText", RpcTarget.All, "Kill them all");
-            mainText.text = "gogogo";
+            mainText.text = "Game starting";
 
             // Wait for the specified length of time until yielding control back to the game loop.
             yield return new WaitForSeconds(startWait);

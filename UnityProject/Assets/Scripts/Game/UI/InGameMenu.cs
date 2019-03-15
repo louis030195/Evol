@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Evol.Game.Player;
-using RPGCharacterAnims;
 using UnityEngine;
 
 namespace Evol.Game.UI
