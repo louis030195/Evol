@@ -173,6 +173,7 @@ namespace Evol.Game.Networking
             HerbivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Herbivorous")), network);
             CarnivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Carnivorous")), network);
             HerbPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Herb")), network);
+
             // StartCoroutine(SpawnAgents());
             foreach(var i in Enumerable.Range(0, 10))
             {
@@ -183,7 +184,7 @@ namespace Evol.Game.Networking
                 go.GetComponent<StateController>().SetupAi(true, new List<Transform>());
             }
 
-            //StartCoroutine(SpawnAgents());
+            // StartCoroutine(SpawnAgents());
             StartCoroutine(GameLoop());
         }
         
