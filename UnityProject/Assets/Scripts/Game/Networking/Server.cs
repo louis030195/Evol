@@ -173,55 +173,23 @@ namespace Evol.Game.Networking
             HerbivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Herbivorous")), network);
             CarnivorousPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Carnivorous")), network);
             HerbPool = new Pool(SpawnablePrefabs.Find(prefab => prefab.CompareTag("Herb")), network);
-            // StartCoroutine(SpawnAgents());
+            StartCoroutine(SpawnAgents());
             foreach(var i in Enumerable.Range(0, 10))
             {
-                var go = Instantiate(SpawnablePrefabs.Last(),
-                    Position.AboveGround(RandomCircle(Vector3.zero, 200),
-                        SpawnablePrefabs.Last().GetComponent<Collider>().bounds.size.y),
+                var go = Instantiate(SpawnablePrefabs.Find(s => s.name.Equals("WolfSM")),
+                    Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 200),
+                        SpawnablePrefabs.Find(s => s.name.Equals("WolfSM")).GetComponent<Collider>().bounds.size.y),
                     Quaternion.identity);
                 go.GetComponent<StateController>().SetupAi(true, new List<Transform>());
             }
 
-            //StartCoroutine(SpawnAgents());
             StartCoroutine(GameLoop());
-        }
-        
-        private Vector3 RandomCircle (Vector3 center , float radius){
-            var ang = Random.value * 360;
-            Vector3 pos;
-            pos.x = center.x + radius * Mathf.Sin(ang * Mathf.Deg2Rad);
-            pos.y = center.y;
-            pos.z = center.z + radius * Mathf.Cos(ang * Mathf.Deg2Rad);
-            
-            // Check if the object is above ground, if not, we lift it to the ground
-            RaycastHit hit;
-            if (Physics.Raycast(pos, Vector3.up, out hit, Mathf.Infinity))
-            {
-                transform.position = new Vector3(pos.x, hit.distance + 0.1f, pos.z);
-            }
-            
-            return pos;
-        }
-
-        private Vector3 RandomPositionAround()
-        {
-            var pos = Random.insideUnitCircle * Ground.GetComponent<Terrain>().terrainData.size.x / 4;
-            
-            // Check if the object is above ground, if not, we lift it to the ground
-            RaycastHit hit;
-            if (Physics.Raycast(new Vector3(pos.x, 0, pos.y), Vector3.up, out hit, Mathf.Infinity))
-            {
-                transform.position = new Vector3(pos.x, hit.distance + 0.1f, pos.y);
-            }
-
-            return pos;
         }
         
         protected GameObject SpawnHerbivorous()
         {
             var herbivorousObject = HerbivorousPool.GetObject();
-            herbivorousObject.transform.position = RandomCircle(Vector3.zero, Ground.GetComponent<Terrain>().terrainData.size.x / 4);
+            herbivorousObject.transform.position = Position.RandomPositionAround(Vector3.zero, Ground.GetComponent<Terrain>().terrainData.size.x / 4);
             //var herbivorousObject = PhotonNetwork.InstantiateSceneObject(SpawnablePrefabs.Find(go => go.CompareTag("Herbivorous")).name, Vector3.zero, Quaternion.identity);
             herbivorousObject.transform.parent = Ground.transform;
             
@@ -233,7 +201,7 @@ namespace Evol.Game.Networking
         protected GameObject SpawnCarnivorous()
         {
             var carnivorousObject = CarnivorousPool.GetObject();
-            carnivorousObject.transform.position = RandomCircle(Vector3.zero, Ground.GetComponent<Terrain>().terrainData.size.x / 4);
+            carnivorousObject.transform.position = Position.RandomPositionAround(Vector3.zero, Ground.GetComponent<Terrain>().terrainData.size.x / 4);
             carnivorousObject.transform.parent = Ground.transform;
             
             carnivorousObject.SetActive(true);
@@ -244,7 +212,7 @@ namespace Evol.Game.Networking
         protected GameObject SpawnHerb()
         {
             var herbObject = HerbPool.GetObject();
-            herbObject.transform.position = RandomCircle(Vector3.zero, Ground.GetComponent<Terrain>().terrainData.size.x / 4);
+            herbObject.transform.position = Position.RandomPositionAround(Vector3.zero, Ground.GetComponent<Terrain>().terrainData.size.x / 4);
             herbObject.transform.parent = Ground.transform;
             
             herbObject.SetActive(true);
@@ -258,6 +226,11 @@ namespace Evol.Game.Networking
             while (true)
             {
                 yield return new WaitForSeconds(Random.Range(0, 10));
+                var go = Instantiate(SpawnablePrefabs.Find(s => s.name.Equals("gallinaSM")),
+                    Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 50),
+                        SpawnablePrefabs.Find(s => s.name.Equals("gallinaSM")).GetComponent<Collider>().bounds.size.y),
+                    Quaternion.identity);
+                go.GetComponent<StateController>().SetupAi(true, new List<Transform>());
                 // SpawnCarnivorous();
                 // SpawnHerbivorous();
                 // SpawnHerb();

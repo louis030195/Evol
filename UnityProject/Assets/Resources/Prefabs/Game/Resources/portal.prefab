@@ -226,7 +226,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0d0e7659be9acb4abd1f522e2f82773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PortalPrefabTest: {fileID: 0}
+  Portal1: {fileID: 0}
+  Portal2: {fileID: 0}
 --- !u!114 &114253560125891914
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -238,7 +239,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0d0e7659be9acb4abd1f522e2f82773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PortalPrefabTest: {fileID: 0}
+  Portal1: {fileID: 0}
+  Portal2: {fileID: 0}
 --- !u!114 &114551364839621296
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -257,7 +259,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 0}
-  viewIdField: 2
+  viewIdField: 0
   InstantiationId: 2
   isRuntimeInstantiated: 0
 --- !u!114 &114899951335148742
@@ -278,6 +280,6 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 0}
-  viewIdField: 1
+  viewIdField: 0
   InstantiationId: 1
   isRuntimeInstantiated: 0

@@ -12,6 +12,7 @@ namespace Evol.Heuristic
 		public AudioSource MovingAudio;         // Reference to the audio source used to play the movement audio.
 		public AudioClip MoveClip;                // Audio that plays when each movement is fired.
 
+		public string MovingAnimation;
 		
 		[HideInInspector] public NavMeshAgent navMeshAgent;
 
@@ -24,22 +25,10 @@ namespace Evol.Heuristic
 			navMeshAgent.speed = 20;
 		}
 
-		private void Update()
-		{
-			if (Math.Abs(navMeshAgent.remainingDistance) < 20)
-			{
-				if (anim && anim.enabled)
-				{
-					anim.SetBool("run", false);
-					anim.SetBool("creep", true);
-				}
-			}
-		}
-
 		public void MoveTo(Vector3 destination)
 		{
 			if (anim && anim.enabled)
-				anim.SetBool("run", true);
+				anim.SetBool(MovingAnimation, true);
 			navMeshAgent.destination = destination;
 			Resume();
 		}

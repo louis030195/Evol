@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Evol.Game.Player;
 using UnityEngine;
 using UnityEngine.AI;
 // using Complete;
@@ -17,6 +18,7 @@ namespace Evol.Heuristic.StateMachine
 
 		[HideInInspector] public Movement movement;
 		[HideInInspector] public Attack attack;
+		[HideInInspector] public Health health;
 		[HideInInspector] public List<Transform> wayPointList;
 		[HideInInspector] public int nextWayPoint;
 		[HideInInspector] public Transform chaseTarget;

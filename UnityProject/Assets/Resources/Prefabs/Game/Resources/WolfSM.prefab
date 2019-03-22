@@ -2889,6 +2889,7 @@ MonoBehaviour:
   remainState: {fileID: 11400000, guid: 66c1aa25a85ba47c4b92d32ccf6e6017, type: 2}
   movement: {fileID: 0}
   attack: {fileID: 0}
+  health: {fileID: 0}
   wayPointList: []
   nextWayPoint: 0
   chaseTarget: {fileID: 0}
@@ -2906,6 +2907,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovingAudio: {fileID: 0}
   MoveClip: {fileID: 0}
+  MovingAnimation: run
   navMeshAgent: {fileID: 0}
 --- !u!114 &114939484335978476
 MonoBehaviour:
