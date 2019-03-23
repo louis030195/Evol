@@ -2,7 +2,10 @@
 
 [Video here](https://www.youtube.com/watch?v=xbMLg1NVD90&feature=youtu.be)
 
-<img src="docs/images/login_register.gif" width="300" height="300"><img src="docs/images/play.gif" width="300" height="300">
+<img src="docs/images/login_register.gif" width="300" height="300">
+<img src="docs/images/main_menu_play_layout.gif" width="300" height="300">
+
+<img src="docs/images/play.gif" width="300" height="300"><img src="docs/images/playfab.png" width="300" height="300">
 
 
 # Roadmap
@@ -10,6 +13,7 @@
 - [ ] Mental control mage (take control of agents by switching to player brain, imitation learning to teach a herd of wolfes ...)
 - [x] Game loop
 - [x] Forest propagation
+- [x] Ugly but working UI
 - [ ] Well working multiplayer
 - [x] Account system
 - [ ] ML stuff
