@@ -226,11 +226,6 @@ namespace Evol.Game.Networking
             while (true)
             {
                 yield return new WaitForSeconds(Random.Range(0, 10));
-                var go = Instantiate(SpawnablePrefabs.Find(s => s.name.Equals("gallinaSM")),
-                    Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 50),
-                        SpawnablePrefabs.Find(s => s.name.Equals("gallinaSM")).GetComponent<Collider>().bounds.size.y),
-                    Quaternion.identity);
-                go.GetComponent<StateController>().SetupAi(true, new List<Transform>());
                 // SpawnCarnivorous();
                 // SpawnHerbivorous();
                 // SpawnHerb();

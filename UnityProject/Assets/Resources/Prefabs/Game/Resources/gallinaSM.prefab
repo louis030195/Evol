@@ -578,7 +578,7 @@ Transform:
   m_GameObject: {fileID: 1406882954958800}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4964124955769624}
   - {fileID: 4555453259883006}
@@ -1045,7 +1045,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!65 &65498949074532934
 BoxCollider:
@@ -1112,6 +1112,7 @@ MonoBehaviour:
   MovingAudio: {fileID: 0}
   MoveClip: {fileID: 0}
   MovingAnimation: run
+  DebugPath: 0
   navMeshAgent: {fileID: 0}
 --- !u!114 &114212414580227942
 MonoBehaviour:
@@ -1152,11 +1153,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyOnDeath: 1
+  HideHealthBar: 1
+  Bar: {fileID: 1275842059631600}
   healthBar: {fileID: 224740991758774754}
   dead: 0
   healthAudio: {fileID: 0}
-  gettingHit: []
   dying: {fileID: 0}
+  gettingHit: []
   deathEffects: []
 --- !u!114 &114657217177789320
 MonoBehaviour:

@@ -36,7 +36,7 @@ public class ForestArea : MonoBehaviour
 		{
 			yield return new WaitForSeconds(SpawnTreeDelay);
 			var prefab = PrefabTree[Random.Range(0, PrefabTree.Count - 1)];
-			var pos = FindPosition(prefab.GetComponent<Collider>().bounds.size.y);
+			var pos = FindPosition();
 			if (pos != Vector3.zero)
 			{
 				
@@ -52,7 +52,7 @@ public class ForestArea : MonoBehaviour
 	/// </summary>
 	/// <param name="prefabSize"></param>
 	/// <returns></returns>
-	private Vector3 FindPosition(float prefabSize)
+	private Vector3 FindPosition()
 	{
 		var position = Vector3.zero;
 		var tries = 0;
@@ -62,12 +62,12 @@ public class ForestArea : MonoBehaviour
 		{
 			// We pick a random position above ground
 			position = Position.AboveGround(transform.position + Target - new Vector3(Random.Range(-100, Size), 0,
-				Random.Range(-100, Size)), prefabSize);
+				Random.Range(-100, Size)), 0);
 			
 			// Then we throw an overlap sphere
 			var hitColliders = Physics.OverlapSphere(transform.position + position, SpacingBetweenTrees);
 			
-			// Which checks if there is already a ready around
+			// Which checks if there is already a tree around
 			if (!hitColliders.Any(c => c.gameObject.name.Contains("tree")))
 			{
 				return position;

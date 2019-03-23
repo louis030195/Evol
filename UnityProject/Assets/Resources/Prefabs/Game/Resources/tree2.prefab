@@ -56,8 +56,9 @@ GameObject:
   - component: {fileID: 114609587792677382}
   - component: {fileID: 114827902311717034}
   - component: {fileID: 114765986648950298}
-  - component: {fileID: 65957859000815338}
   - component: {fileID: 54458168229192928}
+  - component: {fileID: 114433104697082206}
+  - component: {fileID: 64002341615729142}
   m_Layer: 0
   m_Name: tree2
   m_TagString: Untagged
@@ -648,12 +649,12 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
---- !u!65 &65957859000815338
-BoxCollider:
+--- !u!64 &64002341615729142
+MeshCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -661,9 +662,11 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 7, z: 2}
-  m_Center: {x: 0, y: 5, z: 0}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300000, guid: 24a759921bedc2541881a0535a7bfcc8, type: 3}
 --- !u!114 &114175832769279180
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -701,6 +704,17 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114433104697082206
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1218347679047942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a261dd92fa946884cac018e1f40c410f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114588450198736328
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -772,11 +786,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyOnDeath: 1
+  HideHealthBar: 1
+  Bar: {fileID: 1785483102763028}
   healthBar: {fileID: 224852017369709554}
   dead: 0
   healthAudio: {fileID: 0}
-  gettingHit: []
   dying: {fileID: 0}
+  gettingHit: []
   deathEffects: []
 --- !u!114 &114879507467171226
 MonoBehaviour:

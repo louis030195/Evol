@@ -8,6 +8,7 @@ namespace Evol.Heuristic.StateMachine
 	[CreateAssetMenu(menuName = "Evol/StateMachine/Actions/RandomMovement")]
 	public class RandomMovementAction : Action
 	{
+		public int Radius = 10;
 		public override void Act(StateController controller)
 		{
 			RandomMove(controller);
@@ -15,7 +16,11 @@ namespace Evol.Heuristic.StateMachine
 
 		private void RandomMove(StateController controller)
 		{
-			controller.movement.MoveTo(Position.RandomPositionAround(controller.transform.position, 10));
+			if (controller.movement.RemainingDistance <= controller.movement.StoppingDistance && !controller.movement.PathPending) 
+			{
+				controller.movement.MoveTo(Position.RandomPositionAround(controller.transform.position, Radius));
+			}
+			
 		}
 	}
 }

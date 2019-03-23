@@ -2757,11 +2757,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyOnDeath: 1
+  HideHealthBar: 1
+  Bar: {fileID: 1449560668522298}
   healthBar: {fileID: 224035959639152604}
   dead: 0
   healthAudio: {fileID: 0}
-  gettingHit: []
   dying: {fileID: 0}
+  gettingHit: []
   deathEffects: []
 --- !u!114 &114154280729656960
 MonoBehaviour:

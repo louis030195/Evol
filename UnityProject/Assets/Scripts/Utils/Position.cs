@@ -7,29 +7,35 @@ namespace Evol.Utils
 	public static class Position
 	{
 		/// <summary>
-		///  Will adjust the position above ground relatively from the prefab size
+		/// Will adjust the position above ground relatively from the prefab size
+		/// Global position
 		/// </summary>
 		/// <param name="position"></param>
-		/// <param name="prefabSize"></param>
+		/// <param name="prefabHeight">Prefab height needed in order to place well on top of ground</param>
+		/// <param name="flyFix">Little tweak to fix flying object</param>
+		/// <param name="transform">Transform parent</param>
 		/// <returns></returns>
-		public static Vector3 AboveGround(Vector3 position, float prefabSize)
+		public static Vector3 AboveGround(Vector3 position, float prefabHeight, float flyFix = 0.8f, Transform transform = null)
 		{
 			RaycastHit hit;
+			if (transform)
+				position += transform.position;
 			// Below ground
 			if (Physics.Raycast(position, Vector3.up, out hit, Mathf.Infinity))
 			{
-				position.y += hit.distance + prefabSize * 0.5f;
+				position.y += (hit.distance + prefabHeight * 0.5f) * flyFix;
 			}
 
 			hit = new RaycastHit();
 			// Above ground
 			if (Physics.Raycast(position, Vector3.down, out hit, Mathf.Infinity))
 			{
-				position.y -= hit.distance - prefabSize * 0.5f;
+				position.y -= hit.distance - prefabHeight * 0.5f;
 			}
 
 			return position;
 		}
+		
 		
 		/// <summary>
 		/// Return a random position around above ground

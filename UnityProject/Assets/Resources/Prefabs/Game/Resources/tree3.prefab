@@ -156,8 +156,9 @@ GameObject:
   - component: {fileID: 114157262042796254}
   - component: {fileID: 114155809269013738}
   - component: {fileID: 114872389070362456}
-  - component: {fileID: 65822630211466314}
   - component: {fileID: 54995931654909560}
+  - component: {fileID: 114767934724902394}
+  - component: {fileID: 64443594102731476}
   m_Layer: 0
   m_Name: tree3
   m_TagString: Untagged
@@ -575,12 +576,12 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
---- !u!65 &65822630211466314
-BoxCollider:
+--- !u!64 &64443594102731476
+MeshCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -588,9 +589,11 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 7, z: 2}
-  m_Center: {x: 0, y: 5, z: 0}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300012, guid: 9fae9f7a7664c4c47a4fd4e9eedf6d6c, type: 3}
 --- !u!114 &114023863831006804
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -657,11 +660,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyOnDeath: 1
+  HideHealthBar: 1
+  Bar: {fileID: 1982251364309866}
   healthBar: {fileID: 224701378673391474}
   dead: 0
   healthAudio: {fileID: 0}
-  gettingHit: []
   dying: {fileID: 0}
+  gettingHit: []
   deathEffects: []
 --- !u!114 &114157262042796254
 MonoBehaviour:
@@ -690,6 +695,17 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114767934724902394
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1885809000420510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a261dd92fa946884cac018e1f40c410f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114872389070362456
 MonoBehaviour:
   m_ObjectHideFlags: 1

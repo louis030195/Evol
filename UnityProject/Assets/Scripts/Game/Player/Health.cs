@@ -15,6 +15,7 @@ namespace Evol.Game.Player
     {
         public const int maxHealth = 100;
         public bool destroyOnDeath;
+        public bool HideHealthBar = true;
 
         [SerializeField]
         public int CurrentHealth { get; private set; } = maxHealth;
@@ -25,15 +26,16 @@ namespace Evol.Game.Player
         [SerializeField]
         public List<Tuple<string, int>> currentShields;
 
+        public GameObject Bar;
         [SerializeField]
         public RectTransform healthBar;
 
         private Animator anim;
         [HideInInspector] public bool dead; // Has the bot been reduced beyond zero health yet?
-        public AudioSource healthAudio; // The audio source to play.
-        public AudioClip[] gettingHit; // Audio to play when the bot is getting hit.
-        public AudioClip dying; // Audio to play when the bot is dying.
-        public GameObject[] deathEffects;
+        [Tooltip("Audio source")] public AudioSource healthAudio;
+        [Tooltip("Audio to play when dying.")] public AudioClip dying;
+        [Tooltip("Audio to play when getting hit")] public AudioClip[] gettingHit;
+        [Tooltip("Death effects to spill around")]public GameObject[] deathEffects;
 
         private void Audio()
         {
@@ -64,6 +66,10 @@ namespace Evol.Game.Player
         {
             anim = GetComponent<Animator>();
             currentShields = new List<Tuple<string, int>>();
+            if (HideHealthBar)
+            {
+                Bar.gameObject.SetActive(false);
+            }
         }
 
         public void TakeDamage(int amount)

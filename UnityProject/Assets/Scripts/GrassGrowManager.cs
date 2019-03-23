@@ -1,3 +1,4 @@
+using Evol.Utils;
 using UnityEngine;
 
 namespace Evol
@@ -7,18 +8,31 @@ namespace Evol
         private float maxSize;
         private float growRate;
         private float scale;
+        private bool aboveGround;
         
-        public void Start()
+        public void Awake()
         {
             maxSize = Random.Range(0.5f, 1.5f);
             growRate = Random.Range(0.01f, 0.02f);
+            Grow(); // Set the initial size directly to avoid seeing the transition to a lower size ...
         }
 
         public void Update()
         {
+            Grow();
+
+            if (!aboveGround)
+            {
+                transform.position = Position.AboveGround(transform.position, GetComponent<Collider>().bounds.size.y);
+                aboveGround = true;
+            }
+        }
+
+        private void Grow()
+        {
             if(scale < maxSize)
             {
-                this.transform.localScale = Vector3.one * scale;
+                transform.localScale = Vector3.one * scale;
                 scale += growRate * Time.deltaTime;
             }
         }
