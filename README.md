@@ -2,8 +2,8 @@
 
 [Video here](https://www.youtube.com/watch?v=xbMLg1NVD90&feature=youtu.be)
 
-<img src="docs/images/rl_scene.gif" width="300" height="300"><img src="docs/images/ui.gif" width="300" height="300">
-<img src="docs/images/mana.gif" width="300" height="300"><img src="docs/images/forest_gen.gif" width="300" height="300">
+<img src="docs/images/login_register.gif" width="300" height="300"><img src="docs/images/play.gif" width="300" height="300">
+
 
 # Roadmap
 
@@ -11,7 +11,7 @@
 - [x] Game loop
 - [x] Forest propagation
 - [ ] Well working multiplayer
-- [ ] Account system (Steam ?)
+- [x] Account system
 - [ ] ML stuff
 
 # Install
