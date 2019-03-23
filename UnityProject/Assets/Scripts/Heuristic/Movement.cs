@@ -28,11 +28,17 @@ namespace Evol.Heuristic
 		public bool PathPending => navMeshAgent.pathPending;
 		public float StoppingDistance => navMeshAgent.stoppingDistance;
 
+		public float Speed
+		{
+			set => navMeshAgent.speed = value;
+			get => navMeshAgent.speed;
+		}
+		
+
 		private void Awake()
 		{
 			anim = GetComponent<Animator>();
 			navMeshAgent = GetComponent<NavMeshAgent>();
-			navMeshAgent.speed = 20;
 			if (DebugPath)
 			{
 				path = new List<Vector3>();

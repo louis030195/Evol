@@ -33,6 +33,11 @@ namespace Evol.Heuristic.StateMachine
 			movement = GetComponent<Movement>();
 		}
 
+		private void Start()
+		{
+			movement.Speed = parameters.moveSpeed;
+		}
+
 		public void SetupAi(bool aiActivationFromTankManager, List<Transform> wayPointsFromTankManager)
 		{
 			wayPointList = wayPointsFromTankManager;
