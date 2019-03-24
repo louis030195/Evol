@@ -1,14 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using ExitGames.Client.Photon;
+using Photon.Chat;
 using Photon.Pun;
-using Photon.Realtime;
 using PlayFab;
 using PlayFab.ClientModels;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
+using AuthenticationValues = Photon.Realtime.AuthenticationValues;
 
 namespace Evol.Game.Networking
 {
+    // TODO: THINK ABOUT SPLITTING UI STUFF INTO MULTIPLE FILES
     public class PlayFabAuthenticator : MonoBehaviourPunCallbacks
     {
         [Header("Login / Register fields")] 
@@ -17,6 +22,7 @@ namespace Evol.Game.Networking
         public InputField Password;
         public InputField Email;
         public TextMeshProUGUI Result;
+        private LoginWithPlayFabRequest loginRequest;
 
         [Header("Main menu fields")] 
         public GameObject MainMenuCanvas;
@@ -26,17 +32,18 @@ namespace Evol.Game.Networking
         [Tooltip("Back arrow displayed in dead end screens used to go to previous screen")] public GameObject BackArrow;
         [Tooltip("Evol logo")] public GameObject Logo;
         
-        [Header("Play layout")]
-        public GameObject PlayLayout;
+        [Header("Main mode layout")]
+        [Tooltip("Client stats with this char")] public GameObject Stats;
+        [Tooltip("Characters list")] public GameObject CharactersList;
         [Tooltip("The layout that contains the character to be selected to play")] public GameObject CharacterLayout;
-        [Tooltip("Characters displayed in UI for selection")] public GameObject[] Characters;
+        [Tooltip("I don't know ?")] public GameObject Other;
+        [Tooltip("Contains description / lore of the character")] public GameObject CharacterInformations;
         [Tooltip("Looking for a game status")] public TextMeshProUGUI QueueStatus;
-
-        private string playFabPlayerIdCache;
-
-        public bool IsAuthenticated = false;
+        [Tooltip("Characters displayed in UI for selection")] public List<GameObject> Characters;
+        private GameObject selectedCharacter;
         
-        private LoginWithPlayFabRequest loginRequest;
+
+
 
         public void Login()
         {
@@ -46,15 +53,14 @@ namespace Evol.Game.Networking
             PlayFabClientAPI.LoginWithPlayFab(loginRequest, result =>
             {
                 // If the account is found
-                IsAuthenticated = true;
                 PhotonNetwork.LocalPlayer.NickName = loginRequest.Username;
                 Result.text = $"You're now logged in !";
-                LoginRegisterCanvas.gameObject.SetActive(false);
-                MainMenuCanvas.gameObject.SetActive(true);
+                gameObject.GetComponent<Chat>().enabled = true;
+                LoginRegisterCanvas.SetActive(false);
+                MainMenuCanvas.SetActive(true);
             }, error =>
             {
                 // If the account is not found
-                IsAuthenticated = false;
                 Result.text = $"Incorrect username or password";
             }, null);
         }
@@ -78,8 +84,9 @@ namespace Evol.Game.Networking
         /// </summary>
         public void OnDisconnect()
         {
-            LoginRegisterCanvas.gameObject.SetActive(true);
-            MainMenuCanvas.gameObject.SetActive(false);
+            LoginRegisterCanvas.SetActive(true);
+            MainMenuCanvas.SetActive(false);
+            gameObject.GetComponent<Chat>().enabled = false;
             Result.text = $"Successfully disconnected";
         }
 
@@ -99,27 +106,74 @@ namespace Evol.Game.Networking
 
         /// <summary>
         /// This function is used for dead end screen: always same behaviour, hide logo, show back arrow, hide MainNav and BottomBar
+        /// Show the wanted layout and everything call be called in reverse
+        /// <param name="layout"></param>
         /// </summary>
-        public void OnDeadEnd()
+        public void OnDeadEnd(GameObject layout)
         {
             MainNav.SetActive(!MainNav.activeInHierarchy);
             MainContent.SetActive(!MainContent.activeInHierarchy);
             BottomBar.SetActive(!BottomBar.activeInHierarchy);
             BackArrow.SetActive(!BackArrow.activeInHierarchy);
             Logo.SetActive(!Logo.activeInHierarchy);
+            if (layout != null)
+            {
+                layout.SetActive(!layout.activeInHierarchy);
+                BackArrow.GetComponent<Button>().onClick.AddListener(() => // Like a Once event
+                {
+                    var a = new UnityAction(() => OnDeadEnd(layout));
+                    a.Invoke();
+                    BackArrow.GetComponent<Button>().onClick.RemoveListener(a);
+                });
+            }
+            else
+                Debug.Log($"You forgot to add a layout to this dead end");
         }
 
         /// <summary>
-        /// MainNav -> Play -> Play(1st box)
+        /// MainNav -> Play -> MainMode(1st box)
         /// </summary>
-        public void OnPlayLayout()
+        public void OnMainMode()
         {
             // TODO: think about the character selection, best thing would be to store the last char played on the account
             // Then put the last char played
-            PlayLayout.SetActive(true);
-            var go = Instantiate(Characters[0], CharacterLayout.transform);
+            OnCharacterSelection(Characters[0]);
+            BackArrow.GetComponent<Button>().onClick.AddListener(() => // Like a Once event
+            {
+                var a = new UnityAction(() => Destroy(selectedCharacter));
+                a.Invoke();
+                BackArrow.GetComponent<Button>().onClick.RemoveListener(a);
+            });}
+
+        /// <summary>
+        /// Click on my char in play layout -> characters list
+        /// </summary>
+        public void OnCharacterList()
+        {
+            Stats.SetActive(!Stats.activeInHierarchy);
+            CharactersList.SetActive(!CharactersList.activeInHierarchy);
+            Other.SetActive(!Other.activeInHierarchy);
+            CharacterInformations.SetActive(!CharacterInformations.activeInHierarchy);
+            BackArrow.GetComponent<Button>().onClick.AddListener(() => // Like a Once event
+            {
+                var a = new UnityAction(OnCharacterList);
+                a.Invoke();
+                BackArrow.GetComponent<Button>().onClick.RemoveListener(a);
+            });
+        }
+
+        /// <summary>
+        /// Called when clicking on character icon in characters list
+        /// </summary>
+        /// <param name="character"></param>
+        public void OnCharacterSelection(GameObject character)
+        {
+            if(selectedCharacter != null)
+                Destroy(selectedCharacter);
+            var go = Instantiate(character, CharacterLayout.transform);
             go.transform.localScale *= 100;
             go.transform.rotation = new Quaternion(0, 90, 0, 90);
+            selectedCharacter = go;
         }
 
         /// <summary>
@@ -135,7 +189,8 @@ namespace Evol.Game.Networking
         public override void OnConnectedToMaster()
         {
             QueueStatus.text = "Looking for a game ...";
-			// TODO: google photon lobbys etc, next step join game whatever
+			// TODO: google photon lobby etc, next step join game whatever
+			
         }
     }
 }
