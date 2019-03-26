@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using ExitGames.Client.Photon;
 using Photon.Chat;
 using Photon.Pun;
+using Photon.Realtime;
 using PlayFab;
 using PlayFab.ClientModels;
 using TMPro;
@@ -10,6 +13,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using AuthenticationValues = Photon.Realtime.AuthenticationValues;
+using Random = System.Random;
 
 namespace Evol.Game.Networking
 {
@@ -36,25 +40,23 @@ namespace Evol.Game.Networking
         [Tooltip("Client stats with this char")] public GameObject Stats;
         [Tooltip("Characters list")] public GameObject CharactersList;
         [Tooltip("The layout that contains the character to be selected to play")] public GameObject CharacterLayout;
-        [Tooltip("I don't know ?")] public GameObject Other;
-        [Tooltip("Contains description / lore of the character")] public GameObject CharacterInformations;
         [Tooltip("Looking for a game status")] public TextMeshProUGUI QueueStatus;
-        [Tooltip("Characters displayed in UI for selection")] public List<GameObject> Characters;
-        private GameObject selectedCharacter;
-        
 
+
+        private float timeToWaitPlayers = 30; // Should be proportional to the total number of players currently playing
 
 
         public void Login()
         {
-            loginRequest = new LoginWithPlayFabRequest();
-            loginRequest.Username = Username.text;
-            loginRequest.Password = Password.text;
+            loginRequest = new LoginWithPlayFabRequest {Username = Username.text, Password = Password.text};
             PlayFabClientAPI.LoginWithPlayFab(loginRequest, result =>
             {
                 // If the account is found
                 PhotonNetwork.LocalPlayer.NickName = loginRequest.Username;
                 Result.text = $"You're now logged in !";
+                PhotonNetwork.OfflineMode = false;
+                PhotonNetwork.ConnectUsingSettings();
+                gameObject.GetComponent<Chat>().PlayFabAuthenticationContext = result.AuthenticationContext;
                 gameObject.GetComponent<Chat>().enabled = true;
                 LoginRegisterCanvas.SetActive(false);
                 MainMenuCanvas.SetActive(true);
@@ -131,66 +133,86 @@ namespace Evol.Game.Networking
         }
 
         /// <summary>
-        /// MainNav -> Play -> MainMode(1st box)
-        /// </summary>
-        public void OnMainMode()
-        {
-            // TODO: think about the character selection, best thing would be to store the last char played on the account
-            // Then put the last char played
-            OnCharacterSelection(Characters[0]);
-            BackArrow.GetComponent<Button>().onClick.AddListener(() => // Like a Once event
-            {
-                var a = new UnityAction(() => Destroy(selectedCharacter));
-                a.Invoke();
-                BackArrow.GetComponent<Button>().onClick.RemoveListener(a);
-            });}
-
-        /// <summary>
-        /// Click on my char in play layout -> characters list
-        /// </summary>
-        public void OnCharacterList()
-        {
-            Stats.SetActive(!Stats.activeInHierarchy);
-            CharactersList.SetActive(!CharactersList.activeInHierarchy);
-            Other.SetActive(!Other.activeInHierarchy);
-            CharacterInformations.SetActive(!CharacterInformations.activeInHierarchy);
-            BackArrow.GetComponent<Button>().onClick.AddListener(() => // Like a Once event
-            {
-                var a = new UnityAction(OnCharacterList);
-                a.Invoke();
-                BackArrow.GetComponent<Button>().onClick.RemoveListener(a);
-            });
-        }
-
-        /// <summary>
-        /// Called when clicking on character icon in characters list
-        /// </summary>
-        /// <param name="character"></param>
-        public void OnCharacterSelection(GameObject character)
-        {
-            if(selectedCharacter != null)
-                Destroy(selectedCharacter);
-            var go = Instantiate(character, CharacterLayout.transform);
-            go.transform.localScale *= 100;
-            go.transform.rotation = new Quaternion(0, 90, 0, 90);
-            selectedCharacter = go;
-        }
-
-        /// <summary>
         /// PlayLayout -> Ready
         /// Try to find a game
         /// </summary>
         public void OnReady()
         {
-            PhotonNetwork.OfflineMode = false;
-            PhotonNetwork.ConnectUsingSettings();
+            // to join / create game (no friend)
+            if(PhotonNetwork.JoinRandomRoom()) {
+                // Wait a bit other people (proportional to the total number of player in the game)
+                // Start game
+
+            }
         }
-        
+
+        public override void OnJoinRandomFailed(short returnCode, string message)
+        {
+            Debug.Log($"OnJoinRandomFailed { returnCode } - { message }");
+            if (returnCode == 32760) // No match found
+            {
+                if (PhotonNetwork.JoinOrCreateRoom(new Random().Next(0, 100).ToString(), new RoomOptions(), TypedLobby.Default))
+                {
+                    // Wait a bit other players then start
+                    StartCoroutine(WaitPlayersAndStart());
+                    
+                }
+            }
+        }
+
+        IEnumerator WaitPlayersAndStart()
+        {
+            float timeToWait = timeToWaitPlayers;
+            while (timeToWait > 0)
+            {
+                yield return new WaitForSeconds(1);
+                
+                if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
+                {
+                    yield break;
+                }
+
+                QueueStatus.text = $"Estimated time to wait {timeToWait}";
+                timeToWait--;
+            }
+            PhotonNetwork.LoadLevel("Game");
+        }
+
+        public override void OnJoinedRoom()
+        {
+            Debug.Log($"OnJoinedRoom");
+        }
+
+        public override void OnJoinRoomFailed(short returnCode, string message)
+        {
+            Debug.Log($"OnJoinRoomFailed { returnCode } - { message }");
+        }
+
         public override void OnConnectedToMaster()
         {
-            QueueStatus.text = "Looking for a game ...";
-			// TODO: google photon lobby etc, next step join game whatever
-			
+		    Debug.Log($"Connected to master cloud");	
+        }
+
+        public override void OnDisconnected(DisconnectCause cause)
+        {
+            // Persist player data
+            var playerData = new Dictionary<string, string>();
+            foreach (var key in PhotonNetwork.LocalPlayer.CustomProperties.Keys)
+            {
+                playerData.Add((string)key, (string)PhotonNetwork.LocalPlayer.CustomProperties[key]);
+            }
+            PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
+            {
+                AuthenticationContext = loginRequest.AuthenticationContext,
+                Data = playerData
+            }, result =>
+            {
+                Debug.Log($"UpdateUserData succeed - { result }");	
+            }, error =>
+            {
+                Debug.Log($"UpdateUserData failed - { error }");	
+            });
+            Debug.Log($"Disconnected to master cloud { cause }");	
         }
     }
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using ExitGames.Client.Photon;
 using Photon.Chat;
 using Photon.Pun;
+using PlayFab;
+using PlayFab.ClientModels;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +15,8 @@ namespace Evol.Game.Networking
     public class Chat : MonoBehaviour, IChatClientListener
     {
 
+        public PlayFabAuthenticationContext PlayFabAuthenticationContext;
+        
         [Header("Chat layout")]
         public TMP_InputField ChatInput;
         public ScrollRect ChatContent;
@@ -22,13 +26,21 @@ namespace Evol.Game.Networking
         // Start is called before the first frame update
         private void Start()
         {
-            InitializeChat();
+            PlayFabClientAPI.GetPhotonAuthenticationToken(new GetPhotonAuthenticationTokenRequest
+            {
+                PhotonApplicationId = PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat, 
+                AuthenticationContext = PlayFabAuthenticationContext
+            }, OnPhotonChatSuccess, error => {
+                Debug.Log($"Failed to connect to chat { error }");
+            });
+            // InitializeChat();
         }
 
         // Update is called once per frame
         private void Update()
         {
-            chatClient.Service();
+            if (chatClient != null)
+                chatClient.Service();
             // If we have the chat focused and press enter, send the text in our input chat
             if (ChatInput.isFocused && Input.GetKeyDown(KeyCode.Return)) 
             {
@@ -36,16 +48,17 @@ namespace Evol.Game.Networking
             }
         }
         
-        private void InitializeChat()
+        private void OnPhotonChatSuccess(GetPhotonAuthenticationTokenResult result)
         {
+            chatClient.SetOnlineStatus( ChatUserStatus.Online, "Mostly Harmless" );
             // In the C# SDKs, the callbacks are defined in the `IChatClientListener` interface.
             // In the demos, we instantiate and use the ChatClient class to implement the IChatClientListener interface.
             chatClient = new ChatClient(this);
             // Set your favourite region. "EU", "US", and "ASIA" are currently supported.
-            var result = chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat,
+            var success = chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat,
                 PhotonNetwork.AppVersion,
-                new AuthenticationValues(PhotonNetwork.LocalPlayer.UserId));
-            Debug.Log($"Connected to chat { result }");
+                new AuthenticationValues(PlayFabAuthenticationContext.PlayFabId));
+            Debug.Log($"Connected to chat { success }");
         }
 
         private void OnDisable()

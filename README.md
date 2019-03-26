@@ -1,16 +1,17 @@
 # Evol
+<img src="docs/images/evol-logo.png" width="100" height="100">
 
-[Video here](https://www.youtube.com/watch?v=xbMLg1NVD90&feature=youtu.be)
 
-<img src="docs/images/login_register.gif" width="300" height="300">
-<img src="docs/images/main_menu_play_layout.gif" width="300" height="300">
+# Video
+[![Video](https://img.youtube.com/vi/qUGsYp88M64/0.jpg)](https://www.youtube.com/watch?v=qUGsYp88M64)
 
-<img src="docs/images/play.gif" width="300" height="300"><img src="docs/images/playfab.png" width="300" height="300">
+
+
 
 
 # Roadmap
 
-- [ ] Mental control mage (take control of agents by switching to player brain, imitation learning to teach a herd of wolfes ...)
+- [ ] More characters
 - [x] Game loop
 - [x] Forest propagation
 - [x] Ugly but working UI
