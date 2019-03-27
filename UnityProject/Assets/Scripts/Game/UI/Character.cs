@@ -30,8 +30,11 @@ namespace Evol.Game.UI
             CharacterList[characterData.Id].SetActive(true);
             Description.text = characterData.Description;
             Name.text = characterData.CharacterName;
-            // Set the character chosen in the properties of the player
-            PhotonNetwork.LocalPlayer.CustomProperties.Add("character", characterData.Id.ToString());
+            // Add the character chosen in the properties of the player or set if we already had a character key
+            if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("character"))
+                PhotonNetwork.LocalPlayer.CustomProperties["character"] = characterData.Id.ToString();
+            else
+                PhotonNetwork.LocalPlayer.CustomProperties.Add("character", characterData.Id.ToString());
         }
     }
 }

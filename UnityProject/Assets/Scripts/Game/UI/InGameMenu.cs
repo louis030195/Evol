@@ -1,7 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using Evol.Game.Misc;
 using Evol.Game.Player;
+using Photon.Pun;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Evol.Game.UI
 {
@@ -11,20 +16,20 @@ namespace Evol.Game.UI
 		public GameObject PlayUI;
 		public GameObject PauseUI;
 
-		// While in pause ...
+		[Header("Paused")] 
 		public GameObject MainMenuPauseUI;
 		public GameObject SettingsPauseUI;
 
-		// While in settings ...
+		[Header("Settings")] 
 		public GameObject SettingsControlsUI;
 		public GameObject SettingsGraphicsUI;
 		public GameObject SettingsAudioUI;
 		
-		// Use this for initialization
-		void Start()
-		{
-
-		}
+		[Header("Overlay")] 
+		// Top bar
+		public TextMeshProUGUI PlayersAlive;
+		public TextMeshProUGUI Time;
+		public TextMeshProUGUI Kills;
 
 		// Update is called once per frame
 		void Update()
@@ -34,19 +39,21 @@ namespace Evol.Game.UI
 				Cursor.visible = !Cursor.visible;
 
 				// In case we exited the menu from settings, reset stuff
-				if (SettingsPauseUI.active)
+				if (SettingsPauseUI.activeInHierarchy)
 				{
 					OnSettings();
 					OnControls();
 				}
 				
-				PauseUI.SetActive(!PauseUI.active);
-				PlayUI.SetActive(!PlayUI.active);
+				PauseUI.SetActive(!PauseUI.activeInHierarchy);
+				PlayUI.SetActive(!PlayUI.activeInHierarchy);
 
 				// Disable / enable the character movement
 				if (GetComponent<PlayerController>() != null)
 					GetComponent<PlayerController>().Lock = !GetComponent<PlayerController>().Lock;
 			}
+			
+			UpdateTimeUI();
 		}
 
 		/// <summary>
@@ -67,8 +74,8 @@ namespace Evol.Game.UI
 		/// </summary>
 		public void OnSettings()
 		{
-			SettingsPauseUI.SetActive(!SettingsPauseUI.active);
-			MainMenuPauseUI.SetActive(!MainMenuPauseUI.active);
+			SettingsPauseUI.SetActive(!SettingsPauseUI.activeInHierarchy);
+			MainMenuPauseUI.SetActive(!MainMenuPauseUI.activeInHierarchy);
 		}
 		
 		/// <summary>
@@ -76,11 +83,15 @@ namespace Evol.Game.UI
 		/// </summary>
 		public void OnExitGame()
 		{
+			// Leave current room and go back to main menu
+			PhotonNetwork.LeaveRoom();
+			PhotonNetwork.LoadLevel("login");
 			#if UNITY_EDITOR
-				UnityEditor.EditorApplication.isPlaying = false;
+				// UnityEditor.EditorApplication.isPlaying = false;
 			#else
-				Application.Quit();
+				// Application.Quit();
 			#endif
+
 		}
 
 		/// <summary>
@@ -111,6 +122,21 @@ namespace Evol.Game.UI
 			SettingsControlsUI.SetActive(false);
 			SettingsGraphicsUI.SetActive(false);
 			SettingsAudioUI.SetActive(true);
+		}
+
+		public void UpdatePlayersAliveUI()
+		{
+			// PlayersAlive
+		}
+
+		public void UpdateTimeUI()
+		{
+			Time.text = UnityEngine.Time.time.ToString(CultureInfo.InvariantCulture);
+		}
+
+		public void UpdateKillUI()
+		{
+			//
 		}
 	}
 }

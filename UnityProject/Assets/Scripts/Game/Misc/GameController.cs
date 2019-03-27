@@ -5,14 +5,16 @@ using System.Linq;
 using Evol.Game.Player;
 using Evol.Heuristic.StateMachine;
 using Evol.Utils;
+using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 using Debug = System.Diagnostics.Debug;
 
 namespace Evol.Game.Misc
 {
-    public class GameController : MonoBehaviour
+    public class GameController : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         // Lets make a list with constant int linked to gameobject ?
         public List<CharacterData> Characters;
@@ -28,18 +30,34 @@ namespace Evol.Game.Misc
 
         private GameState gameState = GameState.Playing;
 
+        private void Awake()
+        {
+            // Makes the scene independent for debugging (not having to start all scenes everytime)
+            if (!PhotonNetwork.InRoom)
+                PhotonNetwork.ConnectUsingSettings();
+        }
+
         // Start is called before the first frame update
         void Start()
         {
-            // Retrieve the chosen character
+           StartCoroutine(WaitBeingInARoom());      
+        }
+
+        private IEnumerator WaitBeingInARoom()
+        {
+            yield return new WaitUntil(() => PhotonNetwork.InRoom);
+            
+            // Retrieve the chosen character id
             var characterId = PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("character") ?
                 Convert.ToInt32(PhotonNetwork.LocalPlayer.CustomProperties["character"]) :
-                throw new Exception($"The player has no character in his properties !");
+                0;
+            
+            // Retrieve the prefab assiocated to this id
+            var foundPrefab = Characters.Find(c => c.Id == characterId).Prefab;
             
             // Instanciate the player
-            PhotonNetwork.Instantiate(Characters
-                .Find(c => c.Id == characterId).Prefab.name,
-                Position.RandomPositionAround(Vector3.zero, 30),
+            var playerGo = PhotonNetwork.Instantiate(foundPrefab.name,
+                Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 30), foundPrefab.GetComponent<Collider>().bounds.size.y, flyFix:1f),
                 Quaternion.identity);
             
             if (PhotonNetwork.IsMasterClient)
@@ -55,6 +73,12 @@ namespace Evol.Game.Misc
 
                 StartCoroutine(GameLoop());
             }
+        }
+
+        public override void OnConnectedToMaster()
+        {
+            print("Connected to master, creating room");
+            PhotonNetwork.CreateRoom("");
         }
 
         // This is called from start and will run each phase of the game one after another.
@@ -153,6 +177,26 @@ namespace Evol.Game.Misc
             
             // Wait for the specified length of time until yielding control back to the game loop.
             yield return new WaitForSeconds(2);
+        }
+
+        /// <summary>
+        /// Photon event callback
+        /// Should be used for rare event, for frequent event, prefer PunRPC
+        /// </summary>
+        /// <param name="photonEvent"></param>
+        public void OnEvent(EventData photonEvent)
+        {
+            if (photonEvent.Code == 0)
+            {
+                // Boss died ?
+                if((photonEvent.CustomData as object[])[0].Equals("Boss"))
+                    gameState = GameState.Won;
+                // If all player are dead (CountOfPlayers = 0 always in single player ? to investigate that)
+                // checking that its a player that died just in case (and required for single player)
+                if (PhotonNetwork.CountOfPlayers == 0 && (photonEvent.CustomData as object[])[0].Equals("Player"))
+                    gameState = GameState.Lost;
+                print($"Player ${ photonEvent.Sender } : { (photonEvent.CustomData as object[])[0] } died");
+            }
         }
     }
 }

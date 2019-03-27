@@ -2320,11 +2320,6 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 114217870570248522, guid: 644be27d88e5941da83e00333761c43c,
-        type: 3}
-      propertyPath: viewIdField
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 19800000, guid: 644be27d88e5941da83e00333761c43c, type: 3}
       propertyPath: looping
       value: 1
@@ -2335,6 +2330,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 19800000, guid: 644be27d88e5941da83e00333761c43c, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114217870570248522, guid: 644be27d88e5941da83e00333761c43c,
+        type: 3}
+      propertyPath: viewIdField
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:

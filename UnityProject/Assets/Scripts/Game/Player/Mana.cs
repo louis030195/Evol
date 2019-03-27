@@ -11,14 +11,18 @@ namespace Evol.Game.Player
 {
     public class Mana : MonoBehaviour, IPunObservable
     {
-        public const int maxMana = 100;
+        public int MaxMana = 100;
 
         // Adding accessor allow us to hide the field in inspector and limit setter to private
         // We could also use [HideInInspector] without accessors but the field could be changed outside of this class ...
-        public int CurrentMana { get; private set; } = maxMana;
+        public FloatEvent OnManaChanged = new FloatEvent();
+        private int currentMana;
+        public int CurrentMana => currentMana;
 
-        public RectTransform manaBar;
-
+        private void Start()
+        {
+            currentMana = MaxMana;
+        }
 
         public void UseMana(int amount)
         {
@@ -26,10 +30,10 @@ namespace Evol.Game.Player
                 return;
 
             // Substract mana
-            CurrentMana -= amount;
+            currentMana -= amount;
 
             // Clip minimum
-            if (CurrentMana < 0) CurrentMana = 0;
+            if (currentMana < 0) currentMana = 0;
             
             // Update UI
             OnChangeMana();
@@ -41,11 +45,11 @@ namespace Evol.Game.Player
                 return;
 
             // Add mana
-            CurrentMana += amount;
+            currentMana += amount;
             
             // Clip maximum
-            if (CurrentMana > maxMana)
-                CurrentMana = maxMana;
+            if (currentMana > MaxMana)
+                currentMana = MaxMana;
 
             // Update UI
             OnChangeMana();
@@ -53,7 +57,7 @@ namespace Evol.Game.Player
 
         private void OnChangeMana()
         {
-            manaBar.sizeDelta = new Vector2(CurrentMana, manaBar.sizeDelta.y);
+            OnManaChanged.Invoke((float)currentMana / MaxMana);
         }
 
 
@@ -62,13 +66,11 @@ namespace Evol.Game.Player
             // Synchronize mana
             if (stream.IsWriting)
             {
-                stream.SendNext(CurrentMana);
-                stream.SendNext(manaBar.sizeDelta);
+                stream.SendNext(currentMana);
             }
             else
             {
-                CurrentMana = (int) stream.ReceiveNext();
-                manaBar.sizeDelta = (Vector2) stream.ReceiveNext();
+                currentMana = (int) stream.ReceiveNext();
             }
         }
     }

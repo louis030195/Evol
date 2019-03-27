@@ -43,8 +43,15 @@ namespace Evol.Game.Networking
         [Tooltip("Looking for a game status")] public TextMeshProUGUI QueueStatus;
 
 
-        private float timeToWaitPlayers = 30; // Should be proportional to the total number of players currently playing
+        private float timeToWaitPlayers = 3; // Should be proportional to the total number of players currently playing
 
+
+        private void Start()
+        {
+            // We reach this condition if we leave a game a go back to main menu
+            if(PlayFabClientAPI.IsClientLoggedIn())
+                OnLoginSuccess();
+        }
 
         public void Login()
         {
@@ -58,13 +65,18 @@ namespace Evol.Game.Networking
                 PhotonNetwork.ConnectUsingSettings();
                 gameObject.GetComponent<Chat>().PlayFabAuthenticationContext = result.AuthenticationContext;
                 gameObject.GetComponent<Chat>().enabled = true;
-                LoginRegisterCanvas.SetActive(false);
-                MainMenuCanvas.SetActive(true);
+                OnLoginSuccess();
             }, error =>
             {
                 // If the account is not found
                 Result.text = $"Incorrect username or password";
             }, null);
+        }
+
+        private void OnLoginSuccess()
+        {
+            LoginRegisterCanvas.SetActive(false);
+            MainMenuCanvas.SetActive(true);
         }
 
         public void Register()
@@ -142,7 +154,7 @@ namespace Evol.Game.Networking
             if(PhotonNetwork.JoinRandomRoom()) {
                 // Wait a bit other people (proportional to the total number of player in the game)
                 // Start game
-
+                Debug.Log("JoinRandomRoom success");
             }
         }
 
@@ -151,13 +163,19 @@ namespace Evol.Game.Networking
             Debug.Log($"OnJoinRandomFailed { returnCode } - { message }");
             if (returnCode == 32760) // No match found
             {
+                QueueStatus.text = $"No games available, creating one";
                 if (PhotonNetwork.JoinOrCreateRoom(new Random().Next(0, 100).ToString(), new RoomOptions(), TypedLobby.Default))
                 {
-                    // Wait a bit other players then start
-                    StartCoroutine(WaitPlayersAndStart());
+
                     
                 }
             }
+        }
+
+        public override void OnCreatedRoom()
+        {
+            // Only the master should wait & start everyone game
+            StartCoroutine(WaitPlayersAndStart());
         }
 
         IEnumerator WaitPlayersAndStart()
@@ -172,15 +190,23 @@ namespace Evol.Game.Networking
                     yield break;
                 }
 
-                QueueStatus.text = $"Estimated time to wait {timeToWait}";
+                QueueStatus.text = $"Waiting for more players {timeToWait}";
                 timeToWait--;
             }
-            PhotonNetwork.LoadLevel("Game");
+            gameObject.GetPhotonView().RPC(nameof(LoadLevelForEveryone), RpcTarget.All, "Game");
         }
 
         public override void OnJoinedRoom()
         {
+            QueueStatus.text = $"Joined a game";
+            // Wait a bit other players then start
             Debug.Log($"OnJoinedRoom");
+        }
+
+        [PunRPC]
+        public void LoadLevelForEveryone(string scene)
+        {
+            PhotonNetwork.LoadLevel(scene);
         }
 
         public override void OnJoinRoomFailed(short returnCode, string message)
@@ -195,23 +221,24 @@ namespace Evol.Game.Networking
 
         public override void OnDisconnected(DisconnectCause cause)
         {
-            // Persist player data
-            var playerData = new Dictionary<string, string>();
-            foreach (var key in PhotonNetwork.LocalPlayer.CustomProperties.Keys)
+            // I guess it could happen to be null if we are debugging and didn't pass by login scene ?
+            if (loginRequest != null)
             {
-                playerData.Add((string)key, (string)PhotonNetwork.LocalPlayer.CustomProperties[key]);
+                // Persist player data
+                var playerData = new Dictionary<string, string>();
+                foreach (var key in PhotonNetwork.LocalPlayer.CustomProperties.Keys)
+                {
+                    playerData.Add((string) key, (string) PhotonNetwork.LocalPlayer.CustomProperties[key]);
+                }
+
+                PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
+                    {
+                        AuthenticationContext = loginRequest.AuthenticationContext,
+                        Data = playerData
+                    }, result => { Debug.Log($"UpdateUserData succeed - {result}"); },
+                    error => { Debug.Log($"UpdateUserData failed - {error}"); });
             }
-            PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
-            {
-                AuthenticationContext = loginRequest.AuthenticationContext,
-                Data = playerData
-            }, result =>
-            {
-                Debug.Log($"UpdateUserData succeed - { result }");	
-            }, error =>
-            {
-                Debug.Log($"UpdateUserData failed - { error }");	
-            });
+
             Debug.Log($"Disconnected to master cloud { cause }");	
         }
     }
