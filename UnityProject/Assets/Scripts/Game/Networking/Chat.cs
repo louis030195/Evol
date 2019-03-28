@@ -19,13 +19,16 @@ namespace Evol.Game.Networking
         
         [Header("Chat layout")]
         public TMP_InputField ChatInput;
-        public ScrollRect ChatContent;
-        
+        public GameObject ChatContent;
+        public TextMeshProUGUI ChatText;
+
+        private ScrollRect chatScroll;
         private ChatClient chatClient;
         
         // Start is called before the first frame update
         private void Start()
         {
+            chatScroll = ChatContent.GetComponent<ScrollRect>();
             PlayFabClientAPI.GetPhotonAuthenticationToken(new GetPhotonAuthenticationTokenRequest
             {
                 PhotonApplicationId = PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat, 
@@ -39,12 +42,28 @@ namespace Evol.Game.Networking
         // Update is called once per frame
         private void Update()
         {
-            if (chatClient != null)
-                chatClient.Service();
-            // If we have the chat focused and press enter, send the text in our input chat
+            if (chatClient == null)
+                return;
+            chatClient.Service();
+            
+            // If i press enter
             if (Input.GetKeyDown(KeyCode.Return)) 
             {
-                chatClient.PublishMessage( "channelA", $"{ ChatInput.text }" );
+                // If the chat input is focused
+                if (ChatContent.activeInHierarchy)
+                {
+                    // Send message
+                    chatClient.PublishMessage("channelA", $"{ChatInput.text}");
+
+                    // Empty the input
+                    ChatInput.text = "";
+                    Debug.Log($"Published {ChatInput.text}");
+                }
+                else // If the chat input isn't focused, focus it !
+                {
+                    OnChat();
+                    ChatInput.ActivateInputField();
+                }
             }
         }
         
@@ -68,8 +87,8 @@ namespace Evol.Game.Networking
 
         public void OnChat()
         {
-            ChatContent.gameObject.SetActive(!ChatContent.gameObject.activeInHierarchy);
-            Debug.Log($"OnChat");
+            ChatContent.SetActive(!ChatContent.activeInHierarchy);
+            Debug.Log($"Chat { ChatContent.activeInHierarchy }");
         }
 
         public void DebugReturn(DebugLevel level, string message)
@@ -97,21 +116,20 @@ namespace Evol.Game.Networking
         {
             foreach (var s in senders)
             {
-                // Empty the chat after a number of messages ? (should just remove the oldest messages)
-                if (ChatContent.content.transform.childCount > 30)
-                {
-                    foreach (Transform child in ChatContent.content.transform)
-                    {
-                        Destroy(child.gameObject);
-                    }
-                }
-                ChatContent.content.gameObject.AddComponent<TextMeshPro>().text = 
-                    $"$Channel {channelName} - { s } said: { messages.Aggregate("", (current, m) => current + m) }";
-            }
+                ChatText.text += $"Channel {channelName} - { s } said: { messages.Aggregate("", (current, m) => current + m) }\n";
+            } // TODO: Make a FIFO queue to handle messages and remove them after a time
             // All public messages are automatically cached in `Dictionary<string, ChatChannel> PublicChannels`.
             // So you don't have to keep track of them.
             // The channel name is the key for `PublicChannels`.
             // In very long or active conversations, you might want to trim each channels history.
+            
+            // Scroll to bottom
+            StartCoroutine(ScrollToBottom());
+        }
+        
+        private IEnumerator ScrollToBottom() {
+            yield return new WaitForSeconds(.1f);
+            chatScroll.normalizedPosition = new Vector2(0, 0);
         }
 
         public void OnPrivateMessage(string sender, object message, string channelName)
