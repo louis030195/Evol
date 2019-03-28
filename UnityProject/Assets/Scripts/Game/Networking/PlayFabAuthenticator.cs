@@ -185,7 +185,7 @@ namespace Evol.Game.Networking
             StartCoroutine(WaitPlayersAndStart());
         }
 
-        IEnumerator WaitPlayersAndStart()
+        private IEnumerator WaitPlayersAndStart()
         {
             float timeToWait = timeToWaitPlayers;
             while (timeToWait > 0)
@@ -247,6 +247,7 @@ namespace Evol.Game.Networking
             }
 
             Debug.Log($"Disconnected from photon cloud { cause }");	
+            QueueStatus.text = $"Failed to connect to the server { cause }";
         }
     }
 }

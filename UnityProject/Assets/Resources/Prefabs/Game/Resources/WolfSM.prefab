@@ -2445,10 +2445,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   destroyOnDeath: 1
-  healthAudio: {fileID: 6339218218404046835}
-  dying: {fileID: 0}
-  gettingHit: []
-  deathEffects: []
+  HealthAudio: {fileID: 0}
+  Dying: {fileID: 0}
+  GettingHit: []
+  DeathEffects: []
   dead: 0
 --- !u!114 &114798700080383480
 MonoBehaviour:
@@ -2463,7 +2463,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttackingAudio: {fileID: 6339218218404046835}
-  AttackClip: {fileID: 0}
+  AttackClip:
+  - {fileID: 8300000, guid: cbd6325c434b2f86289d6ab61ddbee14, type: 3}
+  - {fileID: 8300000, guid: dd67e7f921220d2638983ef3b9bb7db0, type: 3}
+  - {fileID: 8300000, guid: 2ace3776ce2905484bcbcd7a770c1611, type: 3}
+  - {fileID: 8300000, guid: 5082f89ea200849ebae353ba2013844b, type: 3}
+  - {fileID: 8300000, guid: e88e7142675f7fd8584433f8004b60a7, type: 3}
+  - {fileID: 8300000, guid: 6507ec1ec5570a3d18610a6c1ec19498, type: 3}
+  - {fileID: 8300000, guid: e51879b15ed1d4bc39e0f9d0555b0fcc, type: 3}
+  - {fileID: 8300000, guid: 4e04acb6d4adbc8c19ab1dd332af2c47, type: 3}
 --- !u!114 &114877473929135752
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -50,7 +50,6 @@ namespace Evol.Game.Networking
         
         private void OnPhotonChatSuccess(GetPhotonAuthenticationTokenResult result)
         {
-            chatClient.SetOnlineStatus( ChatUserStatus.Online, "Mostly Harmless" );
             // In the C# SDKs, the callbacks are defined in the `IChatClientListener` interface.
             // In the demos, we instantiate and use the ChatClient class to implement the IChatClientListener interface.
             chatClient = new ChatClient(this);
@@ -85,6 +84,7 @@ namespace Evol.Game.Networking
 
         public void OnConnected()
         {
+            chatClient.SetOnlineStatus( ChatUserStatus.Online, "Mostly Harmless" );
             chatClient.Subscribe( new[] { "channelA" } );
             Debug.Log($"OnConnected - { PhotonNetwork.NickName } connected to chat");
         }

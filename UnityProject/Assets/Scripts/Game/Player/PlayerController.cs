@@ -48,7 +48,7 @@ namespace Evol.Game.Player
             
             //cursorHotspot = new Vector2 (cursorTexture.width / 2, cursorTexture.height / 2);
 
-            if (PhotonNetwork.InRoom && photonView.IsMine)
+            if (PhotonNetwork.InRoom)
             {
                 transform.GetChild(0).GetComponent<Camera>().enabled = false; // TODO: cleaner solution ?
             }

@@ -892,6 +892,16 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 114827902311717034, guid: d89f4be8e0847401faf7ffb865f86022,
+        type: 3}
+      propertyPath: destroyOnDeath
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114827902311717034, guid: d89f4be8e0847401faf7ffb865f86022,
+        type: 3}
+      propertyPath: HideHealthBar
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 114765986648950298, guid: d89f4be8e0847401faf7ffb865f86022,
         type: 3}
       propertyPath: viewIdField
@@ -901,6 +911,11 @@ PrefabInstance:
         type: 3}
       propertyPath: InstantiationId
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 54458168229192928, guid: d89f4be8e0847401faf7ffb865f86022,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 126
       objectReference: {fileID: 0}
     - target: {fileID: 224769459129877618, guid: d89f4be8e0847401faf7ffb865f86022,
         type: 3}
@@ -921,21 +936,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114827902311717034, guid: d89f4be8e0847401faf7ffb865f86022,
-        type: 3}
-      propertyPath: destroyOnDeath
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114827902311717034, guid: d89f4be8e0847401faf7ffb865f86022,
-        type: 3}
-      propertyPath: HideHealthBar
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 54458168229192928, guid: d89f4be8e0847401faf7ffb865f86022,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 126
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114433104697082206, guid: d89f4be8e0847401faf7ffb865f86022, type: 3}
@@ -2752,6 +2752,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2109756dd2423d063bc62509d946e3a0, type: 2}
   - {fileID: 11400000, guid: 9323c8d28af7ae158a52b368d2d5c940, type: 2}
   Wolf: {fileID: 177940, guid: 7922eb7a718974501a8715f89063d3a1, type: 3}
+  Spider: {fileID: 100108, guid: 8c00db5be83e04b4c88b073e10fba9b9, type: 3}
 --- !u!4 &1838624197
 Transform:
   m_ObjectHideFlags: 0

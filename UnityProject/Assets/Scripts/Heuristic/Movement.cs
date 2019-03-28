@@ -12,12 +12,11 @@ namespace Evol.Heuristic
 	{
 		public AudioSource MovingAudio;         // Reference to the audio source used to play the movement audio.
 		public AudioClip MoveClip;                // Audio that plays when each movement is fired.
-		public string MovingAnimation;
 		public bool DebugPath;
 		
 		[HideInInspector] public NavMeshAgent navMeshAgent;
 
-		private Animator anim;
+		private Animator animator;
 
 		private List<Vector3> path;
 		private LineRenderer lr;
@@ -37,7 +36,7 @@ namespace Evol.Heuristic
 
 		private void Awake()
 		{
-			anim = GetComponent<Animator>();
+			animator = GetComponent<Animator>();
 			navMeshAgent = GetComponent<NavMeshAgent>();
 			if (DebugPath)
 			{
@@ -63,8 +62,8 @@ namespace Evol.Heuristic
 
 		public void MoveTo(Vector3 destination)
 		{
-			if (anim && anim.enabled)
-				anim.SetBool(MovingAnimation, true);
+			if (animator) // TODO: maybe run cancel attack anim ?
+				animator.SetBool("run", true);
 			navMeshAgent.destination = destination;
 			if (DebugPath)
 			{

@@ -7,11 +7,18 @@ namespace Evol.Heuristic
 {
 	public class Attack : MonoBehaviour
 	{
+		[Header("Audio")]
 		public AudioSource AttackingAudio;         // Reference to the audio source used to play the shooting audio. NB: different to the movement audio source.
 		public AudioClip[] AttackClip;                // Audio that plays when each attack is fired.
 
+		private Animator animator;
 		private float elapsedTime = 0;
-		
+
+		private void Start()
+		{
+			animator = GetComponent<Animator>();
+		}
+
 		public void Fire(GameObject target, int attackForce, int attackRate)
 		{
 			if (AttackingAudio)
@@ -22,6 +29,12 @@ namespace Evol.Heuristic
 					AttackingAudio.Play();
 				}
 			}
+
+			if (animator)
+			{
+				animator.SetBool("attack", true);
+			}
+			
 			if (!(Time.time > elapsedTime)) return;
 			elapsedTime = Time.time + attackRate;
 			target.GetComponent<Health>().TakeDamage(attackForce);

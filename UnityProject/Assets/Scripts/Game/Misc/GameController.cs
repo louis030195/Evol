@@ -20,6 +20,7 @@ namespace Evol.Game.Misc
         public List<CharacterData> Characters;
 
         public GameObject Wolf; // TODO: think about a clean way to store some spawnable prefabs like monsters ... ?
+        public GameObject Spider;
         
         private enum GameState
         {
@@ -64,11 +65,17 @@ namespace Evol.Game.Misc
             {
                 foreach(var i in Enumerable.Range(0, 10))
                 {
-                    var go = PhotonNetwork.Instantiate(Wolf.name,
-                        Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 200),
+                    var wolf = PhotonNetwork.Instantiate(Wolf.name,
+                        Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 300),
                             Wolf.GetComponent<Collider>().bounds.size.y),
                         Quaternion.identity);
-                    go.GetComponent<StateController>().SetupAi(true, new List<Transform>());
+                    wolf.GetComponent<StateController>().SetupAi(true, new List<Transform>());
+                    
+                    var spider = PhotonNetwork.Instantiate(Wolf.name,
+                        Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 200),
+                            Spider.GetComponent<Collider>().bounds.size.y),
+                        Quaternion.identity);
+                    spider.GetComponent<StateController>().SetupAi(true, new List<Transform>());
                 }
 
                 StartCoroutine(GameLoop());

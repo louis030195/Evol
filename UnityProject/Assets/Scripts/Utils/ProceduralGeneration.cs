@@ -32,7 +32,7 @@ namespace Evol.Utils
 				{
 					Instantiate(ObjectToSpawn, Position.AboveGround(
 							new Vector3(objectWidth * i, 0, 0),
-							objectHeight, transform:transform), rotation1,
+							objectHeight, flyFix:1f, transform:transform), rotation1,
 						transform);
 				}
 

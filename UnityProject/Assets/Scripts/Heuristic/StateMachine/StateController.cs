@@ -38,18 +38,10 @@ namespace Evol.Heuristic.StateMachine
 			movement.Speed = parameters.moveSpeed;
 		}
 
-		public void SetupAi(bool aiActivationFromTankManager, List<Transform> wayPointsFromTankManager)
+		public void SetupAi(bool activate, List<Transform> wayPointsFromTankManager)
 		{
 			wayPointList = wayPointsFromTankManager;
-			aiActive = aiActivationFromTankManager;
-			if (aiActive)
-			{
-				movement.enabled = true;
-			}
-			else
-			{
-				movement.enabled = false;
-			}
+			movement.enabled = activate;
 		}
 
 		private void Update()
