@@ -4,14 +4,16 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19cbebd709e8d4b4db0dc853f92916b4, type: 3}
   m_Name: Portal
   m_EditorClassIdentifier: 
-  SpellPrefab: {fileID: 1050014045351786, guid: 1562391307e12334f8665de029eded3a,
-    type: 2}
+  SpellPrefab: {fileID: 1146266902701880, guid: 0f1158c0df56fa5419abf75609e41663,
+    type: 3}
+  Icon: {fileID: 21300106, guid: 200f1dc55bb4b681ea93a7da7f787a91, type: 3}
   Cooldown: 1
   ManaCost: 1

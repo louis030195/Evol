@@ -30,15 +30,16 @@ namespace Evol.Game.Player
         /// Used for spell specific stuff
         /// </summary>
         public Element Element;
-        public List<SpellObject> Spells;
+        public CharacterData CharacterData;
         public Transform BulletSpawn;
         public float Speed = 1;
         [HideInInspector] public bool Lock;
+        public IntFloatEvent OnSpellThrown = new IntFloatEvent();
 
         protected virtual void Start()
         {
             rigidBody = GetComponent<Rigidbody>();
-            nextSpell = new float[Spells.Count];
+            nextSpell = new float[CharacterData.Spells.Length];
             mana = GetComponent<Mana>();
             health = GetComponent<Health>();
             gameObject.AddComponent<AudioListener>();
@@ -47,7 +48,7 @@ namespace Evol.Game.Player
             
             //cursorHotspot = new Vector2 (cursorTexture.width / 2, cursorTexture.height / 2);
 
-            if (!photonView.IsMine)
+            if (PhotonNetwork.InRoom && photonView.IsMine)
             {
                 transform.GetChild(0).GetComponent<Camera>().enabled = false; // TODO: cleaner solution ?
             }
@@ -59,7 +60,7 @@ namespace Evol.Game.Player
         void Update()
         {
 
-            if (!Lock && photonView.IsMine)
+            if (!Lock && (photonView.IsMine || !PhotonNetwork.InRoom)) // InRoom check is for offline mode (mostly debugging)
             {
                
                 var x = Input.GetAxis("Mouse X") * Time.deltaTime * 50.0f; 
@@ -75,13 +76,6 @@ namespace Evol.Game.Player
                 }
                 else
                     anim.SetBool("Moving", false);
-
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    object[] content = { photonView.name, true }; // Who is ready ?
-                    var raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
-                    PhotonNetwork.RaiseEvent(0, content, raiseEventOptions, SendOptions.SendReliable);
-                }
          
                 
                 transform.Rotate(0, x, 0);
@@ -148,20 +142,23 @@ namespace Evol.Game.Player
         protected void CmdSpell(int spell)
         {
             // If the player try to throw 5th spell but ain't got a 5th spell for example or spell not rdy
-            if (Spells.Count < spell || Time.time < nextSpell[spell] || Spells[spell].ManaCost > mana.CurrentMana) return;
+            if (CharacterData.Spells.Length < spell || Time.time < nextSpell[spell] || CharacterData.Spells[spell].ManaCost > mana.CurrentMana) return;
 
             // Set spell cooldown
-            nextSpell[spell] = Time.time + Spells[spell].Cooldown;
+            nextSpell[spell] = Time.time + CharacterData.Spells[spell].Cooldown;
+            
+            // Throw event to say that we threw a spell
+            OnSpellThrown.Invoke(spell, CharacterData.Spells[spell].Cooldown);
 
             // Use the mana
-            mana.UseMana(Spells[spell].ManaCost);
+            mana.UseMana(CharacterData.Spells[spell].ManaCost);
 
             // Spawn the spellInstance on the Clients
             /*
             var go = Instantiate(Spells[spell].SpellPrefab, BulletSpawn.position,
                 BulletSpawn.rotation);
             */
-            var go = PhotonNetwork.Instantiate(Spells[spell].SpellPrefab.name, BulletSpawn.position,
+            var go = PhotonNetwork.Instantiate(CharacterData.Spells[spell].SpellPrefab.name, BulletSpawn.position,
                 BulletSpawn.rotation);
                 
             go.GetComponent<SpellBase>().Caster =

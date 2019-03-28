@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Evol.Game.Spell;
 using UnityEngine;
 
 namespace Evol.Game.Player
@@ -12,6 +13,7 @@ namespace Evol.Game.Player
         [SerializeField] private string description;
         [SerializeField] private Sprite icon;
         [SerializeField] private GameObject prefab;
+        [SerializeField] private SpellObject[] spells;
 
         
         // Getters
@@ -23,6 +25,7 @@ namespace Evol.Game.Player
 
         public Sprite Icon => icon;
         public GameObject Prefab => prefab;
+        public SpellObject[] Spells => spells;
 
         // More stats ?
     }

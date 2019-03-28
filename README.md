@@ -1,11 +1,12 @@
-# Evol
 <img src="docs/images/evol-logo.png" width="100" height="100">
 
 
 # Video
 [![Video](https://img.youtube.com/vi/qUGsYp88M64/0.jpg)](https://www.youtube.com/watch?v=qUGsYp88M64)
 
+## Cooldown & spells
 
+<img src="docs/images/cooldown.gif" width="500" height="300">
 
 
 

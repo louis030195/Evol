@@ -4,13 +4,15 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19cbebd709e8d4b4db0dc853f92916b4, type: 3}
   m_Name: RechargeMana
   m_EditorClassIdentifier: 
-  SpellPrefab: {fileID: 122498, guid: b9f6ae2dac942481ea82766fc42026ae, type: 2}
+  SpellPrefab: {fileID: 122498, guid: b9f6ae2dac942481ea82766fc42026ae, type: 3}
+  Icon: {fileID: 21300552, guid: 200f1dc55bb4b681ea93a7da7f787a91, type: 3}
   Cooldown: 10
   ManaCost: 0

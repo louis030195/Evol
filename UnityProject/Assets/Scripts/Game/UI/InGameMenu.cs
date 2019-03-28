@@ -131,7 +131,7 @@ namespace Evol.Game.UI
 
 		public void UpdateTimeUI()
 		{
-			Time.text = UnityEngine.Time.time.ToString(CultureInfo.InvariantCulture);
+			Time.text = ((int)UnityEngine.Time.time).ToString();
 		}
 
 		public void UpdateKillUI()

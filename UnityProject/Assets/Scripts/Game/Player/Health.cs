@@ -13,6 +13,8 @@ using Random = UnityEngine.Random;
 
 namespace Evol.Game.Player
 {
+    // TODO: Consider moving these classes somewhere else xD
+    public class IntFloatEvent : UnityEvent<int, float> { }
     public class FloatEvent : UnityEvent<float> { }
     public class Health : MonoBehaviour, IPunObservable
     {
@@ -22,10 +24,10 @@ namespace Evol.Game.Player
         public FloatEvent OnHealthChanged = new FloatEvent();
         
         [Header("Audio")] 
-        [Tooltip("Audio source")] public AudioSource healthAudio;
-        [Tooltip("Audio to play when dying.")] public AudioClip dying;
-        [Tooltip("Audio to play when getting hit")] public AudioClip[] gettingHit;
-        [Tooltip("Death effects to spill around")]public GameObject[] deathEffects;
+        [Tooltip("Audio source")] public AudioSource HealthAudio;
+        [Tooltip("Audio to play when dying.")] public AudioClip Dying;
+        [Tooltip("Audio to play when getting hit")] public AudioClip[] GettingHit;
+        [Tooltip("Death effects to spill around")]public GameObject[] DeathEffects;
         
         private Animator anim;
         private int currentHealth;
@@ -42,16 +44,16 @@ namespace Evol.Game.Player
 
         private void Audio()
         {
-            if (healthAudio)
+            if (HealthAudio)
             {
                 if (!dead)
-                    healthAudio.clip = gettingHit[Random.Range(0, gettingHit.Length)];
+                    HealthAudio.clip = GettingHit[Random.Range(0, GettingHit.Length)];
                 else
-                    healthAudio.clip = dying;
+                    HealthAudio.clip = Dying;
 
-                if (!healthAudio.isPlaying)
+                if (!HealthAudio.isPlaying)
                 {
-                    healthAudio.Play();
+                    HealthAudio.Play();
                 }
             }
         }
@@ -105,9 +107,9 @@ namespace Evol.Game.Player
                 if (destroyOnDeath)
                 {
                     Destroy(gameObject);
-                    if (deathEffects.Length > 0)
+                    if (DeathEffects.Length > 0)
                         Destroy(
-                            Instantiate(deathEffects[Random.Range(0, deathEffects.Length)],
+                            Instantiate(DeathEffects[Random.Range(0, DeathEffects.Length)],
                                 new Vector3(transform.position.x, transform.position.y, transform.position.z),
                                 new Quaternion(0, 0, 0, 0)), 3);
                 }

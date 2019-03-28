@@ -69,6 +69,6 @@ public class RechargeMana : SpellBase
 
 	private void OnDestroy()
 	{
-		stream.ForEach(Destroy);
+		stream?.ForEach(Destroy);
 	}
 }

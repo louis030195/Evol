@@ -8,6 +8,7 @@ namespace Evol.Game.Spell
 	public class SpellObject : ScriptableObject
 	{
 		public GameObject SpellPrefab;
+		public Sprite Icon;
 		public float Cooldown;
 		public int ManaCost;
 	}
