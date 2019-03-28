@@ -58,7 +58,7 @@ namespace Evol.Game.Misc
             
             // Instanciate the player
             var playerGo = PhotonNetwork.Instantiate(foundPrefab.name,
-                Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 30), foundPrefab.GetComponent<Collider>().bounds.size.y, flyFix:1f),
+                new Vector3(0, 100, 0), 
                 Quaternion.identity);
             
             if (PhotonNetwork.IsMasterClient)
@@ -91,6 +91,20 @@ namespace Evol.Game.Misc
         // This is called from start and will run each phase of the game one after another.
         private IEnumerator GameLoop()
         {
+            /*
+              BTW
+                IEnumerator RunInSequence()
+                {
+                   yield return StartCoroutine(Coroutine1());
+                   yield return StartCoroutine(Coroutine2());
+                }
+                
+                public void RunInParallel()
+                {
+                   StartCoroutine(Coroutine1());
+                   StartCoroutine(Coroutine1());
+                }
+             */
 
             // Start off by running the 'GameStarting' coroutine but don't return until it's finished.
             yield return StartCoroutine(GameStarting());

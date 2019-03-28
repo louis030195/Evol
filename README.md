@@ -1,3 +1,5 @@
+[![Discord Chat](https://img.shields.io/badge/discord-here-blue.svg)](https://discord.gg/9F4ZBNu) 
+
 <img src="docs/images/evol-logo.png" width="100" height="100">
 
 
