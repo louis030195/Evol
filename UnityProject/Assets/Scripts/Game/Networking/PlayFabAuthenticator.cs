@@ -55,6 +55,12 @@ namespace Evol.Game.Networking
 
         public void Login()
         {
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                Result.text = $"Check your internet connection";
+                return;
+            }
+
             loginRequest = new LoginWithPlayFabRequest {Username = Username.text, Password = Password.text};
             PlayFabClientAPI.LoginWithPlayFab(loginRequest, result =>
             {
@@ -71,6 +77,7 @@ namespace Evol.Game.Networking
                 // If the account is not found
                 Result.text = $"Incorrect username or password";
             }, null);
+
         }
 
         private void OnLoginSuccess()
@@ -222,7 +229,7 @@ namespace Evol.Game.Networking
         public override void OnDisconnected(DisconnectCause cause)
         {
             // I guess it could happen to be null if we are debugging and didn't pass by login scene ?
-            if (loginRequest != null)
+            if (PlayFabClientAPI.IsClientLoggedIn())
             {
                 // Persist player data
                 var playerData = new Dictionary<string, string>();
@@ -230,7 +237,7 @@ namespace Evol.Game.Networking
                 {
                     playerData.Add((string) key, (string) PhotonNetwork.LocalPlayer.CustomProperties[key]);
                 }
-
+                
                 PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
                     {
                         AuthenticationContext = loginRequest.AuthenticationContext,
@@ -239,7 +246,7 @@ namespace Evol.Game.Networking
                     error => { Debug.Log($"UpdateUserData failed - {error}"); });
             }
 
-            Debug.Log($"Disconnected to master cloud { cause }");	
+            Debug.Log($"Disconnected from photon cloud { cause }");	
         }
     }
 }
