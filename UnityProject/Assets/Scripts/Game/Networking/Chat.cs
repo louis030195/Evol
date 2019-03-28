@@ -42,7 +42,7 @@ namespace Evol.Game.Networking
             if (chatClient != null)
                 chatClient.Service();
             // If we have the chat focused and press enter, send the text in our input chat
-            if (ChatInput.isFocused && Input.GetKeyDown(KeyCode.Return)) 
+            if (Input.GetKeyDown(KeyCode.Return)) 
             {
                 chatClient.PublishMessage( "channelA", $"{ ChatInput.text }" );
             }
@@ -84,7 +84,6 @@ namespace Evol.Game.Networking
 
         public void OnConnected()
         {
-            chatClient.SetOnlineStatus( ChatUserStatus.Online, "Mostly Harmless" );
             chatClient.Subscribe( new[] { "channelA" } );
             Debug.Log($"OnConnected - { PhotonNetwork.NickName } connected to chat");
         }
@@ -126,6 +125,7 @@ namespace Evol.Game.Networking
             {
                 chatClient.PublishMessage( c, $"{ PhotonNetwork.LocalPlayer.NickName } joined the channel" );
             }
+            chatClient.SetOnlineStatus( ChatUserStatus.Online, "Mostly Harmless" );
             Debug.Log($"OnSubscribed - { PhotonNetwork.NickName } - { channels.Aggregate("", (current, m) => current + m) }" +
                       $" - { results.Aggregate("", (current, m) => current + m) }");
         }

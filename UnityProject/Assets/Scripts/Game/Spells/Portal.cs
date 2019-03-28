@@ -1,4 +1,5 @@
 ﻿using System;
+using Evol.Utils;
 using Photon.Pun;
 using UnityEngine;
 
@@ -18,9 +19,7 @@ namespace Evol.Game.Spell
 			// TODO: wait the good time of animation to throw spell (animation event)
 			// Play animation
 			Caster.Item1.GetComponent<Animator>().SetTrigger("Attack1Trigger");
-			Portal2.transform.position = new Vector3(-89f, 20f, -98f);
-			// Throw forward
-			//gameObject.GetComponent<Rigidbody>().velocity = gameObject.transform.forward * 15;
+			Portal2.transform.position = Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 50), 5);
 
 			// Destroy the portal after 20 seconds
 			Invoke(nameof(DestroyAfter), 20);

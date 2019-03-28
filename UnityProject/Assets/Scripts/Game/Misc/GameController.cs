@@ -58,7 +58,8 @@ namespace Evol.Game.Misc
             
             // Instanciate the player
             var playerGo = PhotonNetwork.Instantiate(foundPrefab.name,
-                new Vector3(0, 100, 0), 
+                Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 20),
+                    foundPrefab.GetComponent<Collider>().bounds.size.y), 
                 Quaternion.identity);
             
             if (PhotonNetwork.IsMasterClient)
@@ -66,12 +67,12 @@ namespace Evol.Game.Misc
                 foreach(var i in Enumerable.Range(0, 10))
                 {
                     var wolf = PhotonNetwork.Instantiate(Wolf.name,
-                        Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 300),
+                        Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 200),
                             Wolf.GetComponent<Collider>().bounds.size.y),
                         Quaternion.identity);
                     wolf.GetComponent<StateController>().SetupAi(true, new List<Transform>());
                     
-                    var spider = PhotonNetwork.Instantiate(Wolf.name,
+                    var spider = PhotonNetwork.Instantiate(Spider.name,
                         Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 200),
                             Spider.GetComponent<Collider>().bounds.size.y),
                         Quaternion.identity);

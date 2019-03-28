@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Debug = System.Diagnostics.Debug;
 
 namespace Evol.Utils
 {
@@ -23,6 +24,7 @@ namespace Evol.Utils
 			// Below ground
 			if (Physics.Raycast(position, Vector3.up, out hit, Mathf.Infinity))
 			{
+				// Debug.WriteLine($"aboveground { position.y } + { (hit.distance + prefabHeight * 0.5f) * flyFix } - { hit.distance }");
 				position.y += (hit.distance + prefabHeight * 0.5f) * flyFix;
 			}
 
@@ -49,9 +51,9 @@ namespace Evol.Utils
 			pos.x = center.x + radius * Mathf.Sin(ang * Mathf.Deg2Rad);
 			pos.y = center.y;
 			pos.z = center.z + radius * Mathf.Cos(ang * Mathf.Deg2Rad);
-            
-            
-			return AboveGround(pos, 0);
+
+
+			return pos;
 		}
 
 	}

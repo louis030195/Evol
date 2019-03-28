@@ -43,7 +43,7 @@ namespace Evol.Game.Networking
         [Tooltip("Looking for a game status")] public TextMeshProUGUI QueueStatus;
 
 
-        private float timeToWaitPlayers = 3; // Should be proportional to the total number of players currently playing
+        private float timeToWaitPlayers = 30; // Should be proportional to the total number of players currently playing
 
 
         private void Start()
