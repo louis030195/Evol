@@ -141,10 +141,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   destroyOnDeath: 1
-  healthAudio: {fileID: 0}
-  dying: {fileID: 0}
-  gettingHit: []
-  deathEffects: []
+  HealthAudio: {fileID: 0}
+  Dying: {fileID: 0}
+  GettingHit: []
+  DeathEffects: []
   dead: 0
 --- !u!114 &114765986648950298
 MonoBehaviour:
@@ -196,6 +196,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a261dd92fa946884cac018e1f40c410f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxSize: 1
+  GrowRate: 0.015
+  MinRandomness: 0.5
+  MaxRandomness: 1.5
 --- !u!64 &64002341615729142
 MeshCollider:
   m_ObjectHideFlags: 0
