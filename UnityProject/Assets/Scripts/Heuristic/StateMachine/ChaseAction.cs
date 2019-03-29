@@ -14,7 +14,8 @@ namespace Evol.Heuristic.StateMachine
 
 		private void Chase(StateController controller)
 		{
-			controller.movement.MoveTo(controller.chaseTarget ? controller.chaseTarget.position : Vector3.zero);
+			if (controller.chaseTarget)
+				controller.movement.MoveTo(controller.chaseTarget.position);
 		}
 	}
 }

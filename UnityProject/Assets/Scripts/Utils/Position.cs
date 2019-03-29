@@ -18,21 +18,26 @@ namespace Evol.Utils
 		/// <returns></returns>
 		public static Vector3 AboveGround(Vector3 position, float prefabHeight, float flyFix = 0.8f, Transform transform = null)
 		{
-			RaycastHit hit;
 			if (transform)
 				position += transform.position;
+
+			var below = false;
+			
 			// Below ground
-			if (Physics.Raycast(position, Vector3.up, out hit, Mathf.Infinity))
+			if (Physics.Raycast(position, Vector3.up, out var hit, Mathf.Infinity))
 			{
 				// Debug.WriteLine($"aboveground { position.y } + { (hit.distance + prefabHeight * 0.5f) * flyFix } - { hit.distance }");
-				position.y += (hit.distance + prefabHeight * 0.5f) * flyFix;
+				position.y += hit.distance + prefabHeight * 0.5f;
+				below = true;
 			}
 
-			hit = new RaycastHit();
-			// Above ground
-			if (Physics.Raycast(position, Vector3.down, out hit, Mathf.Infinity))
+			if (!below) // No need to raycast again
 			{
-				position.y -= hit.distance - prefabHeight * 0.5f;
+				// Above ground
+				if (Physics.Raycast(position, Vector3.down, out hit, Mathf.Infinity))
+				{
+					position.y -= hit.distance - prefabHeight * 0.5f;
+				}
 			}
 
 			return position;

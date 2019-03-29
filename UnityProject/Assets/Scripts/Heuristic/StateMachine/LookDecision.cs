@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Evol.Heuristic.StateMachine
@@ -10,8 +11,7 @@ namespace Evol.Heuristic.StateMachine
 
 		public override bool Decide(StateController controller)
 		{
-			bool targetVisible = Look(controller);
-			return targetVisible;
+			return Look(controller);;
 		}
 
 		private bool Look(StateController controller)
@@ -23,7 +23,7 @@ namespace Evol.Heuristic.StateMachine
 
 			if (Physics.SphereCast(controller.eyes.position, controller.parameters.lookSphereCastRadius,
 				    controller.eyes.forward, out hit, controller.parameters.lookRange)
-			    && hit.collider.CompareTag("Player"))
+			    && controller.parameters.tags.Any(t => hit.collider.CompareTag(t)))
 			{
 				controller.chaseTarget = hit.transform;
 				return true;

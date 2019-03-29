@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Evol.Heuristic.StateMachine
@@ -21,7 +22,7 @@ namespace Evol.Heuristic.StateMachine
 
 			if (Physics.SphereCast(controller.eyes.position, controller.parameters.lookSphereCastRadius,
 				    controller.eyes.forward, out hit, controller.parameters.attackRange)
-			    && hit.collider.CompareTag("Player"))
+			    && controller.parameters.tags.Any(t => hit.collider.CompareTag(t)))
 			{
 				controller.attack.Fire(hit.collider.gameObject, controller.parameters.attackForce, controller.parameters.attackRate);
 			}

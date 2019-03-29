@@ -2288,7 +2288,7 @@ GameObject:
   - component: {fileID: 6339218218404046835}
   m_Layer: 0
   m_Name: WolfSM
-  m_TagString: Carnivorous
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2398,15 +2398,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c166260f4ebec433eb5e48ebcda8df97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: {fileID: 11400000, guid: ee3463baa34ad41369f9727caba1487e, type: 2}
+  currentState: {fileID: 11400000, guid: 9c6679a1eb226dab0921c39bf05e319d, type: 2}
   parameters: {fileID: 11400000, guid: 2ea938151c1f14e4394fafbcb3459fce, type: 2}
   eyes: {fileID: 4296736622261324}
   remainState: {fileID: 11400000, guid: 66c1aa25a85ba47c4b92d32ccf6e6017, type: 2}
   movement: {fileID: 0}
   attack: {fileID: 0}
   health: {fileID: 0}
-  wayPointList: []
-  nextWayPoint: 0
   chaseTarget: {fileID: 0}
   stateTimeElapsed: 0
 --- !u!195 &195787246745072868
@@ -2427,7 +2425,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1
+  m_Height: 0.5
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -2447,8 +2445,10 @@ MonoBehaviour:
   destroyOnDeath: 1
   HealthAudio: {fileID: 0}
   Dying: {fileID: 0}
-  GettingHit: []
+  GettingHitClips: []
   DeathEffects: []
+  GettingHitAnimations: []
+  DyingAnimations: []
   dead: 0
 --- !u!114 &114798700080383480
 MonoBehaviour:
@@ -2472,6 +2472,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6507ec1ec5570a3d18610a6c1ec19498, type: 3}
   - {fileID: 8300000, guid: e51879b15ed1d4bc39e0f9d0555b0fcc, type: 3}
   - {fileID: 8300000, guid: 4e04acb6d4adbc8c19ab1dd332af2c47, type: 3}
+  AttackingAnimations: []
+  CastingAnimations: []
 --- !u!114 &114877473929135752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2484,9 +2486,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44e2fa182038c47f6b42692aa839ba10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DebugPath: 0
   MovingAudio: {fileID: 6339218218404046835}
   MoveClip: {fileID: 0}
-  DebugPath: 0
+  WalkingAnimations: []
+  RunningAnimations:
+  - "run\x13"
   navMeshAgent: {fileID: 0}
 --- !u!64 &64310750617014422
 MeshCollider:

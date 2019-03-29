@@ -15,12 +15,9 @@ namespace Evol.Heuristic.StateMachine
 		public Transform eyes;
 		public State remainState;
 
-
 		[HideInInspector] public Movement movement;
 		[HideInInspector] public Attack attack;
 		[HideInInspector] public Health health;
-		[HideInInspector] public List<Transform> wayPointList;
-		[HideInInspector] public int nextWayPoint;
 		[HideInInspector] public Transform chaseTarget;
 		[HideInInspector] public float stateTimeElapsed;
 
@@ -38,10 +35,9 @@ namespace Evol.Heuristic.StateMachine
 			movement.Speed = parameters.moveSpeed;
 		}
 
-		public void SetupAi(bool activate, List<Transform> wayPointsFromTankManager)
+		public void SetupAi(bool activate)
 		{
-			wayPointList = wayPointsFromTankManager;
-			movement.enabled = activate;
+			movement.enabled = aiActive = activate;
 		}
 
 		private void Update()

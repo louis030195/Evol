@@ -26,8 +26,12 @@ namespace Evol.Game.Player
         [Header("Audio")] 
         [Tooltip("Audio source")] public AudioSource HealthAudio;
         [Tooltip("Audio to play when dying.")] public AudioClip Dying;
-        [Tooltip("Audio to play when getting hit")] public AudioClip[] GettingHit;
+        [Tooltip("Audio to play when getting hit")] public AudioClip[] GettingHitClips;
         [Tooltip("Death effects to spill around")]public GameObject[] DeathEffects;
+
+        [Header("Animations")]
+        public string[] GettingHitAnimations;
+        public string[] DyingAnimations;
         
         private int currentHealth;
         public int CurrentHealth => currentHealth;
@@ -63,7 +67,7 @@ namespace Evol.Game.Player
             if (HealthAudio)
             {
                 if (!dead)
-                    HealthAudio.clip = GettingHit[Random.Range(0, GettingHit.Length)];
+                    HealthAudio.clip = GettingHitClips[Random.Range(0, GettingHitClips.Length)];
                 else
                     HealthAudio.clip = Dying;
 
@@ -112,10 +116,23 @@ namespace Evol.Game.Player
                 }
                 else
                 {
-                    // Dead, say to server this player is dead
+                    // Dead, say to server this object is dead
                     PhotonNetwork.RaiseEvent(0, new object[] { gameObject.tag }, new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendReliable);
                 }
-                animator.SetBool("die", true); // TODO: not rly useful if destroyed ... (maybe should add death delay idk)
+
+                if (DyingAnimations.Length > 0)
+                {
+                    var maxRandom = DyingAnimations.Length == 1 ? 0 : DyingAnimations.Length;
+                    // If there is death animations for this object
+                    animator.SetBool(DyingAnimations[Random.Range(0, maxRandom)],
+                        true); // TODO: not rly useful if destroyed ... (maybe should add death delay idk)
+                }
+            }
+            
+            if (CurrentHealth > 0 && GettingHitAnimations.Length > 0) // If there is getting hit animations for this object
+            {
+                var maxRandom = GettingHitAnimations.Length == 1 ? 0 : GettingHitAnimations.Length;
+                animator.SetBool(GettingHitAnimations[Random.Range(0, maxRandom)], true);
             }
 
             Audio();

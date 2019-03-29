@@ -5,14 +5,22 @@ using System.Linq;
 using Evol.Game.Player;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace Evol.Heuristic
 {
 	public class Movement : MonoBehaviour
 	{
+		[Header("Parameters")]
+		public bool DebugPath;
+		
+		[Header("Audio")]
 		public AudioSource MovingAudio;         // Reference to the audio source used to play the movement audio.
 		public AudioClip MoveClip;                // Audio that plays when each movement is fired.
-		public bool DebugPath;
+		
+		[Header("Animations")]
+		public string[] WalkingAnimations;
+		public string[] RunningAnimations;
 		
 		[HideInInspector] public NavMeshAgent navMeshAgent;
 
@@ -23,7 +31,17 @@ namespace Evol.Heuristic
 
 
 		// Broadcasting navmesh params
-		public float RemainingDistance => navMeshAgent.remainingDistance;
+		public float? RemainingDistance
+		{
+			get
+			{
+				if (navMeshAgent.isActiveAndEnabled && navMeshAgent.isOnNavMesh)
+					return navMeshAgent.remainingDistance;
+				return null;
+			}
+		}
+
+		
 		public bool PathPending => navMeshAgent.pathPending;
 		public float StoppingDistance => navMeshAgent.stoppingDistance;
 
@@ -62,8 +80,21 @@ namespace Evol.Heuristic
 
 		public void MoveTo(Vector3 destination)
 		{
-			if (animator) // TODO: maybe run cancel attack anim ?
-				animator.SetBool("run", true);
+			if (animator) 
+			{
+				if (RunningAnimations.Length > 0)
+				{
+					var maxRandom = RunningAnimations.Length == 1 ? 0 : RunningAnimations.Length;
+					// If there is running animations for this object
+					animator.SetBool(RunningAnimations[Random.Range(0, maxRandom)], true);
+				}
+				else if (WalkingAnimations.Length > 0)
+				{
+					var maxRandom = WalkingAnimations.Length == 1 ? 0 : WalkingAnimations.Length;
+					// Else if there is walking animations for this object
+					animator.SetBool(WalkingAnimations[Random.Range(0, maxRandom)], true);
+				}
+			}
 			navMeshAgent.destination = destination;
 			if (DebugPath)
 			{

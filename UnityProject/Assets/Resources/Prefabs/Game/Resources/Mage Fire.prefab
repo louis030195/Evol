@@ -1566,8 +1566,10 @@ MonoBehaviour:
   destroyOnDeath: 0
   HealthAudio: {fileID: 0}
   Dying: {fileID: 0}
-  GettingHit: []
+  GettingHitClips: []
   DeathEffects: []
+  GettingHitAnimations: []
+  DyingAnimations: []
   dead: 0
 --- !u!114 &114560313571305798
 MonoBehaviour:

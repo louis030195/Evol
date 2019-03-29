@@ -180,7 +180,7 @@ namespace Evol.Game.Networking
                     Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 200),
                         SpawnablePrefabs.Find(s => s.name.Equals("WolfSM")).GetComponent<Collider>().bounds.size.y),
                     Quaternion.identity);
-                go.GetComponent<StateController>().SetupAi(true, new List<Transform>());
+                go.GetComponent<StateController>().SetupAi(true);
             }
 
             StartCoroutine(GameLoop());
