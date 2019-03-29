@@ -5,6 +5,11 @@ namespace Evol
 {
     public class GrassGrowManager : MonoBehaviour
     {
+        public float MaxSize = 1;
+        public float GrowRate = 0.015f;
+        public float MinRandomness = 0.5f;
+        public float MaxRandomness = 1.5f;
+        
         private float maxSize;
         private float growRate;
         private float scale;
@@ -12,8 +17,8 @@ namespace Evol
         
         public void Awake()
         {
-            maxSize = Random.Range(0.5f, 1.5f);
-            growRate = Random.Range(0.01f, 0.02f);
+            maxSize = Random.Range(MaxSize * MinRandomness, MaxSize * MaxRandomness); // Add a bit of randomness for heterogeneity
+            growRate = Random.Range(GrowRate * MinRandomness, GrowRate * MaxRandomness);
             Grow(); // Set the initial size directly to avoid seeing the transition to a lower size ...
         }
 

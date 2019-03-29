@@ -108,6 +108,7 @@ namespace Evol.Game.Networking
             LoginRegisterCanvas.SetActive(true);
             MainMenuCanvas.SetActive(false);
             gameObject.GetComponent<Chat>().enabled = false;
+            PhotonNetwork.Disconnect(); // There isn't a Disconnect for playfab
             Result.text = $"Successfully disconnected";
         }
 
@@ -237,13 +238,16 @@ namespace Evol.Game.Networking
                 {
                     playerData.Add((string) key, (string) PhotonNetwork.LocalPlayer.CustomProperties[key]);
                 }
-                
-                PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
-                    {
-                        AuthenticationContext = loginRequest.AuthenticationContext,
-                        Data = playerData
-                    }, result => { Debug.Log($"UpdateUserData succeed - {result}"); },
-                    error => { Debug.Log($"UpdateUserData failed - {error}"); });
+
+                if (playerData.Count > 0) // We don't always add player data (just logging, disconecting ....)
+                {
+                    PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
+                        {
+                            AuthenticationContext = loginRequest.AuthenticationContext,
+                            Data = playerData
+                        }, result => { Debug.Log($"UpdateUserData succeed - {result}"); },
+                        error => { Debug.Log($"UpdateUserData failed - {error}"); });
+                }
             }
 
             Debug.Log($"Disconnected from photon cloud { cause }");	

@@ -82,6 +82,7 @@ namespace Evol.Game.Networking
         private void OnDisable()
         {
             chatClient.Unsubscribe(new[] {"channelA"});
+            chatClient.SetOnlineStatus(ChatUserStatus.Offline, $"disconnected");
             chatClient.Disconnect();
         }
 
@@ -160,6 +161,16 @@ namespace Evol.Game.Networking
         public void OnStatusUpdate(string user, int status, bool gotMessage, object message)
         {
             Debug.Log($"OnStatusUpdate - { user } - { status } - { gotMessage } - { message }");
+        }
+
+        public void OnUserSubscribed(string channel, string user)
+        {
+            //
+        }
+
+        public void OnUserUnsubscribed(string channel, string user)
+        {
+            //
         }
     }
 }
