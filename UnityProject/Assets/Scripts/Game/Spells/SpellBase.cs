@@ -12,7 +12,7 @@ public class SpellBase : MonoBehaviour {
 
 	protected float initializationTime;
 	
-	public Tuple<GameObject, Element> Caster { get; set; }
+	public GameObject Caster { get; set; }
 
 	protected virtual void Start()
 	{

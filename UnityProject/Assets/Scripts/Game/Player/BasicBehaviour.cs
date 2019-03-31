@@ -64,6 +64,14 @@ namespace Evol.Game.Player
 
 		private void Update()
 		{
+			/*
+			// Could be nice to lock the char when cursor is visible
+			if(!Cursor.visible && GetTempLockStatus())
+				UnlockTempBehaviour(currentBehaviour);
+			else
+				LockTempBehaviour(currentBehaviour);
+				*/
+			
 			// Store the input axes.
 			h = Input.GetAxis("Horizontal");
 			v = Input.GetAxis("Vertical");

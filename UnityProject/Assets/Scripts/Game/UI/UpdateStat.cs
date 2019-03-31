@@ -11,25 +11,7 @@ namespace Evol.Game.UI
     {
         // Bottom bar
         public Image Fill;
-        public bool HideOverheadBar = true;
-        public GameObject OverheadBar;
         public RectTransform OverheadFill;
-
-
-        // Start is called before the first frame update
-        protected virtual void Start()
-        {
-            // We don't want to see our own overhead bar, just others
-            if (gameObject.GetPhotonView().IsMine)
-            {
-                HideOverheadBar = true;
-            }
-            
-            if (HideOverheadBar)
-            {
-                OverheadBar.gameObject.SetActive(false);
-            }
-        }
         
         protected void UpdateUI(float value)
         {

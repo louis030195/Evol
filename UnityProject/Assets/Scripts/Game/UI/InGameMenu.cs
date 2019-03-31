@@ -32,7 +32,7 @@ namespace Evol.Game.UI
 		public TextMeshProUGUI Kills;
 
 		// Update is called once per frame
-		void Update()
+		private void Update()
 		{
 			if (Input.GetKeyDown(KeyCode.Escape))
 			{
@@ -48,7 +48,7 @@ namespace Evol.Game.UI
 				PauseUI.SetActive(!PauseUI.activeInHierarchy);
 				PlayUI.SetActive(!PlayUI.activeInHierarchy);
 
-				var behaviour = GetComponent<BasicBehaviour>();
+				// var behaviour = GetComponent<BasicBehaviour>();
 				
 				// Disable / enable the character movement
 				// if (behaviour != null)

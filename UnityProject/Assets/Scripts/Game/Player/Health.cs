@@ -80,7 +80,7 @@ namespace Evol.Game.Player
 
         public void TakeDamage(int amount)
         {
-            if (!GetComponent<PhotonView>().IsMine)
+            if (GetComponent<PhotonView>() && !GetComponent<PhotonView>().IsMine)
                 return;
 
             // Lose life if all the shields have been broken
@@ -100,7 +100,6 @@ namespace Evol.Game.Player
 
             // Update UI
             OnChangeHealth();
-
             if (CurrentHealth <= 0 && !dead)
             {
 

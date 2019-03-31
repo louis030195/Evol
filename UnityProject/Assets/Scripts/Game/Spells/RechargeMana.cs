@@ -23,11 +23,11 @@ public class RechargeMana : SpellBase
 		stream = new List<GameObject>();
 		// Caster.Item1.GetComponent<Animator>().SetTrigger("Attack2Trigger");
         
-		transform.parent = Caster.Item1.transform;
+		transform.parent = Caster.transform;
 		// For some reason the position is random ?
-		transform.position = new Vector3(Caster.Item1.transform.position.x,
-			Caster.Item1.transform.position.y + 1f,
-			Caster.Item1.transform.position.z); 
+		transform.position = new Vector3(Caster.transform.position.x,
+			Caster.transform.position.y + 1f,
+			Caster.transform.position.z); 
 		Destroy(gameObject, 10f);
 		
 
@@ -41,23 +41,23 @@ public class RechargeMana : SpellBase
 		if (!gameObject.GetPhotonView().IsMine)
 			return;
 		var hitColliders = Physics.OverlapSphere(transform.position, 10f);
-		if (hitColliders.Any(c => (Caster.Item2 == Element.Fire && c.CompareTag("FireSource")) 
-		                          || (Caster.Item2 == Element.Ice && c.CompareTag("IceSource"))))
+		var element = Caster.GetComponent<CastBehaviour>().characterData.Element;
+		if (hitColliders.Any(c => (element == Element.Fire && c.CompareTag("FireSource")) 
+		                          || (element == Element.Ice && c.CompareTag("IceSource"))))
 		{
-			// print("ok");
 			if (Time.frameCount % 10 == 0)
 			{
 				///// This could win the Guinness world record for DIRTIEST CODE EVER
-				stream.Add(Instantiate(PowerStream, hitColliders.First(c => (Caster.Item2 == Element.Fire && c.CompareTag("FireSource")) 
-					|| (Caster.Item2 == Element.Ice && c.CompareTag("IceSource")))
+				stream.Add(Instantiate(PowerStream, hitColliders.First(c => (element == Element.Fire && c.CompareTag("FireSource")) 
+					|| (element == Element.Ice && c.CompareTag("IceSource")))
 					.transform.position, Quaternion.identity,
 					transform.parent));
 				stream.Last().AddComponent<Rigidbody>().useGravity = false;
-				stream.Last().transform.LookAt(Caster.Item1.transform);
+				stream.Last().transform.LookAt(Caster.transform);
 				stream.Last().GetComponent<Rigidbody>().AddForce(transform.forward * 400, ForceMode.Acceleration);
 				/////
 				Destroy(stream.Last(), 5f);
-				Caster.Item1.gameObject.GetComponent<Mana>().RechargeMana(10);
+				Caster.gameObject.GetComponent<Mana>().RechargeMana(10);
 			}
 		}
 		else

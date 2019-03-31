@@ -12,23 +12,24 @@ namespace Evol.Game.UI
     public class UpdateSkill : MonoBehaviour, IPunObservable
     {
         // Skill bar
-        public GameObject SkillBar;
-        public GameObject SkillPlaceHolderPrefab;
+        public GameObject skillBar;
+        public GameObject skillPlaceHolderPrefab;
+        public GameObject castBehaviourParent;
         private List<GameObject> skills = new List<GameObject>();
 
         // Start is called before the first frame update
         private void Start()
         {
-            foreach (var spell in GetComponent<CastBehaviour>().CharacterData.Spells)
+            foreach (var spell in castBehaviourParent.GetComponent<CastBehaviour>().characterData.Spells)
             {
                 // Instanciate the prefab the prefab which has an image component + image background for cooldown
-                skills.Add(Instantiate(SkillPlaceHolderPrefab, SkillBar.transform));
+                skills.Add(Instantiate(skillPlaceHolderPrefab, skillBar.transform));
                 
                 // Set the right icon
                 skills.Last().transform.GetChild(0).GetComponent<Image>().sprite = spell.Icon;
             }
             
-            GetComponent<CastBehaviour>().OnSpellThrown.AddListener(UpdateUI);
+            castBehaviourParent.GetComponent<CastBehaviour>().onSpellThrown.AddListener(UpdateUI);
         }
         
         /// <summary>

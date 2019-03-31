@@ -11,10 +11,9 @@ namespace Evol.Game.UI
     public class UpdateHealth : UpdateStat
     {
         // Start is called before the first frame update
-        protected override void Start()
+        private void Start()
         {
             GetComponent<Health>().OnHealthChanged.AddListener(UpdateUI);
-            base.Start();
         }
     }
 }

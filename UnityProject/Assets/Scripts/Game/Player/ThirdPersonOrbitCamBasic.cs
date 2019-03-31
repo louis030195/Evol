@@ -169,7 +169,7 @@ namespace Evol.Game.Player
 		}
 
 		// Check for collision from camera to player.
-		bool ViewingPosCheck(Vector3 checkPos, float deltaPlayerHeight)
+		private bool ViewingPosCheck(Vector3 checkPos, float deltaPlayerHeight)
 		{
 			RaycastHit hit;
 
@@ -178,7 +178,7 @@ namespace Evol.Game.Player
 				relCameraPosMag))
 			{
 				// ... if it is not the player...
-				if (hit.transform != player && !hit.transform.GetComponent<Collider>().isTrigger)
+				if (hit.transform != player /*&& !hit.transform.GetComponent<Collider>().isTrigger*/)
 				{
 					// This position isn't appropriate.
 					return false;
@@ -190,7 +190,7 @@ namespace Evol.Game.Player
 		}
 
 		// Check for collision from player to camera.
-		bool ReverseViewingPosCheck(Vector3 checkPos, float deltaPlayerHeight, float maxDistance)
+		private bool ReverseViewingPosCheck(Vector3 checkPos, float deltaPlayerHeight, float maxDistance)
 		{
 			RaycastHit hit;
 

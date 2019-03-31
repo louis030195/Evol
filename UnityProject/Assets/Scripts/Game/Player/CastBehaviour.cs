@@ -10,14 +10,16 @@ namespace Evol.Game.Player
     // CastBehaviour inherits from GenericBehaviour. This class corresponds to casting spells behaviour.
     public class CastBehaviour : GenericBehaviour
     {
-        public Element Element;
-        public CharacterData CharacterData;
-        public Transform BulletSpawn;
+        // Should we move CharacterData to another script specific to character stats ? or not because its too much related to spells ?
+        public CharacterData characterData;
+        public Transform bulletSpawn;
+        [Tooltip("Key name in the input manager to throw spell (with index next to it like Spell1, Spell2 ...)")] 
+        public string spellKey = "Spell";
         [HideInInspector] public bool Lock;
-        public IntFloatEvent OnSpellThrown = new IntFloatEvent();
+        public IntFloatEvent onSpellThrown = new IntFloatEvent();
 
         
-        protected float[] nextSpell;
+        private float[] nextSpell;
         private Mana mana;
         private Health health;
         private bool cast;
@@ -27,14 +29,14 @@ namespace Evol.Game.Player
         protected virtual void Start()
         {
 	        // Set up the references.
-	        attacksTrigger = new int[CharacterData.Spells.Length];
+	        attacksTrigger = new int[characterData.Spells.Length];
 	        for (var i = 0; i < attacksTrigger.Length; i++)
 	        {
 		        attacksTrigger[i] = Animator.StringToHash($"Attack{i}");
 	        }
 	        
 	        
-	        nextSpell = new float[CharacterData.Spells.Length];
+	        nextSpell = new float[characterData.Spells.Length];
 	        mana = GetComponent<Mana>();
 	        health = GetComponent<Health>();
 	        // behaviourManager.SubscribeBehaviour(this);
@@ -48,10 +50,13 @@ namespace Evol.Game.Player
 		// Update is used to set features regardless the active behaviour.
 		private void Update()
 		{
+			// Rotate toward the point we're aiming at before animating
+			Rotating();
+			
 			// Check if a spell key has been pressed
-			for (var i = 0; i < CharacterData.Spells.Length; i++)
+			for (var i = 0; i < characterData.Spells.Length; i++)
 			{
-				if (!Input.GetButtonDown($"Spell{i}")) continue;
+				if (!Input.GetButtonDown($"{spellKey}{i}")) continue;
 				currentSpell = i;
 				break;
 			}
@@ -65,14 +70,13 @@ namespace Evol.Game.Player
 			// Check if i'm not in a room (debugging)
 			// TODO: order the most improbable first in order to gain performance (avoid checking all others)
 			if (!cast && currentSpell != -1 && Time.time > nextSpell[currentSpell] &&
-			     CharacterData.Spells[currentSpell].ManaCost < mana.CurrentMana &&
+			     characterData.Spells[currentSpell].ManaCost < mana.CurrentMana &&
 			    (photonView.IsMine || !PhotonNetwork.InRoom)) // InRoom check is for offline mode (mostly debugging)
 			{
 				StartCoroutine(nameof(CastOn));
 			} else if (cast && currentSpell == -1) // Just finished casting
 			{
 				StartCoroutine(nameof(CastOff));
-				print("ok");
 			}
 			
 			// No sprinting while casting.
@@ -93,7 +97,7 @@ namespace Evol.Game.Player
 				yield return false;
 			// Start casting.
 			else
-			{
+			{		
 				// Start the casting animation
 				cast = true;
 				
@@ -108,6 +112,25 @@ namespace Evol.Game.Player
 				behaviourManager.OverrideWithBehaviour(this);
 			}
 		}
+		
+		// Rotate the player to match correct orientation, according to camera.
+		private void Rotating()
+		{
+			var forward = behaviourManager.playerCamera.TransformDirection(Vector3.forward);
+			// Player is moving on ground, Y component of camera facing is not relevant.
+			forward.y = 0.0f;
+			forward = forward.normalized;
+
+			// Always rotates the player according to the camera horizontal rotation in aim mode.
+			var targetRotation = Quaternion.Euler(0, behaviourManager.GetCamScript.GetH, 0);
+
+			var minSpeed = Quaternion.Angle(transform.rotation, targetRotation);
+
+			// Rotate entire player to face camera.
+			behaviourManager.SetLastDirection(forward);
+			transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, minSpeed * Time.deltaTime);
+
+		}
 
 		public void InstanciateSpell()
 		{
@@ -115,20 +138,19 @@ namespace Evol.Game.Player
 				return;	
 				
 			// Set spell cooldown
-			nextSpell[currentSpell] = Time.time + CharacterData.Spells[currentSpell].Cooldown;
+			nextSpell[currentSpell] = Time.time + characterData.Spells[currentSpell].Cooldown;
             
 			// Throw event to say that we threw a spell
-			OnSpellThrown.Invoke(currentSpell, CharacterData.Spells[currentSpell].Cooldown);
+			onSpellThrown.Invoke(currentSpell, characterData.Spells[currentSpell].Cooldown);
 
 			// Use the mana
-			mana.UseMana(CharacterData.Spells[currentSpell].ManaCost);
+			mana.UseMana(characterData.Spells[currentSpell].ManaCost);
 
 			// Spawn the spell
-			var go = PhotonNetwork.Instantiate(CharacterData.Spells[currentSpell].SpellPrefab.name, BulletSpawn.position,
-				BulletSpawn.rotation);
-                
-			go.GetComponent<SpellBase>().Caster =
-				Tuple.Create(gameObject, Element); // this is useful for some spells that need the position of the caster
+			var go = PhotonNetwork.Instantiate(characterData.Spells[currentSpell].SpellPrefab.name, bulletSpawn.position,
+				bulletSpawn.rotation);
+
+			go.GetComponent<SpellBase>().Caster = gameObject;
 
 			currentSpell = -1; // Reset the current spell id
 		}

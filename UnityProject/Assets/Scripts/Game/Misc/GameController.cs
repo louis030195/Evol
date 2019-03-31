@@ -18,11 +18,10 @@ namespace Evol.Game.Misc
     public class GameController : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         // Lets make a list with constant int linked to gameobject ?
-        public List<GameObject> Characters;
+        public List<GameObject> characters;
 
-        public GameObject Wolf; // TODO: think about a clean way to store some spawnable prefabs like monsters ... ?
-        public GameObject RockGolem;
-        public GameObject[] Guards;
+        public GameObject[] mobs;
+        public GameObject[] guards;
         
         private enum GameState
         {
@@ -56,7 +55,7 @@ namespace Evol.Game.Misc
                 0;
             
             // Retrieve the prefab assiocated to this id
-            var foundPrefab = Characters.Find(c => c.GetComponent<CastBehaviour>().CharacterData.Id == characterId);
+            var foundPrefab = characters.Find(c => c.GetComponent<CastBehaviour>().characterData.Id == characterId);
             
             // Instanciate the player
             var playerGo = PhotonNetwork.Instantiate(foundPrefab.name, new Vector3(0, 50, 0),  
@@ -64,20 +63,30 @@ namespace Evol.Game.Misc
             
             if (PhotonNetwork.IsMasterClient)
             {
-                foreach(var i in Enumerable.Range(0, 10))
+                foreach(var i in Enumerable.Range(0, 100))
                 {
-                    var rockGolem = Instantiate(RockGolem,
-                        Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 200),
-                           1),
-                        Quaternion.identity);
-                    rockGolem.GetComponent<StateController>().SetupAi(true);
-                    
-                    var guard = Instantiate(Guards[2],
-                        Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 10),
-                            1),
-                        Quaternion.identity);
-                    guard.GetComponent<StateController>().SetupAi(true);
-                    
+                    // Randomgo is just useful to avoid exception when the array is empty
+                    var randomGo = mobs.Length > 0 ? mobs[Random.Range(0, mobs.Length)] : null;
+                    if (randomGo)
+                    {
+                        var mob = Instantiate(randomGo,
+                            Position.AboveGround(
+                                Position.RandomPositionAround(new Vector3(400, 0, 700), 200), // Hardcoded Boss position
+                                1),
+                            Quaternion.identity);
+                        mob.GetComponent<StateController>().SetupAi(true);
+                    }
+
+                    randomGo = guards.Length > 0 ? guards[Random.Range(0, guards.Length)] : null;
+                    if (randomGo)
+                    {
+                        var guard = Instantiate(guards[Random.Range(0, guards.Length)],
+                            Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 10),
+                                1),
+                            Quaternion.identity);
+                        guard.GetComponent<StateController>().SetupAi(true);
+                    }
+
                 }
 
                 StartCoroutine(GameLoop());
