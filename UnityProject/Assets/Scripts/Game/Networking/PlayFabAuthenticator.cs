@@ -20,29 +20,32 @@ namespace Evol.Game.Networking
     // TODO: THINK ABOUT SPLITTING UI STUFF INTO MULTIPLE FILES
     public class PlayFabAuthenticator : MonoBehaviourPunCallbacks
     {
+        [Header("Parameters")] 
+        [Tooltip("When the game is started should we allow other players to join")] public bool lockRoomOnStart = true;
+        
         [Header("Login / Register fields")] 
-        public GameObject LoginRegisterCanvas;
-        public InputField Username;
-        public InputField Password;
-        public InputField Email;
-        public TextMeshProUGUI Result;
+        public GameObject loginRegisterCanvas;
+        public InputField username;
+        public InputField password;
+        public InputField email;
+        public TextMeshProUGUI result;
         private LoginWithPlayFabRequest loginRequest;
 
         [Header("Main menu fields")] 
-        public GameObject MainMenuCanvas;
-        [Tooltip("Main content at the centre of the screen")] public GameObject MainContent;
-        [Tooltip("Nav at the top used to navigate in the main content")] public GameObject MainNav;
-        [Tooltip("Bar at the bottom used for specific less used stuff")] public GameObject BottomBar;
-        [Tooltip("Back arrow displayed in dead end screens used to go to previous screen")] public GameObject BackArrow;
-        [Tooltip("Evol logo")] public GameObject Logo;
+        public GameObject mainMenuCanvas;
+        [Tooltip("Main content at the centre of the screen")] public GameObject mainContent;
+        [Tooltip("Nav at the top used to navigate in the main content")] public GameObject mainNav;
+        [Tooltip("Bar at the bottom used for specific less used stuff")] public GameObject bottomBar;
+        [Tooltip("Back arrow displayed in dead end screens used to go to previous screen")] public GameObject backArrow;
+        [Tooltip("Evol logo")] public GameObject logo;
         
         [Header("Main mode layout")]
-        [Tooltip("Layout that contain everything to start finding a game")] public GameObject GameConfig;
-        [Tooltip("Layout that contain everything to select a char after joining a game")] public GameObject CharacterSelection;
-        [Tooltip("Client stats with this char")] public GameObject Stats;
-        [Tooltip("Characters list")] public GameObject CharactersList;
-        [Tooltip("The layout that contains the character to be selected to play")] public GameObject CharacterLayout;
-        [Tooltip("Looking for a game status")] public TextMeshProUGUI QueueStatus;
+        [Tooltip("Layout that contain everything to start finding a game")] public GameObject gameConfig;
+        [Tooltip("Layout that contain everything to select a char after joining a game")] public GameObject characterSelection;
+        [Tooltip("Client stats with this char")] public GameObject stats;
+        [Tooltip("Characters list")] public GameObject charactersList;
+        [Tooltip("The layout that contains the character to be selected to play")] public GameObject characterLayout;
+        [Tooltip("Looking for a game status")] public TextMeshProUGUI queueStatus;
 
 
         private float timeToWaitPlayers = 3; // Should be proportional to the total number of players currently playing
@@ -53,20 +56,26 @@ namespace Evol.Game.Networking
                 OnLoginSuccess();
         }
 
+        private void Update()
+        {
+            if (!gameObject.GetPhotonView().IsMine)
+                enabled = false;
+        }
+
         public void Login()
         {
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
-                Result.text = $"Check your internet connection";
+                result.text = $"Check your internet connection";
                 return;
             }
 
-            loginRequest = new LoginWithPlayFabRequest {Username = Username.text, Password = Password.text};
+            loginRequest = new LoginWithPlayFabRequest {Username = username.text, Password = password.text};
             PlayFabClientAPI.LoginWithPlayFab(loginRequest, result =>
             {
                 // If the account is found
                 PhotonNetwork.LocalPlayer.NickName = loginRequest.Username;
-                Result.text = $"You're now logged in !";
+                this.result.text = $"You're now logged in !";
                 PhotonNetwork.OfflineMode = false;
                 PhotonNetwork.ConnectUsingSettings();
                 gameObject.GetComponent<Chat>().PlayFabAuthenticationContext = result.AuthenticationContext;
@@ -75,15 +84,15 @@ namespace Evol.Game.Networking
             }, error =>
             {
                 // If the account is not found
-                Result.text = $"Incorrect username or password";
+                result.text = $"Incorrect username or password";
             }, null);
 
         }
 
         private void OnLoginSuccess()
         {
-            LoginRegisterCanvas.SetActive(false);
-            MainMenuCanvas.SetActive(true);
+            loginRegisterCanvas.SetActive(false);
+            mainMenuCanvas.SetActive(true);
             
             // I think here we will initialize all the custom properties of the current player used through the game
             if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("ready"))
@@ -99,14 +108,14 @@ namespace Evol.Game.Networking
         public void Register()
         {
             RegisterPlayFabUserRequest request = new RegisterPlayFabUserRequest();
-            request.Email = Email.text;
-            request.Username = Username.text;
-            request.Password = Password.text;
+            request.Email = email.text;
+            request.Username = username.text;
+            request.Password = password.text;
             
             PlayFabClientAPI.RegisterPlayFabUser(request, result =>
                 {
-                    Result.text = $"Your account has been created !";
-                }, error => { Result.text = $"Fill all field !"; });
+                    this.result.text = $"Your account has been created !";
+                }, error => { result.text = $"Fill all field !"; });
         }
 
         /// <summary>
@@ -115,11 +124,11 @@ namespace Evol.Game.Networking
         /// </summary>
         public void OnDisconnect()
         {
-            LoginRegisterCanvas.SetActive(true);
-            MainMenuCanvas.SetActive(false);
+            loginRegisterCanvas.SetActive(true);
+            mainMenuCanvas.SetActive(false);
             gameObject.GetComponent<Chat>().enabled = false;
             PhotonNetwork.Disconnect(); // There isn't a Disconnect for playfab
-            Result.text = $"Successfully disconnected";
+            result.text = $"Successfully disconnected";
         }
 
         /// <summary>
@@ -128,7 +137,7 @@ namespace Evol.Game.Networking
         /// <param name="layout"></param>
         public void OnMainNav(GameObject layout)
         {
-            foreach (Transform lay in MainContent.transform)
+            foreach (Transform lay in mainContent.transform)
             {
                 lay.gameObject.SetActive(false);
             }
@@ -143,19 +152,19 @@ namespace Evol.Game.Networking
         /// </summary>
         public void OnDeadEnd(GameObject layout)
         {
-            MainNav.SetActive(!MainNav.activeInHierarchy);
-            MainContent.SetActive(!MainContent.activeInHierarchy);
-            BottomBar.SetActive(!BottomBar.activeInHierarchy);
-            BackArrow.SetActive(!BackArrow.activeInHierarchy);
-            Logo.SetActive(!Logo.activeInHierarchy);
+            mainNav.SetActive(!mainNav.activeInHierarchy);
+            mainContent.SetActive(!mainContent.activeInHierarchy);
+            bottomBar.SetActive(!bottomBar.activeInHierarchy);
+            backArrow.SetActive(!backArrow.activeInHierarchy);
+            logo.SetActive(!logo.activeInHierarchy);
             if (layout != null)
             {
                 layout.SetActive(!layout.activeInHierarchy);
-                BackArrow.GetComponent<Button>().onClick.AddListener(() => // Like a Once event
+                backArrow.GetComponent<Button>().onClick.AddListener(() => // Like a Once event
                 {
                     var a = new UnityAction(() => OnDeadEnd(layout));
                     a.Invoke();
-                    BackArrow.GetComponent<Button>().onClick.RemoveListener(a);
+                    backArrow.GetComponent<Button>().onClick.RemoveListener(a);
                 });
             }
             else
@@ -182,12 +191,10 @@ namespace Evol.Game.Networking
         /// </summary>
         public void OnReadyToPlay()
         {
-            gameObject.GetPhotonView().RPC(nameof(OnReadyToPlayRpc), RpcTarget.All);
-        }
-
-        [PunRPC]
-        private void OnReadyToPlayRpc()
-        {
+            // Means that we can just start whenever we want and join others room
+            if(!lockRoomOnStart)
+                PhotonNetwork.LoadLevel("Game");
+            
             if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("ready"))
             {
                 PhotonNetwork.LocalPlayer.CustomProperties["ready"] =
@@ -199,13 +206,16 @@ namespace Evol.Game.Networking
             }
         }
 
+
+
+
         public override void OnJoinRandomFailed(short returnCode, string message)
         {
             Debug.Log($"OnJoinRandomFailed { returnCode } - { message }");
             if (returnCode == 32760) // No match found
             {
-                QueueStatus.text = $"No games available, creating one";
-                if (PhotonNetwork.JoinOrCreateRoom(new Random().Next(0, 100).ToString(), new RoomOptions(), TypedLobby.Default))
+                queueStatus.text = $"No games available, creating one";
+                if (PhotonNetwork.CreateRoom(new Random().Next(0, 100).ToString(), new RoomOptions(), TypedLobby.Default))
                 {
 
                     
@@ -222,35 +232,40 @@ namespace Evol.Game.Networking
 
         private IEnumerator WaitPlayersAndStart()
         {
+            if(!lockRoomOnStart)
+                yield break;
+            
             // var timeToWait = timeToWaitPlayers;
             while (true)
             {
                 yield return new WaitForSeconds(1);
 
-                var allPlayersReady = PhotonNetwork.PlayerList.All(p =>
-                    p.CustomProperties.ContainsKey("ready") && p.CustomProperties["ready"].Equals("1"));
+                var allPlayersReady = PhotonNetwork.CurrentRoom.Players.All(p => p.Value.CustomProperties["ready"].Equals("1"));
                 
                 if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers || allPlayersReady)
                 {
                     break;
                 }
 
-                QueueStatus.text = $"Press ready to start";
+                queueStatus.text = $"Press ready to start";
                 // QueueStatus.text = $"Waiting for more players {timeToWait}";
                 // timeToWait--;
             }
+
+            // Lock the room on start
+            PhotonNetwork.CurrentRoom.MaxPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
             gameObject.GetPhotonView().RPC(nameof(LoadLevelForEveryone), RpcTarget.All, "Game");
         }
 
         private void LoadPlayLayout()
         {
-            GameConfig.SetActive(false);
-            CharacterSelection.SetActive(true);
+            gameConfig.SetActive(false);
+            characterSelection.SetActive(true);
         }
 
         public override void OnJoinedRoom()
         {
-            QueueStatus.text = $"Joined a game";
+            queueStatus.text = $"Joined a game";
             LoadPlayLayout();
             // Wait a bit other players then start
             Debug.Log($"OnJoinedRoom");
@@ -261,6 +276,7 @@ namespace Evol.Game.Networking
         {
             PhotonNetwork.LoadLevel(scene);
         }
+        
 
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
@@ -296,7 +312,7 @@ namespace Evol.Game.Networking
             }
 
             Debug.Log($"Disconnected from photon cloud { cause }");	
-            QueueStatus.text = $"Failed to connect to the server { cause }";
+            queueStatus.text = $"Failed to connect to the server { cause }";
         }
     }
 }

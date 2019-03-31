@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
 namespace Evol.Game.Player
 {
@@ -38,8 +39,12 @@ namespace Evol.Game.Player
 			get { return angleH; }
 		}
 
-		void Awake()
+		private void Awake()
 		{
+			// Multiplayer, deactivate the camera if it's not mine
+			if(player.gameObject.GetPhotonView() != null && !player.gameObject.GetPhotonView().IsMine)
+				gameObject.SetActive(false);
+			
 			// Reference to the camera transform.
 			cam = transform;
 

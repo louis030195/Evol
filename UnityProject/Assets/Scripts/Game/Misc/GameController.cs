@@ -52,7 +52,7 @@ namespace Evol.Game.Misc
             // Retrieve the chosen character id
             var characterId = PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("character") ?
                 Convert.ToInt32(PhotonNetwork.LocalPlayer.CustomProperties["character"]) :
-                0;
+                2;
             
             // Retrieve the prefab assiocated to this id
             var foundPrefab = characters.Find(c => c.GetComponent<CastBehaviour>().characterData.Id == characterId);

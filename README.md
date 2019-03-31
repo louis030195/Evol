@@ -8,7 +8,7 @@
 
 ## Cooldown & spells
 
-<img src="docs/images/cooldown.gif" width="500" height="300">
+<img src="docs/images/kill.gif" width="300" height="300"><img src="docs/images/cooldown.gif" width="300" height="300"><img src="docs/images/portal.gif" width="300" height="300"><img src="docs/images/snow.gif" width="300" height="300">
 
 
 

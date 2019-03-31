@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Photon.Pun;
 
 namespace Evol.Game.Player
 {
@@ -48,6 +49,10 @@ namespace Evol.Game.Player
 
 		private void Awake()
 		{
+			// Multiplayer, deactivate the component if it's not mine
+			if(gameObject.GetPhotonView() != null && !gameObject.GetPhotonView().IsMine)
+				enabled = false;
+			
 			// Set up the references.
 			behaviours = new List<GenericBehaviour>();
 			overridingBehaviours = new List<GenericBehaviour>();

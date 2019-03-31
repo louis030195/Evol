@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Evol.Game.Player;
 using Photon.Pun;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,20 +14,26 @@ namespace Evol.Game.UI
     {
         // Skill bar
         public GameObject skillBar;
-        public GameObject skillPlaceHolderPrefab;
+        public GameObject skillPlaceholderPrefab;
         public GameObject castBehaviourParent;
         private List<GameObject> skills = new List<GameObject>();
 
         // Start is called before the first frame update
         private void Start()
         {
+            var i = 1;
             foreach (var spell in castBehaviourParent.GetComponent<CastBehaviour>().characterData.Spells)
             {
                 // Instanciate the prefab the prefab which has an image component + image background for cooldown
-                skills.Add(Instantiate(skillPlaceHolderPrefab, skillBar.transform));
+                skills.Add(Instantiate(skillPlaceholderPrefab, skillBar.transform));
+                
+                // Set the key text
+                skills.Last().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"Key {i}";
                 
                 // Set the right icon
-                skills.Last().transform.GetChild(0).GetComponent<Image>().sprite = spell.Icon;
+                skills.Last().transform.GetChild(1).GetComponent<Image>().sprite = spell.Icon;
+                
+                i++;
             }
             
             castBehaviourParent.GetComponent<CastBehaviour>().onSpellThrown.AddListener(UpdateUI);
@@ -40,7 +47,7 @@ namespace Evol.Game.UI
         /// <param name="cooldown">spell cooldown</param>
         private void UpdateUI(int spell, float cooldown)
         {
-            StartCoroutine(SkillCooldown(skills[spell].transform.GetChild(1).GetComponent<Image>(), cooldown));
+            StartCoroutine(SkillCooldown(skills[spell].transform.GetChild(2).GetComponent<Image>(), cooldown));
         }
 
         /// <summary>
