@@ -12,7 +12,6 @@ namespace Evol.Game.Player
         [SerializeField] private string characterName;
         [SerializeField] private string description;
         [SerializeField] private Sprite icon;
-        [SerializeField] private GameObject prefab;
         [SerializeField] private SpellObject[] spells;
 
         
@@ -24,7 +23,6 @@ namespace Evol.Game.Player
         public string Description => description;
 
         public Sprite Icon => icon;
-        public GameObject Prefab => prefab;
         public SpellObject[] Spells => spells;
 
         // More stats ?

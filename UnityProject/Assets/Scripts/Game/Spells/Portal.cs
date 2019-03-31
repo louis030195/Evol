@@ -18,7 +18,7 @@ namespace Evol.Game.Spell
 			base.Start();
 			// TODO: wait the good time of animation to throw spell (animation event)
 			// Play animation
-			Caster.Item1.GetComponent<Animator>().SetTrigger("Attack1Trigger");
+			// Caster.Item1.GetComponent<Animator>().SetTrigger("Attack1Trigger");
 			Portal2.transform.position = Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 50), 5);
 
 			// Destroy the portal after 20 seconds

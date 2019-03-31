@@ -37,15 +37,15 @@ namespace Evol.Game.Networking
         [Tooltip("Evol logo")] public GameObject Logo;
         
         [Header("Main mode layout")]
+        [Tooltip("Layout that contain everything to start finding a game")] public GameObject GameConfig;
+        [Tooltip("Layout that contain everything to select a char after joining a game")] public GameObject CharacterSelection;
         [Tooltip("Client stats with this char")] public GameObject Stats;
         [Tooltip("Characters list")] public GameObject CharactersList;
         [Tooltip("The layout that contains the character to be selected to play")] public GameObject CharacterLayout;
         [Tooltip("Looking for a game status")] public TextMeshProUGUI QueueStatus;
 
 
-        private float timeToWaitPlayers = 30; // Should be proportional to the total number of players currently playing
-
-
+        private float timeToWaitPlayers = 3; // Should be proportional to the total number of players currently playing
         private void Start()
         {
             // We reach this condition if we leave a game a go back to main menu
@@ -84,6 +84,16 @@ namespace Evol.Game.Networking
         {
             LoginRegisterCanvas.SetActive(false);
             MainMenuCanvas.SetActive(true);
+            
+            // I think here we will initialize all the custom properties of the current player used through the game
+            if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("ready"))
+            {
+                PhotonNetwork.LocalPlayer.CustomProperties["ready"] = "0";
+            }
+            else
+            {
+                PhotonNetwork.LocalPlayer.CustomProperties.Add("ready", "0");
+            }
         }
 
         public void Register()
@@ -153,16 +163,39 @@ namespace Evol.Game.Networking
         }
 
         /// <summary>
-        /// PlayLayout -> Ready
+        /// GameConfig -> Ready
         /// Try to find a game
         /// </summary>
-        public void OnReady()
+        public void OnReadyToFindAGame()
         {
             // to join / create game (no friend)
             if(PhotonNetwork.JoinRandomRoom()) {
                 // Wait a bit other people (proportional to the total number of player in the game)
                 // Start game
                 Debug.Log("JoinRandomRoom success");
+            }
+        }
+        
+        /// <summary>
+        /// GameConfig -> PlayLayout -> Ready
+        /// Ready to play
+        /// </summary>
+        public void OnReadyToPlay()
+        {
+            gameObject.GetPhotonView().RPC(nameof(OnReadyToPlayRpc), RpcTarget.All);
+        }
+
+        [PunRPC]
+        private void OnReadyToPlayRpc()
+        {
+            if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("ready"))
+            {
+                PhotonNetwork.LocalPlayer.CustomProperties["ready"] =
+                    PhotonNetwork.LocalPlayer.CustomProperties["ready"].Equals("1") ? "0" : "1";
+            }
+            else
+            {
+                PhotonNetwork.LocalPlayer.CustomProperties.Add("ready", "1");
             }
         }
 
@@ -182,31 +215,43 @@ namespace Evol.Game.Networking
 
         public override void OnCreatedRoom()
         {
+            LoadPlayLayout();
             // Only the master should wait & start everyone game
             StartCoroutine(WaitPlayersAndStart());
         }
 
         private IEnumerator WaitPlayersAndStart()
         {
-            float timeToWait = timeToWaitPlayers;
-            while (timeToWait > 0)
+            // var timeToWait = timeToWaitPlayers;
+            while (true)
             {
                 yield return new WaitForSeconds(1);
+
+                var allPlayersReady = PhotonNetwork.PlayerList.All(p =>
+                    p.CustomProperties.ContainsKey("ready") && p.CustomProperties["ready"].Equals("1"));
                 
-                if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
+                if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers || allPlayersReady)
                 {
-                    yield break;
+                    break;
                 }
 
-                QueueStatus.text = $"Waiting for more players {timeToWait}";
-                timeToWait--;
+                QueueStatus.text = $"Press ready to start";
+                // QueueStatus.text = $"Waiting for more players {timeToWait}";
+                // timeToWait--;
             }
             gameObject.GetPhotonView().RPC(nameof(LoadLevelForEveryone), RpcTarget.All, "Game");
+        }
+
+        private void LoadPlayLayout()
+        {
+            GameConfig.SetActive(false);
+            CharacterSelection.SetActive(true);
         }
 
         public override void OnJoinedRoom()
         {
             QueueStatus.text = $"Joined a game";
+            LoadPlayLayout();
             // Wait a bit other players then start
             Debug.Log($"OnJoinedRoom");
         }
@@ -238,7 +283,7 @@ namespace Evol.Game.Networking
                 {
                     playerData.Add((string) key, (string) PhotonNetwork.LocalPlayer.CustomProperties[key]);
                 }
-
+                // TODO: Think to not push all custom properties, there is some properties that shouldn't be persisted (ready for example)
                 if (playerData.Count > 0) // We don't always add player data (just logging, disconecting ....)
                 {
                     PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest

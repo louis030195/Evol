@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Evol.Heuristic.StateMachine
 {
     [CreateAssetMenu(menuName = "Evol/StateMachine/Decisions/InRange")]
-    public class InRange : Decision
+    public class InRangeDecision : Decision
     {
 
         public override bool Decide(StateController controller)

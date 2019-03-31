@@ -21,7 +21,7 @@ public class RechargeMana : SpellBase
 			return;
 		base.Start();
 		stream = new List<GameObject>();
-		Caster.Item1.GetComponent<Animator>().SetTrigger("Attack2Trigger");
+		// Caster.Item1.GetComponent<Animator>().SetTrigger("Attack2Trigger");
         
 		transform.parent = Caster.Item1.transform;
 		// For some reason the position is random ?

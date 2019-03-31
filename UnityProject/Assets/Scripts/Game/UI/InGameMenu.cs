@@ -48,9 +48,11 @@ namespace Evol.Game.UI
 				PauseUI.SetActive(!PauseUI.activeInHierarchy);
 				PlayUI.SetActive(!PlayUI.activeInHierarchy);
 
+				var behaviour = GetComponent<BasicBehaviour>();
+				
 				// Disable / enable the character movement
-				if (GetComponent<PlayerController>() != null)
-					GetComponent<PlayerController>().Lock = !GetComponent<PlayerController>().Lock;
+				// if (behaviour != null)
+				//	behaviour.LockTempBehaviour()) = !GetComponent<CastBehaviour>().Lock;
 			}
 			
 			UpdateTimeUI();
@@ -65,8 +67,8 @@ namespace Evol.Game.UI
 			PauseUI.SetActive(false);
 			PlayUI.SetActive(true);
 			
-			if (GetComponent<PlayerController>() != null)
-				GetComponent<PlayerController>().Lock = !GetComponent<PlayerController>().Lock;
+			// if (GetComponent<CastBehaviour>() != null)
+			//	GetComponent<CastBehaviour>().Lock = !GetComponent<CastBehaviour>().Lock;
 		}
 
 		/// <summary>

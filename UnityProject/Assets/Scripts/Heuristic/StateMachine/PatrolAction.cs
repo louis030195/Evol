@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Debug = System.Diagnostics.Debug;
 
 namespace Evol.Heuristic.StateMachine
 {
@@ -16,11 +17,12 @@ namespace Evol.Heuristic.StateMachine
 
         private void Patrol(StateController controller)
         {
-            controller.movement.MoveTo(wayPointList [nextWayPoint]);
+            controller.movement.MoveTo(wayPointList[nextWayPoint]);
 
             if (controller.movement.RemainingDistance <= controller.movement.StoppingDistance && !controller.movement.PathPending) 
             {
                 nextWayPoint = (nextWayPoint + 1) % wayPointList.Count;
+                Debug.Write($"lol");
             }
         }
     }

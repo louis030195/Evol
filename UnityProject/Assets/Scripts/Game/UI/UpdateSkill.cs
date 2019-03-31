@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Evol.Game.UI
 {
-    [RequireComponent(typeof(PlayerController))]
+    [RequireComponent(typeof(CastBehaviour))]
     public class UpdateSkill : MonoBehaviour, IPunObservable
     {
         // Skill bar
@@ -19,13 +19,16 @@ namespace Evol.Game.UI
         // Start is called before the first frame update
         private void Start()
         {
-            foreach (var spell in GetComponent<PlayerController>().CharacterData.Spells)
+            foreach (var spell in GetComponent<CastBehaviour>().CharacterData.Spells)
             {
+                // Instanciate the prefab the prefab which has an image component + image background for cooldown
                 skills.Add(Instantiate(SkillPlaceHolderPrefab, SkillBar.transform));
+                
+                // Set the right icon
                 skills.Last().transform.GetChild(0).GetComponent<Image>().sprite = spell.Icon;
             }
             
-            GetComponent<PlayerController>().OnSpellThrown.AddListener(UpdateUI);
+            GetComponent<CastBehaviour>().OnSpellThrown.AddListener(UpdateUI);
         }
         
         /// <summary>

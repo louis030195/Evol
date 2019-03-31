@@ -42,19 +42,23 @@ namespace Evol.Game.Player
             nextSpell = new float[CharacterData.Spells.Length];
             mana = GetComponent<Mana>();
             health = GetComponent<Health>();
-            gameObject.AddComponent<AudioListener>();
+            // gameObject.AddComponent<AudioListener>(); // dafuq ?
             anim = GetComponent<Animator>();
             photonView = GetComponent<PhotonView>();
             
             //cursorHotspot = new Vector2 (cursorTexture.width / 2, cursorTexture.height / 2);
-
+            /*
             if (PhotonNetwork.InRoom && !photonView.IsMine)
             {
                 transform.GetChild(0).GetComponent<Camera>().enabled = false; // TODO: cleaner solution ?
-            }
+            }*/
             
             Screen.lockCursor = false;
             Cursor.visible = false;
+            
+            // For debugging in specific scene offline
+            if(!PhotonNetwork.InRoom)
+                PhotonNetwork.OfflineMode = true;
         }
 
         void Update()
@@ -62,7 +66,8 @@ namespace Evol.Game.Player
 
             if (!Lock && (photonView.IsMine || !PhotonNetwork.InRoom)) // InRoom check is for offline mode (mostly debugging)
             {
-               
+                
+               /*
                 var x = Input.GetAxis("Mouse X") * Time.deltaTime * 50.0f; 
                 var y = Input.GetAxis("Horizontal") * Time.deltaTime * 4.0f; 
                 var z = Input.GetAxis("Vertical") * Time.deltaTime * Speed;  
@@ -81,7 +86,7 @@ namespace Evol.Game.Player
                 transform.Rotate(0, x, 0);
                 // transform.Translate(y, 0, 0);
                 rigidBody.AddForce(transform.forward * z);
-                
+                */
                 SpellInput();
             }
         }

@@ -16,7 +16,7 @@ namespace Evol.Game.Spell
             base.Start();
             // TODO: wait the good time of animation to throw spell (animation event)
             // Play animation
-            Caster.Item1.GetComponent<Animator>().SetTrigger("Attack1Trigger");
+            // Caster.Item1.GetComponent<Animator>().SetTrigger("Attack1Trigger");
             
             // Throw forward
             gameObject.GetComponent<Rigidbody>().velocity = gameObject.transform.forward * 15;

@@ -11,17 +11,18 @@ using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 using Debug = System.Diagnostics.Debug;
+using Random = UnityEngine.Random;
 
 namespace Evol.Game.Misc
 {
     public class GameController : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         // Lets make a list with constant int linked to gameobject ?
-        public List<CharacterData> Characters;
+        public List<GameObject> Characters;
 
         public GameObject Wolf; // TODO: think about a clean way to store some spawnable prefabs like monsters ... ?
         public GameObject RockGolem;
-        public GameObject Guard;
+        public GameObject[] Guards;
         
         private enum GameState
         {
@@ -55,12 +56,10 @@ namespace Evol.Game.Misc
                 0;
             
             // Retrieve the prefab assiocated to this id
-            var foundPrefab = Characters.Find(c => c.Id == characterId).Prefab;
+            var foundPrefab = Characters.Find(c => c.GetComponent<CastBehaviour>().CharacterData.Id == characterId);
             
             // Instanciate the player
-            var playerGo = PhotonNetwork.Instantiate(foundPrefab.name,
-                Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 20),
-                    foundPrefab.GetComponent<Collider>().bounds.size.y), 
+            var playerGo = PhotonNetwork.Instantiate(foundPrefab.name, new Vector3(0, 50, 0),  
                 Quaternion.identity);
             
             if (PhotonNetwork.IsMasterClient)
@@ -73,11 +72,12 @@ namespace Evol.Game.Misc
                         Quaternion.identity);
                     rockGolem.GetComponent<StateController>().SetupAi(true);
                     
-                    var guard = Instantiate(Guard,
+                    var guard = Instantiate(Guards[2],
                         Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 10),
                             1),
                         Quaternion.identity);
                     guard.GetComponent<StateController>().SetupAi(true);
+                    
                 }
 
                 StartCoroutine(GameLoop());

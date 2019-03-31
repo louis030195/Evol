@@ -14,7 +14,7 @@ public class Snow : SpellBase
 		if (!gameObject.GetPhotonView().IsMine)
 			return;
 		base.Start();
-		Caster.Item1.GetComponent<Animator>().SetTrigger("Attack2Trigger");
+		// Caster.Item1.GetComponent<Animator>().SetTrigger("Attack2Trigger");
 		// For some reason the position is random ?
 		transform.position = new Vector3(Caster.Item1.transform.position.x,
 			Caster.Item1.transform.position.y + 0.1f,

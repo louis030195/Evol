@@ -26,7 +26,7 @@ namespace Evol.Game.Spell
                 Destroy(gameObject);
 
             Instantiate(BurningSteps, transform);
-            Caster.Item1.GetComponent<Animator>().SetTrigger("Attack2Trigger");
+            // Caster.Item1.GetComponent<Animator>().SetTrigger("Attack2Trigger");
             
             transform.parent = Caster.Item1.transform;
             // For some reason the position is random ?
