@@ -112,9 +112,7 @@ namespace Evol.Game.Player
                             Instantiate(DeathEffects[Random.Range(0, DeathEffects.Length)],
                                 new Vector3(transform.position.x, transform.position.y, transform.position.z),
                                 new Quaternion(0, 0, 0, 0)), 3);
-                }
-                else
-                {
+                    
                     // Dead, say to server this object is dead
                     PhotonNetwork.RaiseEvent(0, new object[] { gameObject.tag }, new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendReliable);
                 }

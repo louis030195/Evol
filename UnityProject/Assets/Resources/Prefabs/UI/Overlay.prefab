@@ -2483,16 +2483,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dda129a4991545d2988105728ecfec5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayUI: {fileID: 4546697399584180293}
-  PauseUI: {fileID: 5173237573798614646}
-  MainMenuPauseUI: {fileID: 8955231052157679531}
-  SettingsPauseUI: {fileID: 95519955620463072}
-  SettingsControlsUI: {fileID: 4891600691679189254}
-  SettingsGraphicsUI: {fileID: 6837468340252780148}
-  SettingsAudioUI: {fileID: 2047347188055633707}
-  PlayersAlive: {fileID: 7413743983094033927}
-  Time: {fileID: 1569963626572421124}
-  Kills: {fileID: 1073188188904163249}
+  playUi: {fileID: 4546697399584180293}
+  pauseUi: {fileID: 5173237573798614646}
+  mainMenuPauseUi: {fileID: 8955231052157679531}
+  settingsPauseUi: {fileID: 95519955620463072}
+  resumePauseButton: {fileID: 4727509682632697915}
+  settingsPauseButton: {fileID: 8771074703162579528}
+  exitGamePauseButton: {fileID: 3448322530972766266}
+  settingsControlsUi: {fileID: 4891600691679189254}
+  settingsControlsButton: {fileID: 4646370261149669113}
+  settingsGraphicsUi: {fileID: 6837468340252780148}
+  settingsGraphicsButton: {fileID: 1811010897836416464}
+  settingsAudioUi: {fileID: 2047347188055633707}
+  settingsAudioButton: {fileID: 7981836389373736760}
+  playersAlive: {fileID: 7413743983094033927}
+  time: {fileID: 1569963626572421124}
+  kills: {fileID: 1073188188904163249}
 --- !u!1 &3083356299650702951
 GameObject:
   m_ObjectHideFlags: 0
@@ -6187,7 +6193,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:

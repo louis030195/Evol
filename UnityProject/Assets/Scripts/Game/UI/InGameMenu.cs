@@ -1,35 +1,69 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using Evol.Game.Misc;
 using Evol.Game.Player;
+using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Realtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Evol.Game.UI
 {
-	public class InGameMenu : MonoBehaviour
+	public class InGameMenu : MonoBehaviourPunCallbacks, IOnEventCallback
 	{
 		
-		public GameObject PlayUI;
-		public GameObject PauseUI;
+		public GameObject playUi;
+		public GameObject pauseUi;
 
 		[Header("Paused")] 
-		public GameObject MainMenuPauseUI;
-		public GameObject SettingsPauseUI;
+		public GameObject mainMenuPauseUi;
+		public GameObject settingsPauseUi;
+		public Button resumePauseButton;
+		public Button settingsPauseButton;
+		public Button exitGamePauseButton;
 
 		[Header("Settings")] 
-		public GameObject SettingsControlsUI;
-		public GameObject SettingsGraphicsUI;
-		public GameObject SettingsAudioUI;
+		public GameObject settingsControlsUi;
+		public Button settingsControlsButton;
+		public GameObject settingsGraphicsUi;
+		public Button settingsGraphicsButton;
+		public GameObject settingsAudioUi;
+		public Button settingsAudioButton;
 		
-		[Header("Overlay")] 
-		// Top bar
-		public TextMeshProUGUI PlayersAlive;
-		public TextMeshProUGUI Time;
-		public TextMeshProUGUI Kills;
+		[Header("Overlay top bar")] 
+		public TextMeshProUGUI playersAlive;
+		public TextMeshProUGUI time;
+		public TextMeshProUGUI kills;
+
+		private void Awake()
+		{
+			// We don't wanna see others players overlay (is there any cleaner solution ?)
+			if(gameObject.transform.parent.gameObject.GetPhotonView() != null && !gameObject.transform.parent.gameObject.GetPhotonView().IsMine)
+				playUi.transform.parent.gameObject.SetActive(false);
+			
+			// Set the onclick actions of buttons
+			ResetListener(resumePauseButton, OnResume);
+			ResetListener(settingsPauseButton, OnSettings);
+			ResetListener(exitGamePauseButton, OnExitGame);
+			
+			ResetListener(settingsControlsButton, OnControls);
+			ResetListener(settingsGraphicsButton, OnGraphics);
+			ResetListener(settingsAudioButton, OnAudio);
+			
+			// Initialize the players alive counter
+			UpdatePlayersAliveUI();
+		}
+
+		private void ResetListener(Button button, UnityAction unityAction)
+		{
+			button.onClick.RemoveAllListeners();
+			button.onClick.AddListener(unityAction);
+		}
 
 		// Update is called once per frame
 		private void Update()
@@ -39,14 +73,14 @@ namespace Evol.Game.UI
 				Cursor.visible = !Cursor.visible;
 
 				// In case we exited the menu from settings, reset stuff
-				if (SettingsPauseUI.activeInHierarchy)
+				if (settingsPauseUi.activeInHierarchy)
 				{
 					OnSettings();
 					OnControls();
 				}
 				
-				PauseUI.SetActive(!PauseUI.activeInHierarchy);
-				PlayUI.SetActive(!PlayUI.activeInHierarchy);
+				pauseUi.SetActive(!pauseUi.activeInHierarchy);
+				playUi.SetActive(!playUi.activeInHierarchy);
 
 				// var behaviour = GetComponent<BasicBehaviour>();
 				
@@ -64,8 +98,8 @@ namespace Evol.Game.UI
 		/// </summary>
 		public void OnResume()
 		{
-			PauseUI.SetActive(false);
-			PlayUI.SetActive(true);
+			pauseUi.SetActive(false);
+			playUi.SetActive(true);
 			
 			// if (GetComponent<CastBehaviour>() != null)
 			//	GetComponent<CastBehaviour>().Lock = !GetComponent<CastBehaviour>().Lock;
@@ -76,8 +110,8 @@ namespace Evol.Game.UI
 		/// </summary>
 		public void OnSettings()
 		{
-			SettingsPauseUI.SetActive(!SettingsPauseUI.activeInHierarchy);
-			MainMenuPauseUI.SetActive(!MainMenuPauseUI.activeInHierarchy);
+			settingsPauseUi.SetActive(!settingsPauseUi.activeInHierarchy);
+			mainMenuPauseUi.SetActive(!mainMenuPauseUi.activeInHierarchy);
 		}
 		
 		/// <summary>
@@ -87,7 +121,7 @@ namespace Evol.Game.UI
 		{
 			// Leave current room and go back to main menu
 			PhotonNetwork.LeaveRoom();
-			PhotonNetwork.LoadLevel("login");
+			PhotonNetwork.LoadLevel("Login");
 			#if UNITY_EDITOR
 				// UnityEditor.EditorApplication.isPlaying = false;
 			#else
@@ -101,9 +135,9 @@ namespace Evol.Game.UI
 		/// </summary>
 		public void OnControls()
 		{
-			SettingsControlsUI.SetActive(true);
-			SettingsGraphicsUI.SetActive(false);
-			SettingsAudioUI.SetActive(false);
+			settingsControlsUi.SetActive(true);
+			settingsGraphicsUi.SetActive(false);
+			settingsAudioUi.SetActive(false);
 		}
 		
 		/// <summary>
@@ -111,9 +145,9 @@ namespace Evol.Game.UI
 		/// </summary>
 		public void OnGraphics()
 		{
-			SettingsControlsUI.SetActive(false);
-			SettingsGraphicsUI.SetActive(true);
-			SettingsAudioUI.SetActive(false);
+			settingsControlsUi.SetActive(false);
+			settingsGraphicsUi.SetActive(true);
+			settingsAudioUi.SetActive(false);
 		}
 		
 		/// <summary>
@@ -121,24 +155,53 @@ namespace Evol.Game.UI
 		/// </summary>
 		public void OnAudio()
 		{
-			SettingsControlsUI.SetActive(false);
-			SettingsGraphicsUI.SetActive(false);
-			SettingsAudioUI.SetActive(true);
+			settingsControlsUi.SetActive(false);
+			settingsGraphicsUi.SetActive(false);
+			settingsAudioUi.SetActive(true);
 		}
 
 		public void UpdatePlayersAliveUI()
 		{
-			// PlayersAlive
+			playersAlive.text = (PhotonNetwork.CurrentRoom != null ? PhotonNetwork.CurrentRoom.PlayerCount : 1).ToString();
 		}
 
 		public void UpdateTimeUI()
 		{
-			Time.text = ((int)UnityEngine.Time.time).ToString();
+			time.text = ((int)Time.time).ToString();
+		}
+		
+		/// <inheritdoc />
+		public void OnEvent(EventData photonEvent)
+		{
+			if (photonEvent.Code == 0)
+			{
+				if (!(photonEvent.CustomData as object[])[0].Equals("Player"))
+				{
+					int.TryParse(kills.text, out var value);
+					// Increment the kills counter
+					kills.text = value++.ToString();
+				}
+				else
+				{
+					int.TryParse(playersAlive.text, out var value);
+					// Decrement the players alive counter
+					playersAlive.text = (value > 0 ? value-- : 0).ToString();
+				}
+			}
 		}
 
-		public void UpdateKillUI()
+		public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
 		{
-			//
+			int.TryParse(playersAlive.text, out var value);
+			// Increment the players alive counter
+			playersAlive.text = (value > 0 ? value++ : 0).ToString();
+		}
+
+		public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+		{
+			int.TryParse(playersAlive.text, out var value); // TODO: player dead left ?
+			// Increment the players alive counter
+			playersAlive.text = (value > 0 ? value-- : 0).ToString();
 		}
 	}
 }

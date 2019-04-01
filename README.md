@@ -4,7 +4,7 @@
 
 
 # Video
-[![Video](https://img.youtube.com/vi/qUGsYp88M64/0.jpg)](https://www.youtube.com/watch?v=qUGsYp88M64)
+[![Video](https://img.youtube.com/vi/PCzRj9FlzMM/0.jpg)](https://www.youtube.com/watch?v=PCzRj9FlzMM)
 
 ## Cooldown & spells
 

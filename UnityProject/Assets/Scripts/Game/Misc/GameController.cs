@@ -10,6 +10,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Debug = System.Diagnostics.Debug;
 using Random = UnityEngine.Random;
 
@@ -17,11 +18,12 @@ namespace Evol.Game.Misc
 {
     public class GameController : MonoBehaviourPunCallbacks, IOnEventCallback
     {
-        // Lets make a list with constant int linked to gameobject ?
-        public List<GameObject> characters;
-
-        public GameObject[] mobs;
-        public GameObject[] guards;
+        [Tooltip("GameObject that contains all the map assets in the scene")] public GameObject map;
+        
+        [Header("Spawnables")]
+        [Tooltip("Prefabs of the characters")] public List<GameObject> characters;
+        [Tooltip("Prefabs of the mobs")] public GameObject[] mobs;
+        [Tooltip("Prefab of the guards")] public GameObject[] guards;
         
         private enum GameState
         {
@@ -40,30 +42,50 @@ namespace Evol.Game.Misc
         }
 
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
-           StartCoroutine(WaitBeingInARoom());      
+            StartCoroutine(WaitBeingInARoom());      
         }
+        
+        void OnEnable()
+        {
+            //Tell our 'OnLevelFinishedLoading' function to start listening for a scene change as soon as this script is enabled.
+            SceneManager.sceneLoaded += OnLevelFinishedLoading;
+        }
+         
+        void OnDisable()
+        {
+            //Tell our 'OnLevelFinishedLoading' function to stop listening for a scene change as soon as this script is disabled. Remember to always have an unsubscription for every delegate you subscribe to!
+            SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+        }
+
+        private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+        {
+            print("Level Loaded");
+            print(scene.name);
+            print(mode);
+        }
+
 
         private IEnumerator WaitBeingInARoom()
         {
-            yield return new WaitUntil(() => PhotonNetwork.InRoom);
+            yield return new WaitUntil(() => PhotonNetwork.InRoom); // For debug + prod
             
-            // Retrieve the chosen character id
-            var characterId = PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("character") ?
-                Convert.ToInt32(PhotonNetwork.LocalPlayer.CustomProperties["character"]) :
-                2;
-            
-            // Retrieve the prefab assiocated to this id
-            var foundPrefab = characters.Find(c => c.GetComponent<CastBehaviour>().characterData.Id == characterId);
-            
-            // Instanciate the player
-            var playerGo = PhotonNetwork.Instantiate(foundPrefab.name, new Vector3(0, 50, 0),  
-                Quaternion.identity);
-            
+            if (PlayerManager.LocalPlayerInstance == null)
+            {
+                print($"We are Instantiating LocalPlayer from {SceneManagerHelper.ActiveSceneName}");
+                // We're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
+                SpawnPlayer(PhotonNetwork.LocalPlayer);
+            }
+            else
+            {
+                print($"Ignoring scene load for {SceneManagerHelper.ActiveSceneName}");
+            }
+
             if (PhotonNetwork.IsMasterClient)
             {
-                foreach(var i in Enumerable.Range(0, 100))
+                // Spawn mobs
+                foreach (var i in Enumerable.Range(0, 100))
                 {
                     // Randomgo is just useful to avoid exception when the array is empty
                     var randomGo = mobs.Length > 0 ? mobs[Random.Range(0, mobs.Length)] : null;
@@ -75,6 +97,9 @@ namespace Evol.Game.Misc
                                 1),
                             Quaternion.identity);
                         mob.GetComponent<StateController>().SetupAi(true);
+
+                        // Set as child of map object
+                        mob.transform.parent = map.transform;
                     }
 
                     randomGo = guards.Length > 0 ? guards[Random.Range(0, guards.Length)] : null;
@@ -85,19 +110,50 @@ namespace Evol.Game.Misc
                                 1),
                             Quaternion.identity);
                         guard.GetComponent<StateController>().SetupAi(true);
-                    }
 
+                        // Set as child of map object
+                        guard.transform.parent = map.transform;
+                    }
                 }
 
                 StartCoroutine(GameLoop());
             }
         }
 
+        private void SpawnPlayer(Photon.Realtime.Player player)
+        {
+            // Retrieve the chosen character id
+            var characterId = player.CustomProperties.ContainsKey("character") ?
+                Convert.ToInt32(player.CustomProperties["character"]) :
+                2;
+            
+            // Retrieve the prefab assiocated to this id
+            var foundPrefab = characters.Find(c => c.GetComponent<CastBehaviour>().characterData.Id == characterId);
+            
+            // Instanciate the player
+            PhotonNetwork.Instantiate(foundPrefab.name, new Vector3(0, 50, 0), Quaternion.identity);
+        }
+        
+
         public override void OnConnectedToMaster()
         {
             print("Connected to master, creating room");
             PhotonNetwork.CreateRoom("");
         }
+
+        public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
+        {
+            // He is in character selection
+            // Once level loaded, spawn him
+            StartCoroutine(WaitPlayerEnterLevel(newPlayer));
+        }
+
+        private IEnumerator WaitPlayerEnterLevel(Photon.Realtime.Player player)
+        {
+            yield return new WaitUntil(() => true);
+        }
+        
+        
 
         // This is called from start and will run each phase of the game one after another.
         private IEnumerator GameLoop()
@@ -227,7 +283,7 @@ namespace Evol.Game.Misc
                 // checking that its a player that died just in case (and required for single player)
                 if (PhotonNetwork.CountOfPlayers == 0 && (photonEvent.CustomData as object[])[0].Equals("Player"))
                     gameState = GameState.Lost;
-                print($"Player ${ photonEvent.Sender } : { (photonEvent.CustomData as object[])[0] } died");
+                print($" { (photonEvent.CustomData as object[])[0] } died");
             }
         }
     }

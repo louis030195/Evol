@@ -34,10 +34,7 @@ namespace Evol.Game.Player
 		private float targetMaxVerticalAngle; // Custom camera max vertical clamp angle.
 
 		// Get the camera horizontal angle.
-		public float GetH
-		{
-			get { return angleH; }
-		}
+		public float GetH => angleH;
 
 		private void Awake()
 		{
@@ -202,8 +199,8 @@ namespace Evol.Game.Player
 			if (Physics.Raycast(player.position + (Vector3.up * deltaPlayerHeight), checkPos - player.position, out hit,
 				maxDistance))
 			{
-				if (hit.transform != player && hit.transform != transform &&
-				    !hit.transform.GetComponent<Collider>().isTrigger)
+				if (hit.transform != player && hit.transform != transform /*&&
+				    !hit.transform.GetComponent<Collider>().isTrigger*/)
 				{
 					return false;
 				}

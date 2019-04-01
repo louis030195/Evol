@@ -25,6 +25,8 @@ namespace Evol.Game.Networking
         
         [Header("Login / Register fields")] 
         public GameObject loginRegisterCanvas;
+        public Button loginButton;
+        public Button registerButton;
         public InputField username;
         public InputField password;
         public InputField email;
@@ -41,7 +43,10 @@ namespace Evol.Game.Networking
         
         [Header("Main mode layout")]
         [Tooltip("Layout that contain everything to start finding a game")] public GameObject gameConfig;
+        [Tooltip("Connection state to master server")] public TextMeshProUGUI gameConfigConnectionState;
+        [Tooltip("Button to start finding a game")] public Button gameConfigFindGameButton;
         [Tooltip("Layout that contain everything to select a char after joining a game")] public GameObject characterSelection;
+        [Tooltip("Button to say ready")] public Button characterSelectionReadyButton;
         [Tooltip("Client stats with this char")] public GameObject stats;
         [Tooltip("Characters list")] public GameObject charactersList;
         [Tooltip("The layout that contains the character to be selected to play")] public GameObject characterLayout;
@@ -49,8 +54,28 @@ namespace Evol.Game.Networking
 
 
         private float timeToWaitPlayers = 3; // Should be proportional to the total number of players currently playing
+
+        private void Awake()
+        {
+            if(!PhotonNetwork.ConnectUsingSettings())
+                print("Failed to connect to master");
+        }
+
         private void Start()
         {
+            // Should set all listeners in code, it makes avoiding losing time on setting it using editor
+            loginButton.onClick.RemoveAllListeners();
+            loginButton.onClick.AddListener(OnLogin);
+            
+            registerButton.onClick.RemoveAllListeners();
+            registerButton.onClick.AddListener(OnRegister);
+            
+            gameConfigFindGameButton.onClick.RemoveAllListeners();
+            gameConfigFindGameButton.onClick.AddListener(OnReadyToFindAGame);
+            
+            characterSelectionReadyButton.onClick.RemoveAllListeners();
+            characterSelectionReadyButton.onClick.AddListener(OnReadyToPlay);
+            
             // We reach this condition if we leave a game a go back to main menu
             if(PlayFabClientAPI.IsClientLoggedIn())
                 OnLoginSuccess();
@@ -58,11 +83,11 @@ namespace Evol.Game.Networking
 
         private void Update()
         {
-            if (!gameObject.GetPhotonView().IsMine)
-                enabled = false;
+            // if (!gameObject.GetPhotonView().IsMine)
+            //    enabled = false;
         }
 
-        public void Login()
+        public void OnLogin()
         {
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
@@ -75,11 +100,9 @@ namespace Evol.Game.Networking
             {
                 // If the account is found
                 PhotonNetwork.LocalPlayer.NickName = loginRequest.Username;
-                this.result.text = $"You're now logged in !";
-                PhotonNetwork.OfflineMode = false;
-                PhotonNetwork.ConnectUsingSettings();
                 gameObject.GetComponent<Chat>().PlayFabAuthenticationContext = result.AuthenticationContext;
                 gameObject.GetComponent<Chat>().enabled = true;
+                this.result.text = $"You're now logged in !";
                 OnLoginSuccess();
             }, error =>
             {
@@ -88,11 +111,22 @@ namespace Evol.Game.Networking
             }, null);
 
         }
+        
+        public override void OnConnectedToMaster()
+        {
+            gameConfigConnectionState.text = $"Connected to server !";
+            gameConfigFindGameButton.interactable = true;
+            PhotonNetwork.AutomaticallySyncScene = false;
+            Debug.Log($"Connected to master cloud");
+        }
 
         private void OnLoginSuccess()
         {
             loginRegisterCanvas.SetActive(false);
             mainMenuCanvas.SetActive(true);
+
+            // TODO: Maybe should start when game config is shown
+            StartCoroutine(nameof(UpdateConnectionState));
             
             // I think here we will initialize all the custom properties of the current player used through the game
             if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("ready"))
@@ -105,13 +139,28 @@ namespace Evol.Game.Networking
             }
         }
 
-        public void Register()
+        private IEnumerator UpdateConnectionState()
         {
-            RegisterPlayFabUserRequest request = new RegisterPlayFabUserRequest();
-            request.Email = email.text;
-            request.Username = username.text;
-            request.Password = password.text;
-            
+            // Don't want to do useless calculation
+            // TODO: DOES IT WORK ?
+            var odd = true;
+            yield return new WaitUntil(() => gameConfig.activeInHierarchy);
+            while (!PhotonNetwork.IsConnectedAndReady)
+            {
+                yield return new WaitForSeconds(2f);
+                gameConfigConnectionState.text =  odd ? "Trying to connect to server ..." :  
+                    "Trying to connect to server ..";
+                odd = !odd;
+            }
+        }
+
+        public void OnRegister()
+        {
+            var request = new RegisterPlayFabUserRequest
+            {
+                Email = email.text, Username = username.text, Password = password.text
+            };
+
             PlayFabClientAPI.RegisterPlayFabUser(request, result =>
                 {
                     this.result.text = $"Your account has been created !";
@@ -179,8 +228,6 @@ namespace Evol.Game.Networking
         {
             // to join / create game (no friend)
             if(PhotonNetwork.JoinRandomRoom()) {
-                // Wait a bit other people (proportional to the total number of player in the game)
-                // Start game
                 Debug.Log("JoinRandomRoom success");
             }
         }
@@ -232,25 +279,13 @@ namespace Evol.Game.Networking
 
         private IEnumerator WaitPlayersAndStart()
         {
+            queueStatus.text = $"Press ready to start";
+            
             if(!lockRoomOnStart)
                 yield break;
-            
-            // var timeToWait = timeToWaitPlayers;
-            while (true)
-            {
-                yield return new WaitForSeconds(1);
-
-                var allPlayersReady = PhotonNetwork.CurrentRoom.Players.All(p => p.Value.CustomProperties["ready"].Equals("1"));
-                
-                if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers || allPlayersReady)
-                {
-                    break;
-                }
-
-                queueStatus.text = $"Press ready to start";
-                // QueueStatus.text = $"Waiting for more players {timeToWait}";
-                // timeToWait--;
-            }
+                        
+            // Wait until all players are ready
+            yield return new WaitUntil(() => PhotonNetwork.CurrentRoom.Players.All(p => p.Value.CustomProperties["ready"].Equals("1")));
 
             // Lock the room on start
             PhotonNetwork.CurrentRoom.MaxPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
@@ -262,7 +297,7 @@ namespace Evol.Game.Networking
             gameConfig.SetActive(false);
             characterSelection.SetActive(true);
         }
-
+        
         public override void OnJoinedRoom()
         {
             queueStatus.text = $"Joined a game";
@@ -281,11 +316,6 @@ namespace Evol.Game.Networking
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
             Debug.Log($"OnJoinRoomFailed { returnCode } - { message }");
-        }
-
-        public override void OnConnectedToMaster()
-        {
-		    Debug.Log($"Connected to master cloud");	
         }
 
         public override void OnDisconnected(DisconnectCause cause)

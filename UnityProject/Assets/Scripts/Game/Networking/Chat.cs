@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 using System.Linq;
 using ExitGames.Client.Photon;
 using Photon.Chat;
@@ -7,8 +9,6 @@ using Photon.Pun;
 using PlayFab;
 using PlayFab.ClientModels;
 using TMPro;
-using UnityEngine;
-using UnityEngine.UI;
 
 namespace Evol.Game.Networking
 {
@@ -16,7 +16,7 @@ namespace Evol.Game.Networking
     {
 
         public PlayFabAuthenticationContext PlayFabAuthenticationContext;
-        
+        public int messageLimit = 100;
         [Header("Chat layout")]
         public TMP_InputField ChatInput;
         public GameObject ChatContent;
@@ -24,6 +24,9 @@ namespace Evol.Game.Networking
 
         private ScrollRect chatScroll;
         private ChatClient chatClient;
+
+        private Queue<string> chatMessages = new Queue<string>();
+        
         
         // Start is called before the first frame update
         private void Start()
@@ -36,7 +39,6 @@ namespace Evol.Game.Networking
             }, OnPhotonChatSuccess, error => {
                 Debug.Log($"Failed to connect to chat { error }");
             });
-            // InitializeChat();
         }
 
         // Update is called once per frame
@@ -117,13 +119,14 @@ namespace Evol.Game.Networking
         {
             foreach (var s in senders)
             {
-                ChatText.text += $"Channel {channelName} - { s } said: { messages.Aggregate("", (current, m) => current + m) }\n";
-            } // TODO: Make a FIFO queue to handle messages and remove them after a time
-            // All public messages are automatically cached in `Dictionary<string, ChatChannel> PublicChannels`.
-            // So you don't have to keep track of them.
-            // The channel name is the key for `PublicChannels`.
-            // In very long or active conversations, you might want to trim each channels history.
+                chatMessages.Enqueue($"Channel {channelName} - { s } said: { messages.Aggregate("", (current, m) => current + m) }");
+                if (messages.Length > messageLimit)
+                    chatMessages.Dequeue();
+            } 
             
+            ChatText.text = "";
+            foreach(string m in messages)
+                ChatText.text += m + "\n";
             // Scroll to bottom
             StartCoroutine(ScrollToBottom());
         }

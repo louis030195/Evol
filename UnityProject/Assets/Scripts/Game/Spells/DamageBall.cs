@@ -28,12 +28,6 @@ namespace Evol.Game.Spell
             Invoke(nameof(DestroyAfter), 5);
         }
 
-        private void Update()
-        {
-            // transform.position = transform.position + moveDirection * speed * Time.deltaTime;
-            
-        }
-
         private void DestroyAfter()
         {
             PhotonNetwork.Destroy(gameObject.GetPhotonView());
@@ -42,6 +36,8 @@ namespace Evol.Game.Spell
 
         private void OnTriggerEnter(Collider other)
         {
+            print($"Hit {other.gameObject.name}");
+            
             // The hitbox is on the mesh which is sometimes on a child
             var health = other.gameObject.GetComponent<Health>() ?? other.transform.parent.gameObject.GetComponent<Health>();
             if(health != null)

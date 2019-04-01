@@ -27,7 +27,12 @@ namespace Evol.Game.Player
         private int[] attacksTrigger;
         
         protected virtual void Start()
-        {
+        {      
+	        // Multiplayer, deactivate the component if it's not mine
+	        if(gameObject.GetPhotonView() != null && !gameObject.GetPhotonView().IsMine)
+		        enabled = false;
+	        
+		        
 	        // Set up the references.
 	        attacksTrigger = new int[characterData.Spells.Length];
 	        for (var i = 0; i < attacksTrigger.Length; i++)
