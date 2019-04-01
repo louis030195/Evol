@@ -1,0 +1,30 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Debug = System.Diagnostics.Debug;
+
+namespace Evol.Heuristic.StateMachine
+{
+    [CreateAssetMenu(menuName = "Evol/StateMachine/Actions/StopAndTalk")]
+    public class StopAndTalkAction : Action
+    {
+        public AudioClip[] clips;
+        public override void Act(StateController controller)
+        {
+            StopAndTalk(controller);
+        }
+
+        private void StopAndTalk(StateController controller)
+        {
+            if (controller.audioSource)
+            {
+                controller.audioSource.clip = clips[Random.Range(0, clips.Length)];
+                controller.audioSource.Play();
+            }
+            else
+            {
+                Debug.Print($"You forgot to add me an audiosource");
+            }
+        }
+    }
+}

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Evol.Game.UI;
 using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
 using UnityEngine;
@@ -14,10 +15,6 @@ namespace Evol.Game.Player
     {
         [Tooltip("The local player instance. Use this to know if the local player is represented in the Scene")]
         public static GameObject LocalPlayerInstance;
-
-        [Tooltip("The Player's UI GameObject Prefab")]
-        [SerializeField]
-        private GameObject playerUiPrefab;
 
         /// <summary>
         /// MonoBehaviour method called on GameObject by Unity during early initialization phase.
@@ -34,23 +31,6 @@ namespace Evol.Game.Player
             // #Critical
             // we flag as don't destroy on load so that instance survives level synchronization, thus giving a seamless experience when levels load.
             DontDestroyOnLoad(gameObject);
-        }
-
-        /// <summary>
-        /// MonoBehaviour method called on GameObject by Unity during initialization phase.
-        /// </summary>
-        public void Start()
-        {
-            // Create the UI
-            if (playerUiPrefab != null)
-            {
-                var uiGo = Instantiate(playerUiPrefab);
-                // TODO: setup listener and stuff, add as child ;..
-            }
-            else
-            {
-                Debug.LogWarning("<Color=Red><b>Missing</b></Color> PlayerUiPrefab reference on player Prefab.", this);
-            }
         }
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

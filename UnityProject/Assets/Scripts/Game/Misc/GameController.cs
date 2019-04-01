@@ -22,6 +22,7 @@ namespace Evol.Game.Misc
         
         [Header("Spawnables")]
         [Tooltip("Prefabs of the characters")] public List<GameObject> characters;
+        [Tooltip("Prefabs of the npcs")] public GameObject[] npcs;
         [Tooltip("Prefabs of the mobs")] public GameObject[] mobs;
         [Tooltip("Prefab of the guards")] public GameObject[] guards;
         
@@ -84,6 +85,16 @@ namespace Evol.Game.Misc
 
             if (PhotonNetwork.IsMasterClient)
             {
+                // Spawn npc
+                var npc = Instantiate(npcs[0], Position.AboveGround(
+                        Position.RandomPositionAround(new Vector3(0, 0, 0), 5),
+                        1),
+                    Quaternion.identity);
+                npc.GetComponent<StateController>().SetupAi(true);
+
+                // Set as child of map object
+                npc.transform.parent = map.transform;
+                
                 // Spawn mobs
                 foreach (var i in Enumerable.Range(0, 100))
                 {

@@ -18,6 +18,7 @@ namespace Evol.Heuristic.StateMachine
 		[HideInInspector] public Movement movement;
 		[HideInInspector] public Attack attack;
 		[HideInInspector] public Health health;
+		[HideInInspector] public AudioSource audioSource;
 		[HideInInspector] public Transform chaseTarget;
 		[HideInInspector] public float stateTimeElapsed;
 
@@ -28,6 +29,8 @@ namespace Evol.Heuristic.StateMachine
 		{
 			attack = GetComponent<Attack>();
 			movement = GetComponent<Movement>();
+			health = GetComponent<Health>();
+			audioSource = GetComponent<AudioSource>();
 		}
 
 		private void Start()

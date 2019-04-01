@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2334e2e50828e4b4299a715a021fba01, type: 3}
+  m_Name: StopAndTalkState
+  m_EditorClassIdentifier: 
+  actions:
+  - {fileID: 11400000, guid: a7ea8618e6d3550249710808dc20ce3e, type: 2}
+  transitions:
+  - decision: {fileID: 11400000, guid: 853b408eee463c05aa2f73fcc7812b94, type: 2}
+    trueState: {fileID: 11400000, guid: 66c1aa25a85ba47c4b92d32ccf6e6017, type: 2}
+    falseState: {fileID: 11400000, guid: 5b92279675f8a6a42a06169449625869, type: 2}
+  sceneGizmoColor: {r: 0, g: 0.44510698, b: 1, a: 1}

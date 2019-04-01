@@ -12,14 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34d59f01d369047119466e8ccc464a94, type: 3}
   m_Name: Passive
   m_EditorClassIdentifier: 
-  lookSphereCastRadius: 10
-  lookRange: 100
-  attackRange: 10
-  attackForce: 1
-  attackRate: 1
-  moveSpeed: 30
-  searchingTurnSpeed: 5
-  searchDuration: 5
+  lookSphereCastRadius: 3
+  lookRange: 3
+  attackRange: 0
+  attackForce: 0
+  attackRate: 0
+  moveSpeed: 5
+  searchingTurnSpeed: 0
+  searchDuration: 0
   tags:
-  - Monster
-  - "Tree\x13"
+  - Player

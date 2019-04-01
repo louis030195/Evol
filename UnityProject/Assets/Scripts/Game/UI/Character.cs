@@ -28,21 +28,23 @@ namespace Evol.Game.UI
             
             foreach (var character in characterList)
             {
+                var characterData = character.GetComponent<CastBehaviour>().characterData;
+                
                 // Set the characters in place
-                var charGo = Instantiate(character.GetComponent<CastBehaviour>().characterData.Placeholder, characterPlaceholder.transform);
+                var charGo = Instantiate(characterData.Placeholder, characterPlaceholder.transform);
                 charGo.transform.localScale *= 100;
                 charGo.transform.Rotate(new Vector3(0, 180, 0));
                 charGo.transform.localPosition = new Vector3(charGo.transform.position.x, charGo.transform.position.y, charGo.transform.position.z - 100);
-                characterListObjects[character.GetComponent<CastBehaviour>().characterData.Id] = charGo; // We use ID for ordering in the list
+                characterListObjects[characterData.Id] = charGo; // We use ID for ordering in the list
 
                 // We instanciate all the character buttons with in the right ranged / melee grid,
                 // with proper icon and add the listener for this character
                 var buttonGo = Instantiate(characterIconTemplate, 
-                    character.GetComponent<CastBehaviour>().characterData.Ranged ? rangedGrid.transform : meleeGrid.transform);
-                buttonGo.GetComponent<Image>().sprite = character.GetComponent<CastBehaviour>().characterData.Icon;
+                    characterData.Ranged ? rangedGrid.transform : meleeGrid.transform);
+                buttonGo.GetComponent<Image>().sprite = characterData.Icon;
                 buttonGo.GetComponent<Button>().onClick.AddListener(delegate
                     {
-                        OnClick(character.GetComponent<CastBehaviour>().characterData);
+                        OnClick(characterData);
                     });     
             }
         }

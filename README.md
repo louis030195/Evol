@@ -14,11 +14,12 @@
 
 # Roadmap
 
-- [ ] More characters
+- [ ] More characters, more spells
+- [ ] Spells evolution
 - [x] Game loop
 - [x] Forest propagation
 - [x] Ugly but working UI
-- [ ] Well working multiplayer
+- [x] Working multiplayer
 - [x] Account system
 - [ ] ML stuff
 

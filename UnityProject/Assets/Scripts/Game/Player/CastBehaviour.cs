@@ -32,7 +32,6 @@ namespace Evol.Game.Player
 	        if(gameObject.GetPhotonView() != null && !gameObject.GetPhotonView().IsMine)
 		        enabled = false;
 	        
-		        
 	        // Set up the references.
 	        attacksTrigger = new int[characterData.Spells.Length];
 	        for (var i = 0; i < attacksTrigger.Length; i++)

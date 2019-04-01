@@ -5,6 +5,7 @@ using System.Linq;
 using Evol.Game.Player;
 using UnityEngine;
 using UnityEngine.AI;
+using Debug = System.Diagnostics.Debug;
 using Random = UnityEngine.Random;
 
 namespace Evol.Heuristic
@@ -80,31 +81,40 @@ namespace Evol.Heuristic
 
 		public void MoveTo(Vector3 destination)
 		{
-			if (animator) 
+			if(navMeshAgent.isOnNavMesh)
 			{
-				if (RunningAnimations.Length > 0)
+				if (animator)
 				{
-					var maxRandom = RunningAnimations.Length == 1 ? 0 : RunningAnimations.Length;
-					// If there is running animations for this object
-					animator.SetBool(RunningAnimations[Random.Range(0, maxRandom)], true);
+					if (RunningAnimations.Length > 0)
+					{
+						var maxRandom = RunningAnimations.Length == 1 ? 0 : RunningAnimations.Length;
+						// If there is running animations for this object
+						animator.SetBool(RunningAnimations[Random.Range(0, maxRandom)], true);
+					}
+					else if (WalkingAnimations.Length > 0)
+					{
+						var maxRandom = WalkingAnimations.Length == 1 ? 0 : WalkingAnimations.Length;
+						// Else if there is walking animations for this object
+						animator.SetBool(WalkingAnimations[Random.Range(0, maxRandom)], true);
+					}
 				}
-				else if (WalkingAnimations.Length > 0)
+
+				navMeshAgent.destination = destination;
+				if (DebugPath)
 				{
-					var maxRandom = WalkingAnimations.Length == 1 ? 0 : WalkingAnimations.Length;
-					// Else if there is walking animations for this object
-					animator.SetBool(WalkingAnimations[Random.Range(0, maxRandom)], true);
+					path.Add(destination);
+					if (path.Count > 10) // Clear a bit
+					{
+						path.RemoveRange(0, 10);
+					}
 				}
-			}
-			navMeshAgent.destination = destination;
-			if (DebugPath)
+
+				Resume();
+			} 
+			else
 			{
-				path.Add(destination);
-				if (path.Count > 10) // Clear a bit
-				{
-					path.RemoveRange(0, 10);
-				}
+				print("Not a on a navmesh");
 			}
-			Resume();
 		}
 
 		/// <summary>
