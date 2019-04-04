@@ -597,7 +597,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -642,6 +642,7 @@ MonoBehaviour:
   movement: {fileID: 0}
   attack: {fileID: 0}
   health: {fileID: 0}
+  audioSource: {fileID: 0}
   chaseTarget: {fileID: 0}
   stateTimeElapsed: 0
 --- !u!114 &7483455126654047383
@@ -696,7 +697,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  destroyOnDeath: 0
+  destroyOnDeath: 1
   HealthAudio: {fileID: 0}
   Dying: {fileID: 0}
   GettingHitClips: []
@@ -811,7 +812,7 @@ GameObject:
   - component: {fileID: 737347292149068323}
   m_Layer: 0
   m_Name: MOC_Hunter_A_SKEL
-  m_TagString: Untagged
+  m_TagString: Guard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -926,7 +927,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: 0f63cc10cde4c974d93b49db5d7727da, type: 3}
 --- !u!1 &1000012084188572

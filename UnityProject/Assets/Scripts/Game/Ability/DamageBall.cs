@@ -6,9 +6,9 @@ using Photon.Pun;
 using UnityEditor;
 using UnityEngine;
 
-namespace Evol.Game.Spell
+namespace Evol.Game.Ability
 {
-    public class DamageBall : SpellBase
+    public class DamageBall : Ability
     {
         private Vector3 moveDirection;
         private float speed = 2000;
@@ -19,7 +19,7 @@ namespace Evol.Game.Spell
             base.Start();
             
             // Throw forward       
-            var camera = Caster.GetComponentInChildren<Camera>();
+            var camera = caster.GetComponentInChildren<Camera>();
             var pos = camera.ViewportToWorldPoint(new Vector3(1f, 1f, camera.nearClipPlane));
             transform.LookAt(pos); 
             gameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * speed);
@@ -36,7 +36,7 @@ namespace Evol.Game.Spell
 
         private void OnTriggerEnter(Collider other)
         {
-            print($"Hit {other.gameObject.name}");
+            // print($"Hit {other.gameObject.name}");
             
             // The hitbox is on the mesh which is sometimes on a child
             var health = other.gameObject.GetComponent<Health>() ?? other.transform.parent.gameObject.GetComponent<Health>();

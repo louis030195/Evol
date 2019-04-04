@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19cbebd709e8d4b4db0dc853f92916b4, type: 3}
   m_Name: Snow
   m_EditorClassIdentifier: 
-  SpellPrefab: {fileID: 100000, guid: 644be27d88e5941da83e00333761c43c, type: 3}
-  Icon: {fileID: 21300382, guid: 200f1dc55bb4b681ea93a7da7f787a91, type: 3}
-  Cooldown: 10
-  ManaCost: 50
+  name: New Ability
+  sound: []
+  animation: 
+  icon: {fileID: 21300000, guid: ef907349b2fed8395860019a7ec74469, type: 3}
+  cooldown: 5
+  manaCost: 20
+  prefab: {fileID: 100000, guid: 644be27d88e5941da83e00333761c43c, type: 3}

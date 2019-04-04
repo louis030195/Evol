@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Evol.Game.Spell
+namespace Evol.Game.Ability
 {
 	public class PortalChild : MonoBehaviour {
 

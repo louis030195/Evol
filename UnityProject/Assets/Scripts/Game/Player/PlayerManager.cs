@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Evol.Game.Item;
 using Evol.Game.UI;
 using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
@@ -43,5 +44,4 @@ namespace Evol.Game.Player
             }
         }
     }
-
 }

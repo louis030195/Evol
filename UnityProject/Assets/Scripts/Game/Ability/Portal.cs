@@ -3,9 +3,9 @@ using Evol.Utils;
 using Photon.Pun;
 using UnityEngine;
 
-namespace Evol.Game.Spell
+namespace Evol.Game.Ability
 {
-	public class Portal : SpellBase
+	public class Portal : Ability
 	{
 		public GameObject Portal1;
 		public GameObject Portal2;

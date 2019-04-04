@@ -64,8 +64,12 @@ namespace Evol.Game.Player
 			ResetMaxVerticalAngle();
 		}
 
-		void Update()
+		private void Update()
 		{
+			// If cursor is visible lock the rotation
+			if (Cursor.visible)
+				return;
+			
 			// Get mouse movement to orbit the camera.
 			// Mouse:
 			angleH += Mathf.Clamp(Input.GetAxis("Mouse X"), -1, 1) * horizontalAimingSpeed;

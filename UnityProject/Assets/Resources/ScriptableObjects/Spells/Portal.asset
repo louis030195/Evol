@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19cbebd709e8d4b4db0dc853f92916b4, type: 3}
   m_Name: Portal
   m_EditorClassIdentifier: 
-  SpellPrefab: {fileID: 1146266902701880, guid: 0f1158c0df56fa5419abf75609e41663,
-    type: 3}
-  Icon: {fileID: 21300106, guid: 200f1dc55bb4b681ea93a7da7f787a91, type: 3}
-  Cooldown: 1
-  ManaCost: 1
+  name: New Ability
+  sound: []
+  animation: 
+  icon: {fileID: 21300000, guid: 941bb339a404a4d0285a7563f208d9ab, type: 3}
+  cooldown: 1
+  manaCost: 1
+  prefab: {fileID: 1146266902701880, guid: 0f1158c0df56fa5419abf75609e41663, type: 3}

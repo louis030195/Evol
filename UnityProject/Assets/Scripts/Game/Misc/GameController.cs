@@ -38,7 +38,7 @@ namespace Evol.Game.Misc
         private void Awake()
         {
             // Makes the scene independent for debugging (not having to start all scenes everytime)
-            if (!PhotonNetwork.InRoom)
+            if (!PhotonNetwork.InRoom) 
                 PhotonNetwork.ConnectUsingSettings();
         }
 
@@ -47,26 +47,6 @@ namespace Evol.Game.Misc
         {
             StartCoroutine(WaitBeingInARoom());      
         }
-        
-        void OnEnable()
-        {
-            //Tell our 'OnLevelFinishedLoading' function to start listening for a scene change as soon as this script is enabled.
-            SceneManager.sceneLoaded += OnLevelFinishedLoading;
-        }
-         
-        void OnDisable()
-        {
-            //Tell our 'OnLevelFinishedLoading' function to stop listening for a scene change as soon as this script is disabled. Remember to always have an unsubscription for every delegate you subscribe to!
-            SceneManager.sceneLoaded -= OnLevelFinishedLoading;
-        }
-
-        private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
-        {
-            print("Level Loaded");
-            print(scene.name);
-            print(mode);
-        }
-
 
         private IEnumerator WaitBeingInARoom()
         {
@@ -96,7 +76,7 @@ namespace Evol.Game.Misc
                 npc.transform.parent = map.transform;
                 
                 // Spawn mobs
-                foreach (var i in Enumerable.Range(0, 100))
+                foreach (var i in Enumerable.Range(0, 10))
                 {
                     // Randomgo is just useful to avoid exception when the array is empty
                     var randomGo = mobs.Length > 0 ? mobs[Random.Range(0, mobs.Length)] : null;
@@ -104,7 +84,7 @@ namespace Evol.Game.Misc
                     {
                         var mob = Instantiate(randomGo,
                             Position.AboveGround(
-                                Position.RandomPositionAround(new Vector3(400, 0, 700), 200), // Hardcoded Boss position
+                                Position.RandomPositionAround(new Vector3(200, 0, 300), 200),
                                 1),
                             Quaternion.identity);
                         mob.GetComponent<StateController>().SetupAi(true);
@@ -139,7 +119,7 @@ namespace Evol.Game.Misc
                 2;
             
             // Retrieve the prefab assiocated to this id
-            var foundPrefab = characters.Find(c => c.GetComponent<CastBehaviour>().characterData.Id == characterId);
+            var foundPrefab = characters.Find(c => c.GetComponent<CastBehaviour>().characterData.id == characterId);
             
             // Instanciate the player
             PhotonNetwork.Instantiate(foundPrefab.name, new Vector3(0, 50, 0), Quaternion.identity);
@@ -151,19 +131,6 @@ namespace Evol.Game.Misc
             print("Connected to master, creating room");
             PhotonNetwork.CreateRoom("");
         }
-
-        public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
-        {
-            // He is in character selection
-            // Once level loaded, spawn him
-            StartCoroutine(WaitPlayerEnterLevel(newPlayer));
-        }
-
-        private IEnumerator WaitPlayerEnterLevel(Photon.Realtime.Player player)
-        {
-            yield return new WaitUntil(() => true);
-        }
-        
         
 
         // This is called from start and will run each phase of the game one after another.

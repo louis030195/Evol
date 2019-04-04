@@ -23,10 +23,12 @@ MonoBehaviour:
   ranged: 1
   element: 1
   icon: {fileID: 21300000, guid: ca3fe86c73b5335bda40809fc9c584e7, type: 3}
-  spells:
+  abilities:
+  - {fileID: 11400000, guid: cb722f370efd747cd8b0046122712fff, type: 2}
+  - {fileID: 11400000, guid: 030d2005f004b44c8a44d1e1e28c5578, type: 2}
   - {fileID: 11400000, guid: c47ebf33220754832ac8fe42e28a042f, type: 2}
-  - {fileID: 11400000, guid: fde49a31f58c34f07aca921ab61a32ca, type: 2}
-  - {fileID: 11400000, guid: 6dd58dcf03afd43a4a272b9fe2567c87, type: 2}
   - {fileID: 11400000, guid: 8d47cbea29f474b4a87251d49e357406, type: 2}
+  - {fileID: 11400000, guid: 6dd58dcf03afd43a4a272b9fe2567c87, type: 2}
+  - {fileID: 11400000, guid: fde49a31f58c34f07aca921ab61a32ca, type: 2}
   placeholder: {fileID: 1647962671677056, guid: 7ebed864cdedb62928362a7732512b5c,
     type: 3}

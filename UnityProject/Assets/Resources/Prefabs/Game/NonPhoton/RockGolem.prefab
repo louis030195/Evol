@@ -1361,6 +1361,7 @@ MonoBehaviour:
   movement: {fileID: 0}
   attack: {fileID: 0}
   health: {fileID: 0}
+  audioSource: {fileID: 0}
   chaseTarget: {fileID: 0}
   stateTimeElapsed: 0
 --- !u!114 &6739360105006294394
@@ -1817,7 +1818,7 @@ GameObject:
   - component: {fileID: 7605954486350110401}
   m_Layer: 8
   m_Name: rockgolem
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1914,7 +1915,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: e768f0b7a777cb04bbb011067b542779, type: 3}
 --- !u!1 &1919075281582490

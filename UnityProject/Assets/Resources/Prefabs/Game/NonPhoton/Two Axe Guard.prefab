@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 8209009896198793377}
   m_Layer: 0
   m_Name: Monster_006_0
-  m_TagString: Untagged
+  m_TagString: Guard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -566,8 +566,6 @@ GameObject:
   - component: {fileID: 95940248555296966}
   - component: {fileID: 2847737286677966188}
   - component: {fileID: 4534611160913718914}
-  - component: {fileID: 5479356496883913603}
-  - component: {fileID: 284068079983777819}
   - component: {fileID: 1012197577726370961}
   - component: {fileID: 9126981803615391327}
   - component: {fileID: 8305912682483142521}
@@ -633,6 +631,7 @@ MonoBehaviour:
   movement: {fileID: 0}
   attack: {fileID: 0}
   health: {fileID: 0}
+  audioSource: {fileID: 0}
   chaseTarget: {fileID: 0}
   stateTimeElapsed: 0
 --- !u!195 &4534611160913718914
@@ -657,43 +656,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &5479356496883913603
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1469492660037290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 0
-  OwnershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 0}
-  viewIdField: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &284068079983777819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1469492660037290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
 --- !u!114 &1012197577726370961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -762,7 +724,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1469492660037290}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 1000
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1

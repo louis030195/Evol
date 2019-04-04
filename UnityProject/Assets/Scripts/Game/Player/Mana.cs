@@ -16,8 +16,7 @@ namespace Evol.Game.Player
         // Adding accessor allow us to hide the field in inspector and limit setter to private
         // We could also use [HideInInspector] without accessors but the field could be changed outside of this class ...
         public FloatEvent OnManaChanged = new FloatEvent();
-        private int currentMana;
-        public int CurrentMana => currentMana;
+        [HideInInspector] public int currentMana;
 
         private void Start()
         {

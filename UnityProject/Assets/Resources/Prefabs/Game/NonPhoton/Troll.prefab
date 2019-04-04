@@ -23303,16 +23303,16 @@ GameObject:
   m_Component:
   - component: {fileID: 443822}
   - component: {fileID: 9543920}
-  - component: {fileID: 13543920}
   - component: {fileID: 5443920}
   - component: {fileID: 7459410992272564831}
   - component: {fileID: 7586442614600648364}
   - component: {fileID: 6865885079759004973}
   - component: {fileID: 7754070969893131915}
   - component: {fileID: 8573994936657719482}
+  - component: {fileID: 4371461522316512050}
   m_Layer: 0
   m_Name: Troll
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23358,19 +23358,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!135 &13543920
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 143816}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 10
-  m_Center: {x: 0, y: 10, z: -1.2071486}
 --- !u!54 &5443920
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -23406,6 +23393,7 @@ MonoBehaviour:
   movement: {fileID: 0}
   attack: {fileID: 0}
   health: {fileID: 0}
+  audioSource: {fileID: 0}
   chaseTarget: {fileID: 0}
   stateTimeElapsed: 0
 --- !u!114 &7586442614600648364
@@ -23421,7 +23409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  destroyOnDeath: 0
+  destroyOnDeath: 1
   HealthAudio: {fileID: 0}
   Dying: {fileID: 0}
   GettingHitClips: []
@@ -23476,7 +23464,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 143816}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 4
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -23485,10 +23473,24 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 30
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!136 &4371461522316512050
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143816}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 5
+  m_Height: 30
+  m_Direction: 1
+  m_Center: {x: 0, y: 15, z: 0}
 --- !u!1 &143818
 GameObject:
   m_ObjectHideFlags: 0
@@ -23533,7 +23535,7 @@ GameObject:
   - component: {fileID: 13743906}
   m_Layer: 0
   m_Name: Mesh_Body
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

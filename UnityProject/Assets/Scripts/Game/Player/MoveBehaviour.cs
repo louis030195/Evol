@@ -41,6 +41,10 @@ namespace Evol.Game.Player
 		// Update is used to set features regardless the active behaviour.
 		private void Update()
 		{
+			// If cursor is visible lock the rotation
+			if (Cursor.visible)
+				return;
+			
 			// Get jump input.
 			if (!jump && Input.GetButtonDown(jumpButton) && behaviourManager.IsCurrentBehaviour(behaviourCode) &&
 			    !behaviourManager.IsOverriding())
@@ -52,6 +56,13 @@ namespace Evol.Game.Player
 		// LocalFixedUpdate overrides the virtual function of the base class.
 		public override void LocalFixedUpdate()
 		{
+			// If cursor is visible lock the rotation
+			if (Cursor.visible)
+			{
+				MovementManagement(0, 0);
+				return;
+			}
+
 			// Call the basic movement manager.
 			MovementManagement(behaviourManager.GetH, behaviourManager.GetV);
 
@@ -120,7 +131,7 @@ namespace Evol.Game.Player
 			var dir = new Vector2(horizontal, vertical);
 			speed = Vector2.ClampMagnitude(dir, 1f).magnitude;
 			// This is for PC only, gamepads control speed via analog stick.
-			speedSeeker += Input.GetAxis("Mouse ScrollWheel"); // Hardcode
+			speedSeeker += Input.GetAxis("Mouse ScrollWheel");
 			speedSeeker = Mathf.Clamp(speedSeeker, walkSpeed, runSpeed);
 			speed *= speedSeeker;
 			if (behaviourManager.IsSprinting())

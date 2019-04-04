@@ -16,22 +16,22 @@ namespace Evol.Game.UI
         public GameObject skillBar;
         public GameObject skillPlaceholderPrefab;
         public GameObject castBehaviourParent;
-        private List<GameObject> skills = new List<GameObject>();
+        private List<GameObject> abilities = new List<GameObject>();
 
         // Start is called before the first frame update
         private void Start()
         {
             var i = 1;
-            foreach (var spell in castBehaviourParent.GetComponent<CastBehaviour>().characterData.Spells)
+            foreach (var spell in castBehaviourParent.GetComponent<CastBehaviour>().characterData.abilities)
             {
                 // Instanciate the prefab the prefab which has an image component + image background for cooldown
-                skills.Add(Instantiate(skillPlaceholderPrefab, skillBar.transform));
+                abilities.Add(Instantiate(skillPlaceholderPrefab, skillBar.transform));
                 
                 // Set the key text
-                skills.Last().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"Key {i}";
+                abilities.Last().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"Key {i}";
                 
                 // Set the right icon
-                skills.Last().transform.GetChild(1).GetComponent<Image>().sprite = spell.Icon;
+                abilities.Last().transform.GetChild(1).GetComponent<Image>().sprite = spell.icon;
                 
                 i++;
             }
@@ -47,7 +47,7 @@ namespace Evol.Game.UI
         /// <param name="cooldown">spell cooldown</param>
         private void UpdateUI(int spell, float cooldown)
         {
-            StartCoroutine(SkillCooldown(skills[spell].transform.GetChild(2).GetComponent<Image>(), cooldown));
+            StartCoroutine(SkillCooldown(abilities[spell].transform.GetChild(2).GetComponent<Image>(), cooldown));
         }
 
         /// <summary>

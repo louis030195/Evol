@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Evol.Game.Player;
-using Evol.Game.Spell;
+using Evol.Game.Ability;
 using Photon.Pun;
 using UnityEngine;
 
-public class RechargeMana : SpellBase
+public class RechargeMana : Ability
 {
 
 
@@ -23,11 +23,11 @@ public class RechargeMana : SpellBase
 		stream = new List<GameObject>();
 		// Caster.Item1.GetComponent<Animator>().SetTrigger("Attack2Trigger");
         
-		transform.parent = Caster.transform;
+		transform.parent = caster.transform;
 		// For some reason the position is random ?
-		transform.position = new Vector3(Caster.transform.position.x,
-			Caster.transform.position.y + 1f,
-			Caster.transform.position.z); 
+		transform.position = new Vector3(caster.transform.position.x,
+			caster.transform.position.y + 1f,
+			caster.transform.position.z); 
 		Destroy(gameObject, 10f);
 		
 
@@ -41,7 +41,7 @@ public class RechargeMana : SpellBase
 		if (!gameObject.GetPhotonView().IsMine)
 			return;
 		var hitColliders = Physics.OverlapSphere(transform.position, 10f);
-		var element = Caster.GetComponent<CastBehaviour>().characterData.Element;
+		var element = caster.GetComponent<CastBehaviour>().characterData.element;
 		if (hitColliders.Any(c => (element == Element.Fire && c.CompareTag("FireSource")) 
 		                          || (element == Element.Ice && c.CompareTag("IceSource"))))
 		{
@@ -53,11 +53,11 @@ public class RechargeMana : SpellBase
 					.transform.position, Quaternion.identity,
 					transform.parent));
 				stream.Last().AddComponent<Rigidbody>().useGravity = false;
-				stream.Last().transform.LookAt(Caster.transform);
+				stream.Last().transform.LookAt(caster.transform);
 				stream.Last().GetComponent<Rigidbody>().AddForce(transform.forward * 400, ForceMode.Acceleration);
 				/////
 				Destroy(stream.Last(), 5f);
-				Caster.gameObject.GetComponent<Mana>().RechargeMana(10);
+				caster.gameObject.GetComponent<Mana>().RechargeMana(10);
 			}
 		}
 		else

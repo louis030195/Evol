@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19cbebd709e8d4b4db0dc853f92916b4, type: 3}
   m_Name: IceBall
   m_EditorClassIdentifier: 
-  SpellPrefab: {fileID: 100004, guid: fe31ce231b9a94e46946236cae210aab, type: 3}
-  Icon: {fileID: 21300028, guid: 200f1dc55bb4b681ea93a7da7f787a91, type: 3}
-  Cooldown: 0
-  ManaCost: 10
+  name: New Ability
+  sound: []
+  animation: 
+  icon: {fileID: 21300000, guid: 4227e1fa86c4c8cf3aad5f592c578efc, type: 3}
+  cooldown: 1
+  manaCost: 1
+  prefab: {fileID: 100004, guid: fe31ce231b9a94e46946236cae210aab, type: 3}

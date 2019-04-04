@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19cbebd709e8d4b4db0dc853f92916b4, type: 3}
   m_Name: FireShield
   m_EditorClassIdentifier: 
-  SpellPrefab: {fileID: 1727626132299242, guid: 5275f4969fd974a748bdaca3cfdceac1,
-    type: 3}
-  Icon: {fileID: 21300096, guid: 200f1dc55bb4b681ea93a7da7f787a91, type: 3}
-  Cooldown: 10
-  ManaCost: 50
+  name: New Ability
+  sound: []
+  animation: 
+  icon: {fileID: 21300000, guid: d5eefcc0542c3ddc381881da5e2d0dcd, type: 3}
+  cooldown: 5
+  manaCost: 20
+  prefab: {fileID: 1727626132299242, guid: 5275f4969fd974a748bdaca3cfdceac1, type: 3}

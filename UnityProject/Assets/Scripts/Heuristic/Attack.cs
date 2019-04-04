@@ -49,7 +49,8 @@ namespace Evol.Heuristic
 			
 			if (!(Time.time > elapsedTime)) return;
 			elapsedTime = Time.time + attackRate;
-			target.GetComponent<Health>().TakeDamage(attackForce);
+			var health = target.gameObject.GetComponent<Health>() ?? target.transform.parent.gameObject.GetComponent<Health>();
+			if(health != null) health.TakeDamage(attackForce);
 		}
 	}
 }

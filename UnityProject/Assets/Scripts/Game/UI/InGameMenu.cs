@@ -39,6 +39,15 @@ namespace Evol.Game.UI
 		public TextMeshProUGUI playersAlive;
 		public TextMeshProUGUI time;
 		public TextMeshProUGUI kills;
+		
+		[Header("Overlay items (center of the screen)")] 
+		public GameObject itemsUi;
+		public GameObject itemsGround;
+		public GameObject itemsInventory;
+		public ScrollRect itemsGroundScroll;
+		public GameObject itemsGroundScrollContent;
+		public GameObject inventoryEquipped;
+		public GameObject inventoryNonEquipped;
 
 		private void Awake()
 		{
@@ -68,28 +77,52 @@ namespace Evol.Game.UI
 		// Update is called once per frame
 		private void Update()
 		{
-			if (Input.GetKeyDown(KeyCode.Escape))
+			if (Input.GetKeyDown(KeyCode.Escape)) // Display pause panel
 			{
 				Cursor.visible = !Cursor.visible;
-
-				// In case we exited the menu from settings, reset stuff
-				if (settingsPauseUi.activeInHierarchy)
-				{
-					OnSettings();
-					OnControls();
-				}
+				OnEscape();
+			}
+			
+			if (Input.GetKeyDown(KeyCode.LeftAlt)) // Display inventory panel + ground panel
+			{
+				Cursor.visible = !Cursor.visible;
 				
-				pauseUi.SetActive(!pauseUi.activeInHierarchy);
-				playUi.SetActive(!playUi.activeInHierarchy);
-
-				// var behaviour = GetComponent<BasicBehaviour>();
+				// We keep the play UI
+				if(pauseUi.activeInHierarchy)
+					pauseUi.SetActive(false);
 				
-				// Disable / enable the character movement
-				// if (behaviour != null)
-				//	behaviour.LockTempBehaviour()) = !GetComponent<CastBehaviour>().Lock;
+				itemsUi.SetActive(!itemsUi.activeInHierarchy);
+				itemsGround.SetActive(itemsUi.activeInHierarchy);
+				itemsInventory.SetActive(itemsUi.activeInHierarchy);
+			}
+
+			if (Input.GetKeyDown(KeyCode.I)) // Display the inventory panel only
+			{
+				Cursor.visible = !Cursor.visible;
+				
+				// We keep the play UI
+				if(pauseUi.activeInHierarchy)
+					pauseUi.SetActive(false);
+				
+				itemsUi.SetActive(!itemsUi.activeInHierarchy);
+				itemsGround.SetActive(itemsUi.activeInHierarchy);
+				itemsInventory.SetActive(false);
 			}
 			
 			UpdateTimeUI();
+		}
+
+		private void OnEscape()
+		{
+			// In case we exited the menu from settings, reset stuff
+			if (settingsPauseUi.activeInHierarchy)
+			{
+				OnSettings();
+				OnControls();
+			}
+				
+			pauseUi.SetActive(!pauseUi.activeInHierarchy);
+			playUi.SetActive(!playUi.activeInHierarchy);
 		}
 
 		/// <summary>
@@ -179,7 +212,7 @@ namespace Evol.Game.UI
 				{
 					int.TryParse(kills.text, out var value);
 					// Increment the kills counter
-					kills.text = value++.ToString();
+					kills.text = (value + 1).ToString();
 				}
 				else
 				{

@@ -69,14 +69,10 @@ namespace Evol.Game.Player
 
 		private void Update()
 		{
-			/*
-			// Could be nice to lock the char when cursor is visible
-			if(!Cursor.visible && GetTempLockStatus())
-				UnlockTempBehaviour(currentBehaviour);
-			else
-				LockTempBehaviour(currentBehaviour);
-				*/
-			
+			// If cursor is visible lock the rotation
+			if (Cursor.visible)
+				return;
+
 			// Store the input axes.
 			h = Input.GetAxis("Horizontal");
 			v = Input.GetAxis("Vertical");
@@ -107,6 +103,10 @@ namespace Evol.Game.Player
 		// Call the FixedUpdate functions of the active or overriding behaviours.
 		private void FixedUpdate()
 		{
+			// If cursor is visible lock the rotation
+			if (Cursor.visible)
+				return;	
+			
 			// Call the active behaviour if no other is overriding.
 			var isAnyBehaviourActive = false;
 			if (behaviourLocked > 0 || overridingBehaviours.Count == 0)
@@ -343,8 +343,9 @@ namespace Evol.Game.Player
 		// Function to tell whether or not the player is on ground.
 		public bool IsGrounded()
 		{
+			// TODO: think about this 0.2f value corresponding to sensibility to say if im grounded or not
 			var ray = new Ray(transform.position + Vector3.up * 2 * colExtents.x, Vector3.down);
-			return Physics.SphereCast(ray, colExtents.x, colExtents.x + 0.2f);
+			return Physics.SphereCast(ray, colExtents.x, colExtents.x + 0.2f); 
 		}
 	}
 }

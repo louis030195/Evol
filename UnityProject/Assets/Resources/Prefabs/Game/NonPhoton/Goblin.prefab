@@ -23416,7 +23416,7 @@ GameObject:
   - component: {fileID: 13755992}
   m_Layer: 0
   m_Name: Mesh_Body
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24893,7 +24893,7 @@ GameObject:
   - component: {fileID: 5909662119351229669}
   m_Layer: 0
   m_Name: Goblin
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24985,6 +24985,7 @@ MonoBehaviour:
   movement: {fileID: 0}
   attack: {fileID: 0}
   health: {fileID: 0}
+  audioSource: {fileID: 0}
   chaseTarget: {fileID: 0}
   stateTimeElapsed: 0
 --- !u!114 &259005546678606942
@@ -25037,7 +25038,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  destroyOnDeath: 0
+  destroyOnDeath: 1
   HealthAudio: {fileID: 0}
   Dying: {fileID: 0}
   GettingHitClips: []
@@ -25055,7 +25056,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 193048}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 3
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -25064,7 +25065,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 14
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4

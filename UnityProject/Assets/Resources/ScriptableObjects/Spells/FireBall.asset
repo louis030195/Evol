@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19cbebd709e8d4b4db0dc853f92916b4, type: 3}
   m_Name: FireBall
   m_EditorClassIdentifier: 
-  SpellPrefab: {fileID: 100004, guid: e80858857bb25463b82ed690e0f7c14d, type: 3}
-  Icon: {fileID: 21300024, guid: 200f1dc55bb4b681ea93a7da7f787a91, type: 3}
-  Cooldown: 0
-  ManaCost: 1
+  name: New Ability
+  sound: []
+  animation: 
+  icon: {fileID: 21300000, guid: 3648478f1787e123d89936c7abf24c05, type: 3}
+  cooldown: 1
+  manaCost: 1
+  prefab: {fileID: 100004, guid: e80858857bb25463b82ed690e0f7c14d, type: 3}

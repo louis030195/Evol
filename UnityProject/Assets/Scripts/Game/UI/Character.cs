@@ -31,17 +31,17 @@ namespace Evol.Game.UI
                 var characterData = character.GetComponent<CastBehaviour>().characterData;
                 
                 // Set the characters in place
-                var charGo = Instantiate(characterData.Placeholder, characterPlaceholder.transform);
+                var charGo = Instantiate(characterData.placeholder, characterPlaceholder.transform);
                 charGo.transform.localScale *= 100;
                 charGo.transform.Rotate(new Vector3(0, 180, 0));
                 charGo.transform.localPosition = new Vector3(charGo.transform.position.x, charGo.transform.position.y, charGo.transform.position.z - 100);
-                characterListObjects[characterData.Id] = charGo; // We use ID for ordering in the list
+                characterListObjects[characterData.id] = charGo; // We use ID for ordering in the list
 
                 // We instanciate all the character buttons with in the right ranged / melee grid,
                 // with proper icon and add the listener for this character
                 var buttonGo = Instantiate(characterIconTemplate, 
-                    characterData.Ranged ? rangedGrid.transform : meleeGrid.transform);
-                buttonGo.GetComponent<Image>().sprite = characterData.Icon;
+                    characterData.ranged ? rangedGrid.transform : meleeGrid.transform);
+                buttonGo.GetComponent<Image>().sprite = characterData.icon;
                 buttonGo.GetComponent<Button>().onClick.AddListener(delegate
                     {
                         OnClick(characterData);
@@ -56,14 +56,14 @@ namespace Evol.Game.UI
                 c.SetActive(false);
             }
             
-            characterListObjects[characterData.Id].SetActive(true);
-            description.text = characterData.Description;
-            name.text = characterData.CharacterName;
+            characterListObjects[characterData.id].SetActive(true);
+            description.text = characterData.description;
+            name.text = characterData.characterName;
             // Add the character chosen in the properties of the player or set if we already had a character key
             if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("character"))
-                PhotonNetwork.LocalPlayer.CustomProperties["character"] = characterData.Id.ToString();
+                PhotonNetwork.LocalPlayer.CustomProperties["character"] = characterData.id.ToString();
             else
-                PhotonNetwork.LocalPlayer.CustomProperties.Add("character", characterData.Id.ToString());
+                PhotonNetwork.LocalPlayer.CustomProperties.Add("character", characterData.id.ToString());
         }
     }
 }

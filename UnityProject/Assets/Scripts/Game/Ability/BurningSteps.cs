@@ -4,9 +4,9 @@ using Evol.Agents;
 using Evol.Game.Player;
 using UnityEngine;
 
-namespace Evol.Game.Spell
+namespace Evol.Game.Ability
 {
-	public class BurningSteps : SpellBase
+	public class BurningSteps : Ability
 	{
 		private void OnTriggerStay(Collider other)
 		{

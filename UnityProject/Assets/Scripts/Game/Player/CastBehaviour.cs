@@ -15,7 +15,6 @@ namespace Evol.Game.Player
         public Transform bulletSpawn;
         [Tooltip("Key name in the input manager to throw spell (with index next to it like Spell1, Spell2 ...)")] 
         public string spellKey = "Spell";
-        [HideInInspector] public bool Lock;
         public IntFloatEvent onSpellThrown = new IntFloatEvent();
 
         
@@ -33,14 +32,13 @@ namespace Evol.Game.Player
 		        enabled = false;
 	        
 	        // Set up the references.
-	        attacksTrigger = new int[characterData.Spells.Length];
+	        attacksTrigger = new int[characterData.abilities.Length];
 	        for (var i = 0; i < attacksTrigger.Length; i++)
 	        {
 		        attacksTrigger[i] = Animator.StringToHash($"Attack0");//Animator.StringToHash($"Attack{i}"); // Temporary until we have good animations
 	        }
 	        
-	        
-	        nextSpell = new float[characterData.Spells.Length];
+	        nextSpell = new float[characterData.abilities.Length];
 	        mana = GetComponent<Mana>();
 	        health = GetComponent<Health>();
 	        // behaviourManager.SubscribeBehaviour(this);
@@ -54,11 +52,15 @@ namespace Evol.Game.Player
 		// Update is used to set features regardless the active behaviour.
 		private void Update()
 		{
+			// If cursor is visible lock the casting
+			if (Cursor.visible)
+				return;
+			
 			// Rotate toward the point we're aiming at before animating
 			Rotating();
 			
 			// Check if a spell key has been pressed
-			for (var i = 0; i < characterData.Spells.Length; i++)
+			for (var i = 0; i < characterData.abilities.Length; i++)
 			{
 				if (!Input.GetButtonDown($"{spellKey}{i}")) continue;
 				currentSpell = i;
@@ -73,8 +75,10 @@ namespace Evol.Game.Player
 			// Check if it's my photonview
 			// Check if i'm not in a room (debugging)
 			// TODO: order the most improbable first in order to gain performance (avoid checking all others)
-			if (!cast && currentSpell != -1 && Time.time > nextSpell[currentSpell] &&
-			     characterData.Spells[currentSpell].ManaCost < mana.CurrentMana &&
+			if (!cast && 
+			    currentSpell != -1 &&
+			    Time.time > nextSpell[currentSpell] &&
+			     characterData.abilities[currentSpell].manaCost < mana.currentMana &&
 			    (photonView.IsMine || !PhotonNetwork.InRoom)) // InRoom check is for offline mode (mostly debugging)
 			{
 				StartCoroutine(nameof(CastOn));
@@ -107,6 +111,8 @@ namespace Evol.Game.Player
 				
 				// Trigger the animation
 				behaviourManager.GetAnim.SetTrigger(attacksTrigger[currentSpell]);
+				// Spells with bool anim ?
+				// behaviourManager.GetAnim.SetTrigger(characterData.Spells[currentSpell].Animation);
 				// behaviourManager.LockTempBehaviour(behaviourCode);
 
 				// Slow movement
@@ -142,19 +148,19 @@ namespace Evol.Game.Player
 				return;	
 				
 			// Set spell cooldown
-			nextSpell[currentSpell] = Time.time + characterData.Spells[currentSpell].Cooldown;
+			nextSpell[currentSpell] = Time.time + characterData.abilities[currentSpell].cooldown;
             
 			// Throw event to say that we threw a spell
-			onSpellThrown.Invoke(currentSpell, characterData.Spells[currentSpell].Cooldown);
+			onSpellThrown.Invoke(currentSpell, characterData.abilities[currentSpell].cooldown);
 
 			// Use the mana
-			mana.UseMana(characterData.Spells[currentSpell].ManaCost);
+			mana.UseMana(characterData.abilities[currentSpell].manaCost);
 
 			// Spawn the spell
-			var go = PhotonNetwork.Instantiate(characterData.Spells[currentSpell].SpellPrefab.name, bulletSpawn.position,
+			var go = PhotonNetwork.Instantiate(characterData.abilities[currentSpell].prefab.name, bulletSpawn.position,
 				bulletSpawn.rotation);
 
-			go.GetComponent<SpellBase>().Caster = gameObject;
+			go.GetComponent<Ability.Ability>().caster = gameObject;
 
 			currentSpell = -1; // Reset the current spell id
 		}

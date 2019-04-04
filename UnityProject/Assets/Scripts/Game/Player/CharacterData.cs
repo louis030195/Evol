@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Evol.Game.Spell;
+using Evol.Game.Ability;
 using UnityEngine;
 
 namespace Evol.Game.Player
@@ -14,28 +14,13 @@ namespace Evol.Game.Player
     [CreateAssetMenu(menuName = "Evol/Character")]
     public class CharacterData : ScriptableObject
     {
-        [SerializeField] private int id;
-        [SerializeField] private string characterName;
-        [SerializeField] private string description;
-        [SerializeField] private bool ranged;
-        [SerializeField] private Element element;
-        [SerializeField] private Sprite icon;
-        [SerializeField] private SpellObject[] spells;
-        [SerializeField] private GameObject placeholder;
-        
-        // Getters
-        public int Id => id;
-
-        public string CharacterName => characterName;
-
-        public string Description => description;
-        public Element Element => element;
-
-        public Sprite Icon => icon;
-        public SpellObject[] Spells => spells;
-        public bool Ranged => ranged;
-        public GameObject Placeholder => placeholder;
-
-        // More stats ?
+        public int id;
+        public string characterName;
+        public string description;
+        public bool ranged;
+        public Element element;
+        public Sprite icon;
+        public AbilityData[] abilities;
+        public GameObject placeholder;
     }
 }

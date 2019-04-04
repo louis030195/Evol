@@ -20,6 +20,9 @@ namespace Evol.Heuristic.StateMachine
             {
                 controller.audioSource.clip = clips[Random.Range(0, clips.Length)];
                 controller.audioSource.Play();
+                
+                // Stop him
+                controller.movement.MoveTo(controller.transform.position);
             }
             else
             {
