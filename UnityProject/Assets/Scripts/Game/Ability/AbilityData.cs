@@ -8,6 +8,7 @@ namespace Evol.Game.Ability
 	public class AbilityData : ScriptableObject
 	{
 		public new string name;
+		public string description;
 		public AudioClip[] sound;
 		public string animation;
 		public Sprite icon;

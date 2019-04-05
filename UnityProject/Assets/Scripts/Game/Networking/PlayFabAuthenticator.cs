@@ -54,6 +54,7 @@ namespace Evol.Game.Networking
 
 
         private float timeToWaitPlayers = 3; // Should be proportional to the total number of players currently playing
+        private bool ready;
 
         private void Awake()
         {
@@ -79,12 +80,6 @@ namespace Evol.Game.Networking
             // We reach this condition if we leave a game a go back to main menu
             if(PlayFabClientAPI.IsClientLoggedIn())
                 OnLoginSuccess();
-        }
-
-        private void Update()
-        {
-            // if (!gameObject.GetPhotonView().IsMine)
-            //    enabled = false;
         }
 
         public void OnLogin()
@@ -241,20 +236,9 @@ namespace Evol.Game.Networking
             // Means that we can just start whenever we want and join others room
             if(!lockRoomOnStart)
                 PhotonNetwork.LoadLevel("Game");
-            
-            if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("ready"))
-            {
-                PhotonNetwork.LocalPlayer.CustomProperties["ready"] =
-                    PhotonNetwork.LocalPlayer.CustomProperties["ready"].Equals("1") ? "0" : "1";
-            }
-            else
-            {
-                PhotonNetwork.LocalPlayer.CustomProperties.Add("ready", "1");
-            }
+            if (PhotonNetwork.IsMasterClient)
+                ready = true;
         }
-
-
-
 
         public override void OnJoinRandomFailed(short returnCode, string message)
         {
@@ -285,7 +269,7 @@ namespace Evol.Game.Networking
                 yield break;
                         
             // Wait until all players are ready
-            yield return new WaitUntil(() => PhotonNetwork.CurrentRoom.Players.All(p => p.Value.CustomProperties["ready"].Equals("1")));
+            yield return new WaitUntil(() => ready);
 
             // Lock the room on start
             PhotonNetwork.CurrentRoom.MaxPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
@@ -300,6 +284,8 @@ namespace Evol.Game.Networking
         
         public override void OnJoinedRoom()
         {
+            // Only the master client can start the game (or if it can if its not locked)
+            characterSelectionReadyButton.interactable = PhotonNetwork.IsMasterClient || !lockRoomOnStart;
             queueStatus.text = $"Joined a game";
             LoadPlayLayout();
             // Wait a bit other players then start

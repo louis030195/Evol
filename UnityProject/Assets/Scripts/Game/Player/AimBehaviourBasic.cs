@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Photon.Pun;
 
 namespace Evol.Game.Player
 {
@@ -18,6 +19,10 @@ namespace Evol.Game.Player
 		// Start is always called after any Awake functions.
 		private void Start()
 		{
+			// Multiplayer, deactivate the component if it's not mine
+			if(gameObject.GetPhotonView() != null && !gameObject.GetPhotonView().IsMine)
+				enabled = false;
+		
 			// Set up the references.
 			aimBool = Animator.StringToHash("Aim");
 		}

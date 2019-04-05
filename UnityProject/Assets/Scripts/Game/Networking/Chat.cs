@@ -124,7 +124,7 @@ namespace Evol.Game.Networking
                     chatMessages.Dequeue();
             } 
             
-            ChatText.text = "";
+            // ChatText.text = "";
             foreach(string m in messages)
                 ChatText.text += m + "\n";
             // Scroll to bottom

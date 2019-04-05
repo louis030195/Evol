@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Evol.Game.Ability;
 using Evol.Game.Player;
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Debug = System.Diagnostics.Debug;
 
 namespace Evol.Game.UI
 {
@@ -18,11 +21,14 @@ namespace Evol.Game.UI
         public GameObject castBehaviourParent;
         private List<GameObject> abilities = new List<GameObject>();
 
+        public GameObject skillInformationPanel;
+        public TextMeshProUGUI skillInformationText;
+
         // Start is called before the first frame update
         private void Start()
         {
             var i = 1;
-            foreach (var spell in castBehaviourParent.GetComponent<CastBehaviour>().characterData.abilities)
+            foreach (var ability in castBehaviourParent.GetComponent<CastBehaviour>().characterData.abilities)
             {
                 // Instanciate the prefab the prefab which has an image component + image background for cooldown
                 abilities.Add(Instantiate(skillPlaceholderPrefab, skillBar.transform));
@@ -31,12 +37,35 @@ namespace Evol.Game.UI
                 abilities.Last().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"Key {i}";
                 
                 // Set the right icon
-                abilities.Last().transform.GetChild(1).GetComponent<Image>().sprite = spell.icon;
+                abilities.Last().transform.GetChild(1).GetComponent<Image>().sprite = ability.icon;
+                var trigger = abilities.Last().AddComponent<EventTrigger>();
+                var entryPointerEnter = new EventTrigger.Entry {eventID = EventTriggerType.PointerEnter};
+                entryPointerEnter.callback.AddListener( ( data ) => { OnPointerEnterDelegate(data as PointerEventData, ability); } );
+                var entryPointerExit = new EventTrigger.Entry {eventID = EventTriggerType.PointerExit};
+                entryPointerExit.callback.AddListener( ( data ) => { OnPointerExitDelegate(data as PointerEventData); } );
+                trigger.triggers.Add( entryPointerEnter );
+                trigger.triggers.Add(entryPointerExit);
                 
                 i++;
             }
             
             castBehaviourParent.GetComponent<CastBehaviour>().onSpellThrown.AddListener(UpdateUI);
+        }
+        
+        private void OnPointerEnterDelegate( PointerEventData data, AbilityData ability )
+        {
+            // Only show the panel when cursor is visible
+            if (!Cursor.visible) return;
+            skillInformationPanel.SetActive(true);
+            // Show the panel a little above the mouse
+            skillInformationPanel.transform.position = new Vector3(Input.mousePosition.x * 0.8f, Input.mousePosition.y * 1.2f, Input.mousePosition.z);
+            skillInformationText.text =
+                $"{ability.name}\nCooldown: {ability.cooldown}\nMana cost: {ability.manaCost}\nDescription: {ability.description}";
+        }
+        
+        private void OnPointerExitDelegate( PointerEventData data )
+        {
+            skillInformationPanel.SetActive(false);
         }
         
         /// <summary>

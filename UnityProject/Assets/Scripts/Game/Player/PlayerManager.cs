@@ -14,6 +14,8 @@ namespace Evol.Game.Player
     /// </summary>
     public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     {
+        public List<Item.Item> inventory;
+
         [Tooltip("The local player instance. Use this to know if the local player is represented in the Scene")]
         public static GameObject LocalPlayerInstance;
 

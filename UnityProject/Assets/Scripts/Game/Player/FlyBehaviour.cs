@@ -24,7 +24,7 @@ namespace Evol.Game.Player
 			
 			// Set up the references.
 			flyBool = Animator.StringToHash("Fly");
-			col = this.GetComponent<CapsuleCollider>();
+			col = GetComponent<CapsuleCollider>();
 			// Subscribe this behaviour on the manager.
 			behaviourManager.SubscribeBehaviour(this);
 		}
