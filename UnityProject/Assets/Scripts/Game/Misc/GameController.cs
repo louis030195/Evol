@@ -16,6 +16,16 @@ using Random = UnityEngine.Random;
 
 namespace Evol.Game.Misc
 {
+    // IMPORTANT THING ABOUT PHOTON
+    /*
+     * By default, PUN instantiate uses the DefaultPool,
+     * which loads prefabs from Resources folders and Destroys the GameObject later on.
+     * A more sophisticated IPunPrefabPool implementation can return objects to a pool in Destroy and re-use them in Instantiate.
+     * In that case, the GameObjects are not truly created in Instantiate, which means that Start() is not being called by Unity in such a case.
+     * Due to this, scripts on networked game objects should just implement OnEnable and OnDisable
+     */
+    // SO BE CAREFUL WITH NETWORK STUFF AND START / ENABLE
+    
     public class GameController : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         [Tooltip("GameObject that contains all the map assets in the scene")] public GameObject map;
@@ -25,7 +35,8 @@ namespace Evol.Game.Misc
         [Tooltip("Prefabs of the npcs")] public GameObject[] npcs;
         [Tooltip("Prefabs of the mobs")] public GameObject[] mobs;
         [Tooltip("Prefab of the guards")] public GameObject[] guards;
-        
+        [Tooltip("Prefab of the items")] public GameObject[] items;
+
         private enum GameState
         {
             Playing,
@@ -119,7 +130,7 @@ namespace Evol.Game.Misc
                 2;
             
             // Retrieve the prefab assiocated to this id
-            var foundPrefab = characters.Find(c => c.GetComponent<CastBehaviour>().characterData.id == characterId);
+            var foundPrefab = characters.Find(c => c.GetComponent<PlayerManager>().characterData.id == characterId);
             
             // Instanciate the player
             PhotonNetwork.Instantiate(foundPrefab.name, new Vector3(0, 50, 0), Quaternion.identity);
@@ -199,6 +210,13 @@ namespace Evol.Game.Misc
             // photonView.RPC("UpdateText", RpcTarget.All, "Kill them all");
             // mainText.text = "Game starting";
             print("Game starting");
+
+            foreach(var i in Enumerable.Range(0, 10)) {
+                // Spawn random items
+                var go = PhotonNetwork.Instantiate(items[Random.Range(0, items.Length)].name,
+                    Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 10), 1),
+                    Quaternion.identity);
+            }
 
             // Wait for the specified length of time until yielding control back to the game loop.
             yield return new WaitForSeconds(2);

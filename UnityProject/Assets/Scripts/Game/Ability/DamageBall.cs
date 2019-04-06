@@ -36,10 +36,10 @@ namespace Evol.Game.Ability
 
         private void OnTriggerEnter(Collider other)
         {
-            // print($"Hit {other.gameObject.name}");
-            
             // The hitbox is on the mesh which is sometimes on a child
-            var health = other.gameObject.GetComponent<Health>() ?? other.transform.parent.gameObject.GetComponent<Health>();
+            var parent = other.transform.parent; // Not all object have a parent
+            var health = other.gameObject.GetComponent<Health>() ? other.gameObject.GetComponent<Health>() :
+                parent ? parent.gameObject.GetComponent<Health>() : null;
             if(health != null)
                 health.TakeDamage(100);
                 

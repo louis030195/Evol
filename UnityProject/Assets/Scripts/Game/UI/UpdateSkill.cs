@@ -18,7 +18,6 @@ namespace Evol.Game.UI
         // Skill bar
         public GameObject skillBar;
         public GameObject skillPlaceholderPrefab;
-        public GameObject castBehaviourParent;
         private List<GameObject> abilities = new List<GameObject>();
 
         public GameObject skillInformationPanel;
@@ -28,7 +27,7 @@ namespace Evol.Game.UI
         private void Start()
         {
             var i = 1;
-            foreach (var ability in castBehaviourParent.GetComponent<CastBehaviour>().characterData.abilities)
+            foreach (var ability in GetComponent<PlayerManager>().characterData.abilities)
             {
                 // Instanciate the prefab the prefab which has an image component + image background for cooldown
                 abilities.Add(Instantiate(skillPlaceholderPrefab, skillBar.transform));
@@ -49,7 +48,7 @@ namespace Evol.Game.UI
                 i++;
             }
             
-            castBehaviourParent.GetComponent<CastBehaviour>().onSpellThrown.AddListener(UpdateUI);
+            GetComponent<CastBehaviour>().onSpellThrown.AddListener(UpdateUI);
         }
         
         private void OnPointerEnterDelegate( PointerEventData data, AbilityData ability )

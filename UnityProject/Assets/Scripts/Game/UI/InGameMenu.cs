@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using Evol.Game.Item;
 using Evol.Game.Misc;
 using Evol.Game.Player;
@@ -18,7 +19,6 @@ namespace Evol.Game.UI
 {
 	public class InGameMenu : MonoBehaviourPunCallbacks, IOnEventCallback
 	{
-		
 		public GameObject playUi;
 		public GameObject pauseUi;
 
@@ -46,13 +46,7 @@ namespace Evol.Game.UI
 		[Tooltip("Layout containing the inventory & ground")] public GameObject itemsUi;
 		[Tooltip("Layout containing the ground items")] public GameObject itemsGround;
 		[Tooltip("Layout containing the inventory items")] public GameObject itemsInventory;
-		[Tooltip("Grid containing the items icons")] public GameObject itemsContent;
-		[Tooltip("Prefab for the item icon")] public GameObject itemsIconPlaceholder;
-		[Tooltip("Panel of information to show when the cursor is above and item")] public GameObject itemInformationPanel;
-		[Tooltip("Text in the information panel")] public TextMeshProUGUI itemInformationText;
-		[Tooltip("Layout containing the equipped inventory items")] public GameObject inventoryEquipped;
-		[Tooltip("Layout containing the non equipped inventory items")] public GameObject inventoryNonEquipped;
-
+		
 		private void Awake()
 		{
 			// We don't wanna see others players overlay (is there any cleaner solution ?)
@@ -70,13 +64,7 @@ namespace Evol.Game.UI
 			
 			// Initialize the players alive counter
 			UpdatePlayersAliveUI();
-		}
-
-		private void ResetListener(Button button, UnityAction unityAction)
-		{
-			button.onClick.RemoveAllListeners();
-			button.onClick.AddListener(unityAction);
-		}
+		}	
 
 		// Update is called once per frame
 		private void Update()
@@ -98,35 +86,6 @@ namespace Evol.Game.UI
 				itemsUi.SetActive(!itemsUi.activeInHierarchy);
 				itemsGround.SetActive(itemsUi.activeInHierarchy);
 				itemsInventory.SetActive(itemsUi.activeInHierarchy);
-
-				if (Cursor.visible)
-				{
-					// Remove all the previous ground items
-					foreach (var child in itemsContent.transform)
-					{
-						Destroy((child as Transform).gameObject);
-					}
-					// Check items around me on the ground (overlapsphere ...?)
-					var hitColliders = Physics.OverlapSphere(transform.parent.position, 50);
-					foreach (var hit in hitColliders)
-					{
-						if (hit.CompareTag("Item"))
-						{
-							var go = Instantiate(itemsIconPlaceholder, itemsContent.transform);
-							var itemComponent = hit.GetComponent<Item.Item>();
-							go.GetComponent<Image>().sprite = itemComponent.itemData.icon;
-							var trigger = go.AddComponent<EventTrigger>();
-							var entryPointerEnter = new EventTrigger.Entry {eventID = EventTriggerType.PointerEnter};
-							entryPointerEnter.callback.AddListener( ( data ) => { OnPointerEnterDelegate(data as PointerEventData, itemComponent.itemData); } );
-							var entryPointerExit = new EventTrigger.Entry {eventID = EventTriggerType.PointerExit};
-							entryPointerExit.callback.AddListener( ( data ) => { OnPointerExitDelegate(data as PointerEventData); } );
-							trigger.triggers.Add( entryPointerEnter );
-							trigger.triggers.Add(entryPointerExit);
-						}
-					}
-					// Change items icons in the grid with found items
-					// Find my inventory, update grid with found items
-				}
 			}
 
 			if (Input.GetKeyDown(KeyCode.I)) // Display the inventory panel only
@@ -145,24 +104,12 @@ namespace Evol.Game.UI
 			UpdateTimeUI();
 		}
 		
-		private void OnPointerEnterDelegate( PointerEventData data, ItemData item )
+		private void ResetListener(Button button, UnityAction unityAction)
 		{
-			itemInformationPanel.SetActive(true);
-			
-			// Vector2 screenPosition = Camera.main.WorldToScreenPoint (transform.position);
-			// TODO: make the windows always visible to screen using camera and stuff
-			// 
-			
-			// Show the panel a little above the mouse
-			itemInformationPanel.transform.position = new Vector3(Input.mousePosition.x * 0.8f, Input.mousePosition.y * 1.2f, Input.mousePosition.z);
-			itemInformationText.text =
-				$"{item.itemName}\nDescription: {item.description}";
+			button.onClick.RemoveAllListeners();
+			button.onClick.AddListener(unityAction);
 		}
-        
-		private void OnPointerExitDelegate( PointerEventData data )
-		{
-			itemInformationPanel.SetActive(false);
-		}
+		
 
 		private void OnPause()
 		{

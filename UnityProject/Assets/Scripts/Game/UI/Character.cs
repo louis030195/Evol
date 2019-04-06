@@ -28,7 +28,7 @@ namespace Evol.Game.UI
             
             foreach (var character in characterList)
             {
-                var characterData = character.GetComponent<CastBehaviour>().characterData;
+                var characterData = character.GetComponent<PlayerManager>().characterData;
                 
                 // Set the characters in place
                 var charGo = Instantiate(characterData.placeholder, characterPlaceholder.transform);

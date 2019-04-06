@@ -11,7 +11,6 @@ namespace Evol.Game.Player
     public class CastBehaviour : GenericBehaviour
     {
         // Should we move CharacterData to another script specific to character stats ? or not because its too much related to spells ?
-        public CharacterData characterData;
         public Transform bulletSpawn;
         [Tooltip("Key name in the input manager to throw spell (with index next to it like Spell1, Spell2 ...)")] 
         public string spellKey = "Spell";
@@ -24,21 +23,24 @@ namespace Evol.Game.Player
         private bool cast;
         private int currentSpell = -1; // Spell threw
         private int[] attacksTrigger;
+        private PlayerManager playerManager;
         
         protected virtual void Start()
         {      
 	        // Multiplayer, deactivate the component if it's not mine
 	        if(gameObject.GetPhotonView() != null && !gameObject.GetPhotonView().IsMine)
 		        enabled = false;
+
+	        playerManager = GetComponent<PlayerManager>();
 	        
 	        // Set up the references.
-	        attacksTrigger = new int[characterData.abilities.Length];
+	        attacksTrigger = new int[playerManager.characterData.abilities.Length];
 	        for (var i = 0; i < attacksTrigger.Length; i++)
 	        {
 		        attacksTrigger[i] = Animator.StringToHash($"Attack0");//Animator.StringToHash($"Attack{i}"); // Temporary until we have good animations
 	        }
 	        
-	        nextSpell = new float[characterData.abilities.Length];
+	        nextSpell = new float[playerManager.characterData.abilities.Length];
 	        mana = GetComponent<Mana>();
 	        health = GetComponent<Health>();
 	        // behaviourManager.SubscribeBehaviour(this);
@@ -60,7 +62,7 @@ namespace Evol.Game.Player
 			Rotating();
 			
 			// Check if a spell key has been pressed
-			for (var i = 0; i < characterData.abilities.Length; i++)
+			for (var i = 0; i < playerManager.characterData.abilities.Length; i++)
 			{
 				if (!Input.GetButtonDown($"{spellKey}{i}")) continue;
 				currentSpell = i;
@@ -69,6 +71,7 @@ namespace Evol.Game.Player
 			// In order:
 			// Check if we just threw a spell
 			// Check if we press the casting button
+			// Check if we are on the ground
 			// Check if we have a spell corresponding to the pressed button
 			// Check if the spell cooldown is ready
 			// Check if we have enough mana
@@ -76,9 +79,10 @@ namespace Evol.Game.Player
 			// Check if i'm not in a room (debugging)
 			// TODO: order the most improbable first in order to gain performance (avoid checking all others)
 			if (!cast && 
+			    behaviourManager.IsGrounded() &&
 			    currentSpell != -1 &&
 			    Time.time > nextSpell[currentSpell] &&
-			     characterData.abilities[currentSpell].manaCost < mana.currentMana &&
+			    playerManager.characterData.abilities[currentSpell].manaCost < mana.currentMana &&
 			    (photonView.IsMine || !PhotonNetwork.InRoom)) // InRoom check is for offline mode (mostly debugging)
 			{
 				StartCoroutine(nameof(CastOn));
@@ -148,16 +152,16 @@ namespace Evol.Game.Player
 				return;	
 				
 			// Set spell cooldown
-			nextSpell[currentSpell] = Time.time + characterData.abilities[currentSpell].cooldown;
+			nextSpell[currentSpell] = Time.time + playerManager.characterData.abilities[currentSpell].cooldown;
             
 			// Throw event to say that we threw a spell
-			onSpellThrown.Invoke(currentSpell, characterData.abilities[currentSpell].cooldown);
+			onSpellThrown.Invoke(currentSpell, playerManager.characterData.abilities[currentSpell].cooldown);
 
 			// Use the mana
-			mana.UseMana(characterData.abilities[currentSpell].manaCost);
+			mana.UseMana(playerManager.characterData.abilities[currentSpell].manaCost);
 
 			// Spawn the spell
-			var go = PhotonNetwork.Instantiate(characterData.abilities[currentSpell].prefab.name, bulletSpawn.position,
+			var go = PhotonNetwork.Instantiate(playerManager.characterData.abilities[currentSpell].prefab.name, bulletSpawn.position,
 				bulletSpawn.rotation);
 
 			go.GetComponent<Ability.Ability>().caster = gameObject;

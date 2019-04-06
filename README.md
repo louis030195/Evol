@@ -15,13 +15,18 @@
 # Roadmap
 
 - [ ] More characters, more spells
-- [ ] Spells evolution
+- [ ] Spells evolution (Kind of like Path of Exile)
+- [x] Items / Inventory system
 - [x] Game loop
 - [x] Forest propagation
 - [x] Ugly but working UI
 - [x] Working multiplayer
 - [x] Account system
 - [ ] ML stuff
+
+# Contribution
+
+Any contribution are welcome either development, assets or just ideas, feedbacks, advice just be sure to follow the [rules](docs/CONTRIBUTE.md)
 
 # Install
 

@@ -41,7 +41,7 @@ public class RechargeMana : Ability
 		if (!gameObject.GetPhotonView().IsMine)
 			return;
 		var hitColliders = Physics.OverlapSphere(transform.position, 10f);
-		var element = caster.GetComponent<CastBehaviour>().characterData.element;
+		var element = caster.GetComponent<PlayerManager>().characterData.element;
 		if (hitColliders.Any(c => (element == Element.Fire && c.CompareTag("FireSource")) 
 		                          || (element == Element.Ice && c.CompareTag("IceSource"))))
 		{
