@@ -6,40 +6,35 @@ using Evol.Game.Ability;
 using Photon.Pun;
 using UnityEngine;
 
-public class RechargeMana : Ability
+namespace Evol.Game.Ability
 {
-
-
-	public GameObject PowerStream;
-
-	private List<GameObject> stream;
-	
-	// Use this for initialization
-	protected override void Start () 
+	public class RechargeMana : Ability
 	{
-		if (!gameObject.GetPhotonView().IsMine)
-			return;
-		base.Start();
-		stream = new List<GameObject>();
-		// Caster.Item1.GetComponent<Animator>().SetTrigger("Attack2Trigger");
-        
-		transform.parent = caster.transform;
-		// For some reason the position is random ?
-		transform.position = new Vector3(caster.transform.position.x,
-			caster.transform.position.y + 1f,
-			caster.transform.position.z); 
-		Destroy(gameObject, 10f);
-		
+		public GameObject powerStream;
 
-	}
-	
-	// Update is called once per frame
-	private void Update () {
-		// TODO: Balance this
-		// print("ok");
-		// If there is a power source close enough
-		if (!gameObject.GetPhotonView().IsMine)
-			return;
+		private List<GameObject> stream = new List<GameObject>();
+
+		protected override void Initialize()
+		{
+		}
+
+		protected override void TriggerAbility()
+		{
+			var transform1 = transform;
+			transform1.parent = caster.transform;
+			// For some reason the position is random ?
+			var position = caster.transform.position;
+			transform1.position = new Vector3(position.x,
+				position.y + 1f,
+				position.z); 
+			Destroy(gameObject, 10f);
+		}
+
+		protected override void UpdateAbility()
+		{
+			// TODO: Balance this
+			// If there is a power source close enough
+			
 		var hitColliders = Physics.OverlapSphere(transform.position, 10f);
 		var element = caster.GetComponent<PlayerManager>().characterData.element;
 		if (hitColliders.Any(c => (element == Element.Fire && c.CompareTag("FireSource")) 
@@ -48,7 +43,7 @@ public class RechargeMana : Ability
 			if (Time.frameCount % 10 == 0)
 			{
 				///// This could win the Guinness world record for DIRTIEST CODE EVER
-				stream.Add(Instantiate(PowerStream, hitColliders.First(c => (element == Element.Fire && c.CompareTag("FireSource")) 
+				stream.Add(Instantiate(powerStream, hitColliders.First(c => (element == Element.Fire && c.CompareTag("FireSource")) 
 					|| (element == Element.Ice && c.CompareTag("IceSource")))
 					.transform.position, Quaternion.identity,
 					transform.parent));
@@ -65,10 +60,11 @@ public class RechargeMana : Ability
 			// Destroy the stream if we go out of range of the source
 			stream.ForEach(Destroy);
 		}
-	}
+		}
 
-	private void OnDestroy()
-	{
-		stream?.ForEach(Destroy);
+		protected override void StopAbility()
+		{
+			stream?.ForEach(Destroy);
+		}
 	}
 }

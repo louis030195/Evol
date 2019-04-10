@@ -8,6 +8,7 @@ namespace Evol.Heuristic.StateMachine
     [CreateAssetMenu(menuName = "Evol/StateMachine/Actions/ReachPosition")]
     public class ReachPositionAction : Action
     {
+        public Vector3 position;
         public override void Act(StateController controller)
         {
             ReachPosition(controller);
@@ -17,7 +18,7 @@ namespace Evol.Heuristic.StateMachine
         {
             if (controller.movement.RemainingDistance <= controller.movement.StoppingDistance && !controller.movement.PathPending) 
             {
-                controller.movement.MoveTo(Vector3.zero);
+                controller.movement.MoveTo(position);
             }
 			
         }

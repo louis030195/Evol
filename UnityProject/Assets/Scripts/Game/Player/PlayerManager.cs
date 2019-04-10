@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Evol.Game.Ability;
 using Evol.Game.Item;
 using Evol.Game.Misc;
 using Evol.Game.UI;
@@ -19,7 +21,7 @@ namespace Evol.Game.Player
     {
         [Tooltip("Contains the specific data about the character chosen")] public CharacterData characterData;
         
-        [HideInInspector] public EventListenedList<Item.Item> inventoryEquipped = new EventListenedList<Item.Item>();
+        [HideInInspector] public EventListenedList<Rune>[] abilitiesRunes;
         [HideInInspector] public EventListenedList<Item.Item> inventoryNonEquipped = new EventListenedList<Item.Item>();
         
         // The local player instance. Use this to know if the local player is represented in the Scene
@@ -38,28 +40,37 @@ namespace Evol.Game.Player
             if (photonView.IsMine)
             {
                 LocalPlayerInstance = gameObject;
+
+
+                // #Critical
+                // we flag as don't destroy on load so that instance survives level synchronization, thus giving a seamless experience when levels load.
+                DontDestroyOnLoad(gameObject);
+
+                animator = GetComponent<Animator>();
+                abilitiesRunes = new EventListenedList<Rune>[characterData.abilities.Length];
+                for (var i = 0; i < abilitiesRunes.Length; i++)
+                {
+                    abilitiesRunes[i] = new EventListenedList<Rune>();
+                    abilitiesRunes[i].OnAdd += Add;
+                    abilitiesRunes[i].OnRemove += Remove;
+                }
+
+
+                for (var i = 0; i < characterData.abilities.Length; i++)
+                {
+                    var ability = characterData.abilities[i].GetComponent<Ability.Ability>();
+                    // Set the caster
+                    ability.caster = gameObject;
+                }
             }
-
-            // #Critical
-            // we flag as don't destroy on load so that instance survives level synchronization, thus giving a seamless experience when levels load.
-            DontDestroyOnLoad(gameObject);
-            
-            inventoryEquipped.OnAdd += OnAdd;
-            inventoryEquipped.OnRemove += OnRemove;
-            
-            inventoryNonEquipped.OnAdd += OnAdd;
-            inventoryNonEquipped.OnRemove += OnRemove;
-
-            animator = GetComponent<Animator>();
-        }
-
-        private void OnAdd(object sender, EventArgs e) {
-            animator.SetTrigger(Pickup);
-            // print("Element added...");
         }
         
-        private void OnRemove(object sender, EventArgs e) {
-            // print("Element removed...");
+        private void Add(object sender, EventArgs e)
+        {
+        }
+        
+        private void Remove(object sender, EventArgs e)
+        {
         }
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

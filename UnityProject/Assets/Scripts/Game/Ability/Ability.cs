@@ -1,24 +1,49 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Evol.Game.Player;
-using Evol.Game.Ability;
+using System.Linq;
 using Evol.Game.Item;
+using Evol.Game.Player;
+using Evol.Utils;
 using Photon.Pun;
 using UnityEngine;
 
 namespace Evol.Game.Ability
 {
-	public abstract class Ability : MonoBehaviour
-	{
+    public abstract class Ability : MonoBehaviour
+    {
+        public AbilityData abilityData;
+         
+        protected float initializationTime;
+        [HideInInspector] public GameObject caster;
 
-		protected float initializationTime;
-		protected Rune[] runes;
-		[HideInInspector] public GameObject caster;
+        private void OnEnable()
+        {
+            initializationTime = Time.timeSinceLevelLoad;
+            Initialize();
+            TriggerAbility();
+        }
 
-		protected virtual void Start()
-		{
-			initializationTime = Time.timeSinceLevelLoad;
-		}
-	}
+
+        private void Update()
+        {
+            UpdateAbility();
+        }
+
+        private void OnDisable()
+        {
+            StopAbility();
+        }
+
+        protected abstract void Initialize();
+        protected abstract void TriggerAbility();
+        protected abstract void UpdateAbility();
+        protected abstract void StopAbility();
+
+        protected IEnumerator DestroyAfter(int seconds)
+        {
+            yield return new WaitForSeconds(seconds);
+            PhotonNetwork.Destroy(gameObject);
+        }
+    }
 }

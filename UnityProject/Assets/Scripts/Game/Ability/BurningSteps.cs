@@ -8,12 +8,29 @@ namespace Evol.Game.Ability
 {
 	public class BurningSteps : Ability
 	{
+		protected override void Initialize()
+		{
+		}
+
+		protected override void TriggerAbility()
+		{
+		}
+
+		protected override void UpdateAbility()
+		{
+		}
+
+		protected override void StopAbility()
+		{
+		}
+
 		private void OnTriggerStay(Collider other)
 		{
-			if (other.gameObject.GetComponent<LivingBeingAgent>() != null)
-				other.gameObject.GetComponent<LivingBeingAgent>().LivingBeing.Life -= 1;
-			else if(other.gameObject.GetComponent<Health>() != null)
-				other.gameObject.GetComponent<Health>().TakeDamage(1);
+			var parent = other.transform.parent; // Not all object have a parent
+			var health = other.gameObject.GetComponent<Health>() ? other.gameObject.GetComponent<Health>() :
+				parent ? parent.gameObject.GetComponent<Health>() : null;
+			if(health != null)
+				health.TakeDamage((int)abilityData.stat.damage);
 		}
 	}
 }

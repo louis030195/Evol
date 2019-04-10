@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 64518989329544294}
   m_Layer: 0
   m_Name: tree1
-  m_TagString: Untagged
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -254,8 +254,10 @@ MonoBehaviour:
   destroyOnDeath: 1
   HealthAudio: {fileID: 0}
   Dying: {fileID: 0}
-  GettingHit: []
+  GettingHitClips: []
   DeathEffects: []
+  GettingHitAnimations: []
+  DyingAnimations: []
   dead: 0
 --- !u!114 &114737118383037606
 MonoBehaviour:

@@ -6,6 +6,12 @@ try to follow this:
 - [Nice list of good practices](http://www.gamasutra.com/blogs/HermanTulleken/20160812/279100/50_Tips_and_Best_Practices_for_Unity_2016_Edition.php)
 ### Naming convention
 Use JetBrains Rider, it will fix your naming convention automatically (following Unity naming convention)
+### Few rules
+- Always prefer TextMeshPro over Text
+- Keep in mind that ScriptableObject are useful for storing serialized data kind of life a database but you shouldn't change the data during runtime, it's useful for fixed data like parameters
+- Try to comment everything
+- Be careful with object naming (especially in UI), it should be clear to understand what it represents 
+- ...
 ### Create a new character
 
 Add these components to the prefab

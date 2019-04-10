@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Evol.Agents;
+using Evol.Game.Item;
 using Evol.Game.Player;
 using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,27 +15,31 @@ namespace Evol.Game.Ability
     {
         private Vector3 moveDirection;
         private float speed = 2000;
-        protected override void Start()
+
+        protected override void Initialize()
         {
-            if (!gameObject.GetPhotonView().IsMine)
-                return;
-            base.Start();
+            StartCoroutine(DestroyAfter((int)abilityData.stat.lifeLength));
+        }
+
+        protected override void TriggerAbility()
+        {
+            transform.localScale *= abilityData.stat.scale;
             
             // Throw forward       
             var camera = caster.GetComponentInChildren<Camera>();
-            var pos = camera.ViewportToWorldPoint(new Vector3(1f, 1f, camera.nearClipPlane));
+            var pos = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, camera.nearClipPlane));
             transform.LookAt(pos); 
-            gameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * speed);
-
-            // Destroy the bullet after 5 seconds
-            Invoke(nameof(DestroyAfter), 5);
+            GetComponent<Rigidbody>().AddForce(-transform.forward * speed);
         }
 
-        private void DestroyAfter()
+        protected override void UpdateAbility()
         {
-            PhotonNetwork.Destroy(gameObject.GetPhotonView());
         }
 
+        protected override void StopAbility()
+        {
+        }
+         
 
         private void OnTriggerEnter(Collider other)
         {
@@ -41,9 +48,8 @@ namespace Evol.Game.Ability
             var health = other.gameObject.GetComponent<Health>() ? other.gameObject.GetComponent<Health>() :
                 parent ? parent.gameObject.GetComponent<Health>() : null;
             if(health != null)
-                health.TakeDamage(100);
-                
-            DestroyAfter();
+                health.TakeDamage((int)abilityData.stat.damage);
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 }

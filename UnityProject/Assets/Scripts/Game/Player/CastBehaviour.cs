@@ -82,7 +82,7 @@ namespace Evol.Game.Player
 			    behaviourManager.IsGrounded() &&
 			    currentSpell != -1 &&
 			    Time.time > nextSpell[currentSpell] &&
-			    playerManager.characterData.abilities[currentSpell].manaCost < mana.currentMana &&
+			    playerManager.characterData.abilities[currentSpell].GetComponent<Ability.Ability>().abilityData.stat.manaCost < mana.currentMana &&
 			    (photonView.IsMine || !PhotonNetwork.InRoom)) // InRoom check is for offline mode (mostly debugging)
 			{
 				StartCoroutine(nameof(CastOn));
@@ -149,23 +149,23 @@ namespace Evol.Game.Player
 		public void InstanciateSpell()
 		{
 			if (currentSpell == -1)
-				return;	
+				return;
+
+			var ability = playerManager.characterData.abilities[currentSpell].GetComponent<Ability.Ability>();
 				
 			// Set spell cooldown
-			nextSpell[currentSpell] = Time.time + playerManager.characterData.abilities[currentSpell].cooldown;
+			nextSpell[currentSpell] = Time.time + ability.abilityData.stat.cooldown;
             
 			// Throw event to say that we threw a spell
-			onSpellThrown.Invoke(currentSpell, playerManager.characterData.abilities[currentSpell].cooldown);
+			onSpellThrown.Invoke(currentSpell, ability.abilityData.stat.cooldown);
 
 			// Use the mana
-			mana.UseMana(playerManager.characterData.abilities[currentSpell].manaCost);
-
+			mana.UseMana((int)ability.abilityData.stat.manaCost);
+			
 			// Spawn the spell
-			var go = PhotonNetwork.Instantiate(playerManager.characterData.abilities[currentSpell].prefab.name, bulletSpawn.position,
-				bulletSpawn.rotation);
-
-			go.GetComponent<Ability.Ability>().caster = gameObject;
-
+			var go = PhotonNetwork.Instantiate(playerManager.characterData.abilities[currentSpell].name, bulletSpawn.position, bulletSpawn.rotation);
+			go.GetComponent<Ability.Ability>().abilityData.stat = ability.abilityData.stat;
+			
 			currentSpell = -1; // Reset the current spell id
 		}
 		

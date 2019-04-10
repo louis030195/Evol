@@ -46,7 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0d0e7659be9acb4abd1f522e2f82773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityData: {fileID: 11400000, guid: 026ecbf860d2dd305ac8e3498310110d, type: 2}
   caster: {fileID: 0}
+  stat:
+    Cooldown: 0
+    LifeLength: 0
+    Damage: 0
+    ManaCost: 0
+    Scale: 0
   Portal1: {fileID: 1508249538579930}
   Portal2: {fileID: 1186004029244628}
 --- !u!114 &4629889263847030913

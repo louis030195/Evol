@@ -51,6 +51,7 @@ namespace Evol.Game.Networking
         [Tooltip("Characters list")] public GameObject charactersList;
         [Tooltip("The layout that contains the character to be selected to play")] public GameObject characterLayout;
         [Tooltip("Looking for a game status")] public TextMeshProUGUI queueStatus;
+        [Tooltip("Difficulty dropdown")] public TMP_Dropdown difficultyDropdown;
 
 
         private float timeToWaitPlayers = 3; // Should be proportional to the total number of players currently playing
@@ -76,6 +77,18 @@ namespace Evol.Game.Networking
             
             characterSelectionReadyButton.onClick.RemoveAllListeners();
             characterSelectionReadyButton.onClick.AddListener(OnReadyToPlay);
+            
+            // Set the difficulty settings as room property
+            difficultyDropdown.onValueChanged.AddListener(value =>
+            {
+                if (PhotonNetwork.InRoom) // TODO: FINISH DIFFICULTY STUFF
+                {
+                    if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("difficulty"))
+                        PhotonNetwork.CurrentRoom.CustomProperties.Add("difficulty", difficultyDropdown.value);
+                    else
+                        PhotonNetwork.CurrentRoom.CustomProperties["difficulty"] = difficultyDropdown.value;
+                }
+            });
             
             // We reach this condition if we leave a game a go back to main menu
             if(PlayFabClientAPI.IsClientLoggedIn())
@@ -286,6 +299,13 @@ namespace Evol.Game.Networking
         {
             // Only the master client can start the game (or if it can if its not locked)
             characterSelectionReadyButton.interactable = PhotonNetwork.IsMasterClient || !lockRoomOnStart;
+            if (!characterSelectionReadyButton.interactable)
+            {
+                difficultyDropdown.interactable = false;
+                characterSelectionReadyButton.GetComponentInChildren<TextMeshProUGUI>().text =
+                    $"Waiting for host to start ...";
+            }
+
             queueStatus.text = $"Joined a game";
             LoadPlayLayout();
             // Wait a bit other players then start

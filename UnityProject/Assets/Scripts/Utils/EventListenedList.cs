@@ -12,8 +12,8 @@ namespace Evol.Utils
         // public event EventHandler OnUpdate;
 
         public void Add(T item) {
-            OnAdd?.Invoke(this, null);
             base.Add(item);
+            OnAdd?.Invoke(this, null); // should be renamed onaddafter
         }
         
         public bool Remove(T item) {

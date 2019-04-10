@@ -4691,7 +4691,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   caster: {fileID: 0}
-  PowerStream: {fileID: 1726164594150916, guid: 7316ba309aa184cd6b287878c6d2a059,
+  abilityName: Recharge mana
+  description: Refill your mana when close to a power source
+  icon: {fileID: 21300008, guid: 200f1dc55bb4b681ea93a7da7f787a91, type: 3}
+  sound: []
+  animation: 
+  cooldown: 5
+  manaCost: 0
+  incompatibleEffects: []
+  powerStream: {fileID: 1726164594150916, guid: 7316ba309aa184cd6b287878c6d2a059,
     type: 3}
 --- !u!114 &114712319689459364
 MonoBehaviour:

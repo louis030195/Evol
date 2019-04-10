@@ -20,7 +20,7 @@ namespace Evol.Game.Player
         public bool ranged;
         public Element element;
         public Sprite icon;
-        public AbilityData[] abilities;
         public GameObject placeholder;
+        public GameObject[] abilities;
     }
 }

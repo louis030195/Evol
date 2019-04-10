@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Evol.Game.Item;
@@ -34,7 +35,8 @@ namespace Evol.Game.UI
 		private PlayerManager playerManager;
 		private bool lastPointerEnterIsGround; // Do we drop it on the ground ?
 		private bool draggedFromGround; // Do we drag it from the ground ?
-		private int lastAbilityHovered; // Last ability GameObject hovered by mouse
+		private int draggedFromAbilityNumber; // Last ability GameObject hovered by mouse
+		private int draggedToAbilityNumber; // Last ability GameObject hovered by mouse
 		// Abilities GameObject instances in the equipped inventory
 		private List<GameObject> abilities = new List<GameObject>(); 
 		private int dragCount; // To check if we hit the first call of dragging function
@@ -52,7 +54,8 @@ namespace Evol.Game.UI
 				var entryPointerEnter = new EventTrigger.Entry {eventID = EventTriggerType.PointerEnter};
 				entryPointerEnter.callback.AddListener((data) =>
 				{
-					InventoryEquippedPointerEnter(data as PointerEventData, i);
+					draggedToAbilityNumber = i;
+					lastPointerEnterIsGround = false;
 				});
 				trigger.triggers.Add(entryPointerEnter);
 
@@ -66,7 +69,8 @@ namespace Evol.Game.UI
 			var entryPointerEnterNonEquipped = new EventTrigger.Entry {eventID = EventTriggerType.PointerEnter};
 			entryPointerEnterNonEquipped.callback.AddListener((data) =>
 			{
-				InventoryNonEquippedPointerEnter(data as PointerEventData);
+				draggedToAbilityNumber = -1;
+				lastPointerEnterIsGround = false;
 			});
 			triggerNonEquipped.triggers.Add(entryPointerEnterNonEquipped);
 
@@ -74,7 +78,7 @@ namespace Evol.Game.UI
 			var triggerGround = itemsGround.AddComponent<EventTrigger>();
 
 			var entryPointerEnterGround = new EventTrigger.Entry {eventID = EventTriggerType.PointerEnter};
-			entryPointerEnterGround.callback.AddListener((data) => { GroundPointerEnter(data as PointerEventData); });
+			entryPointerEnterGround.callback.AddListener((data) => { lastPointerEnterIsGround = true; });
 			triggerGround.triggers.Add(entryPointerEnterGround);
 
 			// Listen to the event "An item is now close to me"
@@ -129,36 +133,6 @@ namespace Evol.Game.UI
 				Destroy(found.gameObject);
 		}
 
-		/// <summary>
-		/// When the pointer enter the non equipped inventory, store it in variable
-		/// </summary>
-		/// <param name="data"></param>
-		private void InventoryNonEquippedPointerEnter(PointerEventData data)
-		{
-			lastAbilityHovered = -1;
-			lastPointerEnterIsGround = false;
-		}
-
-		/// <summary>
-		/// When the pointer enter the equipped inventory, store it in variable
-		/// </summary>
-		/// <param name="data"></param>
-		/// <param name="i"></param>
-		private void InventoryEquippedPointerEnter(PointerEventData data, int i)
-		{
-			lastAbilityHovered = i;
-			lastPointerEnterIsGround = false;
-		}
-
-		/// <summary>
-		/// When the pointer enter the ground, store it in variable
-		/// </summary>
-		/// <param name="data"></param>
-		private void GroundPointerEnter(PointerEventData data)
-		{
-			lastPointerEnterIsGround = true;
-		}
-
 		private void EndDrag(PointerEventData data, GameObject itemIcon, Item.Item itemComponent)
 		{
 			dragCount = 0;
@@ -168,11 +142,11 @@ namespace Evol.Game.UI
 			// If it was not from the ground, we should remove from the appropriate list
 			if (!draggedFromGround)
 			{
-				// Try to remove from the equipped list
-				if (playerManager.inventoryEquipped.Remove(itemComponent))
+				// Try to remove from the non equipped list
+				if (playerManager.inventoryNonEquipped.Remove(itemComponent))
 				{
-					// Try to remove from the non equipped list
-					playerManager.inventoryNonEquipped.Remove(itemComponent);
+					// Try to remove from the equipped list
+					playerManager.abilitiesRunes[draggedFromAbilityNumber].Remove(itemComponent as Rune);
 				}
 			}
 
@@ -180,10 +154,10 @@ namespace Evol.Game.UI
 			if (!lastPointerEnterIsGround)
 			{
 				// If it was dragged to the non equipped inventory
-				if (lastAbilityHovered == -1)
+				if (draggedToAbilityNumber == -1)
 				{
 					// Put it in the non equipped inventory grid
-					itemIcon.transform.parent = itemsInventoryNonEquippedContent.transform;
+					itemIcon.transform.SetParent(itemsInventoryNonEquippedContent.transform, false);
 
 					// Add to the list
 					playerManager.inventoryNonEquipped.Add(itemComponent);
@@ -191,10 +165,10 @@ namespace Evol.Game.UI
 				else // Else it was dragged to the equipped inventory
 				{
 					// Put it in the right ability runes grid
-					itemIcon.transform.parent = abilities[lastAbilityHovered].transform;
+					itemIcon.transform.SetParent(abilities[draggedToAbilityNumber].transform, false);
 
 					// Add to the list
-					playerManager.inventoryEquipped.Add(itemComponent);
+					playerManager.abilitiesRunes[draggedToAbilityNumber].Add(itemComponent as Rune);
 				}
 
 				// Remove from the ground
@@ -212,7 +186,7 @@ namespace Evol.Game.UI
 				if (draggedFromGround)
 				{
 					// Put it in ground grid
-					itemIcon.transform.parent = itemsGroundContent.transform;
+					itemIcon.transform.SetParent(itemsGroundContent.transform, false);
 					return;
 				}
 
@@ -224,7 +198,7 @@ namespace Evol.Game.UI
 				var positionToSpawn =
 					new Vector3(parentForward.x, parentForward.y + 1f,
 						parentForward.z + 2f); // TODO: tweak the + on position to make it realistic
-				var go = PhotonNetwork.Instantiate(itemComponent.itemData.prefab.name, positionToSpawn,
+				var go = PhotonNetwork.InstantiateSceneObject(itemComponent.itemData.prefab.name, positionToSpawn,
 					Quaternion.identity);
 				// go.GetComponent<Item.Item>().instance = go; // Shouldn't need this since its in the awake()
 				// Throw it !
@@ -235,11 +209,15 @@ namespace Evol.Game.UI
 		private void Drag(PointerEventData data, GameObject item)
 		{
 			// If we started to drag while the pointer hovering ground, it means that it come from the ground
-			if (dragCount == 0) // Obviously the drag event is called multiple times, we just want to call this at the first time
+			if (dragCount == 0)
+			{
+				// Obviously the drag event is called multiple times, we just want to call this at the first time
 				draggedFromGround = lastPointerEnterIsGround;
+				draggedFromAbilityNumber = item.transform.parent.GetSiblingIndex();
+			}
 
 			// Release from the layout
-			item.transform.parent = playUi.transform;
+			item.transform.SetParent(playUi.transform, false);
 
 			// The item follow the mouse obviously
 			item.transform.position = Input.mousePosition;

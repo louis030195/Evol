@@ -4480,4 +4480,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c750fc52037a24c98b014f5101d3f43f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityData: {fileID: 11400000, guid: 12d1768cb378d59cc94a4c0070e606a3, type: 2}
+  caster: {fileID: 0}
+  stat:
+    Cooldown: 0
+    LifeLength: 0
+    Damage: 0
+    ManaCost: 0
+    Scale: 0
   SnowPrefab: {fileID: 1609547338697348, guid: 0e25068749fa94e6998857d6a4ef075b, type: 3}

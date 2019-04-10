@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Evol.Utils;
 using Photon.Pun;
 using UnityEngine;
@@ -9,47 +10,34 @@ namespace Evol.Game.Ability
 	{
 		public GameObject Portal1;
 		public GameObject Portal2;
-		
-		// Use this for initialization
-		protected override void Start()
+
+		protected override void Initialize()
 		{
-			if (!gameObject.GetPhotonView().IsMine)
-				return;
-			base.Start();
-			// TODO: wait the good time of animation to throw spell (animation event)
-			// Play animation
-			// Caster.Item1.GetComponent<Animator>().SetTrigger("Attack1Trigger");
+		}
+
+		protected override void TriggerAbility()
+		{
 			Portal2.transform.position = Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 50), 5);
 
 			// Destroy the portal after 20 seconds
-			Invoke(nameof(DestroyAfter), 20);
+			StartCoroutine(DestroyAfter((int)abilityData.stat.lifeLength));
 		}
 
-		private void DestroyAfter()
+		protected override void UpdateAbility()
 		{
-			PhotonNetwork.Destroy(gameObject.GetPhotonView());
+		}
+
+		protected override void StopAbility()
+		{
 		}
 
 		public void TeleportPosition(Transform other)
 		{
-			if (Vector3.Distance(other.position, Portal1.transform.position) < 20)
-			{
-				other.transform.position = new Vector3(Portal2.transform.position.x+5, Portal2.transform.position.y, Portal2.transform.position.z);
-			}
-			else
-			{
-				other.transform.position = new Vector3(Portal1.transform.position.x+5, Portal1.transform.position.y, Portal1.transform.position.z);
-			}
+			var position = Portal2.transform.position;
+			var position1 = Portal1.transform.position;
+			other.transform.position = Vector3.Distance(other.position, position1) < 20 ? 
+				new Vector3(position.x+5, position.y, position.z) :
+				new Vector3(position1.x+5, position1.y, position1.z);
 		}
-
-
-
-
-
-		// Update is called once per frame
-		/*
-		void Update () {
-			
-		}*/
 	}
 }

@@ -36,10 +36,14 @@ namespace Evol.Game.UI
                 abilities.Last().transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"Key {i}";
                 
                 // Set the right icon
-                abilities.Last().transform.GetChild(1).GetComponent<Image>().sprite = ability.icon;
+                abilities.Last().transform.GetChild(1).GetComponent<Image>().sprite = 
+                    ability.GetComponent<Ability.Ability>().abilityData.icon;
                 var trigger = abilities.Last().AddComponent<EventTrigger>();
                 var entryPointerEnter = new EventTrigger.Entry {eventID = EventTriggerType.PointerEnter};
-                entryPointerEnter.callback.AddListener( ( data ) => { OnPointerEnterDelegate(data as PointerEventData, ability); } );
+                entryPointerEnter.callback.AddListener((data) =>
+                {
+                    OnPointerEnterDelegate(data as PointerEventData, ability.GetComponent<Ability.Ability>());
+                } );
                 var entryPointerExit = new EventTrigger.Entry {eventID = EventTriggerType.PointerExit};
                 entryPointerExit.callback.AddListener( ( data ) => { OnPointerExitDelegate(data as PointerEventData); } );
                 trigger.triggers.Add( entryPointerEnter );
@@ -51,15 +55,16 @@ namespace Evol.Game.UI
             GetComponent<CastBehaviour>().onSpellThrown.AddListener(UpdateUI);
         }
         
-        private void OnPointerEnterDelegate( PointerEventData data, AbilityData ability )
+        private void OnPointerEnterDelegate( PointerEventData data, Ability.Ability ability )
         {
             // Only show the panel when cursor is visible
             if (!Cursor.visible) return;
             skillInformationPanel.SetActive(true);
             // Show the panel a little above the mouse
             skillInformationPanel.transform.position = new Vector3(Input.mousePosition.x * 0.8f, Input.mousePosition.y * 1.2f, Input.mousePosition.z);
-            skillInformationText.text =
-                $"{ability.name}\nCooldown: {ability.cooldown}\nMana cost: {ability.manaCost}\nDescription: {ability.description}";
+            skillInformationText.text = ability.ToString();
+            //skillInformationText.text =
+            //    $"{ability.abilityData.name}\nCooldown: {ability.stat.Cooldown}\nMana cost: {ability.stat.ManaCost}\nDescription: {ability.abilityData.description}";
         }
         
         private void OnPointerExitDelegate( PointerEventData data )

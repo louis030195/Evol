@@ -437,7 +437,7 @@ GameObject:
   - component: {fileID: 64443594102731476}
   m_Layer: 0
   m_Name: tree3
-  m_TagString: Untagged
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -484,10 +484,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   destroyOnDeath: 1
-  healthAudio: {fileID: 0}
-  dying: {fileID: 0}
-  gettingHit: []
-  deathEffects: []
+  HealthAudio: {fileID: 0}
+  Dying: {fileID: 0}
+  GettingHitClips: []
+  DeathEffects: []
+  GettingHitAnimations: []
+  DyingAnimations: []
   dead: 0
 --- !u!114 &114872389070362456
 MonoBehaviour:
@@ -539,6 +541,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a261dd92fa946884cac018e1f40c410f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxSize: 1
+  GrowRate: 0.015
+  MinRandomness: 0.5
+  MaxRandomness: 1.5
 --- !u!64 &64443594102731476
 MeshCollider:
   m_ObjectHideFlags: 0

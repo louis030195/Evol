@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Evol.Game.Item;
 using Evol.Game.Player;
 using Evol.Heuristic.StateMachine;
 using Evol.Utils;
@@ -16,6 +17,15 @@ using Random = UnityEngine.Random;
 
 namespace Evol.Game.Misc
 {
+
+    public enum Difficulties
+    {
+        Easy,
+        Medium,
+        Hard,
+        Inferno
+    }
+    
     // IMPORTANT THING ABOUT PHOTON
     /*
      * By default, PUN instantiate uses the DefaultPool,
@@ -28,14 +38,19 @@ namespace Evol.Game.Misc
     
     public class GameController : MonoBehaviourPunCallbacks, IOnEventCallback
     {
-        [Tooltip("GameObject that contains all the map assets in the scene")] public GameObject map;
-        
+        [Header("Game parameters")]
+        [Tooltip("Pause time between rounds in seconds")] public int timeBetweenRound = 30;
+        [Tooltip("Number of AIs spawned at every round")] public int aiPerRound = 30;
+        [Tooltip("Delay between AIs spawns")] public float delayBetweenAiSpawn = 0.1f;
+
         [Header("Spawnables")]
+        [Tooltip("GameObject that contains all the map assets in the scene")] public GameObject map;
         [Tooltip("Prefabs of the characters")] public List<GameObject> characters;
         [Tooltip("Prefabs of the npcs")] public GameObject[] npcs;
         [Tooltip("Prefabs of the mobs")] public GameObject[] mobs;
         [Tooltip("Prefab of the guards")] public GameObject[] guards;
         [Tooltip("Prefab of the items")] public GameObject[] items;
+        [Tooltip("Main text sync for all players")] public TextMeshProUGUI mainText;
 
         private enum GameState
         {
@@ -45,6 +60,7 @@ namespace Evol.Game.Misc
         }
 
         private GameState gameState = GameState.Playing;
+        private int playersAlive, aisAlive, aiSpawned, roundNumber;
 
         private void Awake()
         {
@@ -89,25 +105,10 @@ namespace Evol.Game.Misc
                 // Spawn mobs
                 foreach (var i in Enumerable.Range(0, 10))
                 {
-                    // Randomgo is just useful to avoid exception when the array is empty
-                    var randomGo = mobs.Length > 0 ? mobs[Random.Range(0, mobs.Length)] : null;
+                    var randomGo = guards.Length > 0 ? guards[Random.Range(0, guards.Length)] : null;
                     if (randomGo)
                     {
-                        var mob = Instantiate(randomGo,
-                            Position.AboveGround(
-                                Position.RandomPositionAround(new Vector3(200, 0, 300), 200),
-                                1),
-                            Quaternion.identity);
-                        mob.GetComponent<StateController>().SetupAi(true);
-
-                        // Set as child of map object
-                        mob.transform.parent = map.transform;
-                    }
-
-                    randomGo = guards.Length > 0 ? guards[Random.Range(0, guards.Length)] : null;
-                    if (randomGo)
-                    {
-                        var guard = Instantiate(guards[Random.Range(0, guards.Length)],
+                        var guard = PhotonNetwork.InstantiateSceneObject(randomGo.name,
                             Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 10),
                                 1),
                             Quaternion.identity);
@@ -195,8 +196,8 @@ namespace Evol.Game.Misc
 
         private IEnumerator GameStarting()
         {
-            // photonView.RPC("UpdateText", RpcTarget.All, "Waiting more players or press Space to play solo");
-            // mainText.text = "Press space to start";
+            // Set the total number of players alive
+            playersAlive = PhotonNetwork.CurrentRoom.PlayerCount;
             // Wait other players and that everyone is ready, we also check if nobody has every joined
             /*
             while (nobodyJoinedYet && 
@@ -207,16 +208,14 @@ namespace Evol.Game.Misc
             }*/
             
             gameState = GameState.Playing;
-            // photonView.RPC("UpdateText", RpcTarget.All, "Kill them all");
-            // mainText.text = "Game starting";
-            print("Game starting");
-
+            StartCoroutine(UpdateTextAndDisappear($"Game starting !", 2f));
+            /*
             foreach(var i in Enumerable.Range(0, 10)) {
                 // Spawn random items
                 var go = PhotonNetwork.Instantiate(items[Random.Range(0, items.Length)].name,
                     Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 10), 1),
                     Quaternion.identity);
-            }
+            }*/
 
             // Wait for the specified length of time until yielding control back to the game loop.
             yield return new WaitForSeconds(2);
@@ -225,21 +224,80 @@ namespace Evol.Game.Misc
 
         private IEnumerator GamePlaying()
         {
-            while (gameState == GameState.Playing)
+            while (true)
             {
-                yield return null;
-                /*
                 // Start off by running the 'RoundStarting' coroutine but don't return until it's finished.
                 yield return StartCoroutine(RoundStarting());
 
                 // ... return on the next frame.
                 yield return StartCoroutine(RoundPlaying());
-                if (GameFinished())
+                if (gameState != GameState.Playing)
                     yield break;
 
                 yield return StartCoroutine(RoundEnding());
-                */
             }
+        }
+
+        private IEnumerator RoundStarting()
+        {
+            yield return null;
+            aisAlive = 0;
+            aiSpawned = 0;
+            roundNumber++;
+            StartCoroutine(UpdateTextAndDisappear("Round starting", 2f));
+        }
+        
+        private IEnumerator RoundPlaying()
+        {
+            do
+            {
+                // ... return on the next frame.
+                if (gameState != GameState.Playing)
+                    yield break;
+                yield return StartCoroutine(SpawnAllAi());
+
+            } while (aisAlive > 0);
+        }
+
+        private IEnumerator SpawnAllAi()
+        {
+            if (aiSpawned < aiPerRound * (roundNumber / 4))
+            {
+                // Randomgo is just useful to avoid exception when the array is empty
+                var randomGo = mobs.Length > 0 ? mobs[Random.Range(0, mobs.Length)] : null;
+                if (randomGo)
+                {
+                    // InstanciateSceneObject makes the photon view belongs to the scene
+                    // It is useful to avoid the object being destroyed if the master client leave
+                    // Because normal PhotonNetwork.Instanciate() makes the object belongs to the master
+                    var mob = PhotonNetwork.InstantiateSceneObject(randomGo.name,
+                        Position.AboveGround(
+                            Position.RandomPositionAround(new Vector3(200, 0, 300), 200),
+                            1),
+                        Quaternion.identity);
+                    mob.GetComponent<StateController>().SetupAi(true);
+
+                    // TODO: implement an extension to generate non uniform random distribution (more chance to have 0, 1 items than more ...)
+                    // Add some items to the loot of that monster
+                    // var loot = mob.GetComponent<Loot>();
+                    // if(loot) loot.items = new List<GameObject>(items.PickRandom(Random.Range(0, items.Length)));
+
+                    // Set as child of map object
+                    mob.transform.parent = map.transform;
+
+                    // Increment the AI alive / spawned counters
+                    aisAlive++;
+                    aiSpawned++;
+                }
+            }
+
+            yield return new WaitForSeconds(delayBetweenAiSpawn);
+        }
+        
+        private IEnumerator RoundEnding()
+        {
+            StartCoroutine(UpdateTextAndDisappear("Round ending", 2f));
+            yield return new WaitForSeconds(timeBetweenRound);
         }
 
         private IEnumerator GameEnding()
@@ -249,18 +307,29 @@ namespace Evol.Game.Misc
             
             if (gameState == GameState.Lost)
             {
-                // mainText.text = "GAME OVER";
-                print("Game over");
+                StartCoroutine(UpdateTextAndDisappear($"Game over !", 2f));
             }
             
             if(gameState == GameState.Won)
             {
-                // mainText.text = "VICTORY";
-                print("Victory");
+                StartCoroutine(UpdateTextAndDisappear($"Victory !", 2f));
             }
             
             // Wait for the specified length of time until yielding control back to the game loop.
             yield return new WaitForSeconds(2);
+        }
+
+        private IEnumerator UpdateTextAndDisappear(string text, float delay)
+        {
+            photonView.RPC(nameof(UpdateText), RpcTarget.All, text);
+            yield return new WaitForSeconds(delay);
+            photonView.RPC(nameof(UpdateText), RpcTarget.All, "");
+        }
+
+        [PunRPC]
+        private void UpdateText(string text)
+        {
+            mainText.text = text;
         }
 
         /// <summary>
@@ -272,14 +341,19 @@ namespace Evol.Game.Misc
         {
             if (photonEvent.Code == 0)
             {
+                // Assuming that round mobs are all tagged monster, decrement when one is dead
+                if ((photonEvent.CustomData as object[])[0].Equals("Monster"))
+                    aisAlive--;
                 // Boss died ?
                 if((photonEvent.CustomData as object[])[0].Equals("Boss"))
                     gameState = GameState.Won;
-                // If all player are dead (CountOfPlayers = 0 always in single player ? to investigate that)
-                // checking that its a player that died just in case (and required for single player)
-                if (PhotonNetwork.CountOfPlayers == 0 && (photonEvent.CustomData as object[])[0].Equals("Player"))
+                // If all player are dead
+                // checking that its a player that died just in case
+                if ((photonEvent.CustomData as object[])[0].Equals("Player"))
+                    playersAlive--;
+                // If all players are dead or the nexus is dead
+                if (playersAlive == 0 || (photonEvent.CustomData as object[])[0].Equals("Nexus"))
                     gameState = GameState.Lost;
-                print($" { (photonEvent.CustomData as object[])[0] } died");
             }
         }
     }

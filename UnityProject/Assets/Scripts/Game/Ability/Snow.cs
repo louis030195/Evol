@@ -11,17 +11,12 @@ namespace Evol.Game.Ability
 
 		public GameObject SnowPrefab;
 
-		// Use this for initialization
-		protected override void Start()
+		protected override void Initialize()
 		{
-			if (!gameObject.GetPhotonView().IsMine)
-				return;
-			base.Start();
-			// Caster.Item1.GetComponent<Animator>().SetTrigger("Attack2Trigger");
-			// For some reason the position is random ?
-			transform.position = new Vector3(caster.transform.position.x,
-				caster.transform.position.y + 0.1f,
-				caster.transform.position.z);
+			var position = caster.transform.position;
+			transform.position = new Vector3(position.x,
+				position.y + 0.1f,
+				position.z);
 			transform.Rotate(-90, 0, 0);
 
 
@@ -38,27 +33,25 @@ namespace Evol.Game.Ability
 			}
 		}
 
+		protected override void TriggerAbility()
+		{
 
-		IEnumerator SlowlyDisappear(GameObject go)
+		}
+
+		protected override void UpdateAbility()
+		{
+		}
+
+		protected override void StopAbility()
+		{
+		}
+		
+		private IEnumerator SlowlyDisappear(GameObject go)
 		{
 
 			yield return new WaitForSeconds(5f);
 			Destroy(go);
 
-
-			//Destroy(go.GetComponent<Rigidbody>());
-			//Vector3.Slerp(go.transform.position, Vector3.down * 10, Time.deltaTime * 10);
-
-		}
-
-
-
-		// Update is called once per frame
-		private void Update()
-		{
-			/*
-			if(Time.timeSinceLevelLoad - initializationTime > 1 && GetComponent<ParticleSystem>().particleCount == 0)
-				Destroy(gameObject);*/
 		}
 	}
 }

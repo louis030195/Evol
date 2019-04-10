@@ -91,8 +91,10 @@ namespace Evol.Game.Player
 				Mathf.Lerp(cam.GetComponent<Camera>().fieldOfView, targetFOV, Time.deltaTime);
 
 			// Test for collision with the environment based on current camera position.
-			Vector3 baseTempPosition = player.position + camYRotation * targetPivotOffset;
-			Vector3 noCollisionOffset = targetCamOffset;
+			var baseTempPosition = player.position + camYRotation * targetPivotOffset;
+			var noCollisionOffset = targetCamOffset;
+			/*
+			 // TODO: idk whats the use of this actually
 			for (float zOffset = targetCamOffset.z; zOffset <= 0; zOffset += 0.5f)
 			{
 				noCollisionOffset.z = zOffset;
@@ -101,7 +103,7 @@ namespace Evol.Game.Player
 				{
 					break;
 				}
-			}
+			}*/
 
 			// Repostition the camera.
 			smoothPivotOffset = Vector3.Lerp(smoothPivotOffset, targetPivotOffset, smooth * Time.deltaTime);
@@ -184,7 +186,7 @@ namespace Evol.Game.Player
 				relCameraPosMag))
 			{
 				// ... if it is not the player...
-				if (hit.transform != player /*&& !hit.transform.GetComponent<Collider>().isTrigger*/)
+				if (hit.transform != player && hit.transform.GetComponent<Collider>() && !hit.transform.GetComponent<Collider>().isTrigger)
 				{
 					// This position isn't appropriate.
 					return false;
@@ -198,13 +200,12 @@ namespace Evol.Game.Player
 		// Check for collision from player to camera.
 		private bool ReverseViewingPosCheck(Vector3 checkPos, float deltaPlayerHeight, float maxDistance)
 		{
-			RaycastHit hit;
-
-			if (Physics.Raycast(player.position + (Vector3.up * deltaPlayerHeight), checkPos - player.position, out hit,
+			if (Physics.Raycast(player.position + (Vector3.up * deltaPlayerHeight), checkPos - player.position, out var hit,
 				maxDistance))
 			{
-				if (hit.transform != player && hit.transform != transform /*&&
-				    !hit.transform.GetComponent<Collider>().isTrigger*/)
+				if (hit.transform != player && hit.transform != transform && // TODO: fix this shitty camera
+				    hit.transform.GetComponent<Collider>() &&
+				    !hit.transform.GetComponent<Collider>().isTrigger)
 				{
 					return false;
 				}

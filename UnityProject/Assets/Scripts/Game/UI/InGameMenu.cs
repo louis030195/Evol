@@ -199,7 +199,9 @@ namespace Evol.Game.UI
 
 		public void UpdateTimeUI()
 		{
-			time.text = ((int)Time.time).ToString();
+			var minutes = Mathf.FloorToInt(Time.time / 60f);
+			var seconds = Mathf.FloorToInt(Time.time - minutes * 60);
+			time.text = $"{minutes:00}:{seconds:00}";
 		}
 		
 		/// <inheritdoc />
@@ -207,7 +209,8 @@ namespace Evol.Game.UI
 		{
 			if (photonEvent.Code == 0)
 			{
-				if (!(photonEvent.CustomData as object[])[0].Equals("Player"))
+				var data = (photonEvent.CustomData as object[])[0];
+				if (data.Equals("Monster") || data.Equals("Tree"))
 				{
 					int.TryParse(kills.text, out var value);
 					// Increment the kills counter

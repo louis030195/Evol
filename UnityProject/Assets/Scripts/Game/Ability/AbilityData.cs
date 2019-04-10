@@ -1,22 +1,22 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Evol.Game.Player;
+using Evol.Game.Ability;
+using Evol.Game.Item;
+using Evol.Utils;
+using Photon.Pun;
 using UnityEngine;
 
 namespace Evol.Game.Ability
 {
-	[CreateAssetMenu(menuName = "Evol/Spell")]
+	[CreateAssetMenu(menuName = "Evol/Ability")]
 	public class AbilityData : ScriptableObject
 	{
-		public new string name;
+		public string abilityName;
 		public string description;
-		public AudioClip[] sound;
-		public string animation;
 		public Sprite icon;
-		public float cooldown;
-		public int manaCost;
-		public GameObject prefab;
-
-		//public abstract void Initialize(GameObject obj);
-		//public abstract void TriggerAbility();
+		public Stat stat;
 	}
 }

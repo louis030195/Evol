@@ -18388,8 +18388,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed73386c02cb3472187574eb0c85332e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityData: {fileID: 11400000, guid: c4e9f228c4de8fb63924a7fd5825b4fb, type: 2}
   caster: {fileID: 0}
-  BurningSteps: {fileID: 1972207730512856, guid: ea4fb55d0227e604386f44f905cfe7c0,
+  stat:
+    Cooldown: 0
+    LifeLength: 0
+    Damage: 0
+    ManaCost: 0
+    Scale: 0
+  burningSteps: {fileID: 1972207730512856, guid: c57f57270c0d84cfda0a00712ec35204,
     type: 3}
 --- !u!114 &114687861763970338
 MonoBehaviour:

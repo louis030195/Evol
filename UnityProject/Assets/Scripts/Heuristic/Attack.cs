@@ -42,8 +42,7 @@ namespace Evol.Heuristic
 					// This hack is because of unity random int excluding max value
 					var maxRandom = AttackingAnimations.Length == 1 ? 0 : AttackingAnimations.Length;
 					// If there is attacking animations for this object
-					animator.SetBool(AttackingAnimations[Random.Range(0, maxRandom)],
-						true); // Random.Range exclude max value thats why + 1
+					animator.SetTrigger(AttackingAnimations[Random.Range(0, maxRandom)]); // Random.Range exclude max value thats why + 1
 				}
 			}
 			

@@ -38,7 +38,6 @@ namespace Evol.Game.Player
         [HideInInspector] public bool dead;
 
         // List of shields with the spell name which did this shield
-        [SerializeField]
         public List<Tuple<string, int>> currentShields;
         
         private Animator animator;
@@ -54,7 +53,7 @@ namespace Evol.Game.Player
         private void Update()
         {
             // Clipping shields
-            if (currentShields != null)
+            if (currentShields != null) // TODO: remove from update, use event ...wwwwww
             {
                 for (var i = 0; i < currentShields.Count; i++)
                     currentShields[i] = Tuple.Create(currentShields[i].Item1,
@@ -80,7 +79,7 @@ namespace Evol.Game.Player
 
         public void TakeDamage(int amount)
         {
-            if (GetComponent<PhotonView>() && !GetComponent<PhotonView>().IsMine)
+            if (gameObject.GetPhotonView() && !gameObject.GetPhotonView().IsMine)
                 return;
 
             // Lose life if all the shields have been broken
@@ -106,15 +105,13 @@ namespace Evol.Game.Player
                 dead = true;
                 if (destroyOnDeath)
                 {
-                    Destroy(gameObject);
-                    if (DeathEffects.Length > 0)
+                    if(gameObject.GetPhotonView()) PhotonNetwork.Destroy(gameObject);
+                    else Destroy(gameObject);
+                    if (DeathEffects.Length > 0) // Unused, prob not ready for working
                         Destroy(
                             Instantiate(DeathEffects[Random.Range(0, DeathEffects.Length)],
                                 new Vector3(transform.position.x, transform.position.y, transform.position.z),
                                 new Quaternion(0, 0, 0, 0)), 3);
-                    
-                    // Dead, say to server this object is dead
-                    PhotonNetwork.RaiseEvent(0, new object[] { gameObject.tag }, new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendReliable);
                 }
 
                 if (DyingAnimations.Length > 0)
@@ -124,12 +121,15 @@ namespace Evol.Game.Player
                     animator.SetBool(DyingAnimations[Random.Range(0, maxRandom)],
                         true); // TODO: not rly useful if destroyed ... (maybe should add death delay idk)
                 }
+                
+                // Dead, say to server this object is dead
+                PhotonNetwork.RaiseEvent(0, new object[] { gameObject.tag }, new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendReliable);
             }
             
             if (CurrentHealth > 0 && GettingHitAnimations.Length > 0) // If there is getting hit animations for this object
             {
                 var maxRandom = GettingHitAnimations.Length == 1 ? 0 : GettingHitAnimations.Length;
-                animator.SetBool(GettingHitAnimations[Random.Range(0, maxRandom)], true);
+                animator.SetTrigger(GettingHitAnimations[Random.Range(0, maxRandom)]);
             }
 
             Audio();
@@ -137,7 +137,7 @@ namespace Evol.Game.Player
 
         public void GetHealed(int amount)
         {
-            if (!GetComponent<PhotonView>().IsMine)
+            if (!gameObject.GetPhotonView().IsMine)
                 return;
 
 
