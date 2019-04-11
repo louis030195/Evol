@@ -77,10 +77,24 @@ namespace Evol.Game.Player
             }
         }
 
-        public void TakeDamage(int amount)
+        public void TakeDamage(int amount, Photon.Realtime.Player dealer = null)
         {
             if (gameObject.GetPhotonView() && !gameObject.GetPhotonView().IsMine)
                 return;
+
+            if (dealer != null)
+            {
+                if (dealer.CustomProperties.ContainsKey("damageDealt")
+                ) // TODO: maybe could split by target (Monster, friendly fire, ...)
+                {
+                    // Damage taken also ?
+                    dealer.CustomProperties["damageDealt"] = (int) dealer.CustomProperties["damageDealt"] + amount;
+                }
+                else
+                {
+                    dealer.CustomProperties.Add("damageDealt", amount);
+                }
+            }
 
             // Lose life if all the shields have been broken
             currentHealth -= amount > currentShields.Sum(s => s.Item2) ? amount - currentShields.Sum(s => s.Item2) : 0;

@@ -14,7 +14,6 @@ namespace Evol.Game.Networking
 {
     public class Chat : MonoBehaviour, IChatClientListener
     {
-
         public PlayFabAuthenticationContext PlayFabAuthenticationContext;
         public int messageLimit = 100;
         [Header("Chat layout")]
@@ -31,6 +30,9 @@ namespace Evol.Game.Networking
         // Start is called before the first frame update
         private void Start()
         {
+            ChatInput.onSelect.AddListener(value => OnChat());
+            ChatInput.onDeselect.AddListener(value => OnChat());
+            
             chatScroll = ChatContent.GetComponent<ScrollRect>();
             PlayFabClientAPI.GetPhotonAuthenticationToken(new GetPhotonAuthenticationTokenRequest
             {
@@ -78,6 +80,7 @@ namespace Evol.Game.Networking
             var success = chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat,
                 PhotonNetwork.AppVersion,
                 new AuthenticationValues(PlayFabAuthenticationContext.PlayFabId));
+            DontDestroyOnLoad(gameObject);
             Debug.Log($"Connected to chat { success }");
         }
 

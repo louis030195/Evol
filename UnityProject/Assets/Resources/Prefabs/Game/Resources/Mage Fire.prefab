@@ -1414,8 +1414,8 @@ MonoBehaviour:
   skillBar: {fileID: 5982326821416946012}
   skillPlaceholderPrefab: {fileID: 8518043158311853788, guid: 7981347c612ee635dbc0d1cc79043fe2,
     type: 3}
-  skillInformationPanel: {fileID: 0}
-  skillInformationText: {fileID: 0}
+  skillInformationPanel: {fileID: 3501810596491297295}
+  skillInformationText: {fileID: 4187855756911898262}
 --- !u!114 &114992632291942406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1568,6 +1568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f5fce186676af9559df8add704333c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerDataUpdateFrequency: 60
   characterData: {fileID: 11400000, guid: 2109756dd2423d063bc62509d946e3a0, type: 2}
 --- !u!114 &7681394123401250298
 MonoBehaviour:
@@ -2634,6 +2635,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &3501810596491297295 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5850879962978114128, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
+    type: 3}
+  m_PrefabInstance: {fileID: 7037558849163941983}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4187855756911898262 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6607958109830526665, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
+    type: 3}
+  m_PrefabInstance: {fileID: 7037558849163941983}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5982326821416946012 stripped

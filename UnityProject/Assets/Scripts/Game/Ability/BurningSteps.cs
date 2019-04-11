@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Evol.Agents;
 using Evol.Game.Player;
+using Photon.Pun;
 using UnityEngine;
 
 namespace Evol.Game.Ability
@@ -30,7 +31,7 @@ namespace Evol.Game.Ability
 			var health = other.gameObject.GetComponent<Health>() ? other.gameObject.GetComponent<Health>() :
 				parent ? parent.gameObject.GetComponent<Health>() : null;
 			if(health != null)
-				health.TakeDamage((int)abilityData.stat.damage);
+				health.TakeDamage((int)abilityData.stat.damage, caster.GetPhotonView().Owner);
 		}
 	}
 }

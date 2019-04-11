@@ -1571,7 +1571,7 @@ MonoBehaviour:
   sprintSpeed: 2
   speedDampTime: 0.1
   jumpButton: Jump
-  jumpHeight: 1.5
+  jumpHeight: 1500
   jumpIntertialForce: 10
 --- !u!114 &2952244275162345154
 MonoBehaviour:
@@ -1599,6 +1599,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f5fce186676af9559df8add704333c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerDataUpdateFrequency: 60
   characterData: {fileID: 11400000, guid: f2d52b7d09c152c3b8fffd0d7aa39c50, type: 2}
 --- !u!114 &3922392251806272548
 MonoBehaviour:
@@ -3428,6 +3429,11 @@ PrefabInstance:
     - target: {fileID: 7413743983094033927, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
         type: 3}
       propertyPath: m_isInputParsingRequired
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7413743983094033927, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
+        type: 3}
+      propertyPath: m_firstOverflowCharacterIndex
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1811010897836416464, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,

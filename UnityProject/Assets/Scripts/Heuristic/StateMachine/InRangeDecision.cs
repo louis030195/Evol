@@ -17,11 +17,13 @@ namespace Evol.Heuristic.StateMachine
         private bool CheckIfInRange(StateController controller)
         {
             if (Physics.SphereCast(controller.eyes.position, controller.parameters.lookSphereCastRadius,
-                    controller.eyes.forward, out var hit, controller.parameters.attackRange)
-                && controller.parameters.tags.Any(t => hit.collider.CompareTag(t)))
+                    controller.eyes.forward, out var hit, controller.parameters.attackRange))
             {
-                controller.chaseTarget = hit.transform;
-                return true;
+                if (controller.parameters.tags.Any(t => hit.collider.CompareTag(t)))
+                {
+                    controller.chaseTarget = hit.transform;
+                    return true;
+                }
             }
 
             return false;

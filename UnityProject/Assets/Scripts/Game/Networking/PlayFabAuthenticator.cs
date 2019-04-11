@@ -27,10 +27,11 @@ namespace Evol.Game.Networking
         public GameObject loginRegisterCanvas;
         public Button loginButton;
         public Button registerButton;
-        public InputField username;
-        public InputField password;
-        public InputField email;
+        public TMP_InputField username;
+        public TMP_InputField password;
+        public TMP_InputField email;
         public TextMeshProUGUI result;
+        public GameObject chat;
         private LoginWithPlayFabRequest loginRequest;
 
         [Header("Main menu fields")] 
@@ -81,7 +82,7 @@ namespace Evol.Game.Networking
             // Set the difficulty settings as room property
             difficultyDropdown.onValueChanged.AddListener(value =>
             {
-                if (PhotonNetwork.InRoom) // TODO: FINISH DIFFICULTY STUFF
+                if (PhotonNetwork.InRoom)
                 {
                     if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("difficulty"))
                         PhotonNetwork.CurrentRoom.CustomProperties.Add("difficulty", difficultyDropdown.value);
@@ -108,8 +109,9 @@ namespace Evol.Game.Networking
             {
                 // If the account is found
                 PhotonNetwork.LocalPlayer.NickName = loginRequest.Username;
-                gameObject.GetComponent<Chat>().PlayFabAuthenticationContext = result.AuthenticationContext;
-                gameObject.GetComponent<Chat>().enabled = true;
+                
+                chat.GetComponent<Chat>().PlayFabAuthenticationContext = result.AuthenticationContext;
+                chat.GetComponent<Chat>().enabled = true;
                 this.result.text = $"You're now logged in !";
                 OnLoginSuccess();
             }, error =>
@@ -183,7 +185,7 @@ namespace Evol.Game.Networking
         {
             loginRegisterCanvas.SetActive(true);
             mainMenuCanvas.SetActive(false);
-            gameObject.GetComponent<Chat>().enabled = false;
+            chat.GetComponent<Chat>().enabled = false;
             PhotonNetwork.Disconnect(); // There isn't a Disconnect for playfab
             result.text = $"Successfully disconnected";
         }
@@ -326,27 +328,6 @@ namespace Evol.Game.Networking
 
         public override void OnDisconnected(DisconnectCause cause)
         {
-            // I guess it could happen to be null if we are debugging and didn't pass by login scene ?
-            if (PlayFabClientAPI.IsClientLoggedIn())
-            {
-                // Persist player data
-                var playerData = new Dictionary<string, string>();
-                foreach (var key in PhotonNetwork.LocalPlayer.CustomProperties.Keys)
-                {
-                    playerData.Add((string) key, (string) PhotonNetwork.LocalPlayer.CustomProperties[key]);
-                }
-                // TODO: Think to not push all custom properties, there is some properties that shouldn't be persisted (ready for example)
-                if (playerData.Count > 0) // We don't always add player data (just logging, disconecting ....)
-                {
-                    PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
-                        {
-                            AuthenticationContext = loginRequest.AuthenticationContext,
-                            Data = playerData
-                        }, result => { Debug.Log($"UpdateUserData succeed - {result}"); },
-                        error => { Debug.Log($"UpdateUserData failed - {error}"); });
-                }
-            }
-
             Debug.Log($"Disconnected from photon cloud { cause }");	
             queueStatus.text = $"Failed to connect to the server { cause }";
         }

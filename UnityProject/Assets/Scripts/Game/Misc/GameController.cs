@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Evol.Game.Item;
+using Evol.Game.Networking;
 using Evol.Game.Player;
 using Evol.Heuristic.StateMachine;
 using Evol.Utils;
@@ -17,14 +18,6 @@ using Random = UnityEngine.Random;
 
 namespace Evol.Game.Misc
 {
-
-    public enum Difficulties
-    {
-        Easy,
-        Medium,
-        Hard,
-        Inferno
-    }
     
     // IMPORTANT THING ABOUT PHOTON
     /*
@@ -61,6 +54,7 @@ namespace Evol.Game.Misc
 
         private GameState gameState = GameState.Playing;
         private int playersAlive, aisAlive, aiSpawned, roundNumber;
+        private float difficulty;
 
         private void Awake()
         {
@@ -92,6 +86,12 @@ namespace Evol.Game.Misc
 
             if (PhotonNetwork.IsMasterClient)
             {
+                // Get the difficulty chosen
+                if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("difficulty"))
+                    difficulty = (int) PhotonNetwork.CurrentRoom.CustomProperties["difficulty"] / 3; // 1, 2, 3 => / 3
+                else // Should only happen in debug mode (start from game scene)
+                    difficulty = 1;
+                
                 // Spawn npc
                 var npc = Instantiate(npcs[0], Position.AboveGround(
                         Position.RandomPositionAround(new Vector3(0, 0, 0), 5),
@@ -261,8 +261,11 @@ namespace Evol.Game.Misc
 
         private IEnumerator SpawnAllAi()
         {
-            if (aiSpawned < aiPerRound * (roundNumber / 4))
+            // The number of AIs increase of aiPerRound + aiPerRound * 30% for example (1st round then 60%) in easy mode
+            var aiPerRoundByDifficulty = aiPerRound + aiPerRound * (roundNumber * difficulty);
+            if (aiSpawned < aiPerRoundByDifficulty)
             {
+                print($"AiPerRoundByDiffuculty {aiPerRoundByDifficulty}");
                 // Randomgo is just useful to avoid exception when the array is empty
                 var randomGo = mobs.Length > 0 ? mobs[Random.Range(0, mobs.Length)] : null;
                 if (randomGo)
@@ -279,8 +282,8 @@ namespace Evol.Game.Misc
 
                     // TODO: implement an extension to generate non uniform random distribution (more chance to have 0, 1 items than more ...)
                     // Add some items to the loot of that monster
-                    // var loot = mob.GetComponent<Loot>();
-                    // if(loot) loot.items = new List<GameObject>(items.PickRandom(Random.Range(0, items.Length)));
+                    var loot = mob.GetComponent<Loot>();
+                    if(loot) loot.items = new List<GameObject>(items.PickRandom(Random.Range(0, items.Length)));
 
                     // Set as child of map object
                     mob.transform.parent = map.transform;
@@ -308,11 +311,13 @@ namespace Evol.Game.Misc
             if (gameState == GameState.Lost)
             {
                 StartCoroutine(UpdateTextAndDisappear($"Game over !", 2f));
+                print("lose");
             }
             
             if(gameState == GameState.Won)
             {
                 StartCoroutine(UpdateTextAndDisappear($"Victory !", 2f));
+                print("win");
             }
             
             // Wait for the specified length of time until yielding control back to the game loop.
@@ -330,6 +335,13 @@ namespace Evol.Game.Misc
         private void UpdateText(string text)
         {
             mainText.text = text;
+        }
+
+        // TODO: implement this to handle when master client leave game, take the game loop ...
+        // https://doc.photonengine.com/en-us/pun/current/gameplay/hostmigration
+        public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
+        {
+            base.OnMasterClientSwitched(newMasterClient);
         }
 
         /// <summary>

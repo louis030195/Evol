@@ -16,22 +16,20 @@ namespace Evol.Heuristic.StateMachine
 
 		private bool Look(StateController controller)
 		{
-			RaycastHit hit;
-
 			Debug.DrawRay(controller.eyes.position,
 				controller.eyes.forward.normalized * controller.parameters.lookRange, Color.green);
 
 			if (Physics.SphereCast(controller.eyes.position, controller.parameters.lookSphereCastRadius,
-				    controller.eyes.forward, out hit, controller.parameters.lookRange)
-			    && controller.parameters.tags.Any(t => hit.collider.CompareTag(t)))
+				    controller.eyes.forward, out var hit, controller.parameters.lookRange))
 			{
-				controller.chaseTarget = hit.transform;
-				return true;
+				if (controller.parameters.tags.Any(t => hit.collider.CompareTag(t)))
+				{
+					controller.chaseTarget = hit.transform;
+					return true;
+				}
 			}
-			else
-			{
-				return false;
-			}
+
+			return false;
 		}
 	}
 }

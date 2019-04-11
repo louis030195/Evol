@@ -18,7 +18,7 @@ namespace Evol.Heuristic.StateMachine
         {
             if (controller.movement.RemainingDistance <= controller.movement.StoppingDistance && !controller.movement.PathPending) 
             {
-                controller.movement.MoveTo(position);
+                controller.movement.MoveTo(Position.AboveGround(position, 1));
             }
 			
         }

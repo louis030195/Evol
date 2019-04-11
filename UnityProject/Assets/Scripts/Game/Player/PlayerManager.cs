@@ -5,10 +5,13 @@ using System.Linq;
 using Evol.Game.Ability;
 using Evol.Game.Item;
 using Evol.Game.Misc;
+using Evol.Game.Networking;
 using Evol.Game.UI;
 using Evol.Utils;
 using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
+using PlayFab;
+using PlayFab.ClientModels;
 using UnityEngine;
 
 namespace Evol.Game.Player
@@ -19,6 +22,7 @@ namespace Evol.Game.Player
     /// </summary>
     public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     {
+        [Tooltip("Frequency of sending player data to server in seconds")] public int playerDataUpdateFrequency = 60;
         [Tooltip("Contains the specific data about the character chosen")] public CharacterData characterData;
         
         [HideInInspector] public EventListenedList<Rune>[] abilitiesRunes;
@@ -40,8 +44,7 @@ namespace Evol.Game.Player
             if (photonView.IsMine)
             {
                 LocalPlayerInstance = gameObject;
-
-
+                
                 // #Critical
                 // we flag as don't destroy on load so that instance survives level synchronization, thus giving a seamless experience when levels load.
                 DontDestroyOnLoad(gameObject);
@@ -64,7 +67,37 @@ namespace Evol.Game.Player
                 }
             }
         }
-        
+
+        private void Update()
+        {
+            // TODO: find a way to get the playfabauthcontext
+            /*
+            if (Time.time % playerDataUpdateFrequency < 1)
+            {
+                // I guess it could happen to be null if we are debugging and didn't pass by login scene ?
+                if (PlayFabClientAPI.IsClientLoggedIn())
+                {
+                    // Persist player data
+                    var playerData = new Dictionary<string, string>();
+                    foreach (var key in PhotonNetwork.LocalPlayer.CustomProperties.Keys)
+                    {
+                        if(!key.ToString().Equals("context")) // Here put keys to exclude from persisted on server data
+                            playerData.Add(key.ToString(), PhotonNetwork.LocalPlayer.CustomProperties[key].ToString());
+                    }
+
+                    if (playerData.Count > 0) // We don't always add player data (just logging, disconecting ....)
+                    {
+                        PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
+                            {
+                                AuthenticationContext = ,
+                                Data = playerData
+                            }, result => { Debug.Log($"UpdateUserData succeed - {result}"); },
+                            error => { Debug.Log($"UpdateUserData failed - {error}"); });
+                    }
+                }
+            }*/
+        }
+
         private void Add(object sender, EventArgs e)
         {
         }
