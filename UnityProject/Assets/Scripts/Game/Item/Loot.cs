@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Evol.Utils;
 using Photon.Pun;
 using UnityEngine;
 
@@ -19,10 +20,8 @@ namespace Evol.Game.Item
             if (quitting) return; // Just to avoid calling this function when stopping play mode in editor, or it will cause issues
             
             // Spawn the object at the object position
-            var parentForward = transform.parent.transform.position;
-            var positionToSpawn =
-                new Vector3(parentForward.x, parentForward.y + 1f,
-                    parentForward.z + 2f); // TODO: tweak the + on position to make it realistic
+            var position = transform.position;
+            var positionToSpawn = new Vector3(position.x, position.y + 1, position.z);
             
             // For each items i have in my loot
             foreach (var item in items)

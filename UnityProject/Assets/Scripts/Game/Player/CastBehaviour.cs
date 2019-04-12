@@ -164,7 +164,9 @@ namespace Evol.Game.Player
 			
 			// Spawn the spell
 			var go = PhotonNetwork.Instantiate(playerManager.characterData.abilities[currentSpell].name, bulletSpawn.position, bulletSpawn.rotation);
-			go.GetComponent<Ability.Ability>().abilityData.stat = ability.abilityData.stat;
+			go.GetComponent<Ability.Ability>().runes = playerManager.abilitiesRunes[currentSpell];
+			go.GetComponent<Ability.Ability>().Fire();
+			// go.GetComponent<Ability.Ability>().abilityData.stat = ability.abilityData.stat;
 			
 			currentSpell = -1; // Reset the current spell id
 		}

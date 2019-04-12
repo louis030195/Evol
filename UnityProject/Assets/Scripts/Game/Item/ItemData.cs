@@ -14,5 +14,10 @@ namespace Evol.Game.Item
         public Sprite icon;
         public int price = 0;
         public GameObject prefab;
+        
+        public override string ToString()
+        {
+            return $"Name: {itemName}\nDescription: {description}\nPrice: {price}\n";
+        }
     }
 }

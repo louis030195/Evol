@@ -8,6 +8,12 @@ namespace Evol.Utils
 {
     public static class EnumerableExtension
     {
+        /// <summary>
+        /// Return a random element among the array
+        /// </summary>
+        /// <param name="source"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static T PickRandom<T>(this IEnumerable<T> source)
         {
             return source.PickRandom(1).Single();
@@ -22,5 +28,7 @@ namespace Evol.Utils
         {
             return source.OrderBy(x => Guid.NewGuid());
         }
+        
+        // TODO: non uniform random
     }
 }

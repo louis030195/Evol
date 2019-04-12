@@ -18,5 +18,9 @@ namespace Evol.Game.Ability
 		public string description;
 		public Sprite icon;
 		public Stat stat;
+
+		public GameObject prefab; 
+		// It is redundant to add a reference to the prefab but we need it in order to odo duplication etc (handle runes)
+		// I don't see a cleaner way atm
 	}
 }

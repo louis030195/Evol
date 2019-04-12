@@ -7,6 +7,5 @@ namespace Evol.Game.Item
     [CreateAssetMenu(fileName = "New consumable", menuName = "Evol/Item/Consumable")]
     public class ConsumableData : ItemData
     {
-
     }
 }

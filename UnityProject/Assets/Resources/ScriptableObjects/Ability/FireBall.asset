@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Fire ball
   description: zz
-  icon: {fileID: 21300000, guid: 200f1dc55bb4b681ea93a7da7f787a91, type: 3}
+  icon: {fileID: 21300000, guid: 92b315788e6ebb34f90dddacbca17e68, type: 3}
   stat:
     manaCost: 5
     cooldown: 1
+    lifeLength: 5
+    scale: 1
     damage: 100
     heal: 0
     shield: 0
-    lifeLength: 5
-    scale: 1
-  incompatibleEffects: []
+  prefab: {fileID: 100004, guid: e80858857bb25463b82ed690e0f7c14d, type: 3}

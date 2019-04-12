@@ -1,0 +1,31 @@
+using Evol.Heuristic.StateMachine;
+using Evol.Utils;
+using Photon.Pun;
+using UnityEngine;
+
+namespace Evol.Game.Ability
+{
+    public abstract class Summon : Ability
+    {
+        public GameObject effect;
+        public GameObject summon;
+        protected GameObject instance;
+        
+        protected abstract override void Initialize();
+
+        protected abstract override void TriggerAbility();
+
+        protected abstract override void UpdateAbility();
+
+        protected abstract override void StopAbility();
+
+        protected void SummonNow(Vector3 positionToSpawn)
+        {
+            instance = PhotonNetwork.Instantiate(summon.name, positionToSpawn, Quaternion.identity);
+            
+            // Required to set as a "network" child of the caster or it will be destroyed as a net child of the flask
+            instance.GetPhotonView().TransferOwnership(caster.GetPhotonView().Owner);
+            instance.GetComponent<StateController>().SetupAi(true);
+        }
+    }
+}

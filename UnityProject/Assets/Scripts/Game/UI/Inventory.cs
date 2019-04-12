@@ -146,7 +146,7 @@ namespace Evol.Game.UI
 				if (playerManager.inventoryNonEquipped.Remove(itemComponent))
 				{
 					// Try to remove from the equipped list
-					playerManager.abilitiesRunes[draggedFromAbilityNumber].Remove(itemComponent as Rune);
+					playerManager.abilitiesRunes[draggedFromAbilityNumber].Remove((itemComponent as Rune).itemData as RuneData);
 				}
 			}
 
@@ -168,7 +168,7 @@ namespace Evol.Game.UI
 					itemIcon.transform.SetParent(abilities[draggedToAbilityNumber].transform, false);
 
 					// Add to the list
-					playerManager.abilitiesRunes[draggedToAbilityNumber].Add(itemComponent as Rune);
+					playerManager.abilitiesRunes[draggedToAbilityNumber].Add((itemComponent as Rune).itemData as RuneData);
 				}
 
 				// Remove from the ground
@@ -236,8 +236,7 @@ namespace Evol.Game.UI
 			// Show the panel a little above the mouse
 			itemInformationPanel.transform.position = new Vector3(Input.mousePosition.x * 0.8f,
 				Input.mousePosition.y * 1.2f, Input.mousePosition.z);
-			itemInformationText.text =
-				$"{item.itemName}\nDescription: {item.description}";
+			itemInformationText.text = item.ToString();
 		}
 
 		private void InformationPointerExit(PointerEventData data)

@@ -13,11 +13,15 @@ namespace Evol.Game.Item
         // Instance in the scene
         [HideInInspector] public GameObject instance;
         public ItemData itemData;
+        public GameObject AnimationOnSpawn;
 
         private PhotonView photonView;
 
         private void Awake()
         {
+            // Spawn animation
+            PhotonNetwork.Instantiate(AnimationOnSpawn.name, transform.position, new Quaternion(-90,0,0, 90));
+            
             instance = gameObject;
             
             // My name is set to item name + instanceID for example Shako1463827, because Unity doing find with string GG
@@ -40,6 +44,11 @@ namespace Evol.Game.Item
             // If a player went away from me, tell him
             if (other.CompareTag("Player"))
                 EventManager.TriggerEvent ("OnItemAroundRemove", new object[] { instance });
+        }
+
+        public override string ToString()
+        {
+            return itemData.ToString();
         }
     }
 }

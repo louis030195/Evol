@@ -25,7 +25,7 @@ namespace Evol.Game.Player
         [Tooltip("Frequency of sending player data to server in seconds")] public int playerDataUpdateFrequency = 60;
         [Tooltip("Contains the specific data about the character chosen")] public CharacterData characterData;
         
-        [HideInInspector] public EventListenedList<Rune>[] abilitiesRunes;
+        [HideInInspector] public EventListenedList<RuneData>[] abilitiesRunes;
         [HideInInspector] public EventListenedList<Item.Item> inventoryNonEquipped = new EventListenedList<Item.Item>();
         
         // The local player instance. Use this to know if the local player is represented in the Scene
@@ -50,10 +50,10 @@ namespace Evol.Game.Player
                 DontDestroyOnLoad(gameObject);
 
                 animator = GetComponent<Animator>();
-                abilitiesRunes = new EventListenedList<Rune>[characterData.abilities.Length];
+                abilitiesRunes = new EventListenedList<RuneData>[characterData.abilities.Length];
                 for (var i = 0; i < abilitiesRunes.Length; i++)
                 {
-                    abilitiesRunes[i] = new EventListenedList<Rune>();
+                    abilitiesRunes[i] = new EventListenedList<RuneData>();
                     abilitiesRunes[i].OnAdd += Add;
                     abilitiesRunes[i].OnRemove += Remove;
                 }

@@ -281,7 +281,7 @@ MonoBehaviour:
   GettingHitAnimations:
   - damage1
   DyingAnimations:
-  - "die1\x13"
+  - die1
   dead: 0
 --- !u!114 &5554229823270474535
 MonoBehaviour:
@@ -301,7 +301,7 @@ MonoBehaviour:
   WalkingAnimations:
   - walk
   RunningAnimations:
-  - "run\x13"
+  - run
   navMeshAgent: {fileID: 0}
 --- !u!114 &4482112285003361048
 MonoBehaviour:
@@ -318,7 +318,7 @@ MonoBehaviour:
   AttackingAudio: {fileID: 0}
   AttackClip: []
   AttackingAnimations:
-  - "attack1\x13"
+  - attack1
   CastingAnimations: []
 --- !u!195 &4629115052385444106
 NavMeshAgent:
@@ -407,12 +407,6 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 1
     Name: attack1
-  - Type: 9
-    SynchronizeType: 1
-    Name: hit
-  - Type: 9
-    SynchronizeType: 1
-    Name: die
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0

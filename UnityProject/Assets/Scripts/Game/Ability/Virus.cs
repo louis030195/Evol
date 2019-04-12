@@ -1,13 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Evol.Agents;
-using Evol.Game.Item;
 using Evol.Game.Player;
-using Evol.Utils;
 using Photon.Pun;
-using Photon.Pun.UtilityScripts;
-using UnityEditor;
 using UnityEngine;
 
 namespace Evol.Game.Ability
@@ -15,6 +8,7 @@ namespace Evol.Game.Ability
     
     public class Virus : Ability
     {
+        private GameObject target;
         private Health targetHealth;
         protected override void Initialize()
         {
@@ -48,26 +42,29 @@ namespace Evol.Game.Ability
             var parent = other.transform.parent; // Not all object have a parent
             targetHealth = other.gameObject.GetComponent<Health>() ? other.gameObject.GetComponent<Health>() :
                 parent ? parent.gameObject.GetComponent<Health>() : null;
-            if (targetHealth != null)
+            
+            // It will stick to the target until it hit another target
+            if (other.gameObject != target && targetHealth != null)
             {
+                target = other.gameObject;
                 transform.SetParent(other.transform);
+                StartCoroutine(SlowlyLoseLife(targetHealth));
             }
-
-            PhotonNetwork.Destroy(gameObject);
-        }
-
-        private void OnTriggerStay(Collider other)
-        {
-            StartCoroutine(SlowlyLoseLife(targetHealth));
         }
 
         private IEnumerator SlowlyLoseLife(Health health)
         {
-            foreach(var i in Enumerable.Range(0, (int)abilityData.stat.lifeLength)) // 5 ticks of life loss
+            var i = 0;
+            while(i < (int)abilityData.stat.lifeLength) // ticks of life loss
             {
-                health.TakeDamage((int) abilityData.stat.damage, caster.GetPhotonView().Owner);
+                health.TakeDamage((int)abilityData.stat.damage, caster.GetPhotonView().Owner);
                 yield return new WaitForSeconds(1f);
+                i++;
             }
+
+            target = null;
+            targetHealth = null;
+            // PhotonNetwork.Destroy(gameObject);
         }
     }
 }

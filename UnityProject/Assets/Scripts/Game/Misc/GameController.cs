@@ -212,7 +212,9 @@ namespace Evol.Game.Misc
             /*
             foreach(var i in Enumerable.Range(0, 10)) {
                 // Spawn random items
-                var go = PhotonNetwork.Instantiate(items[Random.Range(0, items.Length)].name,
+                var randomGo = items.Length > 0 ? items.PickRandom() : null;
+                print(randomGo.name);
+                var go = PhotonNetwork.Instantiate(randomGo.name,
                     Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 10), 1),
                     Quaternion.identity);
             }*/
@@ -283,7 +285,7 @@ namespace Evol.Game.Misc
                     // TODO: implement an extension to generate non uniform random distribution (more chance to have 0, 1 items than more ...)
                     // Add some items to the loot of that monster
                     var loot = mob.GetComponent<Loot>();
-                    if(loot) loot.items = new List<GameObject>(items.PickRandom(Random.Range(0, items.Length)));
+                    if(loot) loot.items = new List<GameObject>(items.PickRandom(Random.Range(0, 10)));
 
                     // Set as child of map object
                     mob.transform.parent = map.transform;

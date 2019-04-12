@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using Evol.Agents;
 using Evol.Game.Player;
 using Photon.Pun;
 using UnityEngine;

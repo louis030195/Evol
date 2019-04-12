@@ -1,35 +1,70 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Evol.Agents;
+﻿using System.Linq;
 using Evol.Game.Item;
-using Evol.Game.Player;
 using Photon.Pun;
-using Photon.Pun.UtilityScripts;
-using UnityEditor;
 using UnityEngine;
 
 namespace Evol.Game.Ability
 {
     public class DamageBall : Ability
     {
+        private ParticleSystem particle;
         private Vector3 moveDirection;
         private float speed = 2000;
 
         protected override void Initialize()
         {
+            particle = GetComponent<ParticleSystem>();
             StartCoroutine(DestroyAfter((int)abilityData.stat.lifeLength));
         }
 
         protected override void TriggerAbility()
         {
+            particle.Play();
             transform.localScale *= abilityData.stat.scale;
+            
+            // Has empower rune ?
+            if (runes.Any(r => r.effect == RuneEffect.Empower))
+            {
+                transform.localScale *= 2;
+            }
+
+            var previousPosition = transform.position;
             
             // Throw forward       
             var camera = caster.GetComponentInChildren<Camera>();
             var pos = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, camera.nearClipPlane));
             transform.LookAt(pos); 
             GetComponent<Rigidbody>().AddForce(-transform.forward * speed);
+
+            // Has duplicate rune ?
+            if (runes.Any(r => r.effect == RuneEffect.Duplicate))
+            {
+                var go = PhotonNetwork.Instantiate(abilityData.prefab.name, new Vector3(previousPosition.x, previousPosition.y, previousPosition.z + 3),
+                    Quaternion.identity);
+                go.transform.LookAt(pos);
+                go.GetComponent<Rigidbody>().AddForce(-transform.forward * speed);
+                go.GetComponent<Ability>().Fire();
+            }
+        }
+
+
+        /// <summary>
+        /// This is the hitbox triggered when hitting object with health and triggered by others
+        /// </summary>
+        /// <param name="other"></param>
+        private void OnTriggerEnter(Collider other)
+        {
+            ApplyDamage(other.gameObject);
+            if(!other.isTrigger) PhotonNetwork.Destroy(gameObject); // Destroy anyway (if its not a trigger like object)
+        }
+
+        /// <summary>
+        /// This is the hitbox triggered when hitting object with health and not triggered by others
+        /// </summary>
+        /// <param name="other"></param>
+        private void OnParticleCollision(GameObject other)
+        {
+            if(ApplyDamage(other)) PhotonNetwork.Destroy(gameObject); // Destroy only if hitting health
         }
 
         protected override void UpdateAbility()
@@ -38,21 +73,6 @@ namespace Evol.Game.Ability
 
         protected override void StopAbility()
         {
-        }
-         
-
-        private void OnTriggerEnter(Collider other)
-        {
-            // The hitbox is on the mesh which is sometimes on a child
-            var parent = other.transform.parent; // Not all object have a parent
-            var health = other.gameObject.GetComponent<Health>() ? other.gameObject.GetComponent<Health>() :
-                parent ? parent.gameObject.GetComponent<Health>() : null;
-            if (health != null)
-            {
-                health.TakeDamage((int) abilityData.stat.damage, caster.GetPhotonView().Owner);
-            }
-
-            PhotonNetwork.Destroy(gameObject);
         }
     }
 }

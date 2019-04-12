@@ -6,5 +6,6 @@ namespace Evol.Game.Item
 {
     public class Rune : Item
     {
+        
     }
 }
