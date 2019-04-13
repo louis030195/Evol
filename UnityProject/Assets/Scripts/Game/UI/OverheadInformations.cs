@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
+using Debug = System.Diagnostics.Debug;
 
 namespace Evol.Game.UI
 {
@@ -16,16 +17,19 @@ namespace Evol.Game.UI
         // Start is called before the first frame update
         private void Start()
         {
-            // We don't want to see our own overhead bar, just others
-            if (gameObject.GetPhotonView().IsMine)
+            var photonView = transform.parent.gameObject.GetPhotonView();
+            if (photonView == null)
             {
-                hideBar = true;
+                Debug.Fail($"OverheadInformations no photonview in parent");
             }
+            
+            // We don't want to see our own overhead bar, just others
+            hideBar = photonView.IsMine;
             
             overheadInformations.SetActive(!hideBar);
             
-            // If our parent has photonview (kinda hardcoded) and is not scene view (scene view = not a player)
-            if(gameObject.GetPhotonView() != null && !gameObject.GetPhotonView().IsSceneView)
+            // If our parent is not scene view (scene view = not a player)
+            if(!photonView.IsSceneView)
                 name.text = $"{PhotonNetwork.LocalPlayer.NickName}";
             else
                 name.text = $"Creep";

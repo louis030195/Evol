@@ -28,8 +28,8 @@ namespace Evol.Game.Player
 				enabled = false;
 			
 			// Set up the references.
-			jumpBool = Animator.StringToHash("Jump");
-			groundedBool = Animator.StringToHash("Grounded");
+			jumpBool = Animator.StringToHash("jump");
+			groundedBool = Animator.StringToHash("grounded");
 			behaviourManager.GetAnim.SetBool(groundedBool, true);
 
 			// Subscribe and register this behaviour as the default behaviour.

@@ -9,7 +9,7 @@ namespace Evol.Heuristic.StateMachine
 	{
 		public override bool Decide(StateController controller)
 		{
-			bool chaseTargetIsActive = controller.chaseTarget ?? controller.chaseTarget.gameObject.activeSelf;
+			bool chaseTargetIsActive = controller.target ?? controller.target.gameObject.activeSelf;
 			return chaseTargetIsActive;
 		}
 	}

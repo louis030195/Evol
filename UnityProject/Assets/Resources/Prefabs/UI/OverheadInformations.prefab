@@ -157,6 +157,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9127392546385857632}
+  - component: {fileID: 912884014310069028}
   m_Layer: 0
   m_Name: OverheadInformations
   m_TagString: Untagged
@@ -186,6 +187,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 3}
   m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &912884014310069028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473705318705515589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fdf4ecc7be8b9d688c63b8f8b0c7c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hideBar: 1
+  overheadInformations: {fileID: 473705318705515589}
+  name: {fileID: 4978171461647050145}
+  defaultName: Creep
 --- !u!1 &988529317300167767
 GameObject:
   m_ObjectHideFlags: 0

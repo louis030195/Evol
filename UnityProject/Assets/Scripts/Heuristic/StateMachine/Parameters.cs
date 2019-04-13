@@ -15,6 +15,7 @@ namespace Evol.Heuristic.StateMachine
 		public int moveSpeed;
 		public int searchingTurnSpeed;
 		public int searchDuration;
-		public string[] tags; // Tags to focus (attack, chase ...)
+		public string[] ennemies; // Tags to attack, chase ...
+		public string[] allies; // Tags to defend ...
 	}
 }

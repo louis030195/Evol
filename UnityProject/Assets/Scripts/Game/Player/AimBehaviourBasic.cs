@@ -24,7 +24,7 @@ namespace Evol.Game.Player
 				enabled = false;
 		
 			// Set up the references.
-			aimBool = Animator.StringToHash("Aim");
+			aimBool = Animator.StringToHash("aim");
 		}
 
 		// Update is used to set features regardless the active behaviour.

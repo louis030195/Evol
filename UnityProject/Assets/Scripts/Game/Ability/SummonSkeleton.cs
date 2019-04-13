@@ -24,7 +24,6 @@ namespace Evol.Game.Ability
 
         protected override void StopAbility()
         {
-            PhotonNetwork.Destroy(instance);
         }
 
         private bool collided = false; // tmp to remove after resolving the todo
@@ -34,10 +33,10 @@ namespace Evol.Game.Ability
             collided = true; // tmp to remove after resolving the todo
             var position = transform.position;
             PhotonNetwork.Instantiate(effect.name, position, new Quaternion(90, 0, 0, 90));
-            // TODO: instanciate as child view photonvie of caster or it dies after flakon death
-            SummonNow(position); // TODO: async await this summon (drop coroutine shit) cuz we have to wait that it spawn and then destroy the flask
-            StartCoroutine(DestroyAfter(2));
-            // PhotonNetwork.Destroy(gameObject);
+            SummonNow(position); 
+            // gameObject.SetActive(false);
+            // StartCoroutine(DestroyAfter(2));
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 }

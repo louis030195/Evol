@@ -20,7 +20,7 @@ namespace Evol.Game.Player
             
             // Set up the references.
             behaviourManager = GetComponent<BasicBehaviour>();
-            speedFloat = Animator.StringToHash("Speed");
+            speedFloat = Animator.StringToHash("speed");
             canSprint = true;
 
             // Set the behaviour code based on the inheriting class.

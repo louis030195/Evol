@@ -23,7 +23,7 @@ namespace Evol.Game.Player
 				enabled = false;
 			
 			// Set up the references.
-			flyBool = Animator.StringToHash("Fly");
+			flyBool = Animator.StringToHash("fly");
 			col = GetComponent<CapsuleCollider>();
 			// Subscribe this behaviour on the manager.
 			behaviourManager.SubscribeBehaviour(this);

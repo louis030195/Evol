@@ -32,7 +32,7 @@ namespace Evol.Game.Player
         public static GameObject LocalPlayerInstance;
 
         private Animator animator; // TODO: should we use the behaviour stuff for this also ?
-        private static readonly int Pickup = Animator.StringToHash("Pickup");
+        private static readonly int Pickup = Animator.StringToHash("pickup");
 
         /// <summary>
         /// MonoBehaviour method called on GameObject by Unity during early initialization phase.

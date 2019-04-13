@@ -250,7 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c166260f4ebec433eb5e48ebcda8df97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: {fileID: 11400000, guid: 624f1fc8c15f25259870ee4ab914dfbc, type: 2}
+  currentState: {fileID: 11400000, guid: 6325bde1d6082d08980b9660e64b4c72, type: 2}
   parameters: {fileID: 11400000, guid: cbc8345576c0e3e608ef86f3ab6a4f40, type: 2}
   eyes: {fileID: 6085014642276872239}
   remainState: {fileID: 11400000, guid: 66c1aa25a85ba47c4b92d32ccf6e6017, type: 2}
@@ -258,7 +258,7 @@ MonoBehaviour:
   attack: {fileID: 0}
   health: {fileID: 0}
   audioSource: {fileID: 0}
-  chaseTarget: {fileID: 0}
+  target: {fileID: 0}
   stateTimeElapsed: 0
 --- !u!114 &913882939658757731
 MonoBehaviour:
@@ -360,7 +360,8 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 0
   OwnershipTransfer: 0
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 0}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

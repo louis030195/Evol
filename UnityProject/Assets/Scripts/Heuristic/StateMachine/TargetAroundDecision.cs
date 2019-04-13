@@ -16,17 +16,7 @@ namespace Evol.Heuristic.StateMachine
 
 		private bool TargetAround(StateController controller)
 		{
-			var colliders = Physics.OverlapSphere(controller.transform.position, controller.parameters.lookSphereCastRadius);
-			foreach (var c in colliders)
-			{
-				if(controller.parameters.tags.Any(t => c.CompareTag(t)))
-				{
-					controller.chaseTarget = c.transform;
-					return true;
-				}
-			}
-
-			return false;
+			return Physics.OverlapSphere(controller.transform.position, controller.parameters.lookSphereCastRadius).Select(c => HitTarget(controller, c)).FirstOrDefault();
 		}
 	}
 }

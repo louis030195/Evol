@@ -63,7 +63,7 @@ namespace Evol.Game.Player
 			rBody = GetComponent<Rigidbody>();
 
 			// Grounded verification variables.
-			groundedBool = Animator.StringToHash("Grounded");
+			groundedBool = Animator.StringToHash("grounded");
 			colExtents = GetComponent<Collider>().bounds.extents;
 		}
 

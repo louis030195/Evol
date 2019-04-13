@@ -17,7 +17,7 @@ namespace Evol.Heuristic.StateMachine
 		{
 			try
 			{
-				var pos = controller.chaseTarget.position - controller.transform.position;
+				var pos = controller.target.position - controller.transform.position;
 				controller.movement.MoveTo(pos);
 			}
 			catch (Exception e)

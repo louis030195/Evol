@@ -37,7 +37,8 @@ namespace Evol.Game.Player
 	        attacksTrigger = new int[playerManager.characterData.abilities.Length];
 	        for (var i = 0; i < attacksTrigger.Length; i++)
 	        {
-		        attacksTrigger[i] = Animator.StringToHash($"Attack0");//Animator.StringToHash($"Attack{i}"); // Temporary until we have good animations
+		        attacksTrigger[i] =
+			        Animator.StringToHash($"attack0"); //Animator.StringToHash($"attack{i}"); // Spell 1 = Anim 1 ...
 	        }
 	        
 	        nextSpell = new float[playerManager.characterData.abilities.Length];

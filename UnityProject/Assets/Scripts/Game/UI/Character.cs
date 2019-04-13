@@ -12,7 +12,7 @@ namespace Evol.Game.UI
 {
     public class Character : MonoBehaviour
     {
-        [Tooltip("Prefab array of the characters")] public GameObject[] characterList;
+        [Tooltip("Prefab array of the characters")] public CharacterData[] characterList;
         [Tooltip("Description text of the character")] public TextMeshProUGUI description;
         [Tooltip("Name text of the character")] public TextMeshProUGUI name;
         [Tooltip("Grid of icons of melee character")] public GameObject meleeGrid;
@@ -28,23 +28,22 @@ namespace Evol.Game.UI
             
             foreach (var character in characterList)
             {
-                var characterData = character.GetComponent<PlayerManager>().characterData;
                 
                 // Set the characters in place
-                var charGo = Instantiate(characterData.placeholder, characterPlaceholder.transform);
+                var charGo = Instantiate(character.placeholder, characterPlaceholder.transform);
                 charGo.transform.localScale *= 100;
                 charGo.transform.Rotate(new Vector3(0, 180, 0));
                 charGo.transform.localPosition = new Vector3(charGo.transform.position.x, charGo.transform.position.y, charGo.transform.position.z - 100);
-                characterListObjects[characterData.id] = charGo; // We use ID for ordering in the list
+                characterListObjects[character.id] = charGo; // We use ID for ordering in the list
 
                 // We instanciate all the character buttons with in the right ranged / melee grid,
                 // with proper icon and add the listener for this character
                 var buttonGo = Instantiate(characterIconTemplate, 
-                    characterData.ranged ? rangedGrid.transform : meleeGrid.transform);
-                buttonGo.GetComponent<Image>().sprite = characterData.icon;
+                    character.ranged ? rangedGrid.transform : meleeGrid.transform);
+                buttonGo.GetComponent<Image>().sprite = character.icon;
                 buttonGo.GetComponent<Button>().onClick.AddListener(delegate
                     {
-                        OnClick(characterData);
+                        OnClick(character);
                     });     
             }
         }

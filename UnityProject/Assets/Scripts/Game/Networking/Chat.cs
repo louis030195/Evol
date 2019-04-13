@@ -80,7 +80,7 @@ namespace Evol.Game.Networking
             var success = chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat,
                 PhotonNetwork.AppVersion,
                 new AuthenticationValues(PlayFabAuthenticationContext.PlayFabId));
-            DontDestroyOnLoad(gameObject);
+            // DontDestroyOnLoad(gameObject);
             Debug.Log($"Connected to chat { success }");
         }
 

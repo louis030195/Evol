@@ -20,7 +20,7 @@ namespace Evol.Heuristic.StateMachine
 
 			if (Physics.SphereCast(controller.eyes.position, controller.parameters.lookSphereCastRadius,
 				    controller.eyes.forward, out var hit, controller.parameters.attackRange)
-			    && controller.parameters.tags.Any(t => hit.collider.CompareTag(t)))
+			    && controller.parameters.ennemies.Any(t => hit.collider.CompareTag(t)))
 			{
 				controller.attack.Fire(hit.collider.gameObject, controller.parameters.attackForce, controller.parameters.attackRate);
 			}

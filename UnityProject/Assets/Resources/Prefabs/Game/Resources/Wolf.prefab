@@ -24697,7 +24697,7 @@ MonoBehaviour:
   attack: {fileID: 0}
   health: {fileID: 0}
   audioSource: {fileID: 0}
-  chaseTarget: {fileID: 0}
+  target: {fileID: 0}
   stateTimeElapsed: 0
 --- !u!114 &8532262157619085000
 MonoBehaviour:
@@ -24718,7 +24718,7 @@ MonoBehaviour:
   GettingHitClips: []
   DeathEffects: []
   GettingHitAnimations:
-  - "damage\x131"
+  - "damage1\x01"
   DyingAnimations:
   - die1
   dead: 0
