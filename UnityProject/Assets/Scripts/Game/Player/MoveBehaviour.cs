@@ -6,13 +6,14 @@ namespace Evol.Game.Player
 // MoveBehaviour inherits from GenericBehaviour. This class corresponds to basic walk and run behaviour, it is the default behaviour.
 	public class MoveBehaviour : GenericBehaviour
 	{
-		public float walkSpeed = 0.15f; // Default walk speed.
-		public float runSpeed = 1.0f; // Default run speed.
-		public float sprintSpeed = 2.0f; // Default sprint speed.
-		public float speedDampTime = 0.1f; // Default damp time to change the animations based on current speed.
-		public string jumpButton = "Jump"; // Default jump button.
-		public float jumpHeight = 1.5f; // Default jump height.
-		public float jumpIntertialForce = 10f; // Default horizontal inertial force when jumping.
+		[Tooltip("Default walk speed.")] public float walkSpeed = 0.15f;
+		[Tooltip("Default run speed.")] public float runSpeed = 1.0f;
+		[Tooltip("Default sprint speed.")] public float sprintSpeed = 2.0f;
+		[Tooltip("Default damp time to change the animations based on current speed.")] public float speedDampTime = 0.1f;
+		[Tooltip("")] public bool canJump = true;
+		[Tooltip("Default jump button.")] public string jumpButton = "Jump";
+		[Tooltip("Default jump height.")] public float jumpHeight = 1.5f;
+		[Tooltip(" Default horizontal inertial force when jumping.")] public float jumpIntertialForce = 10f;
 
 		private float speed, speedSeeker; // Moving speed.
 		private int jumpBool; // Animator variable related to jumping.
@@ -24,7 +25,7 @@ namespace Evol.Game.Player
 		private void Start()
 		{
 			// Multiplayer, deactivate the component if it's not mine
-			if(gameObject.GetPhotonView() != null && !gameObject.GetPhotonView().IsMine)
+			if(gameObject.GetPhotonView() != null && !gameObject.GetPhotonView().IsMine && PhotonNetwork.InRoom) // InRoom check is for debugging offline
 				enabled = false;
 			
 			// Set up the references.
@@ -46,7 +47,7 @@ namespace Evol.Game.Player
 				return;
 			
 			// Get jump input.
-			if (!jump && Input.GetButtonDown(jumpButton) && behaviourManager.IsCurrentBehaviour(behaviourCode) &&
+			if (canJump && !jump && Input.GetButtonDown(jumpButton) && behaviourManager.IsCurrentBehaviour(behaviourCode) &&
 			    !behaviourManager.IsOverriding())
 			{
 				jump = true;
@@ -67,7 +68,8 @@ namespace Evol.Game.Player
 			MovementManagement(behaviourManager.GetH, behaviourManager.GetV);
 
 			// Call the jump manager.
-			JumpManagement();
+			if(canJump)
+				JumpManagement();
 		}
 
 		// Execute the idle and walk/run jump movements.

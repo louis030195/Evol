@@ -82,10 +82,17 @@ namespace Evol.Game.UI
 			triggerGround.triggers.Add(entryPointerEnterGround);
 
 			// Listen to the event "An item is now close to me"
-			EventManager.StartListening("OnItemAroundAdd", ItemAroundAdd);
+			if (EventManager.Instance)
+			{
+				EventManager.StartListening("OnItemAroundAdd", ItemAroundAdd);
 
-			// Listen to the event "An item went away from me"
-			EventManager.StartListening("OnItemAroundRemove", ItemAroundRemove);
+				// Listen to the event "An item went away from me"
+				EventManager.StartListening("OnItemAroundRemove", ItemAroundRemove);
+			}
+			else
+			{
+				Debug.LogWarning("No EventManager here !!");
+			}
 		}
 
 		private void ItemAroundAdd(object[] item)

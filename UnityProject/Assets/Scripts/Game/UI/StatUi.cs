@@ -20,7 +20,7 @@ namespace Evol.Game.UI
             var sizeY = overheadFill.sizeDelta.y;
             overheadFill.sizeDelta = new Vector2(sizeY * value * 10, sizeY);
             fill.fillAmount = value;
-            valueText.text = value.ToString("0%");
+            valueText.text = value > 0 ? value.ToString("0%") : "0%";
         }
     }
 }

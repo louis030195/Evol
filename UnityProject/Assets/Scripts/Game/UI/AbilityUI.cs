@@ -42,12 +42,12 @@ namespace Evol.Game.UI
                 
                 // Set the right icon
                 abilities.Last().transform.GetChild(1).GetComponent<Image>().sprite = 
-                    ability.GetComponent<Ability.Ability>().abilityData.icon;
+                    ability.icon;
                 var trigger = abilities.Last().AddComponent<EventTrigger>();
                 var entryPointerEnter = new EventTrigger.Entry {eventID = EventTriggerType.PointerEnter};
                 entryPointerEnter.callback.AddListener((data) =>
                 {
-                    OnPointerEnterDelegate(data as PointerEventData, ability.GetComponent<Ability.Ability>());
+                    OnPointerEnterDelegate(data as PointerEventData, ability);
                 } );
                 var entryPointerExit = new EventTrigger.Entry {eventID = EventTriggerType.PointerExit};
                 entryPointerExit.callback.AddListener( ( data ) => { OnPointerExitDelegate(data as PointerEventData); } );
@@ -60,16 +60,14 @@ namespace Evol.Game.UI
             GetComponentInParent<CastBehaviour>().onSpellThrown.AddListener(UpdateUI);
         }
         
-        private void OnPointerEnterDelegate( PointerEventData data, Ability.Ability ability )
+        private void OnPointerEnterDelegate( PointerEventData data, AbilityData ability )
         {
             // Only show the panel when cursor is visible
             if (!Cursor.visible) return;
             skillInformationPanel.SetActive(true);
             // Show the panel a little above the mouse
             skillInformationPanel.transform.position = new Vector3(Input.mousePosition.x * 0.8f, Input.mousePosition.y * 1.2f, Input.mousePosition.z);
-            skillInformationText.text = ability.ToString();
-            //skillInformationText.text =
-            //    $"{ability.abilityData.name}\nCooldown: {ability.stat.Cooldown}\nMana cost: {ability.stat.ManaCost}\nDescription: {ability.abilityData.description}";
+            skillInformationText.text = ability.stat.ToString();
         }
         
         private void OnPointerExitDelegate( PointerEventData data )

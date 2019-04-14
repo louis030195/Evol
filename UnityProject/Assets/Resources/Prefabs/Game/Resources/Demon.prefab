@@ -1295,7 +1295,7 @@ Transform:
   m_GameObject: {fileID: 3922392251785426877}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 3363063072789332784}
   - {fileID: 896769711961838124}
@@ -1409,7 +1409,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 3
@@ -1466,6 +1465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 484d758ebeedd4b83bf51452c63ec7cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   playerCamera: {fileID: 8697673850071041267}
   turnSmoothing: 0.06
   sprintFOV: 100
@@ -1486,6 +1486,7 @@ MonoBehaviour:
   runSpeed: 1
   sprintSpeed: 2
   speedDampTime: 0.1
+  canJump: 0
   jumpButton: Jump
   jumpHeight: 1500
   jumpIntertialForce: 10
@@ -3136,7 +3137,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5755781030707406524}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.3, z: 4}
+  m_LocalPosition: {x: 0, y: 1.3, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3922392251785653149}
@@ -3322,12 +3323,22 @@ PrefabInstance:
     - target: {fileID: 7413743983094033927, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7413743983094033927, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
         type: 3}
       propertyPath: m_firstOverflowCharacterIndex
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5662045549653986198, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671145106516144494, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4646370261149669113, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
         type: 3}
@@ -3428,6 +3439,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnGraphics
+      objectReference: {fileID: 0}
+    - target: {fileID: 1422896727409809861, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 901407126703883252, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5582677567542839204, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
         type: 3}
@@ -3631,6 +3652,16 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 3922392251785653149}
+    - target: {fileID: 3422048361193791020, guid: ca1b63a9d245a1582a0c647c3fd42b33,
+        type: 3}
+      propertyPath: camOffset.z
+      value: -16
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422048361193791020, guid: ca1b63a9d245a1582a0c647c3fd42b33,
+        type: 3}
+      propertyPath: camOffset.y
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca1b63a9d245a1582a0c647c3fd42b33, type: 3}
 --- !u!4 &8697673850071041267 stripped
@@ -3764,7 +3795,7 @@ PrefabInstance:
     - target: {fileID: 4978171461647050145, guid: 3287ae9a64dad4d13873eb316c76b54b,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3287ae9a64dad4d13873eb316c76b54b, type: 3}

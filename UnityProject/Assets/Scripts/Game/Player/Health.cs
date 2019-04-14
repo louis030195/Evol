@@ -143,7 +143,7 @@ namespace Evol.Game.Player
             if (CurrentHealth > 0 && GettingHitAnimations.Length > 0) // If there is getting hit animations for this object
             {
                 var maxRandom = GettingHitAnimations.Length == 1 ? 0 : GettingHitAnimations.Length;
-                Debug.Log($"I am { gameObject.name }");
+                // Debug.Log($"I am { gameObject.name }");
                 animator.SetTrigger(GettingHitAnimations[Random.Range(0, maxRandom)]);
             }
 

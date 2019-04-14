@@ -11,8 +11,8 @@ public class Builds
     {
         var levels = new[]
         {
-            "Assets/Scenes/Game/Login.unity",
-            "Assets/Scenes/Game/Game.unity"
+            "Assets/Scenes/Login.unity",
+            "Assets/Scenes/Game.unity"
         };
 
         PlayerSettings.runInBackground = false;
@@ -33,8 +33,8 @@ public class Builds
     {
         var levels = new[]
         {
-            "Assets/Scenes/Game/Login.unity",
-            "Assets/Scenes/Game/Game.unity"
+            "Assets/Scenes/Login.unity",
+            "Assets/Scenes/Game.unity"
         };
 
         PlayerSettings.runInBackground = false;

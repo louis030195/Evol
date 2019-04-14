@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public class CameraController : MonoBehaviour
@@ -16,69 +15,48 @@ public class CameraController : MonoBehaviour
 
 	void Start()
 	{
-
+		cameraTarget = GameObject.FindGameObjectWithTag("Player");
+		lastPosition = new Vector3(cameraTarget.transform.position.x, cameraTarget.transform.position.y + offsetHeight, cameraTarget.transform.position.z - offsetDistance);
+		offset = new Vector3(cameraTarget.transform.position.x, cameraTarget.transform.position.y + offsetHeight, cameraTarget.transform.position.z - offsetDistance);
 	}
 
 	void Update()
 	{
-		try
+		if(Input.GetKeyDown(KeyCode.F))
 		{
-			cameraTarget = GameObject.FindGameObjectWithTag("Player");
-		}
-		catch (Exception e)
-		{
-			
-		}
-
-		if (cameraTarget == null) return;
-		
-		lastPosition = new Vector3(cameraTarget.transform.position.x,
-			cameraTarget.transform.position.y + offsetHeight, cameraTarget.transform.position.z - offsetDistance);
-		offset = new Vector3(cameraTarget.transform.position.x, cameraTarget.transform.position.y + offsetHeight,
-			cameraTarget.transform.position.z - offsetDistance);
-
-		if (Input.GetKeyDown(KeyCode.F))
-		{
-			if (following)
+			if(following)
 			{
 				following = false;
-			}
+			} 
 			else
 			{
 				following = true;
 			}
-		}
-
-		if (Input.GetKey(KeyCode.Q))
+		} 
+		if(Input.GetKey(KeyCode.Q))
 		{
 			rotate = -1;
-		}
-		else if (Input.GetKey(KeyCode.E))
+		} 
+		else if(Input.GetKey(KeyCode.E))
 		{
 			rotate = 1;
-		}
+		} 
 		else
 		{
 			rotate = 0;
 		}
-
-		if (following)
+		if(following)
 		{
 			offset = Quaternion.AngleAxis(rotate * rotateSpeed, Vector3.up) * offset;
-			transform.position = cameraTarget.transform.position + offset;
-			transform.position = new Vector3(
-				Mathf.Lerp(lastPosition.x, cameraTarget.transform.position.x + offset.x,
-					smoothing * Time.deltaTime),
-				Mathf.Lerp(lastPosition.y, cameraTarget.transform.position.y + offset.y,
-					smoothing * Time.deltaTime),
-				Mathf.Lerp(lastPosition.z, cameraTarget.transform.position.z + offset.z,
-					smoothing * Time.deltaTime));
-		}
+			transform.position = cameraTarget.transform.position + offset; 
+			transform.position = new Vector3(Mathf.Lerp(lastPosition.x, cameraTarget.transform.position.x + offset.x, smoothing * Time.deltaTime), 
+				Mathf.Lerp(lastPosition.y, cameraTarget.transform.position.y + offset.y, smoothing * Time.deltaTime), 
+				Mathf.Lerp(lastPosition.z, cameraTarget.transform.position.z + offset.z, smoothing * Time.deltaTime));
+		} 
 		else
 		{
-			transform.position = lastPosition;
+			transform.position = lastPosition; 
 		}
-
 		transform.LookAt(cameraTarget.transform.position);
 	}
 

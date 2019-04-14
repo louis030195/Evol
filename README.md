@@ -34,3 +34,7 @@ Evol is a multiplayer hero defense inspired by Warcraft III mods.
 # Contribution
 
 Any contribution are welcome either development, assets or just ideas, feedbacks, advice just be sure to follow the [rules](docs/CONTRIBUTE.md)
+
+# Thanks
+
+A list of all assets used is [available](docs/REFERENCES.md)

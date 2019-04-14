@@ -8,10 +8,12 @@ namespace Evol.Game.Player
 // Contains basic setup and common functions used by all the player behaviours.
 	public class BasicBehaviour : MonoBehaviour
 	{
-		public Transform playerCamera; // Reference to the camera that focus the player.
-		public float turnSmoothing = 0.06f; // Speed of turn when moving to match camera facing.
-		public float sprintFOV = 100f; // the FOV to use on the camera when player is sprinting.
-		public string sprintButton = "Sprint"; // Default sprint button input name.
+		[Header("Parameters")]
+		[Tooltip("Debugging mode = doesn't care about the cursor visible stuff")] public bool debug;
+		[Tooltip("Reference to the camera that focus the player.")] public Transform playerCamera;
+		[Tooltip("Speed of turn when moving to match camera facing.")] public float turnSmoothing = 0.06f;
+		[Tooltip("the FOV to use on the camera when player is sprinting.")] public float sprintFOV = 100f;
+		[Tooltip("Default sprint button input name.")] public string sprintButton = "Sprint";
 
 		private float h; // Horizontal Axis.
 		private float v; // Vertical Axis.
@@ -50,7 +52,7 @@ namespace Evol.Game.Player
 		private void Awake()
 		{
 			// Multiplayer, deactivate the component if it's not mine
-			if(gameObject.GetPhotonView() != null && !gameObject.GetPhotonView().IsMine)
+			if(gameObject.GetPhotonView() != null && !gameObject.GetPhotonView().IsMine && PhotonNetwork.InRoom) // InRoom check is for debugging offline
 				enabled = false;
 			
 			// Set up the references.
@@ -70,7 +72,7 @@ namespace Evol.Game.Player
 		private void Update()
 		{
 			// If cursor is visible lock the rotation
-			if (Cursor.visible)
+			if (Cursor.visible && !debug) 
 				return;
 
 			// Store the input axes.
@@ -344,6 +346,7 @@ namespace Evol.Game.Player
 		public bool IsGrounded()
 		{
 			// TODO: think about this 0.2f value corresponding to sensibility to say if im grounded or not
+			Debug.DrawRay(transform.position + Vector3.up * 2 * colExtents.x, Vector3.down, Color.green, colExtents.x + 0.2f, true);
 			var ray = new Ray(transform.position + Vector3.up * 2 * colExtents.x, Vector3.down);
 			return Physics.SphereCast(ray, colExtents.x, colExtents.x + 0.2f); 
 		}

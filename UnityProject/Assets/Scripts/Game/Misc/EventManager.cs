@@ -23,8 +23,8 @@ namespace Evol.Game.Misc
 
                     if (!eventManager)
                     {
-                        Debug.LogError(
-                            "There needs to be one active EventManger script on a GameObject in your scene.");
+                        Debug.LogWarning(
+                            "There needs to be one active EventManager script on a GameObject in your scene.");
                     }
                     else
                     {
@@ -46,6 +46,7 @@ namespace Evol.Game.Misc
 
         public static void StartListening(string eventName, UnityAction<object[]> listener)
         {
+            if (!Instance) return;
             if (Instance.eventDictionary.TryGetValue(eventName, out var thisEvent))
             {
                 thisEvent.AddListener(listener);
@@ -69,6 +70,7 @@ namespace Evol.Game.Misc
 
         public static void TriggerEvent(string eventName, object[] parameters)
         {
+            if (!Instance) return;
             if (Instance.eventDictionary.TryGetValue(eventName, out var thisEvent))
             {
                 thisEvent.Invoke(parameters);

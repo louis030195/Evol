@@ -3,35 +3,52 @@ using System.Collections;
 
 namespace RPGCharacterAnims{
 
-	[RequireComponent(typeof(RPGCharacterMovementController))]
-	[RequireComponent(typeof(RPGCharacterInputController))]
+	[RequireComponent(typeof(RPGCharacterMovementControllerFREE))]
+	[RequireComponent(typeof(RPGCharacterWeaponControllerFREE))]
+	[RequireComponent(typeof(RPGCharacterInputControllerFREE))]
 	public class RPGCharacterControllerFREE : MonoBehaviour{
 
 		//Components.
-		[HideInInspector]	public RPGCharacterMovementController rpgCharacterMovementController;
-		[HideInInspector]	public RPGCharacterInputController rpgCharacterInputController;
+		[HideInInspector]	public RPGCharacterMovementControllerFREE rpgCharacterMovementController;
+		[HideInInspector]	public RPGCharacterWeaponControllerFREE rpgCharacterWeaponController;
+		[HideInInspector]	public RPGCharacterInputControllerFREE rpgCharacterInputController;
 		[HideInInspector] public Animator animator;
+		[HideInInspector] public IKHandsFREE ikHands;
+		public Weapon weapon = Weapon.UNARMED;
 		public GameObject target;
 
 		//Strafing/action.
 		[HideInInspector] public bool isDead = false;
-		[HideInInspector] public bool canAction = true;
+		[HideInInspector] public bool isBlocking = false;
 		[HideInInspector] public bool isStrafing = false;
+		[HideInInspector] public bool canAction = true;
+
+		public float animationSpeed = 1;
 
 		#region Initialization
 
 		void Awake(){
-			rpgCharacterMovementController = GetComponent<RPGCharacterMovementController>();
-			rpgCharacterInputController = GetComponent<RPGCharacterInputController>();
+			rpgCharacterMovementController = GetComponent<RPGCharacterMovementControllerFREE>();
+			rpgCharacterWeaponController = GetComponent<RPGCharacterWeaponControllerFREE>();
+			rpgCharacterInputController = GetComponent<RPGCharacterInputControllerFREE>();
 			animator = GetComponentInChildren<Animator>();
 			if(animator == null){
 				Debug.LogError("ERROR: There is no animator for character.");
 				Destroy(this);
 			}
 			if(target == null){
-				Debug.LogError("ERROR: There is no target for character.");
+				Debug.LogError("ERROR: There is no target set for character.");
 				Destroy(this);
 			}
+			ikHands = GetComponent<IKHandsFREE>();
+			//Set for starting Unarmed state.
+			weapon = Weapon.UNARMED;
+			animator.SetInteger("Weapon", 0);
+			animator.SetInteger("WeaponSwitch", -1);
+		}
+
+		void Start(){
+			rpgCharacterMovementController.SwitchCollisionOn();
 		}
 
 		#endregion
@@ -39,6 +56,7 @@ namespace RPGCharacterAnims{
 		#region Updates
 
 		void Update(){
+			UpdateAnimationSpeed();
 			if(rpgCharacterMovementController.MaintainingGround()){
 				//Revive.
 				if(rpgCharacterInputController.inputDeath){
@@ -47,37 +65,50 @@ namespace RPGCharacterAnims{
 					}
 				}
 				if(canAction){
-					Strafing();
-					Rolling();
-					//Hit.
-					if(rpgCharacterInputController.inputLightHit){
-						GetHit();
-					}
-					//Death.
-					if(rpgCharacterInputController.inputDeath){
-						if(!isDead){
-							Death();
+					if(!isBlocking){
+						Strafing();
+						Rolling();
+						//Hit.
+						if(rpgCharacterInputController.inputLightHit){
+							GetHit();
 						}
-						else{
-							Revive();
+						//Death.
+						if(rpgCharacterInputController.inputDeath){
+							if(!isDead){
+								Death();
+							}
+							else{
+								Revive();
+							}
 						}
-					}
-					//Attacks.
-					if(rpgCharacterInputController.inputAttackL){
-						Attack(1);
-					}
-					if(rpgCharacterInputController.inputAttackR){
-						Attack(2);
-					}
-					if(rpgCharacterInputController.inputLightHit){
-						GetHit();
-					}
-					//Shooting / Navmesh.
-					if(Input.GetMouseButtonDown(0)){
-						if(rpgCharacterMovementController.useMeshNav){
-							RaycastHit hit;
-							if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100)){
-								rpgCharacterMovementController.navMeshAgent.destination = hit.point;
+						//Attacks.
+						if(rpgCharacterInputController.inputAttackL){
+							Attack(1);
+						}
+						if(rpgCharacterInputController.inputAttackR){
+							Attack(2);
+						}
+						if(rpgCharacterInputController.inputLightHit){
+							GetHit();
+						}
+						//Switch weapons.
+						if(rpgCharacterInputController.inputSwitchUpDown){
+							if(rpgCharacterWeaponController.isSwitchingFinished){
+								if(weapon == Weapon.UNARMED){
+									rpgCharacterWeaponController.SwitchWeaponTwoHand(1);
+								}
+								else{
+									rpgCharacterWeaponController.SwitchWeaponTwoHand(0);
+								}
+							}
+						}
+						//Navmesh.
+						if(Input.GetMouseButtonDown(0)){
+							if(rpgCharacterMovementController.useMeshNav){
+								RaycastHit hit;
+								if(Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100)){
+									rpgCharacterMovementController.navMeshAgent.destination = hit.point;
+								}
 							}
 						}
 					}
@@ -89,7 +120,7 @@ namespace RPGCharacterAnims{
 					Time.timeScale = 1;
 				}
 				else{
-					Time.timeScale = 0.05f;
+					Time.timeScale = 0.005f;
 				}
 			}
 			//Pause toggle.
@@ -101,11 +132,22 @@ namespace RPGCharacterAnims{
 					Time.timeScale = 0f;
 				}
 			}
+			//Strafe toggle.
+			if(rpgCharacterInputController.inputStrafe){
+				animator.SetBool("Strafing", true);
+			}
+			else{
+				animator.SetBool("Strafing", false);
+			}
+		}
+
+		void UpdateAnimationSpeed(){
+			animator.SetFloat("AnimationSpeed", animationSpeed);
 		}
 
 		#endregion
 
-		#region Turning
+		#region Aiming / Turning
 
 		//Turning.
 		public IEnumerator _Turning(int direction){
@@ -124,21 +166,11 @@ namespace RPGCharacterAnims{
 
 		#region Combat
 
-		/// <summary>
-		/// Dodge the specified direction.
-		/// </summary>
-		/// <param name="1">Left</param>
-		/// <param name="2">Right</param>
-		public IEnumerator _Dodge(int direction){
-			animator.SetInteger("Action", direction);
-			animator.SetTrigger("DodgeTrigger");
-			Lock(true, true, true, 0, 0.55f);
-			yield return null;
-		}
-
 		//0 = No side
 		//1 = Left
 		//2 = Right
+		//weaponNumber 0 = Unarmed
+		//weaponNumber 1 = 2H Sword
 		public void Attack(int attackSide){
 			int attackNumber = 0;
 			if(canAction){
@@ -146,30 +178,57 @@ namespace RPGCharacterAnims{
 				if(rpgCharacterMovementController.MaintainingGround()){
 					//Stationary attack.
 					if(!rpgCharacterMovementController.isMoving){
+						if(weapon == Weapon.RELAX){
+							weapon = Weapon.UNARMED;
+							animator.SetInteger("Weapon", 0);
+						}
 						//Armed or Unarmed.
-						int maxAttacks = 3;
-						//Left attacks.
-						if(attackSide == 1){
-							animator.SetInteger("AttackSide", 1);
-							attackNumber = Random.Range(1, maxAttacks + 1);
+						if(weapon == Weapon.UNARMED || weapon == Weapon.ARMED || weapon == Weapon.ARMEDSHIELD){
+							int maxAttacks = 3;
+							//Left attacks.
+							if(attackSide == 1){
+								animator.SetInteger("AttackSide", 1);
+								attackNumber = Random.Range(1, maxAttacks + 1);
+							}
+							//Right attacks.
+							else if(attackSide == 2){
+								animator.SetInteger("AttackSide", 2);
+								attackNumber = Random.Range(4, maxAttacks + 4);
+							}
+							//Set the Locks.
+							if(attackSide != 3){
+								Lock(true, true, true, 0, 1.25f);
+							}
 						}
-						//Right attacks.
-						else if(attackSide == 2){
-							animator.SetInteger("AttackSide", 2);
-							attackNumber = Random.Range(4, maxAttacks + 4);
+						else{
+							int maxAttacks = 6;
+							attackNumber = Random.Range(1, maxAttacks);
+							if(weapon == Weapon.TWOHANDSWORD){
+								Lock(true, true, true, 0, 0.85f);
+							}
+							else{
+								Lock(true, true, true, 0, 0.75f);
+							}
 						}
-						//Set the Locks.
-						Lock(true, true, true, 0, 0.7f);
 					}
 				}
 				//Trigger the animation.
 				animator.SetInteger("Action", attackNumber);
-				animator.SetTrigger("AttackTrigger");
+				if(attackSide == 3){
+					animator.SetTrigger("AttackDualTrigger");
+				}
+				else{
+					animator.SetTrigger("AttackTrigger");
+				}
 			}
 		}
 
 		public void AttackKick(int kickSide){
 			if(rpgCharacterMovementController.MaintainingGround()){
+				if(weapon == Weapon.RELAX){
+					weapon = Weapon.UNARMED;
+					animator.SetInteger("Weapon", 0);
+				}
 				animator.SetInteger("Action", kickSide);
 				animator.SetTrigger("AttackKickTrigger");
 				Lock(true, true, true, 0, 0.9f);
@@ -177,12 +236,14 @@ namespace RPGCharacterAnims{
 		}
 
 		void Strafing(){
-			if(rpgCharacterInputController.inputStrafe || rpgCharacterInputController.inputTargetBlock > 0.8f){
-				animator.SetBool("Strafing", true);
-				isStrafing = true;
+			if(rpgCharacterInputController.inputStrafe && weapon != Weapon.RIFLE){
+				if(weapon != Weapon.RELAX){
+					animator.SetBool("Strafing", true);
+					isStrafing = true;
+				}
 			}
 			else{
-				isStrafing = true;	//was false, locked for always following cursor
+				isStrafing = false;
 				animator.SetBool("Strafing", false);
 			}
 		}
@@ -196,23 +257,36 @@ namespace RPGCharacterAnims{
 		}
 
 		public void GetHit(){
-			int hits = 5;
-			int hitNumber = Random.Range(1, hits + 1);
-			animator.SetInteger("Action", hitNumber);
-			animator.SetTrigger("GetHitTrigger");
-			Lock(true, true, true, 0.1f, 0.4f);
-			//Apply directional knockback force.
-			if(hitNumber <= 1){
-				StartCoroutine(rpgCharacterMovementController._Knockback(-transform.forward, 8, 4));
+			if(weapon == Weapon.RELAX){
+				weapon = Weapon.UNARMED;
+				animator.SetInteger("Weapon", 0);
 			}
-			else if(hitNumber == 2){
-				StartCoroutine(rpgCharacterMovementController._Knockback(transform.forward, 8, 4));
-			}
-			else if(hitNumber == 3){
-				StartCoroutine(rpgCharacterMovementController._Knockback(transform.right, 8, 4));
-			}
-			else if(hitNumber == 4){
-				StartCoroutine(rpgCharacterMovementController._Knockback(-transform.right, 8, 4));
+			if(weapon != Weapon.RIFLE || weapon != Weapon.TWOHANDCROSSBOW){
+				int hits = 5;
+				if(isBlocking){
+					hits = 2;
+				}
+				int hitNumber = Random.Range(1, hits + 1);
+				animator.SetInteger("Action", hitNumber);
+				animator.SetTrigger("GetHitTrigger");
+				Lock(true, true, true, 0.1f, 0.4f);
+				if(isBlocking){
+					StartCoroutine(rpgCharacterMovementController._Knockback(-transform.forward, 3, 3));
+					return;
+				}
+				//Apply directional knockback force.
+				if(hitNumber <= 1){
+					StartCoroutine(rpgCharacterMovementController._Knockback(-transform.forward, 8, 4));
+				}
+				else if(hitNumber == 2){
+					StartCoroutine(rpgCharacterMovementController._Knockback(transform.forward, 8, 4));
+				}
+				else if(hitNumber == 3){
+					StartCoroutine(rpgCharacterMovementController._Knockback(transform.right, 8, 4));
+				}
+				else if(hitNumber == 4){
+					StartCoroutine(rpgCharacterMovementController._Knockback(-transform.right, 8, 4));
+				}
 			}
 		}
 
@@ -230,7 +304,7 @@ namespace RPGCharacterAnims{
 
 		#endregion
 
-		#region LockUnlock
+		#region Actions
 
 		/// <summary>
 		/// Keep character from doing actions.
@@ -266,9 +340,6 @@ namespace RPGCharacterAnims{
 		}
 
 		public void FootL(){
-		}
-
-		public void Jump(){
 		}
 
 		public void Land(){
@@ -330,25 +401,48 @@ namespace RPGCharacterAnims{
 			if(weaponSwitch != -2){
 				animator.SetInteger("WeaponSwitch", weaponSwitch);
 			}
+			//Set left weapon if applicable.
+			if(Lweapon != -1){
+				rpgCharacterWeaponController.leftWeapon = Lweapon;
+				animator.SetInteger("LeftWeapon", Lweapon);
+				//Set Shield.
+				if(Lweapon == 7){
+					animator.SetBool("Shield", true);
+				}
+				else{
+					animator.SetBool("Shield", false);
+				}
+			}
+			//Set weapon side if applicable.
+			if(weaponSide != -1){
+				animator.SetInteger("LeftRight", weaponSide);
+			}
+			SetWeaponState(weapon);
+		}
+
+		public void SetWeaponState(int weaponNumber){
+			if(weaponNumber == -1){
+				weapon = Weapon.RELAX;
+			}
+			else if(weaponNumber == 0){
+				weapon = Weapon.UNARMED;
+			}
+			else if(weaponNumber == 1){
+				weapon = Weapon.TWOHANDSWORD;
+			}
 		}
 
 		public void AnimatorDebug(){
 			Debug.Log("ANIMATOR SETTINGS---------------------------");
 			Debug.Log("Moving: " + animator.GetBool("Moving"));
 			Debug.Log("Strafing: " + animator.GetBool("Strafing"));
-			Debug.Log("Aiming: " + animator.GetBool("Aiming"));
 			Debug.Log("Stunned: " + animator.GetBool("Stunned"));
-			Debug.Log("Swimming: " + animator.GetBool("Swimming"));
-			Debug.Log("Blocking: " + animator.GetBool("Blocking"));
-			Debug.Log("Injured: " + animator.GetBool("Injured"));
-			Debug.Log("LeftRight: " + animator.GetInteger("LeftRight"));
-			Debug.Log("AttackSide: " + animator.GetInteger("AttackSide"));
+			Debug.Log("Weapon: " + animator.GetInteger("Weapon"));
+			Debug.Log("WeaponSwitch: " + animator.GetInteger("WeaponSwitch"));
 			Debug.Log("Jumping: " + animator.GetInteger("Jumping"));
 			Debug.Log("Action: " + animator.GetInteger("Action"));
-			Debug.Log("Talking: " + animator.GetInteger("Talking"));
 			Debug.Log("Velocity X: " + animator.GetFloat("Velocity X"));
 			Debug.Log("Velocity Z: " + animator.GetFloat("Velocity Z"));
-			Debug.Log("Charge: " + animator.GetFloat("Charge"));
 		}
 
 		#endregion

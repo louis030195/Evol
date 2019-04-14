@@ -400,7 +400,7 @@ Animator:
   m_GameObject: {fileID: 981405515219869878}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 874d3000b45bc2487a4dd9329bbb87bc, type: 3}
-  m_Controller: {fileID: 9100000, guid: 1ac2a1891f6a2814dbcb83cbd24d5ee1, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5d3a42429003e918680607598efd1f07, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -500,6 +500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 484d758ebeedd4b83bf51452c63ec7cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   playerCamera: {fileID: 9042835365052787626}
   turnSmoothing: 0.06
   sprintFOV: 100
@@ -549,7 +550,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 0
@@ -626,6 +626,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 981405515220106392}
+  - component: {fileID: 7582418108624340713}
+  - component: {fileID: 2655688546127215848}
   m_Layer: 0
   m_Name: Mutant:LeftHand
   m_TagString: Untagged
@@ -647,6 +649,31 @@ Transform:
   m_Father: {fileID: 981405515220106394}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &7582418108624340713
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981405515219869880}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Center: {x: -0.7, y: -0.15, z: 0}
+--- !u!114 &2655688546127215848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981405515219869880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d68f34df8058c0d009f6dad166ec110b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &981405515219869882
 GameObject:
   m_ObjectHideFlags: 0
@@ -1057,6 +1084,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 981405515220106420}
+  - component: {fileID: 1040481542960270494}
+  - component: {fileID: 4823737390814394736}
   m_Layer: 0
   m_Name: Mutant:RightHand
   m_TagString: Untagged
@@ -1081,6 +1110,31 @@ Transform:
   m_Father: {fileID: 981405515220106422}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1040481542960270494
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981405515219869908}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.4
+  m_Center: {x: 0.3, y: 0, z: 0}
+--- !u!114 &4823737390814394736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981405515219869908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d68f34df8058c0d009f6dad166ec110b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &981405515219869910
 GameObject:
   m_ObjectHideFlags: 0
@@ -1783,7 +1837,7 @@ PrefabInstance:
     - target: {fileID: 4978171461647050145, guid: 3287ae9a64dad4d13873eb316c76b54b,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3287ae9a64dad4d13873eb316c76b54b, type: 3}
@@ -1948,7 +2002,7 @@ PrefabInstance:
     - target: {fileID: 7413743983094033927, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3806614889995687697, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
         type: 3}
@@ -2018,7 +2072,7 @@ PrefabInstance:
     - target: {fileID: 1422896727409809861, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 901407126703883252, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
         type: 3}
@@ -2028,7 +2082,17 @@ PrefabInstance:
     - target: {fileID: 901407126703883252, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5662045549653986198, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671145106516144494, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20efbf4638ffe9d70af8a41ae13a4ac6, type: 3}

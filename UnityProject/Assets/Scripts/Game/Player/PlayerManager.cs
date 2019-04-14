@@ -61,7 +61,7 @@ namespace Evol.Game.Player
 
                 for (var i = 0; i < characterData.abilities.Length; i++)
                 {
-                    var ability = characterData.abilities[i].GetComponent<Ability.Ability>();
+                    var ability = characterData.abilities[i].prefab.GetComponent<Ability.Ability>();
                     // Set the caster
                     ability.caster = gameObject;
                 }

@@ -15,7 +15,7 @@ namespace Evol.Game.Ability
         
         public AbilityData abilityData;
         [HideInInspector] public GameObject caster;
-        [HideInInspector] public List<RuneData> runes;
+        [HideInInspector] public List<RuneData> runes = new List<RuneData>();
         
         protected float initializationTime;
         

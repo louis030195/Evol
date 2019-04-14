@@ -18,7 +18,7 @@ public class CameraScroll : MonoBehaviour {
 		transform.Translate (Vector3.left * (Time.deltaTime * moveSpeed));
 
 		//If the camera passes the last animation, loop to the beginning
-		if(transform.position.x > 112){
+		if(transform.position.x > 110){
 			transform.position = new Vector3(0f, transform.position.y, transform.position.z);
 		}
 	}

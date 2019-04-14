@@ -10,7 +10,7 @@ public class Gravity : MonoBehaviour{
 
 	void Update(){
 		Vector3 dir = (transform.position - planet.position).normalized;
-		GetComponent<RPGCharacterMovementController>().RotateGravity(dir);
+		GetComponent<RPGCharacterMovementControllerFREE>().RotateGravity(dir);
 		transform.rotation = Quaternion.FromToRotation(transform.up, dir) * transform.rotation;
 	}
 }

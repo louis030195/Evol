@@ -21,6 +21,6 @@ namespace Evol.Game.Player
         public Element element;
         public Sprite icon;
         public GameObject placeholder;
-        public GameObject[] abilities;
+        public AbilityData[] abilities;
     }
 }

@@ -16,6 +16,7 @@ namespace Evol.Game.Ability
             var pos = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, camera.nearClipPlane));
             transform.LookAt(pos); 
             GetComponent<Rigidbody>().AddForce(-transform.forward * 1000);
+            GetComponent<Rigidbody>().angularVelocity = Random.insideUnitSphere;
         }
 
         protected override void UpdateAbility()

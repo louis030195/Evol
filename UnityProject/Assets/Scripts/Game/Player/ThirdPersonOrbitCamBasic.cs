@@ -39,7 +39,7 @@ namespace Evol.Game.Player
 		private void Awake()
 		{
 			// Multiplayer, deactivate the camera if it's not mine
-			if(player.gameObject.GetPhotonView() != null && !player.gameObject.GetPhotonView().IsMine)
+			if(player.gameObject.GetPhotonView() != null && !player.gameObject.GetPhotonView().IsMine && PhotonNetwork.InRoom) // InRoom check is for debugging offline
 				gameObject.SetActive(false);
 			
 			// Reference to the camera transform.

@@ -3,14 +3,14 @@ using System.Collections;
 
 namespace RPGCharacterAnims{
 
-	public class GUIControls : MonoBehaviour{
+	public class GUIControlsFREE : MonoBehaviour{
 		RPGCharacterControllerFREE rpgCharacterController;
-		RPGCharacterMovementController rpgCharacterMovementController;
+		RPGCharacterMovementControllerFREE rpgCharacterMovementController;
 		public bool useNavAgent;
 
 		void Awake(){
 			rpgCharacterController = GetComponent<RPGCharacterControllerFREE>();
-			rpgCharacterMovementController = GetComponent<RPGCharacterMovementController>();
+			rpgCharacterMovementController = GetComponent<RPGCharacterMovementControllerFREE>();
 		}
 
 		void OnGUI(){
@@ -41,13 +41,6 @@ namespace RPGCharacterAnims{
 						}
 						if(GUI.Button(new Rect(130, 45, 100, 30), "Roll Right")){
 							StartCoroutine(rpgCharacterMovementController._Roll(2));
-						}
-						//Dodging.
-						if(GUI.Button(new Rect(235, 15, 100, 30), "Dodge Left")){
-							StartCoroutine(rpgCharacterController._Dodge(1));
-						}
-						if(GUI.Button(new Rect(235, 45, 100, 30), "Dodge Right")){
-							StartCoroutine(rpgCharacterController._Dodge(2));
 						}
 						//Turning.
 						if(GUI.Button(new Rect(340, 15, 100, 30), "Turn Left")){
@@ -80,15 +73,15 @@ namespace RPGCharacterAnims{
 						if(rpgCharacterMovementController.MaintainingGround()){
 							if(GUI.Button(new Rect(25, 175, 100, 30), "Jump")){
 								if(rpgCharacterMovementController.canJump){
-									rpgCharacterMovementController.currentState = RPGCharacterState.Jump;
-									rpgCharacterMovementController.rpgCharacterState = RPGCharacterState.Jump;
+									rpgCharacterMovementController.currentState = RPGCharacterStateFREE.Jump;
+									rpgCharacterMovementController.rpgCharacterState = RPGCharacterStateFREE.Jump;
 								}
 							}
 						}
 						if(rpgCharacterMovementController.canDoubleJump){
 							if(GUI.Button(new Rect(25, 175, 100, 30), "Jump Flip")){
-								rpgCharacterMovementController.currentState = RPGCharacterState.DoubleJump;
-								rpgCharacterMovementController.rpgCharacterState = RPGCharacterState.DoubleJump;
+								rpgCharacterMovementController.currentState = RPGCharacterStateFREE.DoubleJump;
+								rpgCharacterMovementController.rpgCharacterState = RPGCharacterStateFREE.DoubleJump;
 							}
 						}
 					}

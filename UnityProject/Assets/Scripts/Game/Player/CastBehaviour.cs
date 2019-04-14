@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Evol.Game.Ability;
+using Evol.Game.Misc;
 using Photon.Pun;
 using UnityEngine;
 
@@ -28,7 +30,7 @@ namespace Evol.Game.Player
         protected virtual void Start()
         {      
 	        // Multiplayer, deactivate the component if it's not mine
-	        if(gameObject.GetPhotonView() != null && !gameObject.GetPhotonView().IsMine)
+	        if(gameObject.GetPhotonView() != null && !gameObject.GetPhotonView().IsMine && PhotonNetwork.InRoom) // InRoom check is for debugging offline
 		        enabled = false;
 
 	        playerManager = GetComponent<PlayerManager>();
@@ -38,7 +40,7 @@ namespace Evol.Game.Player
 	        for (var i = 0; i < attacksTrigger.Length; i++)
 	        {
 		        attacksTrigger[i] =
-			        Animator.StringToHash($"attack0"); //Animator.StringToHash($"attack{i}"); // Spell 1 = Anim 1 ...
+			        /*Animator.StringToHash($"attack0"); */Animator.StringToHash($"attack{i}"); // Spell 1 = Anim 1 ...
 	        }
 	        
 	        nextSpell = new float[playerManager.characterData.abilities.Length];
@@ -83,7 +85,7 @@ namespace Evol.Game.Player
 			    behaviourManager.IsGrounded() &&
 			    currentSpell != -1 &&
 			    Time.time > nextSpell[currentSpell] &&
-			    playerManager.characterData.abilities[currentSpell].GetComponent<Ability.Ability>().abilityData.stat.manaCost < mana.currentMana &&
+			    playerManager.characterData.abilities[currentSpell].stat.manaCost < mana.currentMana &&
 			    (photonView.IsMine || !PhotonNetwork.InRoom)) // InRoom check is for offline mode (mostly debugging)
 			{
 				StartCoroutine(nameof(CastOn));
@@ -146,31 +148,6 @@ namespace Evol.Game.Player
 			transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, minSpeed * Time.deltaTime);
 
 		}
-
-		public void InstanciateSpell()
-		{
-			if (currentSpell == -1)
-				return;
-
-			var ability = playerManager.characterData.abilities[currentSpell].GetComponent<Ability.Ability>();
-				
-			// Set spell cooldown
-			nextSpell[currentSpell] = Time.time + ability.abilityData.stat.cooldown;
-            
-			// Throw event to say that we threw a spell
-			onSpellThrown.Invoke(currentSpell, ability.abilityData.stat.cooldown);
-
-			// Use the mana
-			mana.UseMana((int)ability.abilityData.stat.manaCost);
-			
-			// Spawn the spell
-			var go = PhotonNetwork.Instantiate(playerManager.characterData.abilities[currentSpell].name, bulletSpawn.position, bulletSpawn.rotation);
-			go.GetComponent<Ability.Ability>().runes = playerManager.abilitiesRunes[currentSpell];
-			go.GetComponent<Ability.Ability>().Fire();
-			// go.GetComponent<Ability.Ability>().abilityData.stat = ability.abilityData.stat;
-			
-			currentSpell = -1; // Reset the current spell id
-		}
 		
 		/// <summary>
 		/// This coroutine stop the animation of casting,
@@ -185,6 +162,50 @@ namespace Evol.Game.Player
 			// behaviourManager.UnlockTempBehaviour(behaviourCode);
 			behaviourManager.RevokeOverridingBehaviour(this);
 			yield return null;
+		}
+
+		private void CastAbility()
+		{
+			if (currentSpell == -1)
+				return;
+
+			var ability = playerManager.characterData.abilities[currentSpell];
+				
+			// Set spell cooldown
+			nextSpell[currentSpell] = Time.time + ability.stat.cooldown;
+            
+			// Throw event to say that we threw a spell
+			onSpellThrown.Invoke(currentSpell, ability.stat.cooldown);
+
+			// Use the mana
+			mana.UseMana((int)ability.stat.manaCost);
+			
+			// Spawn the spell
+			var go = PhotonNetwork.Instantiate(playerManager.characterData.abilities[currentSpell].prefab.name, bulletSpawn.position, bulletSpawn.rotation);
+			go.GetComponent<Ability.Ability>().runes = playerManager.abilitiesRunes[currentSpell];
+			go.GetComponent<Ability.Ability>().Fire();
+		}
+
+		public void AnimationEventBegin()
+		{
+			CastAbility();
+			EventManager.TriggerEvent("OnAnimationStart", null);
+		}
+		
+		// TODO: more func like this for each anim event
+		public void AnimationEventSpawnSpell()
+		{
+			CastAbility();
+		}
+		
+		/// <summary>
+		/// You need to put an Animation Event at the point of animation you think it's over and call this function
+		/// To tell the script that it can use another ability from now
+		/// </summary>
+		public void AnimationEventEnd()
+		{
+			currentSpell = -1; // Reset the current spell id
+			EventManager.TriggerEvent("OnAnimationEnd", null);
 		}
     }
 }

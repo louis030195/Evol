@@ -35,7 +35,9 @@ namespace Evol.Game.Misc
         [Tooltip("Pause time between rounds in seconds")] public int timeBetweenRound = 30;
         [Tooltip("Number of AIs spawned at every round")] public int aiPerRound = 30;
         [Tooltip("Delay between AIs spawns")] public float delayBetweenAiSpawn = 0.1f;
+        [Tooltip("Number of guards to spawn")] public int numberOfGuards = 10;
 
+        
         [Header("Spawnables")]
         [Tooltip("GameObject that contains all the map assets in the scene")] public GameObject map;
         [Tooltip("Prefabs of the characters")] public List<GameObject> characters;
@@ -103,7 +105,7 @@ namespace Evol.Game.Misc
                 npc.transform.parent = map.transform;
                 
                 // Spawn mobs
-                foreach (var i in Enumerable.Range(0, 10))
+                foreach (var i in Enumerable.Range(0, numberOfGuards))
                 {
                     var randomGo = guards.Length > 0 ? guards[Random.Range(0, guards.Length)] : null;
                     if (randomGo)
@@ -128,7 +130,7 @@ namespace Evol.Game.Misc
             // Retrieve the chosen character id
             var characterId = player.CustomProperties.ContainsKey("character") ?
                 Convert.ToInt32(player.CustomProperties["character"]) :
-                2;
+                4;
             
             // Retrieve the prefab assiocated to this id
             var foundPrefab = characters.Find(c => c.GetComponent<PlayerManager>().characterData.id == characterId);
