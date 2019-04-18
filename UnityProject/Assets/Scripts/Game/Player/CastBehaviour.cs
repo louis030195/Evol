@@ -175,7 +175,10 @@ namespace Evol.Game.Player
 		{
 			// if (currentSpell == -1)
 			//	return;
-
+			playerManager = GetComponent<PlayerManager>(); 
+			// This seems to be required because Unity doesn't seem to store the actual component reference
+			// so when the properties are updated playerManager property here isn't updated
+			
 			var ability = playerManager.characterData.abilities[currentSpell];
 				
 			// Set spell cooldown
@@ -195,6 +198,7 @@ namespace Evol.Game.Player
 			{
 				abilityInstance.runes.Add(r);
 			});
+			abilityInstance.Ready();
 			abilityInstance.Fire();
 		}
 

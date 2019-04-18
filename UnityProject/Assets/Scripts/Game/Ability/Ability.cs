@@ -22,8 +22,14 @@ namespace Evol.Game.Ability
         
         private void OnEnable()
         {
-            
             initializationTime = Time.timeSinceLevelLoad;
+        }
+        
+        /// <summary>
+        /// Ready function is useful when we instanciate the ability so we can initialize the properties THEN run the initialize of the ability
+        /// </summary>
+        public void Ready()
+        {
             Initialize();
         }
 
