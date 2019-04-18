@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Evol.Game.Ability;
+using Evol.Game.Item;
 using Evol.Game.Misc;
 using Photon.Pun;
 using UnityEngine;
@@ -52,6 +53,17 @@ namespace Evol.Game.Player
 	        // For debugging in specific scene offline
 	        if(!PhotonNetwork.InRoom)
 		        PhotonNetwork.OfflineMode = true;
+	        
+	        EventManager.StartListening("OnAbilityAnimationStart", arg0 => { 
+		        // Start the casting animation
+		        cast = true;
+	        });
+	        // Reset current spell to -1, allow to say that we stopped casting
+	        EventManager.StartListening("OnAbilityAnimationEnd", arg0 =>
+	        {
+		        cast = false;
+		        currentSpell = -1;
+	        }); 
         }
         
 		// Update is used to set features regardless the active behaviour.
@@ -84,7 +96,7 @@ namespace Evol.Game.Player
 			if (!cast && 
 			    behaviourManager.IsGrounded() &&
 			    currentSpell != -1 &&
-			    Time.time > nextSpell[currentSpell] &&
+			    Time.time > nextSpell[currentSpell] * 1.001f &&
 			    playerManager.characterData.abilities[currentSpell].stat.manaCost < mana.currentMana &&
 			    (photonView.IsMine || !PhotonNetwork.InRoom)) // InRoom check is for offline mode (mostly debugging)
 			{
@@ -113,9 +125,6 @@ namespace Evol.Game.Player
 			// Start casting.
 			else
 			{		
-				// Start the casting animation
-				cast = true;
-				
 				// Trigger the animation
 				behaviourManager.GetAnim.SetTrigger(attacksTrigger[currentSpell]);
 				// Spells with bool anim ?
@@ -126,7 +135,7 @@ namespace Evol.Game.Player
 				behaviourManager.GetAnim.SetFloat(speedFloat, 0);
 				
 				// This state overrides the active one.
-				behaviourManager.OverrideWithBehaviour(this);
+				// behaviourManager.OverrideWithBehaviour(this);
 			}
 		}
 		
@@ -156,18 +165,16 @@ namespace Evol.Game.Player
 		/// <returns></returns>
 		private IEnumerator CastOff()
 		{
-			// Say that we stop the casting animation
-			cast = false;
 			// yield return new WaitForSeconds(0.5f);
 			// behaviourManager.UnlockTempBehaviour(behaviourCode);
-			behaviourManager.RevokeOverridingBehaviour(this);
+			// behaviourManager.RevokeOverridingBehaviour(this);
 			yield return null;
 		}
 
 		private void CastAbility()
 		{
-			if (currentSpell == -1)
-				return;
+			// if (currentSpell == -1)
+			//	return;
 
 			var ability = playerManager.characterData.abilities[currentSpell];
 				
@@ -182,30 +189,21 @@ namespace Evol.Game.Player
 			
 			// Spawn the spell
 			var go = PhotonNetwork.Instantiate(playerManager.characterData.abilities[currentSpell].prefab.name, bulletSpawn.position, bulletSpawn.rotation);
-			go.GetComponent<Ability.Ability>().runes = playerManager.abilitiesRunes[currentSpell];
-			go.GetComponent<Ability.Ability>().Fire();
+			var abilityInstance = go.GetComponent<Ability.Ability>();
+			abilityInstance.runes = new List<RuneData>();
+			playerManager.abilitiesRunes[currentSpell].ForEach(r => // We don't directly give the reference but copy
+			{
+				abilityInstance.runes.Add(r);
+			});
+			abilityInstance.Fire();
 		}
 
-		public void AnimationEventBegin()
-		{
-			CastAbility();
-			EventManager.TriggerEvent("OnAnimationStart", null);
-		}
 		
-		// TODO: more func like this for each anim event
+		// TODO: more func like this for each anim event, channelling etc,
+		// use statemachine (AnimationCallback.cs) only for very start very end i guess
 		public void AnimationEventSpawnSpell()
 		{
 			CastAbility();
-		}
-		
-		/// <summary>
-		/// You need to put an Animation Event at the point of animation you think it's over and call this function
-		/// To tell the script that it can use another ability from now
-		/// </summary>
-		public void AnimationEventEnd()
-		{
-			currentSpell = -1; // Reset the current spell id
-			EventManager.TriggerEvent("OnAnimationEnd", null);
 		}
     }
 }

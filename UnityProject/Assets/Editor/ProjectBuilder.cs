@@ -3,22 +3,24 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class Builds
 {
+    static string[] levels = new[]
+    {
+        "Assets/Scenes/Login.unity",
+        "Assets/Scenes/Game.unity"
+    };
+
+    
     [MenuItem("Builds/Windows")]
     public static void BuildWindows()
     {
-        var levels = new[]
-        {
-            "Assets/Scenes/Login.unity",
-            "Assets/Scenes/Game.unity"
-        };
-
         PlayerSettings.runInBackground = false;
         var message = BuildPipeline.BuildPlayer(
             levels,
-            $"../Build/Windows/Client/Evol.exe",
+            $"../Build/Windows/Evol.exe",
             BuildTarget.StandaloneWindows64,
             BuildOptions.ShowBuiltPlayer);
 
@@ -31,16 +33,10 @@ public class Builds
     [MenuItem("Builds/Linux")]
     public static void BuildLinux()
     {
-        var levels = new[]
-        {
-            "Assets/Scenes/Login.unity",
-            "Assets/Scenes/Game.unity"
-        };
-
         PlayerSettings.runInBackground = false;
         var message = BuildPipeline.BuildPlayer(
             levels,
-            $"../Build/Linux/Client/Evol.x86_64",
+            $"../Build/Linux/Evol.x86_64",
             BuildTarget.StandaloneLinux64,
             BuildOptions.ShowBuiltPlayer);
 
@@ -48,6 +44,22 @@ public class Builds
             Debug.Log($"Linux build complete");
         else
             Debug.LogError($"Error building Linux { message }");
+    }
+    
+    [MenuItem("Builds/Web")]
+    public static void BuildWeb()
+    {
+        PlayerSettings.runInBackground = false;
+        var message = BuildPipeline.BuildPlayer(
+            levels,
+            $"../Build/Web/",
+            BuildTarget.WebGL,
+            BuildOptions.ShowBuiltPlayer);
+
+        if (message)
+            Debug.Log($"WebGL build complete");
+        else
+            Debug.LogError($"Error building WebGL { message }");
     }
     
     // Seems to be runnable from bash

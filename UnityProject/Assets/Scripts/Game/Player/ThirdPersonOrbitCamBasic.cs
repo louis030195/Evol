@@ -6,7 +6,6 @@ namespace Evol.Game.Player
 // This class corresponds to the 3rd person camera features.
 	public class ThirdPersonOrbitCamBasic : MonoBehaviour
 	{
-		public Transform player; // Player's reference.
 		public Vector3 pivotOffset = new Vector3(0.0f, 1.0f, 0.0f); // Offset to repoint the camera.
 
 		public Vector3
@@ -32,12 +31,14 @@ namespace Evol.Game.Player
 		private float defaultFOV; // Default camera Field of View.
 		private float targetFOV; // Target camera Field of View.
 		private float targetMaxVerticalAngle; // Custom camera max vertical clamp angle.
-
+		private Transform player; // Player's reference.
 		// Get the camera horizontal angle.
 		public float GetH => angleH;
 
 		private void Awake()
 		{
+			player = transform.parent; // Has to be child of the player
+			
 			// Multiplayer, deactivate the camera if it's not mine
 			if(player.gameObject.GetPhotonView() != null && !player.gameObject.GetPhotonView().IsMine && PhotonNetwork.InRoom) // InRoom check is for debugging offline
 				gameObject.SetActive(false);

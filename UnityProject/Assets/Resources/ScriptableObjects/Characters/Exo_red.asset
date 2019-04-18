@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 072bd7e82c2f0dd35875b6c6b6912e35, type: 3}
+  m_Name: Exo_red
+  m_EditorClassIdentifier: 
+  id: 6
+  characterName: Exo_red
+  description: fire
+  ranged: 1
+  element: 0
+  icon: {fileID: 21300550, guid: 200f1dc55bb4b681ea93a7da7f787a91, type: 3}
+  placeholder: {fileID: 8483267314921240194, guid: 98e877b1766f50a5b99bbac8435746fc,
+    type: 3}
+  abilities:
+  - {fileID: 11400000, guid: 35c35a39a263c1a73bc189c44fe27823, type: 2}

@@ -1606,9 +1606,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetweenRound: 3
-  aiPerRound: 1
+  aiPerRound: 10
   delayBetweenAiSpawn: 0.1
-  numberOfGuards: 1
+  numberOfGuards: 20
   map: {fileID: 937177433}
   characters:
   - {fileID: 1647962671677056, guid: fb4f8dc935185426384ec6a765bf8693, type: 3}
@@ -1617,6 +1617,7 @@ MonoBehaviour:
   - {fileID: 981405515219869878, guid: 4c1d8512167a4a6c8a122ca4fdefd9b5, type: 3}
   - {fileID: 1000012557904484, guid: fde87c405715c643dbfe7be78f202138, type: 3}
   - {fileID: 1620485347683822, guid: c70928d8f860cdb45a271c2422f5b805, type: 3}
+  - {fileID: 8483267314921240194, guid: 9340e9afaead6b6cb96fd77e40da11e3, type: 3}
   npcs:
   - {fileID: 8954953832340804110, guid: 740ae706dc053de32ba096dc58eea98d, type: 3}
   mobs:
@@ -1671,6 +1672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 0

@@ -138,7 +138,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf0fe4b1cec4960378d67a169b8aa4ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instance: {fileID: 0}
   itemData: {fileID: 11400000, guid: b125ef8acd201b295ba53d94f8b03ecb, type: 2}
   AnimationOnSpawn: {fileID: 100000, guid: 8fabb152bed485da7889150467409a93, type: 3}
 --- !u!114 &22889936433347821
@@ -153,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
   Synchronization: 0

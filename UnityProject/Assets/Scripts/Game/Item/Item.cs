@@ -10,22 +10,18 @@ namespace Evol.Game.Item
 {
     public abstract class Item : MonoBehaviour
     {
-        // Instance in the scene
-        [HideInInspector] public GameObject instance;
         public ItemData itemData;
         public GameObject AnimationOnSpawn;
 
         private PhotonView photonView;
 
-        private void Awake()
+        private void OnEnable()
         {
             // Spawn animation
             PhotonNetwork.Instantiate(AnimationOnSpawn.name, transform.position, new Quaternion(-90,0,0, 90));
             
-            instance = gameObject;
-            
             // My name is set to item name + instanceID for example Shako1463827, because Unity doing find with string GG
-            name = $"{itemData.itemName}{instance.GetInstanceID()}";
+            name = $"{itemData.itemName}{gameObject.GetInstanceID()}";
 
             // Get my photon view
             photonView = gameObject.GetPhotonView();
@@ -34,7 +30,7 @@ namespace Evol.Game.Item
         {
             // If a player is close to me, tell him i'm here
             if (other.CompareTag("Player"))
-                EventManager.TriggerEvent ("OnItemAroundAdd", new object[] { instance });
+                EventManager.TriggerEvent ("OnItemAroundAdd", new object[] { gameObject });
         }
 
         private void OnTriggerExit(Collider other)
@@ -43,7 +39,7 @@ namespace Evol.Game.Item
             // In that case we could call OnTriggerExit in OnDisable / OnDestroy
             // If a player went away from me, tell him
             if (other.CompareTag("Player"))
-                EventManager.TriggerEvent ("OnItemAroundRemove", new object[] { instance });
+                EventManager.TriggerEvent ("OnItemAroundRemove", new object[] { gameObject });
         }
 
         public override string ToString()

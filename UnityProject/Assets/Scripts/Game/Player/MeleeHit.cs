@@ -12,11 +12,11 @@ public class MeleeHit : MonoBehaviour
 
     private void Start()
     {
-        EventManager.StartListening("OnAnimationStart", arg0 =>
+        EventManager.StartListening("OnAbilityAnimationStart", arg0 =>
         {
             isAnimationPlaying = true;
         });
-        EventManager.StartListening("OnAnimationEnd", arg0 =>
+        EventManager.StartListening("OnAbilityAnimationEnd", arg0 =>
         {
             isAnimationPlaying = false;
         });

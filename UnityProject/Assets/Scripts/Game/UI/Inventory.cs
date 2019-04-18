@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Evol.Game.Item;
 using Evol.Game.Misc;
+using Evol.Utils;
 using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
 using TMPro;
@@ -24,13 +25,15 @@ namespace Evol.Game.UI
 		[Tooltip("Item/Ground/Content Grid containing the items icons")] public GameObject itemsGroundContent;
 		[Tooltip("Item/Equipped/Content Grid containing the items icons")] public GameObject itemsInventoryEquippedContent;
 		[Tooltip("Item/NonEquipped/Content Grid containing the items icons")] public GameObject itemsInventoryNonEquippedContent;
+		[Tooltip("Size of the non equipped inventory")] public int inventoryNonEquippedSize = 5;
 		
 		[Tooltip("Item/InformationPanel Panel of information to show when the cursor is above and item")] public GameObject itemInformationPanel;
 		[Tooltip("Item/InformationPanel/Text Text in the information panel")] public TextMeshProUGUI itemInformationText;
 		
 		[Header("Placeholders")]
-		[Tooltip("Prefab for the item icon")] public GameObject itemsEquippedSlotPlaceholder;
-		[Tooltip("Prefab for the item icon")] public GameObject itemsIconPlaceholder;
+		[Tooltip("Prefab for the ability runes container (ability image + 5x item container)")] public GameObject abilityRunesContainerPlaceholder;
+		[Tooltip("Prefab for any item container")] public GameObject itemContainerPlaceholder;
+		[Tooltip("Prefab for the item icon")] public GameObject itemsPlaceholder;
 
 		private PlayerManager playerManager;
 		private bool lastPointerEnterIsGround; // Do we drop it on the ground ?
@@ -38,7 +41,8 @@ namespace Evol.Game.UI
 		private int draggedFromAbilityNumber; // Last ability GameObject hovered by mouse
 		private int draggedToAbilityNumber; // Last ability GameObject hovered by mouse
 		// Abilities GameObject instances in the equipped inventory
-		private List<GameObject> abilities = new List<GameObject>(); 
+		private List<GameObject> abilities = new List<GameObject>();
+		private List<GameObject> groundItems = new List<GameObject>();
 		private int dragCount; // To check if we hit the first call of dragging function
 
 		private void Awake()
@@ -48,38 +52,19 @@ namespace Evol.Game.UI
 			// Fill the equipped UI with our abilities
 			foreach (var i in Enumerable.Range(0, playerManager.characterData.abilities.Length))
 			{
-				var go = Instantiate(itemsEquippedSlotPlaceholder, itemsInventoryEquippedContent.transform);
-				var trigger = go.AddComponent<EventTrigger>();
-
-				var entryPointerEnter = new EventTrigger.Entry {eventID = EventTriggerType.PointerEnter};
-				entryPointerEnter.callback.AddListener((data) =>
-				{
-					draggedToAbilityNumber = i;
-					lastPointerEnterIsGround = false;
-				});
-				trigger.triggers.Add(entryPointerEnter);
-
+				var go = Instantiate(abilityRunesContainerPlaceholder, itemsInventoryEquippedContent.transform);
+				// Set the appropriate ability icon
+				go.transform.GetChild(0).GetComponent<Image>().sprite = playerManager.characterData.abilities[i].icon; 
 				abilities.Add(go);
 			}
-
-			// We actually add the event trigger to his parent, because the grid is probably empty, 
-			var triggerNonEquipped =
-				itemsInventoryNonEquippedContent.transform.parent.gameObject.AddComponent<EventTrigger>();
-
-			var entryPointerEnterNonEquipped = new EventTrigger.Entry {eventID = EventTriggerType.PointerEnter};
-			entryPointerEnterNonEquipped.callback.AddListener((data) =>
+			
+			// Fill the non equipped UI with containers
+			foreach (var i in Enumerable.Range(0, inventoryNonEquippedSize))
 			{
-				draggedToAbilityNumber = -1;
-				lastPointerEnterIsGround = false;
-			});
-			triggerNonEquipped.triggers.Add(entryPointerEnterNonEquipped);
-
-			// Add trigger pointer enter for ground
-			var triggerGround = itemsGround.AddComponent<EventTrigger>();
-
-			var entryPointerEnterGround = new EventTrigger.Entry {eventID = EventTriggerType.PointerEnter};
-			entryPointerEnterGround.callback.AddListener((data) => { lastPointerEnterIsGround = true; });
-			triggerGround.triggers.Add(entryPointerEnterGround);
+				var go = Instantiate(itemContainerPlaceholder, itemsInventoryNonEquippedContent.transform);
+				go.GetComponent<ItemContainer>().location = Location.Inventory;
+			}
+			
 
 			// Listen to the event "An item is now close to me"
 			if (EventManager.Instance)
@@ -88,20 +73,93 @@ namespace Evol.Game.UI
 
 				// Listen to the event "An item went away from me"
 				EventManager.StartListening("OnItemAroundRemove", ItemAroundRemove);
+				
+				EventManager.StartListening("OnItemEndDrag", OnItemEndDrag);
 			}
 			else
 			{
 				Debug.LogWarning("No EventManager here !!");
 			}
 		}
+		
+		private void OnItemEndDrag(object[] item)
+		{
+			StartCoroutine(WaitEvent((Transform) item[0]));
+		}
+
+		private IEnumerator WaitEvent(Transform t)
+		{
+			// We have to wait a litte delay after event
+			// Because there is multiple listeners to this event, we can afford to be the last in the stack
+			/*while(t.parent.parent == null)
+			{
+				yield return null;
+			}*/
+			
+			yield return new WaitForSeconds(0.1f);
+			if (t == null) yield break; // Case when it's been dropped to ground, no need to have 2 icon for 1 item
+			var previousContainer = t.GetComponent<ItemUi>().previousContainer.GetComponent<ItemContainer>();
+
+			if (previousContainer.location == Location.Rune) // Picked from abilities runes
+			{
+				// Remove from runes
+				playerManager.abilitiesRunes[previousContainer.transform.parent.GetSiblingIndex()]
+					.Remove(t.GetComponent<ItemUi>().itemData as RuneData);
+			} 
+			else if (previousContainer.location == Location.Inventory) // Picked from inventory
+			{
+				// Remove from runes
+				playerManager.inventoryNonEquipped.Remove(t.GetComponent<ItemUi>().itemData);
+			}
+			else if(previousContainer.location == Location.Ground) // Picked from ground
+			{
+				var physicalItem = groundItems.Find(i => i == t.GetComponent<ItemUi>().physicalInstance);
+				groundItems.Remove(physicalItem);
+				PhotonNetwork.Destroy(physicalItem); // Hide physical item
+			}
+			
+			var container = t.parent.GetComponent<ItemContainer>();
+			// print($"{container.transform.parent.GetSiblingIndex()}");
+
+			if (container.location == Location.Rune) // ability rune container
+			{
+				// Add to the list
+				playerManager.abilitiesRunes[t.parent.parent.GetSiblingIndex()]
+					.Add(t.GetComponent<ItemUi>().itemData as RuneData);
+				
+				// Using getsiblingindex
+				// means that we have to have the rune as grand child of the ability layout so we know to which ability its added
+				// Eg ability1/container1/item
+				//    ability1/container.../item
+				//    ability2/container/item
+			} 
+			else if (container.location == Location.Inventory)
+			{
+				// Add to the list
+				playerManager.inventoryNonEquipped.Add(t.GetComponent<ItemUi>().itemData);
+			}
+		}
 
 		private void ItemAroundAdd(object[] item)
 		{
+			var physicalItem = item[0] as GameObject;
+			groundItems.Add(physicalItem);
+			/*
+			foreach (Transform child in itemsGroundContent.transform)
+			{
+				if (child.name.Equals(physicalItem.name)) return;
+				// child.GetComponent<ItemUi>().physicalItem.GetComponent<Item.
+			}*/
+			
 			// Icon isn't networked so no PhotonNetwork.Instanciate()
-			var go = Instantiate(itemsIconPlaceholder, itemsGroundContent.transform);
-			go.name = (item[0] as GameObject).name; // Set the same name than the GameObject instance
-			var itemComponent = (item[0] as GameObject).GetComponent<Item.Item>();
-			go.GetComponent<Image>().sprite = itemComponent.itemData.icon;
+			var go = Instantiate(itemsPlaceholder, itemsGroundContent.transform);
+			go.GetComponent<ItemUi>().playUi = playUi.transform;
+			go.GetComponent<ItemUi>().itemData = physicalItem.GetComponent<Item.Item>().itemData;
+			go.GetComponent<ItemUi>().physicalInstance = physicalItem;
+			go.name = physicalItem.gameObject.name; // Set the same name than the GameObject instance
+			go.GetComponent<Image>().sprite = physicalItem.GetComponent<Item.Item>().itemData.icon;
+			
+			// go.AddComponent<Item.Item>(itemComponent);
 
 			// Already have these event (when taking an item dropping it ...)
 			if (go.GetComponent<EventTrigger>() != null) return;
@@ -109,30 +167,22 @@ namespace Evol.Game.UI
 			var trigger = go.AddComponent<EventTrigger>();
 
 			var entryPointerEnter = new EventTrigger.Entry {eventID = EventTriggerType.PointerEnter};
-			entryPointerEnter.callback.AddListener((data) =>
+			entryPointerEnter.callback.AddListener(data =>
 			{
-				InformationPointerEnter(data as PointerEventData, itemComponent.itemData);
+				InformationPointerEnter(data as PointerEventData, go.GetComponent<ItemUi>().itemData);
 			});
 			trigger.triggers.Add(entryPointerEnter);
 
+			
 			var entryPointerExit = new EventTrigger.Entry {eventID = EventTriggerType.PointerExit};
 			entryPointerExit.callback.AddListener((data) => { InformationPointerExit(data as PointerEventData); });
 			trigger.triggers.Add(entryPointerExit);
-
-			var entryDrag = new EventTrigger.Entry {eventID = EventTriggerType.Drag};
-			entryDrag.callback.AddListener((data) => { Drag(data as PointerEventData, go); });
-			trigger.triggers.Add(entryDrag);
-
-			var entryEndDrag = new EventTrigger.Entry {eventID = EventTriggerType.EndDrag};
-			entryEndDrag.callback.AddListener((data) =>
-			{
-				EndDrag(data as PointerEventData, go, itemComponent);
-			});
-			trigger.triggers.Add(entryEndDrag);
 		}
 
 		private void ItemAroundRemove(object[] data)
 		{
+			groundItems.Add(data[0] as GameObject);
+			
 			var found = itemsGroundContent.transform.Find((data[0] as GameObject).name);
 
 			// Destroy the item icon from the UI grid when it went too far away
@@ -140,6 +190,7 @@ namespace Evol.Game.UI
 				Destroy(found.gameObject);
 		}
 
+		/*
 		private void EndDrag(PointerEventData data, GameObject itemIcon, Item.Item itemComponent)
 		{
 			dragCount = 0;
@@ -153,7 +204,7 @@ namespace Evol.Game.UI
 				if (playerManager.inventoryNonEquipped.Remove(itemComponent))
 				{
 					// Try to remove from the equipped list
-					playerManager.abilitiesRunes[draggedFromAbilityNumber].Remove((itemComponent as Rune).itemData as RuneData);
+					playerManager.abilitiesRunes[draggedFromAbilityNumber].Remove((itemComponent as Rune).itemData as RuneData); // TODO: doesnt remove ? doesnt work ?
 				}
 			}
 
@@ -230,10 +281,12 @@ namespace Evol.Game.UI
 			item.transform.position = Input.mousePosition;
 
 			dragCount++;
-		}
+		}*/
 
 		private void InformationPointerEnter(PointerEventData data, ItemData item)
 		{
+			if (item == null) return;
+			
 			itemInformationPanel.SetActive(true);
 
 			// Vector2 screenPosition = Camera.main.WorldToScreenPoint (transform.position);

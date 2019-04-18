@@ -26,7 +26,7 @@ namespace Evol.Game.Player
         [Tooltip("Contains the specific data about the character chosen")] public CharacterData characterData;
         
         [HideInInspector] public EventListenedList<RuneData>[] abilitiesRunes;
-        [HideInInspector] public EventListenedList<Item.Item> inventoryNonEquipped = new EventListenedList<Item.Item>();
+        [HideInInspector] public EventListenedList<ItemData> inventoryNonEquipped = new EventListenedList<ItemData>();
         
         // The local player instance. Use this to know if the local player is represented in the Scene
         public static GameObject LocalPlayerInstance;
@@ -100,10 +100,12 @@ namespace Evol.Game.Player
 
         private void Add(object sender, EventArgs e)
         {
+            print("rune added");
         }
         
         private void Remove(object sender, EventArgs e)
         {
+            print("rune removed");
         }
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

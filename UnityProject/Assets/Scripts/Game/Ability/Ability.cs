@@ -63,8 +63,10 @@ namespace Evol.Game.Ability
         /// Check if the gameobject has health component, if yes, deal damage, return if health component has been found
         /// </summary>
         /// <param name="other"></param>
-        protected bool ApplyDamage(GameObject other)
+        public bool ApplyDamage(GameObject other)
         {
+            if (other == caster) return false; // Suicide isn't allowed :/
+            
             // The hitbox is on the mesh which is sometimes on a child
             var parent = other.transform.parent; // Not all object have a parent
             var health = other.gameObject.GetComponent<Health>() ? other.gameObject.GetComponent<Health>() :
