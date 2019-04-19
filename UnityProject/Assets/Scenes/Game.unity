@@ -1608,7 +1608,7 @@ MonoBehaviour:
   timeBetweenRound: 3
   aiPerRound: 10
   delayBetweenAiSpawn: 0.1
-  numberOfGuards: 20
+  numberOfGuards: 10
   map: {fileID: 937177433}
   characters:
   - {fileID: 1647962671677056, guid: fb4f8dc935185426384ec6a765bf8693, type: 3}
@@ -1618,14 +1618,13 @@ MonoBehaviour:
   - {fileID: 1000012557904484, guid: fde87c405715c643dbfe7be78f202138, type: 3}
   - {fileID: 1620485347683822, guid: c70928d8f860cdb45a271c2422f5b805, type: 3}
   - {fileID: 8483267314921240194, guid: 9340e9afaead6b6cb96fd77e40da11e3, type: 3}
-  npcs:
-  - {fileID: 8954953832340804110, guid: 740ae706dc053de32ba096dc58eea98d, type: 3}
+  npcs: []
   mobs:
   - {fileID: 193048, guid: be3cbaf02f5437e4a8956b882b64ad92, type: 3}
   - {fileID: 165622, guid: b7f1dfc4e01f4a645a02f3816571583e, type: 3}
   - {fileID: 1694707009694540, guid: d796fff449df17e64ba076e0c9b05f5b, type: 3}
-  - {fileID: 180470, guid: f4864ffb159f30048a3bdafeae646afb, type: 3}
   - {fileID: 143816, guid: 2e6391b851bd6104aa35c25d824e40b1, type: 3}
+  - {fileID: 180470, guid: f4864ffb159f30048a3bdafeae646afb, type: 3}
   guards:
   - {fileID: 1469492660037290, guid: cef4d139b3492e4ef91246f85cb8d3a2, type: 3}
   - {fileID: 1000010402951368, guid: 5bcbf31ded2e353449622ec74f8954da, type: 3}

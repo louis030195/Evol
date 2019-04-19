@@ -29,6 +29,7 @@ namespace Evol.Heuristic
 
 		private List<Vector3> path;
 		private LineRenderer lr;
+		private int speedFloat; // Speed parameter on the Animator.
 
 
 		// Broadcasting navmesh params
@@ -62,6 +63,9 @@ namespace Evol.Heuristic
 				path = new List<Vector3>();
 				lr = gameObject.AddComponent<LineRenderer>();
 			}
+			
+			speedFloat = Animator.StringToHash("speed");
+			if(speedFloat == 0) print($"failed hash {gameObject.name}");
 		}
 
 		private void Update()
@@ -81,40 +85,19 @@ namespace Evol.Heuristic
 
 		public void MoveTo(Vector3 destination)
 		{
-			if(navMeshAgent.isOnNavMesh)
+			animator.SetFloat(speedFloat, Mathf.Clamp(Vector3.Distance(transform.position, destination), 0, 1), 0.1f, Time.deltaTime);
+			
+			navMeshAgent.destination = destination;
+			if (DebugPath)
 			{
-				if (animator)
+				path.Add(destination);
+				if (path.Count > 10) // Clear a bit
 				{
-					if (RunningAnimations.Length > 0)
-					{
-						var maxRandom = RunningAnimations.Length == 1 ? 0 : RunningAnimations.Length;
-						// If there is running animations for this object
-						animator.SetBool(RunningAnimations[Random.Range(0, maxRandom)], true);
-					}
-					else if (WalkingAnimations.Length > 0)
-					{
-						var maxRandom = WalkingAnimations.Length == 1 ? 0 : WalkingAnimations.Length;
-						// Else if there is walking animations for this object
-						animator.SetBool(WalkingAnimations[Random.Range(0, maxRandom)], true);
-					}
+					path.RemoveRange(0, 10);
 				}
-
-				navMeshAgent.destination = destination;
-				if (DebugPath)
-				{
-					path.Add(destination);
-					if (path.Count > 10) // Clear a bit
-					{
-						path.RemoveRange(0, 10);
-					}
-				}
-
-				Resume();
-			} 
-			else
-			{
-				print("Not a on a navmesh");
 			}
+
+			Resume();
 		}
 
 		/// <summary>

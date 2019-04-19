@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Evol.Game.Ability;
 using Evol.Game.Item;
 using Evol.Game.Misc;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Evol.Game.Player
 {
@@ -27,6 +29,10 @@ namespace Evol.Game.Player
         private int currentSpell = -1; // Spell threw
         private int[] attacksTrigger;
         private PlayerManager playerManager;
+
+        [HideInInspector] public UnityEvent onAbilityAnimationStart;
+        [HideInInspector] public UnityEvent onAbilityAnimationEnd;
+
         
         protected virtual void Start()
         {      
@@ -40,8 +46,7 @@ namespace Evol.Game.Player
 	        attacksTrigger = new int[playerManager.characterData.abilities.Length];
 	        for (var i = 0; i < attacksTrigger.Length; i++)
 	        {
-		        attacksTrigger[i] =
-			        /*Animator.StringToHash($"attack0"); */Animator.StringToHash($"attack{i}"); // Spell 1 = Anim 1 ...
+		        attacksTrigger[i] = Animator.StringToHash($"attack{i}"); // Spell 1 = Anim 1 ...
 	        }
 	        
 	        nextSpell = new float[playerManager.characterData.abilities.Length];
@@ -54,6 +59,21 @@ namespace Evol.Game.Player
 	        if(!PhotonNetwork.InRoom)
 		        PhotonNetwork.OfflineMode = true;
 	        
+	        onAbilityAnimationStart.AddListener(() =>
+	        {
+		        // Start the casting animation
+		        cast = true;
+	        });
+	        onAbilityAnimationEnd.AddListener(() =>
+	        {
+		        // Reset current spell to -1, allow to say that we stopped casting
+		        cast = false;
+		        currentSpell = -1;
+	        });
+	        
+	        behaviourManager.GetAnim.GetBehaviours<AnimationCallback>().ToList().ForEach(a => a.targets.Add(gameObject));
+	        
+	        /*
 	        EventManager.StartListening("OnAbilityAnimationStart", arg0 => { 
 		        // Start the casting animation
 		        cast = true;
@@ -63,7 +83,7 @@ namespace Evol.Game.Player
 	        {
 		        cast = false;
 		        currentSpell = -1;
-	        }); 
+	        }); */
         }
         
 		// Update is used to set features regardless the active behaviour.

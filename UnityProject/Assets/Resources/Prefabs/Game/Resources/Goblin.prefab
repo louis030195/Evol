@@ -14327,7 +14327,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -14380,7 +14380,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeZ:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -14433,7 +14433,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationX:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -14486,7 +14486,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -23835,6 +23835,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 455926}
+  - component: {fileID: 2863972073295261845}
+  - component: {fileID: 4991108778449323865}
   m_Layer: 0
   m_Name: Bip01 L Hand
   m_TagString: Untagged
@@ -23858,6 +23860,41 @@ Transform:
   m_Father: {fileID: 455924}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &2863972073295261845
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155932}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3
+  m_Center: {x: -2, y: 0, z: 0}
+--- !u!114 &4991108778449323865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d68f34df8058c0d009f6dad166ec110b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onAbilityAnimationStart:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onAbilityAnimationEnd:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &155934
 GameObject:
   m_ObjectHideFlags: 0
@@ -23912,7 +23949,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 155936}
-  m_LocalRotation: {x: 0.0070558502, y: -0.018662797, z: 0.9380963, w: -0.34579945}
+  m_LocalRotation: {x: 0.0070558507, y: -0.018662797, z: 0.93809634, w: -0.34579945}
   m_LocalPosition: {x: -0.78093505, y: 2.4322767, z: -0.0036182404}
   m_LocalScale: {x: 0.9999999, y: 1.0000002, z: 1.0000001}
   m_Children:
@@ -24099,7 +24136,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 155948}
-  m_LocalRotation: {x: -0.36705846, y: 0.36316678, z: 0.08671783, w: 0.851973}
+  m_LocalRotation: {x: -0.3670585, y: 0.3631668, z: 0.08671784, w: 0.85197306}
   m_LocalPosition: {x: -0.4246981, y: 0.16829348, z: 0.5513153}
   m_LocalScale: {x: 1.0000002, y: 1.0000002, z: 1.0000002}
   m_Children:
@@ -24208,6 +24245,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 455952}
+  - component: {fileID: 2387492232278636501}
+  - component: {fileID: 9151912363162236476}
   m_Layer: 0
   m_Name: Bip01 R Hand
   m_TagString: Untagged
@@ -24231,6 +24270,41 @@ Transform:
   m_Father: {fileID: 455950}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2387492232278636501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d68f34df8058c0d009f6dad166ec110b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onAbilityAnimationStart:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onAbilityAnimationEnd:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!135 &9151912363162236476
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155956}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3
+  m_Center: {x: -2, y: 0, z: 0}
 --- !u!1 &155958
 GameObject:
   m_ObjectHideFlags: 0
@@ -24254,7 +24328,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 155958}
-  m_LocalRotation: {x: -0.40324467, y: 0.90364903, z: -0.12171698, w: -0.07744101}
+  m_LocalRotation: {x: -0.40324467, y: 0.9036491, z: -0.12171698, w: -0.077441014}
   m_LocalPosition: {x: 1.0268707, y: 0.4933113, z: -1.1124767}
   m_LocalScale: {x: 1, y: 1.0000001, z: 1}
   m_Children:
@@ -24285,7 +24359,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 155960}
-  m_LocalRotation: {x: -0.007055849, y: 0.01866279, z: 0.9380963, w: -0.34579945}
+  m_LocalRotation: {x: -0.0070558493, y: 0.018662792, z: 0.93809634, w: -0.34579948}
   m_LocalPosition: {x: -0.7809353, y: 2.432277, z: 0.0036183596}
   m_LocalScale: {x: 1, y: 1.0000002, z: 1}
   m_Children:
@@ -24932,7 +25006,7 @@ Animator:
   m_GameObject: {fileID: 193048}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: c8dd3d85d32c3f240a47d18e1f4cb61a, type: 3}
-  m_Controller: {fileID: 9100000, guid: 9c2e3c14b5933234dafd26e2ee39f677, type: 2}
+  m_Controller: {fileID: 9100000, guid: 45ff10fd26e9250a481cfa6c17c1e144, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -24968,7 +25042,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 122
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &4497312126946100267
 MonoBehaviour:
@@ -25026,9 +25100,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackingAudio: {fileID: 0}
   AttackClip: []
-  AttackingAnimations:
-  - attack1
-  CastingAnimations: []
+  abilities:
+  - {fileID: 11400000, guid: ccfbbebbac84a75daa526cad3c2831ff, type: 2}
 --- !u!114 &7362881703884423062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25140,12 +25213,6 @@ MonoBehaviour:
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
   m_SynchronizeParameters:
-  - Type: 4
-    SynchronizeType: 1
-    Name: walk
-  - Type: 4
-    SynchronizeType: 1
-    Name: run
   - Type: 4
     SynchronizeType: 1
     Name: idle01

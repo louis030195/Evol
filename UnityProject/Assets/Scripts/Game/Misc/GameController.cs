@@ -95,15 +95,18 @@ namespace Evol.Game.Misc
                     difficulty = 1;
                 
                 // Spawn npc
-                var npc = Instantiate(npcs[0], Position.AboveGround(
-                        Position.RandomPositionAround(new Vector3(0, 0, 0), 5),
-                        1),
-                    Quaternion.identity);
-                npc.GetComponent<StateController>().SetupAi(true);
+                if (npcs.Length > 0)
+                {
+                    var npc = Instantiate(npcs[0], Position.AboveGround(
+                            Position.RandomPositionAround(new Vector3(0, 0, 0), 5),
+                            1),
+                        Quaternion.identity);
+                    npc.GetComponent<StateController>().SetupAi(true);
 
-                // Set as child of map object
-                npc.transform.parent = map.transform;
-                
+                    // Set as child of map object
+                    npc.transform.parent = map.transform;
+                }
+
                 // Spawn mobs
                 foreach (var i in Enumerable.Range(0, numberOfGuards))
                 {
@@ -130,7 +133,7 @@ namespace Evol.Game.Misc
             // Retrieve the chosen character id
             var characterId = player.CustomProperties.ContainsKey("character") ?
                 Convert.ToInt32(player.CustomProperties["character"]) :
-                2;
+                3;
             
             // Retrieve the prefab assiocated to this id
             var foundPrefab = characters.Find(c => c.GetComponent<PlayerManager>().characterData.id == characterId);
@@ -269,7 +272,7 @@ namespace Evol.Game.Misc
             var aiPerRoundByDifficulty = aiPerRound + aiPerRound * (roundNumber * difficulty);
             if (aiSpawned < aiPerRoundByDifficulty)
             {
-                print($"AiPerRoundByDiffuculty {aiPerRoundByDifficulty}");
+                // print($"AiPerRoundByDiffuculty {aiPerRoundByDifficulty}");
                 // Randomgo is just useful to avoid exception when the array is empty
                 var randomGo = mobs.Length > 0 ? mobs[Random.Range(0, mobs.Length)] : null;
                 if (randomGo)

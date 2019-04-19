@@ -15,14 +15,18 @@ namespace Evol.Heuristic.StateMachine
 
 		private void Attack(StateController controller)
 		{
-			Debug.DrawRay(controller.eyes.position,
+			// the origin of the ray need to start a bit behind
+			var castOrigin = controller.eyes.position - controller.eyes.forward * controller.parameters.lookSphereCastRadius; 
+
+			// TODO: LayerMask.GetMask("Player") optimization
+			Debug.DrawRay(castOrigin,
 				controller.eyes.forward.normalized * controller.parameters.attackRange, Color.red);
 
-			if (Physics.SphereCast(controller.eyes.position, controller.parameters.lookSphereCastRadius,
+			if (Physics.SphereCast(castOrigin, controller.parameters.lookSphereCastRadius,
 				    controller.eyes.forward, out var hit, controller.parameters.attackRange)
 			    && controller.parameters.ennemies.Any(t => hit.collider.CompareTag(t)))
 			{
-				controller.attack.Fire(hit.collider.gameObject, controller.parameters.attackForce, controller.parameters.attackRate);
+				controller.attack.AttackNow(hit.collider.gameObject);
 			}
 		}
 	}

@@ -140,7 +140,6 @@ namespace Evol.Game.Player
 			{
 				speed = sprintSpeed;
 			}
-
 			behaviourManager.GetAnim.SetFloat(speedFloat, speed, speedDampTime, Time.deltaTime);
 		}
 

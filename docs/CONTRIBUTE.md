@@ -1,3 +1,35 @@
+# TODO
+In order of importance
+- Think & fill this list of ideas ...
+- Optimize (object pooling for ex, use photon instanciate override stuff)
+- Prepare steam API (friend play etc)
+- Make a google form feedback (English + French)
+- Tweak multiplayer (test, make it less laggy ...)
+- Improve UI
+- More runes
+- Bosses
+- Lore
+- Think / handle player death (respawn or not ... ?)
+- Improve custom editor
+- Improve AI (sound, animations, code, behaviour, introduce machine learning, ranged ennemies, give AIs abilities)
+- Ability ideas (try to find original abilities): (BTW these abilities could be used by ennemies)
+    - Teleportation
+    - Anti gravity
+    - Traps
+    - Push / Grab / Move / Build items, objects etc ...
+    - Reflect abilities
+    - Wololo
+    - Rays
+    - Channelled stuff
+    - Laser link between players
+    - Lightning abilities
+    - Dashes
+    - Clone or not original ?
+    - A utility character more original than a healer
+    - Invisiblity ?
+    - What else ... ?
+
+
 # Developpers doc
 If you want to contribute to this project feel free to contact Louis.
 ## Unity development
@@ -14,18 +46,24 @@ Use JetBrains Rider, it will fix your naming convention automatically (following
 - ...
 ### Create a new character
 
-Add these components to the prefab
-
-<img src="images/create_a_new_character.png" width="300" height="300">
+Use the custom editor character creator windows (evol/)
 
 Create a CharacterData Scriptable object:
 Create/Evol/Character and fill with the appropriate data
 
 Don't forget to put the photon animator view as last component (it seems to be required for trigger parameters)
 
+tweak the parameters (custom editor not finished)
+
+### Create a new AI
+
+Use the custom editor ai creator windows (evol/)
+
+tweak the parameters (custom editor not finished)
+
 ### Create a new ability
 
-Add these components to the prefab
+Add these components to the prefab (can be different depending on the ability u're trying to do)
 
 <img src="images/create_a_new_ability.png" width="300" height="300">
 
