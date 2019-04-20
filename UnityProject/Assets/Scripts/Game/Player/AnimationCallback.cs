@@ -55,13 +55,18 @@ namespace Evol.Game.Player
             {
                 var melee = target.GetComponent<MeleeHit>();
                 var player = target.GetComponent<CastBehaviour>();
+                var ai = target.GetComponent<Attack>();
                 if (melee)
                 {
                     melee.onAbilityAnimationStart.Invoke();
                 }
-                else
+                else if(player)
                 {
                     player.onAbilityAnimationStart.Invoke();
+                }
+                else if(ai)
+                {
+                    ai.onAbilityAnimationStart.Invoke();
                 }
             }
         }
@@ -76,13 +81,18 @@ namespace Evol.Game.Player
             {
                 var melee = target.GetComponent<MeleeHit>();
                 var player = target.GetComponent<CastBehaviour>();
+                var ai = target.GetComponent<Attack>();
                 if (melee)
                 {
                     melee.onAbilityAnimationEnd.Invoke();
                 }
-                else
+                else if(player)
                 {
                     player.onAbilityAnimationEnd.Invoke();
+                }
+                else if(ai)
+                {
+                    ai.onAbilityAnimationEnd.Invoke();
                 }
             }
         }

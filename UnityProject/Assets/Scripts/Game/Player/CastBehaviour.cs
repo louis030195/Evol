@@ -154,6 +154,8 @@ namespace Evol.Game.Player
 				// Slow movement
 				behaviourManager.GetAnim.SetFloat(speedFloat, 0);
 				
+				CastAbility();
+				
 				// This state overrides the active one.
 				// behaviourManager.OverrideWithBehaviour(this);
 			}
@@ -209,7 +211,12 @@ namespace Evol.Game.Player
 
 			// Use the mana
 			mana.UseMana((int)ability.stat.manaCost);
-			
+		}
+
+		
+		// Call this func with animation event, when u want to spawn ability at specific time of animation
+		public void AnimationEventSpawnSpell()
+		{
 			// Spawn the spell
 			var go = PhotonNetwork.Instantiate(playerManager.characterData.abilities[currentSpell].prefab.name, bulletSpawn.position, bulletSpawn.rotation);
 			var abilityInstance = go.GetComponent<Ability.Ability>();
@@ -220,14 +227,6 @@ namespace Evol.Game.Player
 			});
 			abilityInstance.Ready();
 			abilityInstance.Fire();
-		}
-
-		
-		// TODO: more func like this for each anim event, channelling etc,
-		// use statemachine (AnimationCallback.cs) only for very start very end i guess
-		public void AnimationEventSpawnSpell()
-		{
-			CastAbility();
 		}
     }
 }

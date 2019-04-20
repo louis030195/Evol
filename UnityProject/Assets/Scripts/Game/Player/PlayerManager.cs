@@ -59,9 +59,10 @@ namespace Evol.Game.Player
                 }
 
 
-                for (var i = 0; i < characterData.abilities.Length; i++)
+                foreach (var t in characterData.abilities)
                 {
-                    var ability = characterData.abilities[i].prefab.GetComponent<Ability.Ability>();
+                    if (!t.prefab) continue; // In case our ability has no prefab (melee)
+                    var ability = t.prefab.GetComponent<Ability.Ability>();
                     // Set the caster
                     ability.caster = gameObject;
                 }

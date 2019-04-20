@@ -7,9 +7,10 @@ Evol is a multiplayer hero defense.
 The machine learning part is [here](https://github.com/louis030195/Evol_ML), planning to use ML to train AI to fight players and be really challenging for players
 
 # Videos
+Oldest to newest:
 - [Video 1](https://www.youtube.com/watch?v=PCzRj9FlzMM)
 - [Video 2](https://www.youtube.com/watch?v=BP6NS7U8HWQ)
-
+- [Video 3](https://www.youtube.com/watch?v=1MhD9d4IKyE)
 
 # Features
 

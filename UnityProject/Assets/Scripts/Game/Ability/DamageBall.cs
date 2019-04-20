@@ -30,11 +30,14 @@ namespace Evol.Game.Ability
 
             var previousPosition = transform.position;
             
-            // Throw forward       
-            var camera = caster.GetComponentInChildren<Camera>();
-            var pos = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, camera.nearClipPlane));
+            // Throw forward      
+            var cam = caster.GetComponentInChildren<Camera>();
+            var pos = target == null
+                ? cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, cam.nearClipPlane))
+                : target.transform.position;
             transform.LookAt(pos); 
-            GetComponent<Rigidbody>().AddForce(-transform.forward * speed);
+            
+            GetComponent<Rigidbody>().AddForce(transform.forward * speed);
 
             // Has duplicate rune ?
             if (runes.Any(r => r.effect == RuneEffect.Duplicate))
@@ -42,7 +45,7 @@ namespace Evol.Game.Ability
                 var go = PhotonNetwork.Instantiate(abilityData.prefab.name, new Vector3(previousPosition.x, previousPosition.y, previousPosition.z + 3),
                     Quaternion.identity);
                 go.transform.LookAt(pos);
-                go.GetComponent<Rigidbody>().AddForce(-transform.forward * speed);
+                go.GetComponent<Rigidbody>().AddForce(transform.forward * speed);
                 go.GetComponent<Ability>().Fire();
             }
         }

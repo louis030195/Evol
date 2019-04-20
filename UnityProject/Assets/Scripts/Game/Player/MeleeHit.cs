@@ -36,6 +36,6 @@ public class MeleeHit : MonoBehaviour
         var health = other.gameObject.GetComponent<Health>() ? other.gameObject.GetComponent<Health>() :
             parent ? parent.gameObject.GetComponent<Health>() : null;
         if (health != null && !other.CompareTag(parentTag) && isAnimationPlaying) // To avoid suiciding ? // TODO: check if animating
-            health.TakeDamage(100, gameObject.GetComponentInParent<PhotonView>().Owner);
+            health.TakeDamage(10, gameObject.GetComponentInParent<PhotonView>().Owner);
     }
 }

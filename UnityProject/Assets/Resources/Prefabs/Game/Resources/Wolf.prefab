@@ -24756,7 +24756,7 @@ MonoBehaviour:
   GettingHitClips: []
   DeathEffects: []
   GettingHitAnimations:
-  - "damage1\x01"
+  - damage1
   DyingAnimations:
   - die1
   dead: 0
@@ -24792,6 +24792,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 876fe3af9d8944658a375dd77f19027d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onAbilityAnimationStart:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onAbilityAnimationEnd:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   AttackingAudio: {fileID: 0}
   AttackClip: []
   abilities:

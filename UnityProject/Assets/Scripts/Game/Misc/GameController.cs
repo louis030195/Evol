@@ -318,13 +318,11 @@ namespace Evol.Game.Misc
             if (gameState == GameState.Lost)
             {
                 StartCoroutine(UpdateTextAndDisappear($"Game over !", 2f));
-                print("lose");
             }
             
             if(gameState == GameState.Won)
             {
                 StartCoroutine(UpdateTextAndDisappear($"Victory !", 2f));
-                print("win");
             }
             
             // Wait for the specified length of time until yielding control back to the game loop.
