@@ -7,6 +7,11 @@ namespace Evol.Game.Ability
 {
     public class Skull : MonoBehaviour
     {
+        private void Start()
+        {
+            if (!gameObject.GetPhotonView().IsMine)
+                enabled = false;
+        }
 
         private void OnCollisionEnter(Collision other)
         {

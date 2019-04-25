@@ -537,6 +537,7 @@ GameObject:
   - component: {fileID: 4000010311705956}
   - component: {fileID: 95000011467492768}
   - component: {fileID: 6465741340336958950}
+  - component: {fileID: 836386149533241809}
   - component: {fileID: 2234717791802831964}
   - component: {fileID: 793389831965854038}
   - component: {fileID: 7483455126654047383}
@@ -545,7 +546,6 @@ GameObject:
   - component: {fileID: 4262716408934669982}
   - component: {fileID: 6858220346634515219}
   - component: {fileID: 3164041323742385161}
-  - component: {fileID: 836386149533241809}
   m_Layer: 0
   m_Name: HeavySpear_A_SKEL
   m_TagString: Guard
@@ -605,6 +605,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!136 &836386149533241809
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000011929712078}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.3
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!195 &2234717791802831964
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -690,8 +704,10 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  AttackingAudio: {fileID: 0}
-  AttackClip: []
+  alliesTag: []
+  enemiesTag: []
+  attackingAudio: {fileID: 0}
+  attackClip: []
   abilities:
   - {fileID: 11400000, guid: ccfbbebbac84a75daa526cad3c2831ff, type: 2}
 --- !u!114 &2912984682893808251
@@ -709,7 +725,7 @@ MonoBehaviour:
   maxHealth: 100
   destroyOnDeath: 1
   HealthAudio: {fileID: 0}
-  Dying: {fileID: 0}
+  DyingClips: []
   GettingHitClips: []
   DeathEffects: []
   GettingHitAnimations: []
@@ -781,23 +797,24 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 1
     Name: attack4
+  - Type: 1
+    SynchronizeType: 2
+    Name: speed
+  - Type: 9
+    SynchronizeType: 1
+    Name: damage1
+  - Type: 9
+    SynchronizeType: 1
+    Name: die1
+  - Type: 9
+    SynchronizeType: 1
+    Name: attack0
+  - Type: 9
+    SynchronizeType: 1
+    Name: born1
   m_SynchronizeLayers:
-  - SynchronizeType: 1
+  - SynchronizeType: 2
     LayerIndex: 0
---- !u!136 &836386149533241809
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000011929712078}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.3
-  m_Height: 1.5
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!1 &1000011966246464
 GameObject:
   m_ObjectHideFlags: 0
@@ -905,6 +922,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d68f34df8058c0d009f6dad166ec110b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityData: {fileID: 11400000, guid: ccfbbebbac84a75daa526cad3c2831ff, type: 2}
+  caster: {fileID: 0}
+  runes: []
+  target: {fileID: 0}
+  alliesTag: []
+  enemiesTag: []
   onAbilityAnimationStart:
     m_PersistentCalls:
       m_Calls: []

@@ -24,6 +24,8 @@ namespace Evol.Game.Player
     {
         [Tooltip("Frequency of sending player data to server in seconds")] public int playerDataUpdateFrequency = 60;
         [Tooltip("Contains the specific data about the character chosen")] public CharacterData characterData;
+        public List<string> alliesTag = new List<string>();
+        public List<string> enemiesTag = new List<string>();
         
         [HideInInspector] public EventListenedList<RuneData>[] abilitiesRunes;
         [HideInInspector] public EventListenedList<ItemData> inventoryNonEquipped = new EventListenedList<ItemData>();
@@ -33,6 +35,7 @@ namespace Evol.Game.Player
 
         private Animator animator; // TODO: should we use the behaviour stuff for this also ?
         private static readonly int Pickup = Animator.StringToHash("pickup");
+        private Chat chat;
 
         /// <summary>
         /// MonoBehaviour method called on GameObject by Unity during early initialization phase.
@@ -49,6 +52,9 @@ namespace Evol.Game.Player
                 // we flag as don't destroy on load so that instance survives level synchronization, thus giving a seamless experience when levels load.
                 DontDestroyOnLoad(gameObject);
 
+                if(Chat.LocalChatInstance != null) // If it's null it means we are in debug mode (game scene directly)
+                    chat = Chat.LocalChatInstance.GetComponent<Chat>();
+
                 animator = GetComponent<Animator>();
                 abilitiesRunes = new EventListenedList<RuneData>[characterData.abilities.Length];
                 for (var i = 0; i < abilitiesRunes.Length; i++)
@@ -63,6 +69,8 @@ namespace Evol.Game.Player
                 {
                     if (!t.prefab) continue; // In case our ability has no prefab (melee)
                     var ability = t.prefab.GetComponent<Ability.Ability>();
+                    ability.alliesTag = alliesTag;
+                    ability.enemiesTag = enemiesTag;
                     // Set the caster
                     ability.caster = gameObject;
                 }
@@ -71,9 +79,8 @@ namespace Evol.Game.Player
 
         private void Update()
         {
-            // TODO: find a way to get the playfabauthcontext
-            /*
-            if (Time.time % playerDataUpdateFrequency < 1)
+            // check if chat is set is for debug mode (not logged to playfab probably)
+            if (chat && Time.time % playerDataUpdateFrequency < 1)
             {
                 // I guess it could happen to be null if we are debugging and didn't pass by login scene ?
                 if (PlayFabClientAPI.IsClientLoggedIn())
@@ -90,13 +97,13 @@ namespace Evol.Game.Player
                     {
                         PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
                             {
-                                AuthenticationContext = ,
+                                AuthenticationContext = chat.PlayFabAuthenticationContext,
                                 Data = playerData
-                            }, result => { Debug.Log($"UpdateUserData succeed - {result}"); },
-                            error => { Debug.Log($"UpdateUserData failed - {error}"); });
+                            }, result => { /*Debug.Log($"UpdateUserData succeed - {result}");*/ },
+                            error => { /*Debug.Log($"UpdateUserData failed - {error}");*/ });
                     }
                 }
-            }*/
+            }
         }
 
         private void Add(object sender, EventArgs e)

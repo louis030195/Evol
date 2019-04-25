@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using ExitGames.Client.Photon;
-using Photon.Chat;
+﻿using System.Collections;
 using Photon.Pun;
 using Photon.Realtime;
 using PlayFab;
@@ -12,7 +7,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using AuthenticationValues = Photon.Realtime.AuthenticationValues;
 using Random = System.Random;
 
 namespace Evol.Game.Networking
@@ -38,7 +32,7 @@ namespace Evol.Game.Networking
         public GameObject mainMenuCanvas;
         [Tooltip("Main content at the centre of the screen")] public GameObject mainContent;
         [Tooltip("Nav at the top used to navigate in the main content")] public GameObject mainNav;
-        [Tooltip("Bar at the bottom used for specific less used stuff")] public GameObject bottomBar;
+        //[Tooltip("Bar at the bottom used for specific less used stuff")] public GameObject bottomBar;
         [Tooltip("Back arrow displayed in dead end screens used to go to previous screen")] public GameObject backArrow;
         [Tooltip("Evol logo")] public GameObject logo;
         
@@ -48,10 +42,9 @@ namespace Evol.Game.Networking
         [Tooltip("Button to start finding a game")] public Button gameConfigFindGameButton;
         [Tooltip("Layout that contain everything to select a char after joining a game")] public GameObject characterSelection;
         [Tooltip("Button to say ready")] public Button characterSelectionReadyButton;
-        [Tooltip("Client stats with this char")] public GameObject stats;
-        [Tooltip("Characters list")] public GameObject charactersList;
-        [Tooltip("The layout that contains the character to be selected to play")] public GameObject characterLayout;
-        [Tooltip("Looking for a game status")] public TextMeshProUGUI queueStatus;
+        //[Tooltip("Client stats with this char")] public GameObject stats;
+        //[Tooltip("Characters list")] public GameObject charactersList;
+        //[Tooltip("The layout that contains the character to be selected to play")] public GameObject characterLayout;
         [Tooltip("Difficulty dropdown")] public TMP_Dropdown difficultyDropdown;
 
 
@@ -111,7 +104,7 @@ namespace Evol.Game.Networking
                 PhotonNetwork.LocalPlayer.NickName = loginRequest.Username;
                 
                 chat.GetComponent<Chat>().PlayFabAuthenticationContext = result.AuthenticationContext;
-                chat.GetComponent<Chat>().enabled = true;
+                chat.SetActive(true);
                 this.result.text = $"You're now logged in !";
                 OnLoginSuccess();
             }, error =>
@@ -213,7 +206,7 @@ namespace Evol.Game.Networking
         {
             mainNav.SetActive(!mainNav.activeInHierarchy);
             mainContent.SetActive(!mainContent.activeInHierarchy);
-            bottomBar.SetActive(!bottomBar.activeInHierarchy);
+            // bottomBar.SetActive(!bottomBar.activeInHierarchy);
             backArrow.SetActive(!backArrow.activeInHierarchy);
             logo.SetActive(!logo.activeInHierarchy);
             if (layout != null)
@@ -260,7 +253,6 @@ namespace Evol.Game.Networking
             Debug.Log($"OnJoinRandomFailed { returnCode } - { message }");
             if (returnCode == 32760) // No match found
             {
-                queueStatus.text = $"No games available, creating one";
                 if (PhotonNetwork.CreateRoom(new Random().Next(0, 100).ToString(), new RoomOptions(), TypedLobby.Default))
                 {
 
@@ -278,8 +270,6 @@ namespace Evol.Game.Networking
 
         private IEnumerator WaitPlayersAndStart()
         {
-            queueStatus.text = $"Press ready to start";
-            
             if(!lockRoomOnStart)
                 yield break;
                         
@@ -308,7 +298,6 @@ namespace Evol.Game.Networking
                     $"Waiting for host to start ...";
             }
 
-            queueStatus.text = $"Joined a game";
             LoadPlayLayout();
             // Wait a bit other players then start
             Debug.Log($"OnJoinedRoom");
@@ -329,7 +318,6 @@ namespace Evol.Game.Networking
         public override void OnDisconnected(DisconnectCause cause)
         {
             Debug.Log($"Disconnected from photon cloud { cause }");	
-            queueStatus.text = $"Failed to connect to the server { cause }";
         }
     }
 }

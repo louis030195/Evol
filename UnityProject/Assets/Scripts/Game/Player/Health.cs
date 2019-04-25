@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Evol.Game.Misc;
+using Evol.Utils;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
@@ -16,7 +17,7 @@ namespace Evol.Game.Player
     // TODO: Consider moving these classes somewhere else xD
     public class IntFloatEvent : UnityEvent<int, float> { }
     public class FloatEvent : UnityEvent<float> { }
-    public class Health : MonoBehaviour, IPunObservable
+    public class Health : MonoBehaviour
     {
         [Header("Parameters")] 
         public int maxHealth = 100;
@@ -24,9 +25,9 @@ namespace Evol.Game.Player
         public FloatEvent OnHealthChanged = new FloatEvent();
         
         [Header("Audio")] 
-        [Tooltip("Audio source")] public AudioSource HealthAudio;
-        [Tooltip("Audio to play when dying.")] public AudioClip Dying;
-        [Tooltip("Audio to play when getting hit")] public AudioClip[] GettingHitClips;
+        public AudioSource HealthAudio;
+        [Tooltip("Clips to play when dying.")] public AudioClip[] DyingClips;
+        [Tooltip("Clips to play when getting hit")] public AudioClip[] GettingHitClips;
         [Tooltip("Death effects to spill around")]public GameObject[] DeathEffects;
 
         [Header("Animations")]
@@ -41,7 +42,7 @@ namespace Evol.Game.Player
         public List<Tuple<string, int>> currentShields;
         
         private Animator animator;
-
+        
         
         private void Start()
         {
@@ -65,11 +66,7 @@ namespace Evol.Game.Player
         {
             if (HealthAudio)
             {
-                if (!dead)
-                    HealthAudio.clip = GettingHitClips[Random.Range(0, GettingHitClips.Length)];
-                else
-                    HealthAudio.clip = Dying;
-
+                HealthAudio.clip = !dead ? GettingHitClips.PickRandom() : DyingClips.PickRandom();
                 if (!HealthAudio.isPlaying)
                 {
                     HealthAudio.Play();
@@ -170,19 +167,6 @@ namespace Evol.Game.Player
         private void OnChangeHealth()
         {
             OnHealthChanged.Invoke((float)currentHealth / maxHealth);
-        }
-
-        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-        {
-            // Synchronize life
-            if (stream.IsWriting)
-            {
-                stream.SendNext(currentHealth);
-            }
-            else
-            {
-                currentHealth = (int) stream.ReceiveNext();
-            }
         }
     }
 }

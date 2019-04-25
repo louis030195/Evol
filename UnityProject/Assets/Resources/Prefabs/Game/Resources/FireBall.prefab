@@ -9334,6 +9334,13 @@ MonoBehaviour:
   caster: {fileID: 0}
   runes: []
   target: {fileID: 0}
+  alliesTag:
+  - Monster
+  - Tree
+  enemiesTag:
+  - Player
+  - Guard
+  - Nexus
 --- !u!135 &9136062515357616567
 SphereCollider:
   m_ObjectHideFlags: 0

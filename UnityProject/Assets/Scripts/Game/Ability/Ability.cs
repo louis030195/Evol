@@ -17,6 +17,8 @@ namespace Evol.Game.Ability
         [HideInInspector] public GameObject caster;
         [HideInInspector] public List<RuneData> runes = new List<RuneData>();
         [HideInInspector] public GameObject target;
+        [HideInInspector] public List<string> alliesTag = new List<string>();
+        [HideInInspector] public List<string> enemiesTag = new List<string>();
         
         protected float initializationTime;
         
@@ -72,7 +74,7 @@ namespace Evol.Game.Ability
         /// <param name="other"></param>
         public bool ApplyDamage(GameObject other)
         {
-            if (other == caster) return false; // Suicide isn't allowed :/
+            if (other == caster || !enemiesTag.Any(other.CompareTag)) return false; // Suicide isn't allowed :/ or killing not an ennemy ?
             
             // The hitbox is on the mesh which is sometimes on a child
             var parent = other.transform.parent; // Not all object have a parent

@@ -133,7 +133,7 @@ namespace Evol.Game.Misc
             // Retrieve the chosen character id
             var characterId = player.CustomProperties.ContainsKey("character") ?
                 Convert.ToInt32(player.CustomProperties["character"]) :
-                3;
+                2;
             
             // Retrieve the prefab assiocated to this id
             var foundPrefab = characters.Find(c => c.GetComponent<PlayerManager>().characterData.id == characterId);

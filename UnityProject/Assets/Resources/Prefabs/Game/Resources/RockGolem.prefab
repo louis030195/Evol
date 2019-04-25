@@ -45,6 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d68f34df8058c0d009f6dad166ec110b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityData: {fileID: 11400000, guid: ccfbbebbac84a75daa526cad3c2831ff, type: 2}
+  caster: {fileID: 0}
+  runes: []
+  target: {fileID: 0}
+  alliesTag: []
+  enemiesTag: []
   onAbilityAnimationStart:
     m_PersistentCalls:
       m_Calls: []
@@ -575,8 +581,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4308257165947900}
-  - component: {fileID: 190691515790722386}
   - component: {fileID: 5993915232362430357}
+  - component: {fileID: 190691515790722386}
   m_Layer: 8
   m_Name: Bone_R_Forearm
   m_TagString: Untagged
@@ -599,6 +605,34 @@ Transform:
   m_Father: {fileID: 4528841720324982}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -9.904647, y: -12.617455, z: -8.240278}
+--- !u!114 &5993915232362430357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351596486363070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d68f34df8058c0d009f6dad166ec110b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityData: {fileID: 11400000, guid: ccfbbebbac84a75daa526cad3c2831ff, type: 2}
+  caster: {fileID: 0}
+  runes: []
+  target: {fileID: 0}
+  alliesTag: []
+  enemiesTag: []
+  onAbilityAnimationStart:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onAbilityAnimationEnd:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!136 &190691515790722386
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -613,28 +647,6 @@ CapsuleCollider:
   m_Height: 5
   m_Direction: 0
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5993915232362430357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1351596486363070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d68f34df8058c0d009f6dad166ec110b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onAbilityAnimationStart:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  onAbilityAnimationEnd:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!1 &1358115961294464
 GameObject:
   m_ObjectHideFlags: 0
@@ -1332,6 +1344,7 @@ GameObject:
   - component: {fileID: 4533444614477862}
   - component: {fileID: 95371728100821360}
   - component: {fileID: 1713788613003369029}
+  - component: {fileID: 306450574240403671}
   - component: {fileID: 2169581274191482039}
   - component: {fileID: 1553472693388776286}
   - component: {fileID: 6739360105006294394}
@@ -1341,7 +1354,6 @@ GameObject:
   - component: {fileID: 5469329469595104231}
   - component: {fileID: 2707830816707839630}
   - component: {fileID: 7428678517679228374}
-  - component: {fileID: 306450574240403671}
   m_Layer: 8
   m_Name: RockGolem
   m_TagString: Monster
@@ -1401,6 +1413,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!136 &306450574240403671
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694707009694540}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 2.4
+  m_Height: 5
+  m_Direction: 1
+  m_Center: {x: 0, y: 2.5, z: 0}
 --- !u!195 &2169581274191482039
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1460,7 +1486,7 @@ MonoBehaviour:
   maxHealth: 100
   destroyOnDeath: 1
   HealthAudio: {fileID: 0}
-  Dying: {fileID: 0}
+  DyingClips: []
   GettingHitClips: []
   DeathEffects: []
   GettingHitAnimations: []
@@ -1508,8 +1534,10 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  AttackingAudio: {fileID: 0}
-  AttackClip: []
+  alliesTag: []
+  enemiesTag: []
+  attackingAudio: {fileID: 0}
+  attackClip: []
   abilities:
   - {fileID: 11400000, guid: ccfbbebbac84a75daa526cad3c2831ff, type: 2}
 --- !u!114 &7884052525739365517
@@ -1590,23 +1618,27 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 1
     Name: attack4
+  - Type: 1
+    SynchronizeType: 2
+    Name: speed
+  - Type: 4
+    SynchronizeType: 1
+    Name: idle01
+  - Type: 9
+    SynchronizeType: 1
+    Name: damage1
+  - Type: 9
+    SynchronizeType: 1
+    Name: die1
+  - Type: 9
+    SynchronizeType: 1
+    Name: attack0
+  - Type: 9
+    SynchronizeType: 1
+    Name: born1
   m_SynchronizeLayers:
-  - SynchronizeType: 1
+  - SynchronizeType: 2
     LayerIndex: 0
---- !u!136 &306450574240403671
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1694707009694540}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 2.4
-  m_Height: 5
-  m_Direction: 1
-  m_Center: {x: 0, y: 2.5, z: 0}
 --- !u!1 &1714121806856554
 GameObject:
   m_ObjectHideFlags: 0

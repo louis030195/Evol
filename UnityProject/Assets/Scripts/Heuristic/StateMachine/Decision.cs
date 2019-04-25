@@ -21,7 +21,7 @@ namespace Evol.Heuristic.StateMachine
 			// If we hit something and it's an ennemy
 			if (!ally)
 			{
-				if (!controller.parameters.ennemies.Any(t => hit.CompareTag(t))) return false;
+				if (!controller.parameters.enemies.Any(t => hit.CompareTag(t))) return false;
 				controller.target = hit.transform;
 				return true;
 			}

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Evol.Game.Player;
 using UnityEngine;
 using UnityEngine.AI;
@@ -28,6 +29,8 @@ namespace Evol.Heuristic.StateMachine
 		private void Awake()
 		{
 			attack = GetComponent<Attack>();
+			attack.alliesTag = parameters.allies.ToList();
+			attack.enemiesTag = parameters.enemies.ToList();
 			movement = GetComponent<Movement>();
 			health = GetComponent<Health>();
 			audioSource = GetComponent<AudioSource>();

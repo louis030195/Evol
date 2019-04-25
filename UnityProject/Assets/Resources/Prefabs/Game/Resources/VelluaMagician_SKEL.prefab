@@ -1542,7 +1542,7 @@ GameObject:
   - component: {fileID: 4123181757028195422}
   - component: {fileID: 4123181757028195423}
   - component: {fileID: 4123181757028195361}
-  - component: {fileID: 4123181757028195420}
+  - component: {fileID: 5869423994541271792}
   m_Layer: 0
   m_Name: VelluaMagician_SKEL
   m_TagString: Monster
@@ -1657,8 +1657,10 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  AttackingAudio: {fileID: 0}
-  AttackClip: []
+  alliesTag: []
+  enemiesTag: []
+  attackingAudio: {fileID: 0}
+  attackClip: []
   abilities:
   - {fileID: 11400000, guid: 35c35a39a263c1a73bc189c44fe27823, type: 2}
 --- !u!114 &4123181757028195417
@@ -1676,7 +1678,7 @@ MonoBehaviour:
   maxHealth: 100
   destroyOnDeath: 1
   HealthAudio: {fileID: 0}
-  Dying: {fileID: 0}
+  DyingClips: []
   GettingHitClips: []
   DeathEffects: []
   GettingHitAnimations:
@@ -1736,9 +1738,11 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 0
+  Synchronization: 3
   OwnershipTransfer: 0
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 4123181757028195421}
+  - {fileID: 5869423994541271792}
   viewIdField: 0
   InstantiationId: 2
   isRuntimeInstantiated: 0
@@ -1777,7 +1781,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items: []
---- !u!114 &4123181757028195420
+--- !u!114 &5869423994541271792
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1791,8 +1795,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
-  m_SynchronizeLayers: []
+  m_SynchronizeParameters:
+  - Type: 1
+    SynchronizeType: 2
+    Name: speed
+  - Type: 4
+    SynchronizeType: 1
+    Name: idle01
+  - Type: 9
+    SynchronizeType: 1
+    Name: damage1
+  - Type: 9
+    SynchronizeType: 1
+    Name: die1
+  - Type: 9
+    SynchronizeType: 1
+    Name: attack0
+  - Type: 9
+    SynchronizeType: 1
+    Name: attack1
+  - Type: 9
+    SynchronizeType: 1
+    Name: attack2
+  - Type: 9
+    SynchronizeType: 1
+    Name: attack3
+  - Type: 9
+    SynchronizeType: 1
+    Name: attack4
+  - Type: 9
+    SynchronizeType: 1
+    Name: born1
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0
 --- !u!1 &4124160879034789803
 GameObject:
   m_ObjectHideFlags: 0

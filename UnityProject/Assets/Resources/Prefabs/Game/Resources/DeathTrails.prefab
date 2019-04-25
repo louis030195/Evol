@@ -4776,6 +4776,14 @@ MonoBehaviour:
   abilityData: {fileID: 11400000, guid: c8d17d905928838319464654a5e401ce, type: 2}
   caster: {fileID: 0}
   runes: []
+  target: {fileID: 0}
+  alliesTag:
+  - Player
+  - Guard
+  - Nexus
+  enemiesTag:
+  - Monster
+  - Guard
 --- !u!114 &5632503747888761602
 MonoBehaviour:
   m_ObjectHideFlags: 0

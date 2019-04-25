@@ -1,5 +1,4 @@
 # TODO
-In order of importance
 - Think & fill this list of ideas ...
 - Optimize (object pooling for ex, use photon instanciate override stuff)
 - Prepare steam API (friend play etc)

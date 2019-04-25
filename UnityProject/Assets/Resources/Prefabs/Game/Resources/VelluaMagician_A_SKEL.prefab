@@ -1565,8 +1565,10 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  AttackingAudio: {fileID: 0}
-  AttackClip: []
+  alliesTag: []
+  enemiesTag: []
+  attackingAudio: {fileID: 0}
+  attackClip: []
   abilities:
   - {fileID: 11400000, guid: 35c35a39a263c1a73bc189c44fe27823, type: 2}
 --- !u!114 &1232970856217514774
@@ -1584,7 +1586,7 @@ MonoBehaviour:
   maxHealth: 100
   destroyOnDeath: 1
   HealthAudio: {fileID: 0}
-  Dying: {fileID: 0}
+  DyingClips: []
   GettingHitClips: []
   DeathEffects: []
   GettingHitAnimations:
@@ -1644,9 +1646,11 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 0
+  Synchronization: 3
   OwnershipTransfer: 0
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 1232970856217514762}
+  - {fileID: 1232970856217514761}
   viewIdField: 0
   InstantiationId: 3
   isRuntimeInstantiated: 0
@@ -1699,8 +1703,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
-  m_SynchronizeLayers: []
+  m_SynchronizeParameters:
+  - Type: 1
+    SynchronizeType: 2
+    Name: speed
+  - Type: 4
+    SynchronizeType: 1
+    Name: idle01
+  - Type: 9
+    SynchronizeType: 1
+    Name: damage1
+  - Type: 9
+    SynchronizeType: 1
+    Name: die1
+  - Type: 9
+    SynchronizeType: 1
+    Name: attack0
+  - Type: 9
+    SynchronizeType: 1
+    Name: attack1
+  - Type: 9
+    SynchronizeType: 1
+    Name: attack2
+  - Type: 9
+    SynchronizeType: 1
+    Name: attack3
+  - Type: 9
+    SynchronizeType: 1
+    Name: attack4
+  - Type: 9
+    SynchronizeType: 1
+    Name: born1
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0
 --- !u!1 &1233962073981986622
 GameObject:
   m_ObjectHideFlags: 0

@@ -686,6 +686,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d68f34df8058c0d009f6dad166ec110b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityData: {fileID: 11400000, guid: ccfbbebbac84a75daa526cad3c2831ff, type: 2}
+  caster: {fileID: 0}
+  runes: []
+  target: {fileID: 0}
+  alliesTag: []
+  ennemiesTag: []
   onAbilityAnimationStart:
     m_PersistentCalls:
       m_Calls: []
@@ -1157,6 +1163,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d68f34df8058c0d009f6dad166ec110b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityData: {fileID: 11400000, guid: ccfbbebbac84a75daa526cad3c2831ff, type: 2}
+  caster: {fileID: 0}
+  runes: []
+  target: {fileID: 0}
+  alliesTag: []
+  ennemiesTag: []
   onAbilityAnimationStart:
     m_PersistentCalls:
       m_Calls: []
@@ -1869,7 +1881,7 @@ PrefabInstance:
     - target: {fileID: 4978171461647050145, guid: 3287ae9a64dad4d13873eb316c76b54b,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3287ae9a64dad4d13873eb316c76b54b, type: 3}
@@ -2034,17 +2046,17 @@ PrefabInstance:
     - target: {fileID: 7413743983094033927, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5662045549653986198, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4671145106516144494, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3806614889995687697, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
         type: 3}
@@ -2114,7 +2126,7 @@ PrefabInstance:
     - target: {fileID: 1422896727409809861, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 901407126703883252, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
         type: 3}
@@ -2124,7 +2136,7 @@ PrefabInstance:
     - target: {fileID: 901407126703883252, guid: 20efbf4638ffe9d70af8a41ae13a4ac6,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20efbf4638ffe9d70af8a41ae13a4ac6, type: 3}

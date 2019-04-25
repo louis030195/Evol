@@ -23845,6 +23845,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d68f34df8058c0d009f6dad166ec110b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityData: {fileID: 11400000, guid: ccfbbebbac84a75daa526cad3c2831ff, type: 2}
+  caster: {fileID: 0}
+  runes: []
+  target: {fileID: 0}
+  alliesTag: []
+  enemiesTag: []
   onAbilityAnimationStart:
     m_PersistentCalls:
       m_Calls: []
@@ -24649,11 +24655,11 @@ GameObject:
   - component: {fileID: 4158111957483483727}
   - component: {fileID: 2289791529060134477}
   - component: {fileID: 6456883057394005317}
+  - component: {fileID: 7836156961980116698}
   - component: {fileID: 7624392263034060396}
   - component: {fileID: 5031852620504245966}
   - component: {fileID: 1555297746004774519}
   - component: {fileID: 9004248534200375517}
-  - component: {fileID: 7836156961980116698}
   m_Layer: 0
   m_Name: Wolf
   m_TagString: Monster
@@ -24752,7 +24758,7 @@ MonoBehaviour:
   maxHealth: 100
   destroyOnDeath: 1
   HealthAudio: {fileID: 0}
-  Dying: {fileID: 0}
+  DyingClips: []
   GettingHitClips: []
   DeathEffects: []
   GettingHitAnimations:
@@ -24802,8 +24808,10 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  AttackingAudio: {fileID: 0}
-  AttackClip: []
+  alliesTag: []
+  enemiesTag: []
+  attackingAudio: {fileID: 0}
+  attackClip: []
   abilities:
   - {fileID: 11400000, guid: ccfbbebbac84a75daa526cad3c2831ff, type: 2}
 --- !u!195 &6456883057394005317
@@ -24828,6 +24836,20 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!136 &7836156961980116698
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180470}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 5
+  m_Height: 20
+  m_Direction: 2
+  m_Center: {x: 0, y: 5, z: 0}
 --- !u!114 &7624392263034060396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24893,24 +24915,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
+  m_SynchronizeParameters:
+  - Type: 1
+    SynchronizeType: 2
+    Name: speed
+  - Type: 4
+    SynchronizeType: 1
+    Name: idle01
+  - Type: 9
+    SynchronizeType: 1
+    Name: attack0
+  - Type: 9
+    SynchronizeType: 1
+    Name: damage1
+  - Type: 9
+    SynchronizeType: 1
+    Name: die1
   m_SynchronizeLayers:
-  - SynchronizeType: 1
+  - SynchronizeType: 2
     LayerIndex: 0
---- !u!136 &7836156961980116698
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 180470}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 5
-  m_Height: 20
-  m_Direction: 2
-  m_Center: {x: 0, y: 5, z: 0}
 --- !u!1 &8687380915043453901
 GameObject:
   m_ObjectHideFlags: 0

@@ -30,11 +30,19 @@ namespace Evol.Game.Ability
 
             var previousPosition = transform.position;
             
-            // Throw forward      
-            var cam = caster.GetComponentInChildren<Camera>();
-            var pos = target == null
-                ? cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, cam.nearClipPlane))
-                : target.transform.position;
+            // Throw forward   
+            Vector3 pos;
+            if (target == null)
+            {
+                var cam = caster.GetComponentInChildren<Camera>();
+                if(cam == null) return; // Rarely happen
+                pos = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, cam.nearClipPlane));
+            }
+            else
+            {
+                pos = target.transform.position;
+            }
+            
             transform.LookAt(pos); 
             
             GetComponent<Rigidbody>().AddForce(transform.forward * speed);

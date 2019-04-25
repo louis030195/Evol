@@ -15,7 +15,7 @@ namespace Evol.Game.UI
             playersList = GetComponent<TextMeshProUGUI>();
             foreach (var currentRoomPlayer in PhotonNetwork.CurrentRoom.Players)
             {
-                playersList.text += $"\n{currentRoomPlayer.Value.NickName}";
+                UpdateTextForNewPlayer(currentRoomPlayer.Value);
             }
         }
 
@@ -27,6 +27,28 @@ namespace Evol.Game.UI
         public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
         {
             playersList.text = playersList.text.Replace($"\n{otherPlayer.NickName}", "");
+        }
+
+        private void UpdateTextForNewPlayer(Photon.Realtime.Player player, bool add = true)
+        {
+            var chosenChar = player.CustomProperties.ContainsKey("character")
+                ? player.CustomProperties["character"]
+                : 0;
+            var lastDamageDealt = player.CustomProperties.ContainsKey("damageDealt")
+                ? player.CustomProperties["damageDealt"]
+                : 0;
+            if (add)
+            {
+                playersList.text += $"\n{player.NickName}" +
+                                    $"\nChosen character {chosenChar}" +
+                                    $"\nDamage dealt last game {lastDamageDealt}";
+            }
+            else
+            {
+                playersList.text = playersList.text.Replace($"\n{player.NickName}" +
+                                                                     $"\nChosen character {chosenChar}" +
+                                                                     $"\nDamage dealt last game {lastDamageDealt}", "");
+            }
         }
     }
 }

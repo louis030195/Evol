@@ -14,10 +14,13 @@ namespace Evol.Heuristic
 	{	
 		[HideInInspector] public UnityEvent onAbilityAnimationStart;
 		[HideInInspector] public UnityEvent onAbilityAnimationEnd;
+		[HideInInspector] public List<string> alliesTag = new List<string>();
+		[HideInInspector] public List<string> enemiesTag = new List<string>();
+		
 		
 		[Header("Audio")]
-		public AudioSource AttackingAudio;         // Reference to the audio source used to play the shooting audio. NB: different to the movement audio source.
-		[Tooltip("I guess it's for grunt noise (not for ability audio)")] public AudioClip[] AttackClip;                // Audio that plays when each attack is fired.
+		public AudioSource attackingAudio;         // Reference to the audio source used to play the shooting audio. NB: different to the movement audio source.
+		[Tooltip("I guess it's for grunt noise (not for ability audio)")] public AudioClip[] attackClip;                // Audio that plays when each attack is fired.
 
 		[Header("Abilities")] 
 		public AbilityData[] abilities;
@@ -57,6 +60,8 @@ namespace Evol.Heuristic
 			{
 				if (!t.prefab) continue; // In case our ability has no prefab (melee)
 				var ability = t.prefab.GetComponent<Ability>();
+				ability.alliesTag = alliesTag;
+				ability.enemiesTag = enemiesTag;
 				// Set the caster
 				ability.caster = gameObject;
 			}
@@ -68,12 +73,12 @@ namespace Evol.Heuristic
 		{
 			currentTarget = target; // Maybe not so clean
 			// When do we reset to null this target ?
-			if (AttackingAudio)
+			if (attackingAudio)
 			{
-				AttackingAudio.clip = AttackClip[Random.Range(0, AttackClip.Length)];
-				if (!AttackingAudio.isPlaying) // To avoid overlapping sound
+				attackingAudio.clip = attackClip.PickRandom();
+				if (!attackingAudio.isPlaying) // To avoid overlapping sound
 				{
-					AttackingAudio.Play();
+					attackingAudio.Play();
 				}
 			}
 			

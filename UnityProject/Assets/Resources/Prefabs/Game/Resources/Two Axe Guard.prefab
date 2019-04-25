@@ -90,6 +90,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d68f34df8058c0d009f6dad166ec110b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityData: {fileID: 11400000, guid: ccfbbebbac84a75daa526cad3c2831ff, type: 2}
+  caster: {fileID: 0}
+  runes: []
+  target: {fileID: 0}
+  alliesTag: []
+  enemiesTag: []
   onAbilityAnimationStart:
     m_PersistentCalls:
       m_Calls: []
@@ -434,6 +440,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d68f34df8058c0d009f6dad166ec110b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityData: {fileID: 11400000, guid: ccfbbebbac84a75daa526cad3c2831ff, type: 2}
+  caster: {fileID: 0}
+  runes: []
+  target: {fileID: 0}
+  alliesTag: []
+  enemiesTag: []
   onAbilityAnimationStart:
     m_PersistentCalls:
       m_Calls: []
@@ -758,8 +770,10 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  AttackingAudio: {fileID: 0}
-  AttackClip: []
+  alliesTag: []
+  enemiesTag: []
+  attackingAudio: {fileID: 0}
+  attackClip: []
   abilities:
   - {fileID: 11400000, guid: ccfbbebbac84a75daa526cad3c2831ff, type: 2}
 --- !u!114 &9126981803615391327
@@ -796,7 +810,7 @@ MonoBehaviour:
   maxHealth: 100
   destroyOnDeath: 1
   HealthAudio: {fileID: 0}
-  Dying: {fileID: 0}
+  DyingClips: []
   GettingHitClips: []
   DeathEffects: []
   GettingHitAnimations:
@@ -876,8 +890,20 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 1
     Name: attack1
+  - Type: 1
+    SynchronizeType: 2
+    Name: speed
+  - Type: 9
+    SynchronizeType: 1
+    Name: damage1
+  - Type: 9
+    SynchronizeType: 1
+    Name: die1
+  - Type: 9
+    SynchronizeType: 1
+    Name: attack0
   m_SynchronizeLayers:
-  - SynchronizeType: 1
+  - SynchronizeType: 2
     LayerIndex: 0
 --- !u!136 &27294369253118671
 CapsuleCollider:

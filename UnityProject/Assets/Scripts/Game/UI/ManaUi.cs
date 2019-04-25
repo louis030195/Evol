@@ -17,6 +17,7 @@ namespace Evol.Game.UI
                 throw new UnityException($"Update should be in a child of a mana component");
             }
             GetComponentInParent<Mana>().OnManaChanged.AddListener(UpdateUI);
+            GetComponentInParent<PhotonView>().ObservedComponents.Add(this);
         }
     }
 }

@@ -14,6 +14,9 @@ namespace Evol.Game.Networking
 {
     public class Chat : MonoBehaviour, IChatClientListener
     {
+        // The local chat instance. Use this to know if the local chat is represented in the Scene
+        public static GameObject LocalChatInstance;
+        
         public PlayFabAuthenticationContext PlayFabAuthenticationContext;
         public int messageLimit = 100;
         [Header("Chat layout")]
@@ -30,6 +33,10 @@ namespace Evol.Game.Networking
         // Start is called before the first frame update
         private void Start()
         {
+            LocalChatInstance = gameObject;
+            
+            DontDestroyOnLoad(gameObject);
+            
             ChatInput.onSelect.AddListener(value => OnChat());
             ChatInput.onDeselect.AddListener(value => OnChat());
             
@@ -57,7 +64,7 @@ namespace Evol.Game.Networking
                 if (ChatContent.activeInHierarchy)
                 {
                     // Send message
-                    chatClient.PublishMessage("channelA", $"{ChatInput.text}");
+                    chatClient.PublishMessage("channelA", $"{PhotonNetwork.LocalPlayer.NickName}:{ChatInput.text}");
 
                     // Empty the input
                     ChatInput.text = "";
@@ -94,7 +101,7 @@ namespace Evol.Game.Networking
         public void OnChat()
         {
             ChatContent.SetActive(!ChatContent.activeInHierarchy);
-            Debug.Log($"Chat { ChatContent.activeInHierarchy }");
+            // Debug.Log($"Chat { ChatContent.activeInHierarchy }");
         }
 
         public void DebugReturn(DebugLevel level, string message)
@@ -122,14 +129,18 @@ namespace Evol.Game.Networking
         {
             foreach (var s in senders)
             {
-                chatMessages.Enqueue($"Channel {channelName} - { s } said: { messages.Aggregate("", (current, m) => current + m) }");
+                chatMessages.Enqueue($"{ messages.Aggregate("", (current, m) => current + m) }");
                 if (messages.Length > messageLimit)
                     chatMessages.Dequeue();
             } 
             
             // ChatText.text = "";
-            foreach(string m in messages)
+            foreach (var m in chatMessages)
+            {
+                print(m);
                 ChatText.text += m + "\n";
+            }
+
             // Scroll to bottom
             StartCoroutine(ScrollToBottom());
         }

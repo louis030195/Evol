@@ -18,8 +18,10 @@ MonoBehaviour:
   moveSpeed: 10
   searchingTurnSpeed: 5
   searchDuration: 5
-  ennemies:
+  enemies:
   - Player
   - Guard
   - Nexus
-  allies: []
+  allies:
+  - Monster
+  - Tree
