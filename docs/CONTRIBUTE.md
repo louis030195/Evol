@@ -10,7 +10,7 @@
 - Lore
 - Think / handle player death (respawn or not ... ?)
 - Improve custom editor
-- Improve AI (sound, animations, code, behaviour, introduce machine learning, ranged ennemies, give AIs abilities)
+- Improve AI (sound, animations, code, behaviour, introduce machine learning, ranged ennemies, give AIs abilities, even think about doing custom editor node based AI FSM for heuristics)
 - Ability ideas (try to find original abilities): (BTW these abilities could be used by ennemies)
     - Teleportation
     - Anti gravity
@@ -29,7 +29,7 @@
     - What else ... ?
 
 
-# Developpers doc
+# Developers doc
 If you want to contribute to this project feel free to contact Louis.
 ## Unity development
 ### Best practices

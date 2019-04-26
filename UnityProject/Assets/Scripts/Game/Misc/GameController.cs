@@ -13,6 +13,7 @@ using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Debug = System.Diagnostics.Debug;
 using Random = UnityEngine.Random;
 
@@ -45,7 +46,11 @@ namespace Evol.Game.Misc
         [Tooltip("Prefabs of the mobs")] public GameObject[] mobs;
         [Tooltip("Prefab of the guards")] public GameObject[] guards;
         [Tooltip("Prefab of the items")] public GameObject[] items;
+        
+        [Header("Canvas for all players")]
         [Tooltip("Main text sync for all players")] public TextMeshProUGUI mainText;
+        [Tooltip("Team layout containing players informations")] public GameObject team;
+        [Tooltip("Player information prefab")] public GameObject teamInformation;
 
         private enum GameState
         {
@@ -133,14 +138,27 @@ namespace Evol.Game.Misc
             // Retrieve the chosen character id
             var characterId = player.CustomProperties.ContainsKey("character") ?
                 Convert.ToInt32(player.CustomProperties["character"]) :
-                2;
+                5;
             
             // Retrieve the prefab assiocated to this id
             var foundPrefab = characters.Find(c => c.GetComponent<PlayerManager>().characterData.id == characterId);
             
             // Instanciate the player
             PhotonNetwork.Instantiate(foundPrefab.name, new Vector3(0, 50, 0), Quaternion.identity);
+            
+            //photonView.RPC(nameof(AddTeamInformation), RpcTarget.All, player.NickName, foundPrefab.GetComponent<PlayerManager>().characterData.icon);
+            //var go = Instantiate(teamInformation, team.transform);
+            //go.GetComponentInChildren<TextMeshProUGUI>().text = player.NickName; // This is dirty (need to have the player name as first text component)
+            //go.GetComponentInChildren<Image>().sprite = foundPrefab.GetComponent<PlayerManager>().characterData.icon; // Also dirty !!
         }
+        /*
+        [PunRPC]
+        private void AddTeamInformation(string playerName, Sprite playerObject)
+        {
+            var go = Instantiate(teamInformation, team.transform);
+            go.GetComponentInChildren<TextMeshProUGUI>().text = playerName; // This is dirty (need to have the player name as first text component)
+            go.GetComponentInChildren<Image>().sprite = playerObject; // Also dirty !!
+        }*/
         
 
         public override void OnConnectedToMaster()
