@@ -65,7 +65,16 @@ namespace Evol.Heuristic
 				// Set the caster
 				ability.caster = gameObject;
 			}
-	        // print($"how many animtioncallback {gameObject.name}-{animator.GetBehaviours<AnimationCallback>().Length}");
+
+			// Specific case with basic attack melee
+			var meleeHit = GetComponentInChildren<MeleeHit>();
+			if (meleeHit)
+			{
+				meleeHit.enemiesTag = enemiesTag;
+				meleeHit.alliesTag = alliesTag;
+			}
+
+			// print($"how many animtioncallback {gameObject.name}-{animator.GetBehaviours<AnimationCallback>().Length}");
 			animator.GetBehaviours<AnimationCallback>().ToList().ForEach(a => a.targets.Add(gameObject));
 		}
 		

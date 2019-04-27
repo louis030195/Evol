@@ -19,6 +19,7 @@ public class MeleeHit : Ability
     [HideInInspector] public UnityEvent onAbilityAnimationEnd;
 
     private bool isAnimationPlaying;
+    private bool hitOnce;
 
     private void Start()
     {
@@ -32,8 +33,24 @@ public class MeleeHit : Ability
 
     private void OnTriggerEnter(Collider other)
     {
-        if(isAnimationPlaying)
-            ApplyDamage(other.gameObject);
+        if (isAnimationPlaying)
+        {
+            hitOnce = ApplyDamage(other.gameObject);
+        }
+    }
+    
+    private void OnTriggerStay(Collider other)
+    {
+        if (isAnimationPlaying && !hitOnce) // Checking also if we already hit because OnTriggerStay proc multiple times during attack
+        {
+            hitOnce = ApplyDamage(other.gameObject);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        // TODO: think about this
+        // hitOnce = false;
     }
 
     protected override void Initialize()

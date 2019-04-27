@@ -29,6 +29,7 @@ namespace Evol.Game.Ability
         /// <param name="other"></param>
         private void OnParticleCollision(GameObject other)
         {
+            //print($"Collided with {other.name}");
             ApplyDamage(other);
             //PhotonNetwork.Destroy(gameObject); // Destroy only if hitting health
         }

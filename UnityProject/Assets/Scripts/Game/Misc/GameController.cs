@@ -82,7 +82,7 @@ namespace Evol.Game.Misc
             
             if (PlayerManager.LocalPlayerInstance == null)
             {
-                print($"We are Instantiating LocalPlayer from {SceneManagerHelper.ActiveSceneName}");
+                // print($"We are Instantiating LocalPlayer from {SceneManagerHelper.ActiveSceneName}");
                 // We're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
                 SpawnPlayer(PhotonNetwork.LocalPlayer);
             }
@@ -138,7 +138,7 @@ namespace Evol.Game.Misc
             // Retrieve the chosen character id
             var characterId = player.CustomProperties.ContainsKey("character") ?
                 Convert.ToInt32(player.CustomProperties["character"]) :
-                5;
+                2;
             
             // Retrieve the prefab assiocated to this id
             var foundPrefab = characters.Find(c => c.GetComponent<PlayerManager>().characterData.id == characterId);
@@ -288,7 +288,7 @@ namespace Evol.Game.Misc
         {
             // The number of AIs increase of aiPerRound + aiPerRound * 30% for example (1st round then 60%) in easy mode
             var aiPerRoundByDifficulty = aiPerRound + aiPerRound * (roundNumber * difficulty);
-            if (aiSpawned < aiPerRoundByDifficulty)
+            if (aiSpawned < aiPerRoundByDifficulty - 1)
             {
                 // print($"AiPerRoundByDiffuculty {aiPerRoundByDifficulty}");
                 // Randomgo is just useful to avoid exception when the array is empty

@@ -15,9 +15,13 @@ namespace Evol.Heuristic.StateMachine
 
 		private void Attack(StateController controller)
 		{
+			controller.movement.Stop();
+			if(controller.target != null) // This if shouldnt be needed because of ActivateStateDecision already checking but idk
+				controller.attack.AttackNow(controller.target.gameObject); // Why would we do a raycast again ? decision lead us here (inrange prob)
 			// the origin of the ray need to start a bit behind
-			var castOrigin = controller.eyes.position - controller.eyes.forward * controller.parameters.lookSphereCastRadius; 
+			// var castOrigin = controller.eyes.position - controller.eyes.forward * controller.parameters.lookSphereCastRadius; 
 
+			/*
 			// TODO: LayerMask.GetMask("Player") optimization
 			Debug.DrawRay(castOrigin,
 				controller.eyes.forward.normalized * controller.parameters.attackRange, Color.red);
@@ -27,7 +31,7 @@ namespace Evol.Heuristic.StateMachine
 			    && controller.parameters.enemies.Any(t => hit.collider.CompareTag(t)))
 			{
 				controller.attack.AttackNow(hit.collider.gameObject);
-			}
+			}*/
 		}
 	}
 }

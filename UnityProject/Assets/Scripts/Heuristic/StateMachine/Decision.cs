@@ -7,7 +7,7 @@ namespace Evol.Heuristic.StateMachine
 {
 	public abstract class Decision : ScriptableObject
 	{
-		[Tooltip("Whether the decision is about an ally or an ennemy")] public bool ally;
+		[Tooltip("Whether the decision is about an ally or an enemy")] public bool ally;
 		public abstract bool Decide(StateController controller);
 
 		/// <summary>
@@ -18,16 +18,16 @@ namespace Evol.Heuristic.StateMachine
 		/// <returns></returns>
 		protected bool HitTarget(StateController controller, Collider hit)
 		{
-			// If we hit something and it's an ennemy
+			// If we hit something and it's an enemy
 			if (!ally)
 			{
-				if (!controller.parameters.enemies.Any(t => hit.CompareTag(t))) return false;
+				if (!controller.parameters.enemies.Any(hit.CompareTag)) return false;
 				controller.target = hit.transform;
 				return true;
 			}
 
 			// If it's an ally
-			if (!controller.parameters.allies.Any(t => hit.CompareTag(t))) return false;
+			if (!controller.parameters.allies.Any(hit.CompareTag)) return false;
 			controller.target = hit.transform;
 			return true;
 		}
