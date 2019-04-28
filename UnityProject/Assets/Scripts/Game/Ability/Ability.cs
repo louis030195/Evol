@@ -82,7 +82,7 @@ namespace Evol.Game.Ability
                 parent ? parent.gameObject.GetComponent<Health>() : null;
             if (health != null)
             {
-                health.TakeDamage((int)abilityData.stat.damage, caster.GetPhotonView().Owner);
+                health.TakeDamage((int)abilityData.stat.damage, caster ? caster.GetPhotonView().Owner : null);
                 return true;
             }
 

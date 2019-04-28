@@ -15,6 +15,9 @@ namespace Evol.Game.Player
 		[Tooltip("the FOV to use on the camera when player is sprinting.")] public float sprintFOV = 100f;
 		[Tooltip("Default sprint button input name.")] public string sprintButton = "Sprint";
 
+		
+		[HideInInspector] public Rigidbody rBody; // Reference to the player's rigidbody.
+		
 		private float h; // Horizontal Axis.
 		private float v; // Vertical Axis.
 		private int currentBehaviour; // Reference to the current player behaviour.
@@ -29,7 +32,6 @@ namespace Evol.Game.Player
 		private int vFloat; // Animator variable related to Vertical Axis.
 		private List<GenericBehaviour> behaviours; // The list containing all the enabled player behaviours.
 		private List<GenericBehaviour> overridingBehaviours; // List of current overriding behaviours.
-		private Rigidbody rBody; // Reference to the player's rigidbody.
 		private int groundedBool; // Animator variable related to whether or not the player is on the ground.
 		private Vector3 colExtents; // Collider extents for ground test. 
 
@@ -346,7 +348,7 @@ namespace Evol.Game.Player
 		public bool IsGrounded()
 		{
 			// TODO: think about this 0.2f value corresponding to sensibility to say if im grounded or not
-			Debug.DrawRay(transform.position + Vector3.up * 2 * colExtents.x, Vector3.down, Color.green, colExtents.x + 0.2f, true);
+			// Debug.DrawRay(transform.position + Vector3.up * 2 * colExtents.x, Vector3.down, Color.green, colExtents.x + 0.2f, true);
 			var ray = new Ray(transform.position + Vector3.up * 2 * colExtents.x, Vector3.down);
 			return Physics.SphereCast(ray, colExtents.x, colExtents.x + 0.2f); 
 		}

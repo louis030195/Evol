@@ -70,6 +70,10 @@ namespace Evol.Game.Player
 			// Call the jump manager.
 			if(canJump)
 				JumpManagement();
+			
+			// Manual gravity while not jumping
+			if(!behaviourManager.IsGrounded() && !jump)
+				behaviourManager.rBody.AddForce(-transform.up, ForceMode.VelocityChange);
 		}
 
 		// Execute the idle and walk/run jump movements.
