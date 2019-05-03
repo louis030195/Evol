@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27b88661a77c9c4be9d3c9fe4daf12da, type: 3}
   m_Name: PatrolActionGuard
   m_EditorClassIdentifier: 
+  precision: 10
   wayPointList:
-  - {x: 0, y: 0, z: 0}
-  - {x: 50, y: 50, z: 50}
+  - {x: -50, y: 0, z: 0}
+  - {x: 50, y: 0, z: 0}
   nextWayPoint: 0

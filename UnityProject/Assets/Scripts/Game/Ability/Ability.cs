@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Evol.Game.Item;
 using Evol.Game.Player;
+using Evol.ML;
 using Evol.Utils;
 using Photon.Pun;
 using UnityEngine;
@@ -16,7 +17,7 @@ namespace Evol.Game.Ability
         public AbilityData abilityData;
         [HideInInspector] public GameObject caster;
         [HideInInspector] public List<RuneData> runes = new List<RuneData>();
-        [HideInInspector] public GameObject target;
+        [HideInInspector] public Vector3 target;
         [HideInInspector] public List<string> alliesTag = new List<string>();
         [HideInInspector] public List<string> enemiesTag = new List<string>();
         
@@ -82,7 +83,12 @@ namespace Evol.Game.Ability
                 parent ? parent.gameObject.GetComponent<Health>() : null;
             if (health != null)
             {
-                health.TakeDamage((int)abilityData.stat.damage, caster ? caster.GetPhotonView().Owner : null);
+                var killerAgent = caster.gameObject.GetComponent<KillerAgent>();
+                if(killerAgent != null)
+                    killerAgent.hitEnemy.Invoke(abilityData.stat.damage);
+                
+                // The caster.GetPhotonView() should only occur if the caster is non networked (agent training case)
+                health.TakeDamage((int)abilityData.stat.damage, caster && caster.GetPhotonView() ? caster.GetPhotonView().Owner : null);
                 return true;
             }
 

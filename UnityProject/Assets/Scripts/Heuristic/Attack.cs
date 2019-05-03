@@ -16,6 +16,7 @@ namespace Evol.Heuristic
 		[HideInInspector] public UnityEvent onAbilityAnimationEnd;
 		[HideInInspector] public List<string> alliesTag = new List<string>();
 		[HideInInspector] public List<string> enemiesTag = new List<string>();
+		[HideInInspector] public bool offline; // For training no need online mode;
 		
 		
 		[Header("Audio")]
@@ -30,7 +31,7 @@ namespace Evol.Heuristic
 		private float[] elapsedTime;
 		private int currentAbility = -1;
 		private bool isCasting;
-		private GameObject currentTarget;
+		private Vector3 currentTarget;
 
 		private void Start()
 		{
@@ -78,7 +79,7 @@ namespace Evol.Heuristic
 			animator.GetBehaviours<AnimationCallback>().ToList().ForEach(a => a.targets.Add(gameObject));
 		}
 		
-		public void AttackNow(GameObject target)
+		public void AttackNow(Vector3 target)
 		{
 			currentTarget = target; // Maybe not so clean
 			// When do we reset to null this target ?
@@ -107,25 +108,38 @@ namespace Evol.Heuristic
 			
 			// Rotate the AI toward the target, instanciate spell
 			// The step size is equal to speed times frame time.
-			var step = 10 * Time.deltaTime;
-			var newDir = Vector3.RotateTowards(transform.forward, target.transform.position, step, 0.0f);
+			//var step = 10 * Time.deltaTime;
+			//var newDir = Vector3.RotateTowards(transform.forward, target, step, 0.0f);
 			// Debug.DrawRay(transform.position, newDir, Color.magenta);
-
+			transform.LookAt(target); 
 			// Move our position a step closer to the target.
-			transform.rotation = Quaternion.LookRotation(newDir);
-			
+			//var quaternion = Quaternion.LookRotation(newDir);
+			//quaternion.x = 0.0f;
+			//quaternion.z = 0.0f;
+			//transform.rotation = quaternion;
+
 			// Use the mana
 			// mana.UseMana((int)ability.stat.manaCost);
 		}
 
 		public void AnimationEventSpawnAbility()
 		{
-			// print("lol");
-			// if (currentAbility == -1) return; // This is strange, shouldn't happen
-			// TODO : spell
+			GameObject go;
+			var position = transform.position;
 			// Spawn the spell
-			var go = PhotonNetwork.Instantiate(abilities[currentAbility].prefab.name,
-				new Vector3(transform.position.x, transform.position.y + 5, transform.position.z), transform.rotation);
+			if (!offline)
+			{
+				go = PhotonNetwork.Instantiate(abilities[currentAbility].prefab.name,
+					new Vector3(position.x, position.y + 5, position.z),
+					Quaternion.identity);
+			}
+			else
+			{
+				go = Instantiate(abilities[currentAbility].prefab,
+					new Vector3(position.x, position.y + 5, position.z),
+					Quaternion.identity);
+			}
+
 			var abilityInstance = go.GetComponent<Ability>();
 			abilityInstance.target = currentTarget;
 			abilityInstance.Ready();

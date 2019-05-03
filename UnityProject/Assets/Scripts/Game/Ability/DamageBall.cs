@@ -32,7 +32,7 @@ namespace Evol.Game.Ability
             
             // Throw forward   
             Vector3 pos;
-            if (target == null)
+            if (target == Vector3.zero)
             {
                 var cam = caster.GetComponentInChildren<Camera>();
                 if(cam == null) return; // Rarely happen
@@ -40,7 +40,7 @@ namespace Evol.Game.Ability
             }
             else
             {
-                pos = target.transform.position;
+                pos = target;
             }
             
             transform.LookAt(pos); 
@@ -75,7 +75,10 @@ namespace Evol.Game.Ability
         /// <param name="other"></param>
         private void OnParticleCollision(GameObject other)
         {
-            if(ApplyDamage(other)) PhotonNetwork.Destroy(gameObject); // Destroy only if hitting health
+            if (ApplyDamage(other))
+                PhotonNetwork.Destroy(gameObject);
+            
+            // Destroy only if hitting health
         }
 
         protected override void UpdateAbility()

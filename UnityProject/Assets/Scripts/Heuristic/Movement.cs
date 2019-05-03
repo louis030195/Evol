@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Evol.Game.Player;
+using Evol.Utils;
 using UnityEngine;
 using UnityEngine.AI;
 using Debug = System.Diagnostics.Debug;
@@ -14,6 +15,8 @@ namespace Evol.Heuristic
 	{
 		[Header("Parameters")]
 		public bool DebugPath;
+
+		[Tooltip("Whether to use NavMeshAgent or Rigidbody")] public bool useNavMeshAgent = true;
 		
 		[Header("Audio")]
 		public AudioSource MovingAudio;         // Reference to the audio source used to play the movement audio.
@@ -26,7 +29,7 @@ namespace Evol.Heuristic
 		[HideInInspector] public NavMeshAgent navMeshAgent;
 
 		private Animator animator;
-
+		private Rigidbody rbody;
 		private List<Vector3> path;
 		private LineRenderer lr;
 		private int speedFloat; // Speed parameter on the Animator.
@@ -58,6 +61,7 @@ namespace Evol.Heuristic
 		{
 			animator = GetComponent<Animator>();
 			navMeshAgent = GetComponent<NavMeshAgent>();
+			rbody = GetComponent<Rigidbody>();
 			if (DebugPath)
 			{
 				path = new List<Vector3>();
@@ -86,8 +90,17 @@ namespace Evol.Heuristic
 		public void MoveTo(Vector3 destination)
 		{
 			animator.SetFloat(speedFloat, Mathf.Clamp(Vector3.Distance(transform.position, destination), 0, 1), 0.1f, Time.deltaTime);
-			
-			navMeshAgent.destination = destination;
+			// animator.SetFloat(speedFloat, navMeshAgent.velocity.magnitude, 0.1f, Time.deltaTime);
+			if (useNavMeshAgent)
+			{
+				navMeshAgent.destination = destination;
+				Resume();
+			}
+			else
+			{
+				
+			}
+
 			if (DebugPath)
 			{
 				path.Add(destination);
@@ -97,7 +110,10 @@ namespace Evol.Heuristic
 				}
 			}
 
-			Resume();
+			//navMeshAgent.velocity.Set(navMeshAgent.velocity.x, navMeshAgent.velocity.y - 0.1f, navMeshAgent.velocity.z);
+			// navMeshAgent.FindClosestEdge(out var hit);
+			// transform.position = Vector3.Slerp(transform.position, hit.position, Time.deltaTime);
+			
 		}
 
 		/// <summary>

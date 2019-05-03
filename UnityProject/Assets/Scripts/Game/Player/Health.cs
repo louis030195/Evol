@@ -134,7 +134,8 @@ namespace Evol.Game.Player
                 }
                 
                 // Dead, say to server this object is dead
-                PhotonNetwork.RaiseEvent(0, new object[] { gameObject.tag }, new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendReliable);
+                if(PhotonNetwork.InRoom)
+                    PhotonNetwork.RaiseEvent(0, new object[] { gameObject.tag }, new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendReliable);
             }
             
             if (CurrentHealth > 0 && GettingHitAnimations.Length > 0) // If there is getting hit animations for this object

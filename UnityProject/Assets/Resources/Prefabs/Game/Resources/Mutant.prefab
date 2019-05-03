@@ -454,7 +454,7 @@ MonoBehaviour:
   maxHealth: 100
   destroyOnDeath: 0
   HealthAudio: {fileID: 0}
-  Dying: {fileID: 0}
+  DyingClips: []
   GettingHitClips: []
   DeathEffects: []
   GettingHitAnimations: []
@@ -488,6 +488,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerDataUpdateFrequency: 60
   characterData: {fileID: 11400000, guid: 9ee0bb828294489468cab2727ce63f3b, type: 2}
+  alliesTag: []
+  enemiesTag: []
 --- !u!114 &2579641525564898093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,6 +507,7 @@ MonoBehaviour:
   turnSmoothing: 0.06
   sprintFOV: 100
   sprintButton: Sprint
+  rBody: {fileID: 0}
 --- !u!114 &4842097252253194815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -691,7 +694,7 @@ MonoBehaviour:
   runes: []
   target: {fileID: 0}
   alliesTag: []
-  ennemiesTag: []
+  enemiesTag: []
   onAbilityAnimationStart:
     m_PersistentCalls:
       m_Calls: []
@@ -1168,7 +1171,7 @@ MonoBehaviour:
   runes: []
   target: {fileID: 0}
   alliesTag: []
-  ennemiesTag: []
+  enemiesTag: []
   onAbilityAnimationStart:
     m_PersistentCalls:
       m_Calls: []

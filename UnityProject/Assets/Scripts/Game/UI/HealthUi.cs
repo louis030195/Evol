@@ -17,7 +17,7 @@ namespace Evol.Game.UI
                 throw new UnityException($"Update should be in a child of a health component");
             }
             GetComponentInParent<Health>().OnHealthChanged.AddListener(UpdateUI);
-            GetComponentInParent<PhotonView>().ObservedComponents.Add(this);
+            GetComponentInParent<PhotonView>()?.ObservedComponents.Add(this);
         }
     }
 }
