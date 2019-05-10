@@ -312,7 +312,7 @@ Transform:
   m_GameObject: {fileID: 6021913912285312657}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 9132677747044972026}
   - {fileID: 6025704907904875639}
@@ -382,6 +382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugPath: 0
+  useNavMeshAgent: 1
   MovingAudio: {fileID: 0}
   MoveClip: {fileID: 0}
   WalkingAnimations:
@@ -412,6 +413,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   alliesTag: []
   enemiesTag: []
+  offline: 0
   attackingAudio: {fileID: 0}
   attackClip: []
   abilities: []

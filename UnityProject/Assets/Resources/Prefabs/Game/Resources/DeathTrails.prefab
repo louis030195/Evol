@@ -55,8 +55,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7da57bc00d8d3ea059f29c52775d7123, type: 2}
-  - {fileID: 2100000, guid: 7da57bc00d8d3ea059f29c52775d7123, type: 2}
+  - {fileID: 2100000, guid: 54ab63e57379af0ca90cbcde988474c8, type: 2}
+  - {fileID: 2100000, guid: 54ab63e57379af0ca90cbcde988474c8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4776,7 +4776,7 @@ MonoBehaviour:
   abilityData: {fileID: 11400000, guid: c8d17d905928838319464654a5e401ce, type: 2}
   caster: {fileID: 0}
   runes: []
-  target: {fileID: 0}
+  target: {x: 0, y: 0, z: 0}
   alliesTag:
   - Player
   - Guard
@@ -5141,9 +5141,9 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 0.7529412}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.7647059, g: 0.7647059, b: 0.7647059, a: 1}
+        key0: {r: 0.11320752, g: 0.11320752, b: 0.11320752, a: 1}
         key1: {r: 1, g: 1, b: 1, a: 1}
-        key2: {r: 0.7647059, g: 0.7647059, b: 0.7647059, a: 1}
+        key2: {r: 0.21698111, g: 0.21698111, b: 0.21698111, a: 1}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
@@ -6232,8 +6232,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 0}
-        key1: {r: 1, g: 1, b: 1, a: 1}
+        key0: {r: 0.31132078, g: 0.31132078, b: 0.31132078, a: 0}
+        key1: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0.9098039}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -6400,8 +6400,8 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     speedRange: {x: 0, y: 1}
-    tilesX: 6
-    tilesY: 6
+    tilesX: 8
+    tilesY: 8
     animationType: 0
     rowIndex: 0
     cycles: 1
@@ -9475,7 +9475,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f150bffd033ae0849a6e54119c1f169f, type: 2}
+  - {fileID: 2100000, guid: df0a9d4a1d2f26c4eb697a71ac5b82d6, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -9514,7 +9514,7 @@ ParticleSystemRenderer:
   m_ApplyActiveColorSpace: 0
   m_AllowRoll: 1
   m_VertexStreams: 0001030405
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}

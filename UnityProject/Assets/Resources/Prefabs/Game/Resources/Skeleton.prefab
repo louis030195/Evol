@@ -194,7 +194,7 @@ Transform:
   m_GameObject: {fileID: 6733704227853617683}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 20, y: 20, z: 20}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children:
   - {fileID: 6085014642276872239}
   - {fileID: 6733704227853784701}
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c166260f4ebec433eb5e48ebcda8df97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: {fileID: 11400000, guid: 6325bde1d6082d08980b9660e64b4c72, type: 2}
+  currentState: {fileID: 11400000, guid: 624f1fc8c15f25259870ee4ab914dfbc, type: 2}
   parameters: {fileID: 11400000, guid: cbc8345576c0e3e608ef86f3ab6a4f40, type: 2}
   eyes: {fileID: 6085014642276872239}
   remainState: {fileID: 11400000, guid: 66c1aa25a85ba47c4b92d32ccf6e6017, type: 2}
@@ -308,6 +308,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   alliesTag: []
   enemiesTag: []
+  offline: 0
   attackingAudio: {fileID: 0}
   attackClip: []
   abilities:
@@ -325,6 +326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugPath: 0
+  useNavMeshAgent: 1
   MovingAudio: {fileID: 0}
   MoveClip: {fileID: 0}
   WalkingAnimations:
@@ -569,7 +571,7 @@ MonoBehaviour:
   abilityData: {fileID: 11400000, guid: ccfbbebbac84a75daa526cad3c2831ff, type: 2}
   caster: {fileID: 0}
   runes: []
-  target: {fileID: 0}
+  target: {x: 0, y: 0, z: 0}
   alliesTag: []
   enemiesTag: []
   onAbilityAnimationStart:

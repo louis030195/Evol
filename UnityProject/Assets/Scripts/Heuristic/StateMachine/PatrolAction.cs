@@ -8,8 +8,8 @@ namespace Evol.Heuristic.StateMachine
     [CreateAssetMenu(menuName = "Evol/StateMachine/Actions/Patrol")]
     public class PatrolAction : Action
     {
-        [Tooltip("Distance to be from a waypoint to switch to another")] public int precision = 10;
-        [Tooltip("Distance to be from a waypoint to switch to another")] public List<Vector3> wayPointList;
+        [Tooltip("Distance to be from a waypoint to switch to another")] public int precision = 5;
+        [Tooltip("Distance to be from a waypoint to switch to another")] public GameObject[] wayPointList;
         [HideInInspector] public int nextWayPoint;
         public override void Act(StateController controller)
         {
@@ -18,11 +18,11 @@ namespace Evol.Heuristic.StateMachine
 
         private void Patrol(StateController controller)
         {
-            controller.movement.MoveTo(wayPointList[nextWayPoint]);
+            controller.movement.MoveTo(wayPointList[nextWayPoint].transform.position);
 
-            if (Vector3.Distance(controller.transform.position, wayPointList[nextWayPoint]) < precision) 
+            if (Vector3.Distance(controller.transform.position, wayPointList[nextWayPoint].transform.position) < precision) 
             {
-                nextWayPoint = (nextWayPoint + 1) % wayPointList.Count;
+                nextWayPoint = (nextWayPoint + 1) % wayPointList.Length;
             }
         }
     }

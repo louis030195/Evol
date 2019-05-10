@@ -23332,7 +23332,7 @@ Transform:
   m_GameObject: {fileID: 143816}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children:
   - {fileID: 2315609464915345053}
   - {fileID: 443816}
@@ -23640,6 +23640,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   alliesTag: []
   enemiesTag: []
+  offline: 0
   attackingAudio: {fileID: 0}
   attackClip: []
   abilities:
@@ -23657,6 +23658,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugPath: 0
+  useNavMeshAgent: 1
   MovingAudio: {fileID: 0}
   MoveClip: {fileID: 0}
   WalkingAnimations:
@@ -25524,7 +25526,7 @@ MonoBehaviour:
   abilityData: {fileID: 11400000, guid: ccfbbebbac84a75daa526cad3c2831ff, type: 2}
   caster: {fileID: 0}
   runes: []
-  target: {fileID: 0}
+  target: {x: 0, y: 0, z: 0}
   alliesTag: []
   enemiesTag: []
   onAbilityAnimationStart:

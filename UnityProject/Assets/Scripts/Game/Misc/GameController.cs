@@ -42,9 +42,12 @@ namespace Evol.Game.Misc
         [Header("Spawnables")]
         [Tooltip("GameObject that contains all the map assets in the scene")] public GameObject map;
         [Tooltip("Prefabs of the characters")] public List<GameObject> characters;
+        [Tooltip("Spawn position players")] public GameObject spawnSpotPlayers;
         [Tooltip("Prefabs of the npcs")] public GameObject[] npcs;
         [Tooltip("Prefabs of the mobs")] public GameObject[] mobs;
+        [Tooltip("Spawn position mobs")] public GameObject spawnSpotMobs;
         [Tooltip("Prefab of the guards")] public GameObject[] guards;
+        [Tooltip("Spawn position guards")] public GameObject spawnSpotGuards;
         [Tooltip("Prefab of the items")] public GameObject[] items;
         
         [Header("Canvas for all players")]
@@ -119,7 +122,7 @@ namespace Evol.Game.Misc
                     if (randomGo)
                     {
                         var guard = PhotonNetwork.InstantiateSceneObject(randomGo.name,
-                            Position.AboveGround(Position.RandomPositionAround(Vector3.zero, 10),
+                            Position.AboveGround(Position.RandomPositionAround(spawnSpotGuards.transform.position, 10),
                                 1),
                             Quaternion.identity);
                         guard.GetComponent<StateController>().SetupAi(true);
@@ -138,13 +141,13 @@ namespace Evol.Game.Misc
             // Retrieve the chosen character id
             var characterId = player.CustomProperties.ContainsKey("character") ?
                 Convert.ToInt32(player.CustomProperties["character"]) :
-                2;
+                0;
             
             // Retrieve the prefab assiocated to this id
             var foundPrefab = characters.Find(c => c.GetComponent<PlayerManager>().characterData.id == characterId);
             
             // Instanciate the player
-            PhotonNetwork.Instantiate(foundPrefab.name, new Vector3(0, 50, 0), Quaternion.identity);
+            PhotonNetwork.Instantiate(foundPrefab.name, Position.RandomPositionAround(spawnSpotPlayers.transform.position, 5), Quaternion.identity);
             
             //photonView.RPC(nameof(AddTeamInformation), RpcTarget.All, player.NickName, foundPrefab.GetComponent<PlayerManager>().characterData.icon);
             //var go = Instantiate(teamInformation, team.transform);
@@ -300,7 +303,7 @@ namespace Evol.Game.Misc
                     // Because normal PhotonNetwork.Instanciate() makes the object belongs to the master
                     var mob = PhotonNetwork.InstantiateSceneObject(randomGo.name,
                         Position.AboveGround(
-                            Position.RandomPositionAround(new Vector3(200, 0, 300), 200),
+                            Position.RandomPositionAround(spawnSpotMobs.transform.position, 5),
                             1),
                         Quaternion.identity);
                     mob.GetComponent<StateController>().SetupAi(true);
