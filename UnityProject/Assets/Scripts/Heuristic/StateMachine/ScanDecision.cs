@@ -9,8 +9,7 @@ namespace Evol.Heuristic.StateMachine
 	{
 		public override bool Decide(StateController controller)
 		{
-			var noEnemyInSight = Scan(controller);
-			return noEnemyInSight;
+			return Scan(controller);
 		}
 
 		private bool Scan(StateController controller)

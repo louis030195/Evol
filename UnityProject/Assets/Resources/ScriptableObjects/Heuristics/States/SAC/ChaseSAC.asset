@@ -9,17 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34d59f01d369047119466e8ccc464a94, type: 3}
-  m_Name: Defensive
+  m_Script: {fileID: 11500000, guid: 2334e2e50828e4b4299a715a021fba01, type: 3}
+  m_Name: ChaseAndScan
   m_EditorClassIdentifier: 
-  lookSphereCastRadius: 10
-  lookRange: 60
-  attackRange: 3
-  moveSpeed: 4
-  searchingTurnSpeed: 5
-  searchDuration: 5
-  enemies:
-  - Monster
-  - Tree
-  allies:
-  - Player
+  actions: []
+  transitions: []
+  sceneGizmoColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}

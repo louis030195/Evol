@@ -6,6 +6,7 @@ namespace Evol.Game.Player
 // MoveBehaviour inherits from GenericBehaviour. This class corresponds to basic walk and run behaviour, it is the default behaviour.
 	public class MoveBehaviour : GenericBehaviour
 	{
+		[Tooltip("Default player gravity")] public float gravity = 1f;
 		[Tooltip("Default walk speed.")] public float walkSpeed = 0.15f;
 		[Tooltip("Default run speed.")] public float runSpeed = 1.0f;
 		[Tooltip("Default sprint speed.")] public float sprintSpeed = 2.0f;

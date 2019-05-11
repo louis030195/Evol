@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Aggressive
   m_EditorClassIdentifier: 
   lookSphereCastRadius: 10
-  lookRange: 100
+  lookRange: 60
   attackRange: 3
   moveSpeed: 4
   searchingTurnSpeed: 5
@@ -21,7 +21,8 @@ MonoBehaviour:
   enemies:
   - Player
   - Guard
-  - Nexus
+  - Castle
+  - Barrier
   allies:
   - Monster
   - Tree

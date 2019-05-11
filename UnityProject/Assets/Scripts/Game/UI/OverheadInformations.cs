@@ -33,13 +33,11 @@ namespace Evol.Game.UI
             
             // If our parent is not scene view (scene view = not a player)
             name.text = !photonView.IsSceneView ? $"{PhotonNetwork.LocalPlayer.NickName}" : $"Creep";
-            
-            cam = Camera.main; // Get camera
         }
 
         private void Update()
         {
-            /*
+            
              // TODO: fix this (someone create game, other join ok it works, but the guy joining get this =>
              // TODO: NullReferenceException: Object reference not set to an instance of an object
              // TODO: Evol.Game.UI.OverheadInformations.Update () (at Assets/Scripts/Game/UI/OverheadInformations.cs:45)
@@ -48,10 +46,14 @@ namespace Evol.Game.UI
             if (!photonView.IsMine) // Only needed to rotate on others since we don't see our own bar
             {
                 // Make the canvas always look to the camera
-                var rotation = cam.transform.rotation;
-                overheadInformations.transform.LookAt(transform.position + rotation * Vector3.back,
-                    rotation * Vector3.up);
-            }*/
+                if (!cam) cam = Camera.main;
+                if (cam)
+                {
+                    var rotation = cam.transform.rotation;
+                    overheadInformations.transform.LookAt(transform.position + rotation * Vector3.back,
+                        rotation * Vector3.up);
+                }
+            }
         }
     }
 }

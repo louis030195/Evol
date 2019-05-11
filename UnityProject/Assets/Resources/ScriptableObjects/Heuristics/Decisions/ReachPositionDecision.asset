@@ -9,17 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34d59f01d369047119466e8ccc464a94, type: 3}
-  m_Name: Defensive
+  m_Script: {fileID: 11500000, guid: 3cde5412c36a42be956a395092b066cb, type: 3}
+  m_Name: ReachPositionDecision
   m_EditorClassIdentifier: 
-  lookSphereCastRadius: 10
-  lookRange: 60
-  attackRange: 3
-  moveSpeed: 4
-  searchingTurnSpeed: 5
-  searchDuration: 5
-  enemies:
-  - Monster
-  - Tree
-  allies:
-  - Player
+  ally: 0
+  position: {fileID: 3106179450811763349, guid: 15d272a3e13bd2b0b9a67278be4c8c89,
+    type: 3}
+  precision: 10

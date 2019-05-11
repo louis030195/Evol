@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Debug = System.Diagnostics.Debug;
+﻿using UnityEngine;
 
 namespace Evol.Heuristic.StateMachine
 {
@@ -9,8 +6,8 @@ namespace Evol.Heuristic.StateMachine
     public class PatrolAction : Action
     {
         [Tooltip("Distance to be from a waypoint to switch to another")] public int precision = 5;
-        [Tooltip("Distance to be from a waypoint to switch to another")] public GameObject[] wayPointList;
-        [HideInInspector] public int nextWayPoint;
+        [Tooltip("Distance to be from a waypoint to switch to another")] public GameObject wayPointList;
+        [HideInInspector] private int nextWayPoint;
         public override void Act(StateController controller)
         {
             Patrol(controller);
@@ -18,11 +15,15 @@ namespace Evol.Heuristic.StateMachine
 
         private void Patrol(StateController controller)
         {
-            controller.movement.MoveTo(wayPointList[nextWayPoint].transform.position);
+            Debug.Assert(wayPointList.transform.childCount > 0, $"wayPointList.transform.childCount <= 0");
+            // Debug.Log($"wayPointList.transform.childCount {wayPointList.transform.childCount} - nextWayPoint {nextWayPoint}");
+    
+            controller.movement.MoveTo(wayPointList.transform.GetChild(nextWayPoint).position);
 
-            if (Vector3.Distance(controller.transform.position, wayPointList[nextWayPoint].transform.position) < precision) 
+            if (Vector3.Distance(controller.transform.position, wayPointList.transform.GetChild(nextWayPoint).position) < precision)
             {
-                nextWayPoint = (nextWayPoint + 1) % wayPointList.Length;
+                nextWayPoint++;
+                nextWayPoint %= wayPointList.transform.childCount;
             }
         }
     }

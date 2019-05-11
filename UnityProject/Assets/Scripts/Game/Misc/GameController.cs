@@ -29,7 +29,7 @@ namespace Evol.Game.Misc
      * Due to this, scripts on networked game objects should just implement OnEnable and OnDisable
      */
     // SO BE CAREFUL WITH NETWORK STUFF AND START / ENABLE
-    
+    [System.Serializable] public class SerializedGameObjectMatrices { public GameObject[] gameObjects; }
     public class GameController : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         [Header("Game parameters")]
@@ -46,6 +46,7 @@ namespace Evol.Game.Misc
         [Tooltip("Prefabs of the npcs")] public GameObject[] npcs;
         [Tooltip("Prefabs of the mobs")] public GameObject[] mobs;
         [Tooltip("Spawn position mobs")] public GameObject spawnSpotMobs;
+        [Tooltip("Prefab wave boss")] public SerializedGameObjectMatrices[] waveBosses;
         [Tooltip("Prefab of the guards")] public GameObject[] guards;
         [Tooltip("Spawn position guards")] public GameObject spawnSpotGuards;
         [Tooltip("Prefab of the items")] public GameObject[] items;
@@ -282,47 +283,54 @@ namespace Evol.Game.Misc
                 // ... return on the next frame.
                 if (gameState != GameState.Playing)
                     yield break;
-                yield return StartCoroutine(SpawnAllAi());
-
+                SpawnAllAi();
+                if (roundNumber % 3 == 0)
+                {
+                    // roundNumber / 3 - 1, for example if you're round 3 it will pick first bosses of the list ...
+                    foreach (var prefab in waveBosses[roundNumber / 3 - 1].gameObjects)
+                    {
+                        SpawnAnAi(prefab, spawnSpotMobs.transform.position);
+                    }
+                }
+                yield return new WaitForSeconds(1f);
             } while (aisAlive > 0);
         }
 
-        private IEnumerator SpawnAllAi()
+        private void SpawnAnAi(GameObject prefab, Vector3 position)
+        {
+            // InstanciateSceneObject makes the photon view belongs to the scene
+            // It is useful to avoid the object being destroyed if the master client leave
+            // Because normal PhotonNetwork.Instanciate() makes the object belongs to the master
+            var mob = PhotonNetwork.InstantiateSceneObject(prefab.name,
+                Position.AboveGround(
+                    Position.RandomPositionAround(position, 5),
+                    1),
+                Quaternion.identity);
+            mob.GetComponent<StateController>().SetupAi(true);
+
+            // TODO: implement an extension to generate non uniform random distribution (more chance to have 0, 1 items than more ...)
+            // Add some items to the loot of that monster
+            var loot = mob.GetComponent<Loot>();
+            if(loot) loot.items = new List<GameObject>(items.PickRandom(Random.Range(0, 10)));
+
+            // Set as child of map object
+            mob.transform.parent = map.transform;
+            
+            aisAlive++;
+        }
+
+        private void SpawnAllAi()
         {
             // The number of AIs increase of aiPerRound + aiPerRound * 30% for example (1st round then 60%) in easy mode
             var aiPerRoundByDifficulty = aiPerRound + aiPerRound * (roundNumber * difficulty);
-            if (aiSpawned < aiPerRoundByDifficulty - 1)
+            while (aiSpawned < aiPerRoundByDifficulty - 1)
             {
                 // print($"AiPerRoundByDiffuculty {aiPerRoundByDifficulty}");
                 // Randomgo is just useful to avoid exception when the array is empty
-                var randomGo = mobs.Length > 0 ? mobs[Random.Range(0, mobs.Length)] : null;
-                if (randomGo)
-                {
-                    // InstanciateSceneObject makes the photon view belongs to the scene
-                    // It is useful to avoid the object being destroyed if the master client leave
-                    // Because normal PhotonNetwork.Instanciate() makes the object belongs to the master
-                    var mob = PhotonNetwork.InstantiateSceneObject(randomGo.name,
-                        Position.AboveGround(
-                            Position.RandomPositionAround(spawnSpotMobs.transform.position, 5),
-                            1),
-                        Quaternion.identity);
-                    mob.GetComponent<StateController>().SetupAi(true);
-
-                    // TODO: implement an extension to generate non uniform random distribution (more chance to have 0, 1 items than more ...)
-                    // Add some items to the loot of that monster
-                    var loot = mob.GetComponent<Loot>();
-                    if(loot) loot.items = new List<GameObject>(items.PickRandom(Random.Range(0, 10)));
-
-                    // Set as child of map object
-                    mob.transform.parent = map.transform;
-
-                    // Increment the AI alive / spawned counters
-                    aisAlive++;
-                    aiSpawned++;
-                }
+                SpawnAnAi(mobs.PickRandom(), spawnSpotMobs.transform.position);
+                // Increment the AI alive / spawned counters
+                aiSpawned++;
             }
-
-            yield return new WaitForSeconds(delayBetweenAiSpawn);
         }
         
         private IEnumerator RoundEnding()
@@ -390,7 +398,7 @@ namespace Evol.Game.Misc
                 if ((photonEvent.CustomData as object[])[0].Equals("Player"))
                     playersAlive--;
                 // If all players are dead or the nexus is dead
-                if (playersAlive == 0 || (photonEvent.CustomData as object[])[0].Equals("Nexus"))
+                if (playersAlive == 0 || (photonEvent.CustomData as object[])[0].Equals("Castle"))
                     gameState = GameState.Lost;
             }
         }

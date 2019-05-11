@@ -319,6 +319,7 @@ MonoBehaviour:
   turnSmoothing: 0.06
   sprintFOV: 100
   sprintButton: Sprint
+  rBody: {fileID: 0}
 --- !u!114 &3899605668250175679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,7 +363,7 @@ MonoBehaviour:
   canJump: 1
   jumpButton: Jump
   jumpHeight: 1.5
-  jumpIntertialForce: 10
+  jumpIntertialForce: 5
 --- !u!114 &3902894403070491097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4942,6 +4943,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422048361193791020, guid: ca1b63a9d245a1582a0c647c3fd42b33,
+        type: 3}
+      propertyPath: camOffset.z
+      value: -6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422048361193791020, guid: ca1b63a9d245a1582a0c647c3fd42b33,
+        type: 3}
+      propertyPath: camOffset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422048361193791020, guid: ca1b63a9d245a1582a0c647c3fd42b33,
+        type: 3}
+      propertyPath: minVerticalAngle
+      value: -30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca1b63a9d245a1582a0c647c3fd42b33, type: 3}

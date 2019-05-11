@@ -142,7 +142,7 @@ MonoBehaviour:
   maxHealth: 100
   destroyOnDeath: 1
   HealthAudio: {fileID: 0}
-  Dying: {fileID: 0}
+  DyingClips: []
   GettingHitClips: []
   DeathEffects: []
   GettingHitAnimations: []
@@ -199,9 +199,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxSize: 1
-  GrowRate: 0.015
+  GrowRate: 0.02
   MinRandomness: 0.5
-  MaxRandomness: 1.5
+  MaxRandomness: 3
 --- !u!64 &64002341615729142
 MeshCollider:
   m_ObjectHideFlags: 0

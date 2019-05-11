@@ -4,6 +4,7 @@ using System.Linq;
 using Evol.Utils;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Debug = System.Diagnostics.Debug;
 
 namespace Evol.Game.Misc
 {
@@ -12,30 +13,27 @@ namespace Evol.Game.Misc
 
 	public class ForestArea : MonoBehaviour
 	{
-		[Tooltip("Space between trees")] public int SpacingBetweenTrees = 500;
+		[HideInInspector] public int spacingBetweenTrees = 5;
+		[HideInInspector] public float spawnTreeDelay = 1f;
+		[HideInInspector] public int checkFullDelay = 60;
+		[HideInInspector] public GameObject[] prefabTree;
+		[HideInInspector] public int size = 100;
+		[HideInInspector] public Vector3 target;
 
-		[Tooltip("Delay to spawn tree in seconds")]
-		public float SpawnTreeDelay = 1f;
-
-		[Tooltip("Delay to check if the area is full in seconds")]
-		public int CheckFullDelay = 60;
-
-		public List<GameObject> PrefabTree;
-		[HideInInspector] public bool Full;
-		[HideInInspector] public int Size = 100;
-		[HideInInspector] public Vector3 Target;
-
+		private int spawnedTrees;
+		
 		private void Start()
 		{
-			CheckFullDelay *= 60;
+			checkFullDelay *= 60;
 			StartCoroutine(SpawnTree()); // Starting once at start
 		}
 
 		// Update is called once per frame
 		private void Update()
 		{
-			if (Time.frameCount % CheckFullDelay == 0)
+			if (Time.frameCount % checkFullDelay == 0)
 			{
+				spawnedTrees = transform.childCount;
 				StartCoroutine(SpawnTree()); // To fill the destroyed trees
 			}
 		}
@@ -43,10 +41,10 @@ namespace Evol.Game.Misc
 
 		private IEnumerator SpawnTree()
 		{
-			while (!Full)
+			while (spawnedTrees < size / spacingBetweenTrees) // For example area size 100, spacing = 5, = 20 trees
 			{
-				yield return new WaitForSeconds(SpawnTreeDelay);
-				var prefab = PrefabTree[Random.Range(0, PrefabTree.Count - 1)];
+				yield return new WaitForSeconds(spawnTreeDelay);
+				var prefab = prefabTree.PickRandom();
 				var pos = FindPosition();
 				if (pos != Vector3.zero)
 				{
@@ -72,14 +70,15 @@ namespace Evol.Game.Misc
 			while (tries < 10)
 			{
 				// We pick a random position above ground
-				position = Position.AboveGround(transform.position + Target - new Vector3(Random.Range(-100, Size), 0,
-					                                Random.Range(-100, Size)), 0);
+				position = Position.AboveGround(transform.position - new Vector3(Random.Range(-100, size), 0,
+					                                Random.Range(-100, size)), 0);
 
 				// Then we throw an overlap sphere
-				var hitColliders = Physics.OverlapSphere(transform.position + position, SpacingBetweenTrees);
+				var hitColliders = Physics.OverlapSphere(position, spacingBetweenTrees);
+				UnityEngine.Debug.DrawRay(position, transform.up * 10, Color.green);
 
 				// Which checks if there is already a tree around
-				if (!hitColliders.Any(c => c.gameObject.name.Contains("tree")))
+				if (!hitColliders.Any(c => c.CompareTag("Tree")))
 				{
 					return position;
 				}
