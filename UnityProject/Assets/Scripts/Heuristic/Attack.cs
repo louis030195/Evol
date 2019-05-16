@@ -7,6 +7,7 @@ using Evol.Utils;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
+using Debug = System.Diagnostics.Debug;
 
 namespace Evol.Heuristic
 {
@@ -36,6 +37,7 @@ namespace Evol.Heuristic
 		private void Start()
 		{
 			animator = GetComponent<Animator>();
+			Debug.Assert(abilities.Length > 0, "No ability set");
 			elapsedTime = new float[abilities.Length];
 			// Set up the references.
 			attacksTrigger = new int[abilities.Length];

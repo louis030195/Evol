@@ -33,6 +33,7 @@ namespace Evol.Game.Misc
 		{
 			if (Time.frameCount % checkFullDelay == 0)
 			{
+				// print($"spawnedTrees { spawnedTrees }");
 				spawnedTrees = transform.childCount;
 				StartCoroutine(SpawnTree()); // To fill the destroyed trees
 			}
@@ -70,11 +71,11 @@ namespace Evol.Game.Misc
 			while (tries < 10)
 			{
 				// We pick a random position above ground
-				position = Position.AboveGround(transform.position - new Vector3(Random.Range(-100, size), 0,
-					                                Random.Range(-100, size)), 0);
+				position = Position.AboveGround(transform.position - new Vector3(Random.Range(-size, size), 0,
+					                                0.75f * Random.Range(-size, size)), 0);
 
 				// Then we throw an overlap sphere
-				var hitColliders = Physics.OverlapSphere(position, spacingBetweenTrees);
+				var hitColliders = Physics.OverlapSphere(position, spacingBetweenTrees, 1 << LayerMask.NameToLayer("Walkable"));
 				UnityEngine.Debug.DrawRay(position, transform.up * 10, Color.green);
 
 				// Which checks if there is already a tree around

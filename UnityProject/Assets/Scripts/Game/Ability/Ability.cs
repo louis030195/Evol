@@ -83,6 +83,7 @@ namespace Evol.Game.Ability
                 parent ? parent.gameObject.GetComponent<Health>() : null;
             if (health != null)
             {
+                // print($"I dealt {abilityData.stat.damage} damage to {other.name}");
                 var killerAgent = caster.gameObject.GetComponent<KillerAgent>();
                 if(killerAgent != null)
                     killerAgent.hitEnemy.Invoke(abilityData.stat.damage);

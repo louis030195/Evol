@@ -356,6 +356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e65f18381723d23feaec89ddbf517be2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gravity: 1
   walkSpeed: 0.15
   runSpeed: 1
   sprintSpeed: 2
@@ -5184,11 +5185,22 @@ PrefabInstance:
       propertyPath: m_isInputParsingRequired
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 912884014310069028, guid: 3287ae9a64dad4d13873eb316c76b54b,
+        type: 3}
+      propertyPath: nameBar
+      value: 
+      objectReference: {fileID: 4117889882470546711}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3287ae9a64dad4d13873eb316c76b54b, type: 3}
 --- !u!224 &6130171274229731276 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9127392546385857632, guid: 3287ae9a64dad4d13873eb316c76b54b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3150757643063444396}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4117889882470546711 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1340967017757294267, guid: 3287ae9a64dad4d13873eb316c76b54b,
     type: 3}
   m_PrefabInstance: {fileID: 3150757643063444396}
   m_PrefabAsset: {fileID: 0}

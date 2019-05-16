@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Evol.Game.Misc
 {
@@ -21,6 +22,12 @@ namespace Evol.Game.Misc
 
 		[Tooltip("Size of the area (exponential)(around 100 - 200 is nice)")]
 		public int size = 100;
+		
+		[Range(0.0f, 1.0f)]
+		public float spacingBetweenArea = 0.1f;
+		
+		[Range(0.0f, 1.0f)]
+		public float areaSizeGrowth = 0.1f;
 		
 		[Header("Forest area parameters")]
 		[Tooltip("Space between trees")] 
@@ -46,10 +53,12 @@ namespace Evol.Game.Misc
 			{
 				// Instanciate area
 				forestArea.Add(Instantiate(areaPrefab));
-				forestArea.Last().transform.localPosition = origin.transform.position;
+				forestArea.Last().transform.LookAt(target.transform);
+				var position = target.transform.position;
+				forestArea.Last().transform.position = origin.transform.position - spacingBetweenArea * (position * (-i + 1));
 				var forestAreaComponent = forestArea.Last().GetComponent<ForestArea>();
-				forestAreaComponent.size = i * size;
-				forestAreaComponent.target = target.transform.position;
+				forestAreaComponent.size = ((int)areaSizeGrowth * i + 1) * size;
+				forestAreaComponent.target = position;
 				forestAreaComponent.spacingBetweenTrees = spacingBetweenTrees;
 				forestAreaComponent.spawnTreeDelay = spawnTreeDelay;
 				forestAreaComponent.checkFullDelay = checkFullDelay;

@@ -10,15 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2334e2e50828e4b4299a715a021fba01, type: 3}
-  m_Name: ProtectPlayerState
+  m_Name: FollowAndChaseFAC
   m_EditorClassIdentifier: 
   actions:
-  - {fileID: 11400000, guid: 234bd7be4e825fce49cc3b24cf6c8947, type: 2}
+  - {fileID: 11400000, guid: 9bd55da76dd810e61997496b5899df82, type: 2}
   transitions:
-  - decision: {fileID: 11400000, guid: 89bd392ebd9517274bb251cabd5a9db3, type: 2}
-    trueState: {fileID: 11400000, guid: a3e955cfcfb82cd338e9a4ada22a3830, type: 2}
-    falseState: {fileID: 11400000, guid: 66c1aa25a85ba47c4b92d32ccf6e6017, type: 2}
   - decision: {fileID: 11400000, guid: 8262f85016acd40b2b749ba917b3c383, type: 2}
-    trueState: {fileID: 11400000, guid: a3e955cfcfb82cd338e9a4ada22a3830, type: 2}
+    trueState: {fileID: 11400000, guid: aea1c94eef3efccaf9cc01431017423f, type: 2}
     falseState: {fileID: 11400000, guid: 66c1aa25a85ba47c4b92d32ccf6e6017, type: 2}
-  sceneGizmoColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  sceneGizmoColor: {r: 0.7657566, g: 1, b: 0, a: 1}

@@ -291,10 +291,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fdf4ecc7be8b9d688c63b8f8b0c7c36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hideBar: 1
+  hide: 0
+  nameBar: {fileID: 1340967017757294267}
   overheadInformations: {fileID: 473705318705515589}
   name: {fileID: 4978171461647050145}
-  defaultName: Creep
 --- !u!114 &1368137373983436039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,6 +307,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5630e15110087ebaca9be58f8d91a55e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hide: 0
+  bar: {fileID: 7033792304371182272}
   fill: {fileID: 3493808115848571098}
   valueText: {fileID: 482926857877175744}
   overheadFill: {fileID: 1412690902752163657}
@@ -322,6 +324,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7991fb7466efcf048214e2eb20b9d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hide: 0
+  bar: {fileID: 8209951898190361740}
   fill: {fileID: 7147917301936889598}
   valueText: {fileID: 2135925469318857875}
   overheadFill: {fileID: 459782426914512042}

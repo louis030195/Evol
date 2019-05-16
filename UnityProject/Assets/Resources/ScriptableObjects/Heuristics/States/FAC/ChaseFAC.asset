@@ -10,15 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2334e2e50828e4b4299a715a021fba01, type: 3}
-  m_Name: ChasePAC
+  m_Name: ChaseFAC
   m_EditorClassIdentifier: 
   actions:
   - {fileID: 11400000, guid: 9263634b8ef42400993e614de085d5f1, type: 2}
   transitions:
   - decision: {fileID: 11400000, guid: f85fcf431e5bf4cabb40b7618134028f, type: 2}
     trueState: {fileID: 11400000, guid: 66c1aa25a85ba47c4b92d32ccf6e6017, type: 2}
-    falseState: {fileID: 11400000, guid: 624f1fc8c15f25259870ee4ab914dfbc, type: 2}
+    falseState: {fileID: 11400000, guid: 6325bde1d6082d08980b9660e64b4c72, type: 2}
   - decision: {fileID: 11400000, guid: 41907aab84671bac58538261be684b30, type: 2}
-    trueState: {fileID: 11400000, guid: 614152cfaa1a31c4eb653729c327606c, type: 2}
+    trueState: {fileID: 11400000, guid: d19eb2c1088be2f1aa923e98094af735, type: 2}
+    falseState: {fileID: 11400000, guid: 66c1aa25a85ba47c4b92d32ccf6e6017, type: 2}
+  - decision: {fileID: 11400000, guid: e70297b509f45e7c6accba57b8ddf541, type: 2}
+    trueState: {fileID: 11400000, guid: 6325bde1d6082d08980b9660e64b4c72, type: 2}
     falseState: {fileID: 11400000, guid: 66c1aa25a85ba47c4b92d32ccf6e6017, type: 2}
   sceneGizmoColor: {r: 1, g: 0.52305317, b: 0, a: 1}

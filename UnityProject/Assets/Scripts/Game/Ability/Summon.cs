@@ -32,6 +32,7 @@ namespace Evol.Game.Ability
                 // Required to set as a "network" child of the caster or it will be destroyed as a net child of the flask
                 instance.GetPhotonView().TransferOwnership(caster.GetPhotonView().Owner);
                 instance.GetComponent<StateController>().SetupAi(true);
+                instance.GetComponent<StateController>().master = caster.transform;
             }
         }
     }

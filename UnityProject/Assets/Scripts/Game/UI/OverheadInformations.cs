@@ -9,10 +9,10 @@ namespace Evol.Game.UI
 {
     public class OverheadInformations : MonoBehaviour
     {
-        public bool hideBar = true;
+        public bool hide;
+        public GameObject nameBar;
         public GameObject overheadInformations;
         [Tooltip("Reference to the text above the head")] public TextMeshProUGUI name;
-        [Tooltip("Default name to give to non players objects")] public string defaultName = "Creep";
 
         private Camera cam;
         private PhotonView photonView;
@@ -27,12 +27,12 @@ namespace Evol.Game.UI
             }
             
             // We don't want to see our own overhead bar, just others
-            hideBar = photonView.IsMine;
-            
-            overheadInformations.SetActive(!hideBar);
+            overheadInformations.SetActive(!photonView.IsMine || photonView.IsSceneView);
             
             // If our parent is not scene view (scene view = not a player)
             name.text = !photonView.IsSceneView ? $"{PhotonNetwork.LocalPlayer.NickName}" : $"Creep";
+            
+            nameBar.SetActive(!hide);
         }
 
         private void Update()
@@ -43,17 +43,17 @@ namespace Evol.Game.UI
              // TODO: Evol.Game.UI.OverheadInformations.Update () (at Assets/Scripts/Game/UI/OverheadInformations.cs:45)
              // TODO: (cant find the main camera ? (our own cam)   
                 
-            if (!photonView.IsMine) // Only needed to rotate on others since we don't see our own bar
-            {
+            //if (!photonView.IsMine) // Only needed to rotate on others since we don't see our own bar
+            //{
                 // Make the canvas always look to the camera
                 if (!cam) cam = Camera.main;
                 if (cam)
                 {
                     var rotation = cam.transform.rotation;
-                    overheadInformations.transform.LookAt(transform.position + rotation * Vector3.back,
+                    overheadInformations.transform.LookAt(transform.position + rotation * -Vector3.back,
                         rotation * Vector3.up);
                 }
-            }
+            //}
         }
     }
 }

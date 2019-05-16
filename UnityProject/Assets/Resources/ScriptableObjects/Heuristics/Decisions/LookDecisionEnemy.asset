@@ -9,19 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34d59f01d369047119466e8ccc464a94, type: 3}
-  m_Name: Defensive
+  m_Script: {fileID: 11500000, guid: 4853e8ae4ab914b1d9702dec79f2d0bd, type: 3}
+  m_Name: LookDecisionEnemy
   m_EditorClassIdentifier: 
-  lookSphereCastRadius: 10
-  lookRange: 60
-  attackRange: 1
-  moveSpeed: 4
-  searchingTurnSpeed: 5
-  searchDuration: 5
-  timeOut: 15
-  enemies:
-  - Monster
-  - Tree
-  - Boss
-  allies:
-  - Player
+  ally: 0

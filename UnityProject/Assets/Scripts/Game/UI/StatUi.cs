@@ -11,9 +11,20 @@ namespace Evol.Game.UI
     public abstract class StatUi : MonoBehaviour, IPunObservable
     {
         // Bottom bar
+        public bool hide;
+        public GameObject bar;
         public Image fill;
         public TextMeshProUGUI valueText;
         public RectTransform overheadFill;
+
+        private void Awake()
+        {
+            if (hide)
+            {
+                bar.SetActive(false);
+                enabled = false;
+            }
+        }
 
         protected void UpdateUI(float value)
         {

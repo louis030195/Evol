@@ -10,7 +10,7 @@ namespace Evol.Heuristic.StateMachine
 	{
 		public override bool Decide(StateController controller)
 		{
-			return Look(controller);;
+			return Look(controller);
 		}
 
 		private bool Look(StateController controller)

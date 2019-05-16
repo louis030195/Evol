@@ -123,6 +123,10 @@ namespace Evol.Game.Player
                             Instantiate(DeathEffects[Random.Range(0, DeathEffects.Length)],
                                 new Vector3(transform.position.x, transform.position.y, transform.position.z),
                                 new Quaternion(0, 0, 0, 0)), 3);
+                    
+                    // Dead, say to server this object is dead, only thrown if destroyOnDeath ?
+                    if(PhotonNetwork.InRoom)
+                        PhotonNetwork.RaiseEvent(0, new object[] { gameObject.tag }, new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendReliable);
                 }
 
                 if (DyingAnimations.Length > 0)
@@ -133,9 +137,7 @@ namespace Evol.Game.Player
                         true); // TODO: not rly useful if destroyed ... (maybe should add death delay idk)
                 }
                 
-                // Dead, say to server this object is dead
-                if(PhotonNetwork.InRoom)
-                    PhotonNetwork.RaiseEvent(0, new object[] { gameObject.tag }, new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendReliable);
+
             }
             
             if (CurrentHealth > 0 && GettingHitAnimations.Length > 0) // If there is getting hit animations for this object

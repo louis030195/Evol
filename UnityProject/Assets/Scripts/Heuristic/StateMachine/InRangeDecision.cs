@@ -20,7 +20,8 @@ namespace Evol.Heuristic.StateMachine
             // Debug.DrawRay(castOrigin,
             //    controller.eyes.forward.normalized * controller.parameters.attackRange, controller.currentState.sceneGizmoColor);
             // We just need to check if we are close enough to attack our target
-            return controller.target != null && Vector3.Distance(controller.transform.position, controller.target.position) <
+            var position = controller.transform.position;
+            return controller.target != null && Vector3.Distance(position, controller.target.GetComponent<Collider>().ClosestPointOnBounds(position)) <
                    controller.parameters.attackRange;
             // We didn't use SphereCast here because SphereCast only detect moving thing ...
             // So there was a glitch is you stop moving the mob doesn't see you anymore :D

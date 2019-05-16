@@ -20,6 +20,7 @@ namespace Evol.Heuristic.StateMachine
 		[HideInInspector] public Attack attack;
 		[HideInInspector] public Health health;
 		[HideInInspector] public AudioSource audioSource;
+		[HideInInspector] public Transform master;
 		[HideInInspector] public Transform target;
 		[HideInInspector] public float stateTimeElapsed;
 

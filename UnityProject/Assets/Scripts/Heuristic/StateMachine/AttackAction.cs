@@ -17,7 +17,7 @@ namespace Evol.Heuristic.StateMachine
 		{
 			controller.movement.Stop();
 			if(controller.target != null) // This if shouldnt be needed because of ActivateStateDecision already checking but idk
-				controller.attack.AttackNow(controller.target.position);
+				controller.attack.AttackNow(controller.target.GetComponent<Collider>().ClosestPointOnBounds(controller.transform.position));
 		}
 	}
 }

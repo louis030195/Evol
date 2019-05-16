@@ -66,6 +66,7 @@ namespace Evol.Game.Misc
         private GameState gameState = GameState.Playing;
         private int playersAlive, aisAlive, aiSpawned, roundNumber;
         private float difficulty;
+        private bool bossSpawned;
 
         private void Awake()
         {
@@ -284,8 +285,9 @@ namespace Evol.Game.Misc
                 if (gameState != GameState.Playing)
                     yield break;
                 SpawnAllAi();
-                if (roundNumber % 3 == 0)
+                if (roundNumber % 3 == 0 && !bossSpawned)
                 {
+                    bossSpawned = true;
                     // roundNumber / 3 - 1, for example if you're round 3 it will pick first bosses of the list ...
                     foreach (var prefab in waveBosses[roundNumber / 3 - 1].gameObjects)
                     {
@@ -293,7 +295,7 @@ namespace Evol.Game.Misc
                     }
                 }
                 yield return new WaitForSeconds(1f);
-            } while (aisAlive > 0);
+            } while (aisAlive > 0 || aiPerRound == 0); // While there is mobs alive or if we set to no mobs to spawn
         }
 
         private void SpawnAnAi(GameObject prefab, Vector3 position)
@@ -302,9 +304,9 @@ namespace Evol.Game.Misc
             // It is useful to avoid the object being destroyed if the master client leave
             // Because normal PhotonNetwork.Instanciate() makes the object belongs to the master
             var mob = PhotonNetwork.InstantiateSceneObject(prefab.name,
-                Position.AboveGround(
+                //Position.AboveGround(
                     Position.RandomPositionAround(position, 5),
-                    1),
+                    //1),
                 Quaternion.identity);
             mob.GetComponent<StateController>().SetupAi(true);
 
@@ -335,6 +337,7 @@ namespace Evol.Game.Misc
         
         private IEnumerator RoundEnding()
         {
+            bossSpawned = false;
             StartCoroutine(UpdateTextAndDisappear("Round ending", 2f));
             yield return new WaitForSeconds(timeBetweenRound);
         }
