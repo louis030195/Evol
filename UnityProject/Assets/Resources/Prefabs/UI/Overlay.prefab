@@ -3217,7 +3217,7 @@ MonoBehaviour:
   itemsGroundContent: {fileID: 857382220650970212}
   itemsInventoryEquippedContent: {fileID: 1131045452671162919}
   itemsInventoryNonEquippedContent: {fileID: 5390720061505061525}
-  inventoryNonEquippedSize: 48
+  inventoryNonEquippedSize: 40
   itemInformationPanel: {fileID: 4628119552019457532}
   itemInformationText: {fileID: 7907450580102570560}
   abilityRunesContainerPlaceholder: {fileID: 3241120806235800883, guid: 5bf1fa4b187f53622941220a333a894f,
@@ -3255,6 +3255,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5630e15110087ebaca9be58f8d91a55e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hide: 0
+  bar: {fileID: 523905625591762726}
   fill: {fileID: 7277582171732460248}
   valueText: {fileID: 5662045549653986198}
   overheadFill: {fileID: 392570820828307435}
@@ -3270,6 +3272,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7991fb7466efcf048214e2eb20b9d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hide: 0
+  bar: {fileID: 4921782952167971628}
   fill: {fileID: 1624497104860121089}
   valueText: {fileID: 4671145106516144494}
   overheadFill: {fileID: 4225004916498204960}

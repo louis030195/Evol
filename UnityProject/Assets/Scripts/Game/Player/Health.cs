@@ -64,7 +64,7 @@ namespace Evol.Game.Player
         
         private void Audio()
         {
-            if (HealthAudio)
+            if (HealthAudio && HealthAudio.isActiveAndEnabled)
             {
                 HealthAudio.clip = !dead ? GettingHitClips.PickRandom() : DyingClips.PickRandom();
                 if (!HealthAudio.isPlaying)

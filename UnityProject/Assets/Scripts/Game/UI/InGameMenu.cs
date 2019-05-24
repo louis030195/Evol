@@ -132,9 +132,6 @@ namespace Evol.Game.UI
 		{
 			pauseUi.SetActive(false);
 			playUi.SetActive(true);
-			
-			// if (GetComponent<CastBehaviour>() != null)
-			//	GetComponent<CastBehaviour>().Lock = !GetComponent<CastBehaviour>().Lock;
 		}
 
 		/// <summary>
@@ -142,6 +139,8 @@ namespace Evol.Game.UI
 		/// </summary>
 		public void OnSettings()
 		{
+			print(settingsPauseUi.activeInHierarchy);
+			print(mainMenuPauseUi.activeInHierarchy);
 			settingsPauseUi.SetActive(!settingsPauseUi.activeInHierarchy);
 			mainMenuPauseUi.SetActive(!mainMenuPauseUi.activeInHierarchy);
 		}

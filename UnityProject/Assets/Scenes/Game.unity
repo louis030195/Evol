@@ -23,22 +23,22 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 0.25
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 7d1430089afb5854892670b854d1d684, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
   m_DefaultReflectionMode: 0
-  m_DefaultReflectionResolution: 128
+  m_DefaultReflectionResolution: 1024
   m_ReflectionBounces: 1
-  m_ReflectionIntensity: 1
+  m_ReflectionIntensity: 0.495
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4383415, g: 0.48639488, b: 0.5666715, a: 1}
+  m_IndirectSpecularColor: {r: 0.2596881, g: 0.46470183, b: 0.63963395, a: 0.495}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7539,10 +7539,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5506d5325af32da9aa4adaa15967ca75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenRound: 3
-  aiPerRound: 5
+  timeBetweenRound: 10
+  aiPerRound: 0
   delayBetweenAiSpawn: 0
-  numberOfGuards: 5
+  numberOfGuards: 0
   map: {fileID: 1365251772}
   characters:
   - {fileID: 3922392251785426877, guid: fdd81557f537d124697c7b9bf33a6375, type: 3}
@@ -11795,7 +11795,7 @@ PrefabInstance:
     - target: {fileID: 3106179450811763348, guid: 15d272a3e13bd2b0b9a67278be4c8c89,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -230.12
+      value: -227.65
       objectReference: {fileID: 0}
     - target: {fileID: 3106179450811763348, guid: 15d272a3e13bd2b0b9a67278be4c8c89,
         type: 3}

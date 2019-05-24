@@ -13,6 +13,8 @@ namespace Evol.Game.Misc
 
         public void OnClick()
         {
+            Application.OpenURL("https://forms.gle/8xNrC56X6S71Q7Sh7");
+            /*
             if (Input.activeInHierarchy)
             {
                 ButtonText.text = $"Thanks !";
@@ -25,7 +27,7 @@ namespace Evol.Game.Misc
             {
                 ButtonText.text = $"Send";
             }
-            Input.SetActive(!Input.activeInHierarchy);
+            Input.SetActive(!Input.activeInHierarchy);*/
         }
     }
 }

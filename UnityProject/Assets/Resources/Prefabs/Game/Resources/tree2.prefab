@@ -86,11 +86,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4345878849055200}
-  - component: {fileID: 114609587792677382}
   - component: {fileID: 114827902311717034}
   - component: {fileID: 114765986648950298}
   - component: {fileID: 114433104697082206}
   - component: {fileID: 3668463657021874661}
+  - component: {fileID: 8053732765805904418}
+  - component: {fileID: 6175996508442988912}
+  - component: {fileID: 4753805296856598024}
   m_Layer: 0
   m_Name: tree2
   m_TagString: Tree
@@ -114,18 +116,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114609587792677382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1218347679047942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 423baef4a196f7a4999f2c13f2f24129, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114827902311717034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,6 +171,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a261dd92fa946884cac018e1f40c410f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allies: []
+  enemies:
+  - Player
+  - Guard
   MaxSize: 1
   GrowRate: 0.02
   MinRandomness: 0.5
@@ -199,6 +193,68 @@ CapsuleCollider:
   m_Height: 10
   m_Direction: 1
   m_Center: {x: 0, y: 5, z: 0}
+--- !u!135 &8053732765805904418
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1218347679047942}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 10
+  m_Center: {x: 0, y: 5, z: 0}
+--- !u!114 &6175996508442988912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1218347679047942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 876fe3af9d8944658a375dd77f19027d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onAbilityAnimationStart:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onAbilityAnimationEnd:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  alliesTag: []
+  enemiesTag: []
+  offline: 0
+  rotateTowardTarget: 0
+  attackingAudio: {fileID: 0}
+  attackClip: []
+  abilities:
+  - {fileID: 11400000, guid: a8fcc628d05bc9f11b8a901da394b9dd, type: 2}
+--- !u!95 &4753805296856598024
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1218347679047942}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 614315226e981281ea6ded398c418b80, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1363467826424036
 GameObject:
   m_ObjectHideFlags: 0

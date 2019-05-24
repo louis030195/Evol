@@ -4,7 +4,7 @@
 
 Evol is a multiplayer hero defense.
 
-Part of the lore is generated using deep learning OpenAi's [gpt2](https://github.com/louis030195/gpt-2) (laziness xD)
+Part of the lore is generated using deep learning OpenAi's [gpt2](https://openai.com/blog/better-language-models/)
 
 The old machine learning part is [here](https://github.com/louis030195/Evol_ML), thinking about where to add ML in this project
 
@@ -20,15 +20,9 @@ Oldest to newest:
 - Items / Inventory system
 - Game loop
 - Forest propagation
-- Ugly but working UI
+- Working UI
 - Working multiplayer
 - Account system
-
-# Machine learning
-
-The AI will use a finite state machine + the attack part will be handled by ML to predict where to throw ability to hit it's ennemy
-
-<img src="docs/images/ml.gif" width="300" height="300">
 
 # Contribution
 

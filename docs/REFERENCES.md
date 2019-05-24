@@ -7,3 +7,5 @@
 - https://opengameart.org/content/guttural-vocals
 - https://opengameart.org/content/rpg-sound-pack
 - https://assetstore.unity.com/packages/2d/gui/simple-fantasy-gui-99451
+- https://assetstore.unity.com/packages/3d/characters/creatures/lowpoly-fantasy-monsters-pack-ver1-0-demo-98393
+- https://assetstore.unity.com/packages/3d/characters/creatures/character-monster-1-76640
