@@ -81,7 +81,7 @@ namespace Evol.Game.Ability
             var parent = other.transform.parent; // Not all object have a parent
             var health = other.gameObject.GetComponent<Health>() ? other.gameObject.GetComponent<Health>() :
                 parent ? parent.gameObject.GetComponent<Health>() : null;
-            if (health != null)
+            if (health && caster)
             {
                 // print($"I dealt {abilityData.stat.damage} damage to {other.name}");
                 var killerAgent = caster.gameObject.GetComponent<KillerAgent>();

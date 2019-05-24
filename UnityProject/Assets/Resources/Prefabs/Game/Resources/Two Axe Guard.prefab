@@ -680,7 +680,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
-  - {fileID: 2378338946022781793}
+  - {fileID: 6893477772716068576}
   - {fileID: 2097335839165499502}
   - {fileID: 4544349597376930}
   m_Father: {fileID: 0}
@@ -775,6 +775,7 @@ MonoBehaviour:
   alliesTag: []
   enemiesTag: []
   offline: 0
+  rotateTowardTarget: 1
   attackingAudio: {fileID: 0}
   attackClip: []
   abilities:
@@ -1761,7 +1762,7 @@ PrefabInstance:
         type: 3}
       propertyPath: nameBar
       value: 
-      objectReference: {fileID: 5563810204303917498}
+      objectReference: {fileID: 6893477772716052308}
     - target: {fileID: 912884014310069028, guid: 3287ae9a64dad4d13873eb316c76b54b,
         type: 3}
       propertyPath: hide
@@ -1815,13 +1816,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3287ae9a64dad4d13873eb316c76b54b, type: 3}
---- !u!1 &5563810204303917498 stripped
+--- !u!1 &6893477772716052308 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1340967017757294267, guid: 3287ae9a64dad4d13873eb316c76b54b,
     type: 3}
   m_PrefabInstance: {fileID: 6893477772716064513}
   m_PrefabAsset: {fileID: 0}
---- !u!224 &2378338946022781793 stripped
+--- !u!224 &6893477772716068576 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9127392546385857632, guid: 3287ae9a64dad4d13873eb316c76b54b,
     type: 3}

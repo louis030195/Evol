@@ -3751,28 +3751,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3142826444487229146, guid: c08c60a4b5abe1816a53727273d4d73e,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
+    - target: {fileID: 808538923, guid: c08c60a4b5abe1816a53727273d4d73e, type: 3}
+      propertyPath: viewIdField
+      value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 3142826444487229147, guid: c08c60a4b5abe1816a53727273d4d73e,
-        type: 3}
-      propertyPath: m_Convex
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3142826444487229147, guid: c08c60a4b5abe1816a53727273d4d73e,
-        type: 3}
-      propertyPath: m_CookingOptions
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3142826444487229147, guid: c08c60a4b5abe1816a53727273d4d73e,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 3142826444487229146, guid: c08c60a4b5abe1816a53727273d4d73e, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c08c60a4b5abe1816a53727273d4d73e, type: 3}
 --- !u!1001 &658030670
 PrefabInstance:
@@ -4600,48 +4583,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 791364224}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &808538915 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3142826443915231304, guid: c08c60a4b5abe1816a53727273d4d73e,
-    type: 3}
-  m_PrefabInstance: {fileID: 652797397}
-  m_PrefabAsset: {fileID: 0}
---- !u!136 &808538919
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 808538915}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.02
-  m_Height: 0.1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.05, z: 0}
---- !u!114 &808538923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 808538915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 0
-  OwnershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 0}
-  viewIdField: 2
-  InstantiationId: 2
-  isRuntimeInstantiated: 0
 --- !u!1001 &827731385
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7540,9 +7481,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetweenRound: 10
-  aiPerRound: 0
+  aiPerRound: 3
   delayBetweenAiSpawn: 0
-  numberOfGuards: 0
+  numberOfGuards: 5
   map: {fileID: 1365251772}
   characters:
   - {fileID: 3922392251785426877, guid: fdd81557f537d124697c7b9bf33a6375, type: 3}

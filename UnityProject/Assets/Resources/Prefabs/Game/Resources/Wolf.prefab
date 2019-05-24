@@ -24683,7 +24683,7 @@ Transform:
   - {fileID: 480392}
   - {fileID: 470732}
   - {fileID: 470744}
-  - {fileID: 3972139701650773094}
+  - {fileID: 5311119630641539559}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -24814,6 +24814,7 @@ MonoBehaviour:
   alliesTag: []
   enemiesTag: []
   offline: 0
+  rotateTowardTarget: 1
   attackingAudio: {fileID: 0}
   attackClip: []
   abilities:
@@ -25214,7 +25215,7 @@ PrefabInstance:
         type: 3}
       propertyPath: nameBar
       value: 
-      objectReference: {fileID: 6568765381397079741}
+      objectReference: {fileID: 5311119630641555539}
     - target: {fileID: 912884014310069028, guid: 3287ae9a64dad4d13873eb316c76b54b,
         type: 3}
       propertyPath: hide
@@ -25279,13 +25280,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3287ae9a64dad4d13873eb316c76b54b, type: 3}
---- !u!224 &3972139701650773094 stripped
+--- !u!224 &5311119630641539559 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9127392546385857632, guid: 3287ae9a64dad4d13873eb316c76b54b,
     type: 3}
   m_PrefabInstance: {fileID: 5311119630641551366}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6568765381397079741 stripped
+--- !u!1 &5311119630641555539 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1340967017757294267, guid: 3287ae9a64dad4d13873eb316c76b54b,
     type: 3}
