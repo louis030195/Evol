@@ -15,8 +15,9 @@ namespace Evol.Utils
 		/// <param name="prefabHeight">Prefab height needed in order to place well on top of ground</param>
 		/// <param name="flyFix">Little tweak to fix flying object</param>
 		/// <param name="transform">Transform parent</param>
+		/// <param name="layerMask">Layers to ignore</param>
 		/// <returns></returns>
-		public static Vector3 AboveGround(Vector3 position, float prefabHeight, float flyFix = 0.8f, Transform transform = null)
+		public static Vector3 AboveGround(Vector3 position, float prefabHeight, float flyFix = 0.8f, Transform transform = null, LayerMask layerMask = default(LayerMask))
 		{
 			if (transform)
 				position += transform.position;
@@ -24,7 +25,7 @@ namespace Evol.Utils
 			var below = false;
 			
 			// Below ground
-			if (Physics.Raycast(position, Vector3.up, out var hit, Mathf.Infinity))
+			if (Physics.Raycast(position, Vector3.up, out var hit, Mathf.Infinity, layerMask: layerMask))
 			{
 				// Debug.WriteLine($"aboveground { position.y } + { (hit.distance + prefabHeight * 0.5f) * flyFix } - { hit.distance }");
 				position.y += hit.distance + prefabHeight * 0.5f;
@@ -34,7 +35,7 @@ namespace Evol.Utils
 			if (!below) // No need to raycast again
 			{
 				// Above ground
-				if (Physics.Raycast(position, Vector3.down, out hit, Mathf.Infinity))
+				if (Physics.Raycast(position, Vector3.down, out hit, Mathf.Infinity, layerMask: layerMask))
 				{
 					position.y -= hit.distance - prefabHeight * 0.5f;
 				}

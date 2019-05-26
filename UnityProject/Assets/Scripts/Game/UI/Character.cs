@@ -32,8 +32,10 @@ namespace Evol.Game.UI
                 // Set the characters in place
                 var charGo = Instantiate(character.placeholder, characterPlaceholder.transform);
                 charGo.transform.localScale *= 100;
-                charGo.transform.Rotate(new Vector3(0, 180, 0));
-                charGo.transform.localPosition = new Vector3(charGo.transform.position.x, charGo.transform.position.y, charGo.transform.position.z - 100);
+                //charGo.transform.Rotate(new Vector3(0, 180, 0));
+                var position = charGo.transform.position;
+                position = new Vector3(position.x, position.y, position.z + 100);
+                charGo.transform.position = position;
                 characterListObjects[character.id] = charGo; // We use ID for ordering in the list
 
                 // We instanciate all the character buttons with in the right ranged / melee grid,

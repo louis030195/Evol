@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4320772450542988216}
   - component: {fileID: 4181461552905707240}
   - component: {fileID: 3422048361193791020}
+  - component: {fileID: 7229467032789115226}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -104,3 +105,11 @@ MonoBehaviour:
   minVerticalAngle: -30
   XAxis: Analog X
   YAxis: Analog Y
+--- !u!81 &7229467032789115226
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4304112402699872086}
+  m_Enabled: 1

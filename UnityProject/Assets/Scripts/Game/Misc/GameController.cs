@@ -52,6 +52,7 @@ namespace Evol.Game.Misc
         [Tooltip("Prefab of the items")] public GameObject[] items;
         
         [Header("Canvas for all players")]
+        [Tooltip("Object containing all message events")] public GameObject messageEvents;
         [Tooltip("Main text sync for all players")] public TextMeshProUGUI mainText;
         [Tooltip("Team layout containing players informations")] public GameObject team;
         [Tooltip("Player information prefab")] public GameObject teamInformation;
@@ -208,11 +209,13 @@ namespace Evol.Game.Misc
                     // If there is a game winner, what are we doing ?
                     // Show stats idk
                     // Send RPC asking to go back to main menu to everyone
+                    PhotonNetwork.LoadLevel("Login");
                     break;
                 case GameState.Lost:
                     // If game is lost, what are we doing ?
                     // Show stats idk
                     // Send RPC asking to go back to main menu to everyone
+                    PhotonNetwork.LoadLevel("Login");
                     break;
                 case GameState.Playing:
                     // If there isn't a winner yet, restart this coroutine so the loop continues.
@@ -236,7 +239,7 @@ namespace Evol.Game.Misc
             }*/
             
             gameState = GameState.Playing;
-            StartCoroutine(UpdateTextAndDisappear($"Game starting !", 2f));
+            StartCoroutine(UpdateTextAndDisappear($"Defend the base from enemies and kill the Treant !", 2f));
             /*
             foreach(var i in Enumerable.Range(0, 10)) {
                 // Spawn random items
@@ -372,6 +375,7 @@ namespace Evol.Game.Misc
         private void UpdateText(string text)
         {
             mainText.text = text;
+            messageEvents.SetActive(!messageEvents.activeInHierarchy);
         }
 
         // TODO: implement this to handle when master client leave game, take the game loop ...

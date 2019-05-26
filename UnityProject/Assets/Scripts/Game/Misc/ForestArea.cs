@@ -72,11 +72,11 @@ namespace Evol.Game.Misc
 			{
 				// We pick a random position above ground
 				position = Position.AboveGround(transform.position - new Vector3(Random.Range(-size, size), 0,
-					                                0.75f * Random.Range(-size, size)), 0);
+					                                0.75f * Random.Range(-size, size)), 0, layerMask: 1 << LayerMask.NameToLayer("Walkable"));
 
 				// Then we throw an overlap sphere
 				var hitColliders = Physics.OverlapSphere(position, spacingBetweenTrees, 1 << LayerMask.NameToLayer("Walkable"));
-				UnityEngine.Debug.DrawRay(position, transform.up * 10, Color.green);
+				// UnityEngine.Debug.DrawRay(position, transform.up * 10, Color.green);
 
 				// Which checks if there is already a tree around
 				if (!hitColliders.Any(c => c.CompareTag("Tree")))

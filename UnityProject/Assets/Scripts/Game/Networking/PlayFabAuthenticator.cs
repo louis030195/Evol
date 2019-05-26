@@ -53,7 +53,14 @@ namespace Evol.Game.Networking
 
         private void Awake()
         {
-            if(!PhotonNetwork.ConnectUsingSettings())
+            // This case when we're already connected, just let the button interactable
+            gameConfigFindGameButton.interactable = PhotonNetwork.IsConnected;
+
+            // No need to connect again
+            if (gameConfigFindGameButton.interactable)
+                return;
+            
+            if (!PhotonNetwork.ConnectUsingSettings())
                 print("Failed to connect to master");
         }
 

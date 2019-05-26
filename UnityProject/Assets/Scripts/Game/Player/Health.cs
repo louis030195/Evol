@@ -25,9 +25,10 @@ namespace Evol.Game.Player
         public FloatEvent OnHealthChanged = new FloatEvent();
         
         [Header("Audio")] 
-        public AudioSource HealthAudio;
         [Tooltip("Clips to play when dying.")] public AudioClip[] DyingClips;
         [Tooltip("Clips to play when getting hit")] public AudioClip[] GettingHitClips;
+        
+        [Header("Effects")]
         [Tooltip("Death effects to spill around")]public GameObject[] DeathEffects;
 
         [Header("Animations")]
@@ -42,11 +43,12 @@ namespace Evol.Game.Player
         public List<Tuple<string, int>> currentShields;
         
         private Animator animator;
-        
+        private AudioSource audioSource;
         
         private void Start()
         {
             currentHealth = maxHealth;
+            audioSource = GetComponent<AudioSource>();
             animator = GetComponent<Animator>();
             currentShields = new List<Tuple<string, int>>();
         }
@@ -64,12 +66,21 @@ namespace Evol.Game.Player
         
         private void Audio()
         {
-            if (HealthAudio && HealthAudio.isActiveAndEnabled)
+            if (audioSource && audioSource.isActiveAndEnabled)
             {
-                HealthAudio.clip = !dead ? GettingHitClips.PickRandom() : DyingClips.PickRandom();
-                if (!HealthAudio.isPlaying)
+                try
                 {
-                    HealthAudio.Play();
+                    audioSource.clip = !dead ? GettingHitClips.PickRandom() : DyingClips.PickRandom();
+                }
+                catch (InvalidOperationException e)
+                {
+                    print($"Health - {gameObject.name} have audio source but no clips !");
+                    return;
+                }
+
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.Play();
                 }
             }
         }
@@ -116,7 +127,7 @@ namespace Evol.Game.Player
                 dead = true;
                 if (destroyOnDeath)
                 {
-                    if(gameObject.GetPhotonView()) PhotonNetwork.Destroy(gameObject);
+                    if(gameObject.GetPhotonView()) PhotonNetwork.Destroy(gameObject); // TODO: destroy instant or not ? no time to do death sound atm
                     else Destroy(gameObject);
                     if (DeathEffects.Length > 0) // Unused, prob not ready for working
                         Destroy(

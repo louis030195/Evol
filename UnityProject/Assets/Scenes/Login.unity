@@ -959,8 +959,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -500}
-  m_SizeDelta: {x: 0, y: 1000}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &118729326
 MonoBehaviour:
@@ -1938,7 +1938,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 274264903}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Sliding Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8872,7 +8872,7 @@ GameObject:
   - component: {fileID: 1068336029}
   - component: {fileID: 1068336028}
   - component: {fileID: 1068336027}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Viewport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8963,7 +8963,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1080956437}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9779,7 +9779,7 @@ GameObject:
   - component: {fileID: 1122096714}
   - component: {fileID: 1122096716}
   - component: {fileID: 1122096715}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10726,7 +10726,7 @@ GameObject:
   - component: {fileID: 1217374694}
   - component: {fileID: 1217374693}
   - component: {fileID: 1217374692}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Scrollbar Vertical
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12036,7 +12036,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1412275642}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Sliding Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13047,7 +13047,7 @@ GameObject:
   - component: {fileID: 1485217949}
   - component: {fileID: 1485217951}
   - component: {fileID: 1485217950}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13488,7 +13488,7 @@ GameObject:
   - component: {fileID: 1550315957}
   - component: {fileID: 1550315959}
   - component: {fileID: 1550315958}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Placeholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15705,7 +15705,7 @@ GameObject:
   - component: {fileID: 1717270384}
   - component: {fileID: 1717270382}
   - component: {fileID: 1717270381}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Chat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15816,7 +15816,7 @@ Canvas:
   m_GameObject: {fileID: 1717270380}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 1949109569}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -16382,7 +16382,7 @@ GameObject:
   - component: {fileID: 1773620729}
   - component: {fileID: 1773620728}
   - component: {fileID: 1773620727}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: ChatInput
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16398,7 +16398,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1773620725}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1864349596}
@@ -16872,7 +16872,7 @@ GameObject:
   - component: {fileID: 1820928534}
   - component: {fileID: 1820928533}
   - component: {fileID: 1820928532}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Scrollbar Horizontal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17276,7 +17276,7 @@ Canvas:
   m_GameObject: {fileID: 1827655120}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 1949109569}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -17704,7 +17704,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1864349596}
   - component: {fileID: 1864349597}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18413,7 +18413,7 @@ GameObject:
   - component: {fileID: 1913468100}
   - component: {fileID: 1913468102}
   - component: {fileID: 1913468101}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: ChatText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19936,6 +19936,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7816070506985107684, guid: 101af36cd112e45d8ba6942b6d34cce7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816070506132713338, guid: 101af36cd112e45d8ba6942b6d34cce7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816070505270847942, guid: 101af36cd112e45d8ba6942b6d34cce7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816070506557112907, guid: 101af36cd112e45d8ba6942b6d34cce7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816070505858172988, guid: 101af36cd112e45d8ba6942b6d34cce7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816070505568594774, guid: 101af36cd112e45d8ba6942b6d34cce7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816070506867034426, guid: 101af36cd112e45d8ba6942b6d34cce7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7816070506867034420, guid: 101af36cd112e45d8ba6942b6d34cce7,
         type: 3}
       propertyPath: m_fontStyle
@@ -19950,6 +19985,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontSizeBase
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816070506848428659, guid: 101af36cd112e45d8ba6942b6d34cce7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7816070506848428557, guid: 101af36cd112e45d8ba6942b6d34cce7,
         type: 3}
@@ -19976,10 +20016,20 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7816070506800660749, guid: 101af36cd112e45d8ba6942b6d34cce7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7816070506800660751, guid: 101af36cd112e45d8ba6942b6d34cce7,
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816070505361187261, guid: 101af36cd112e45d8ba6942b6d34cce7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7816070505361187260, guid: 101af36cd112e45d8ba6942b6d34cce7,
         type: 3}
@@ -20009,7 +20059,7 @@ PrefabInstance:
     - target: {fileID: 7816070505361187260, guid: 101af36cd112e45d8ba6942b6d34cce7,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7816070505361187262, guid: 101af36cd112e45d8ba6942b6d34cce7,
         type: 3}
@@ -20025,6 +20075,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.b
       value: 0.6320754
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816070505175829541, guid: 101af36cd112e45d8ba6942b6d34cce7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816070505667225952, guid: 101af36cd112e45d8ba6942b6d34cce7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816070505822848074, guid: 101af36cd112e45d8ba6942b6d34cce7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7816070505822848068, guid: 101af36cd112e45d8ba6942b6d34cce7,
         type: 3}
@@ -20206,10 +20271,25 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 400
       objectReference: {fileID: 0}
+    - target: {fileID: 7816070505853791504, guid: 101af36cd112e45d8ba6942b6d34cce7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7816070505853791533, guid: 101af36cd112e45d8ba6942b6d34cce7,
         type: 3}
       propertyPath: m_MovementType
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816070505853791505, guid: 101af36cd112e45d8ba6942b6d34cce7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816070506560916810, guid: 101af36cd112e45d8ba6942b6d34cce7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 918002448366840803, guid: 101af36cd112e45d8ba6942b6d34cce7, type: 3}
@@ -20249,7 +20329,7 @@ GameObject:
   - component: {fileID: 2045748845}
   - component: {fileID: 2045748844}
   - component: {fileID: 2045748843}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: ChatContent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20463,7 +20543,7 @@ GameObject:
   - component: {fileID: 2061497359}
   - component: {fileID: 2061497361}
   - component: {fileID: 2061497360}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
