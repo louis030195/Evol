@@ -24981,6 +24981,7 @@ GameObject:
   - component: {fileID: 362392619569777248}
   - component: {fileID: 1068466181341797367}
   - component: {fileID: 4160257888454660096}
+  - component: {fileID: 2410524311449619838}
   m_Layer: 11
   m_Name: Goblin
   m_TagString: Monster
@@ -25094,8 +25095,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DebugPath: 0
   useNavMeshAgent: 1
-  MovingAudio: {fileID: 0}
-  MoveClip: {fileID: 0}
+  MoveClip:
+  - {fileID: 0}
   WalkingAnimations:
   - walk
   RunningAnimations:
@@ -25127,7 +25128,6 @@ MonoBehaviour:
   enemiesTag: []
   offline: 0
   rotateTowardTarget: 1
-  attackingAudio: {fileID: 0}
   attackClip: []
   abilities:
   - {fileID: 11400000, guid: ccfbbebbac84a75daa526cad3c2831ff, type: 2}
@@ -25145,8 +25145,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   destroyOnDeath: 1
-  DyingClips: []
-  GettingHitClips: []
+  DyingClips:
+  - {fileID: 8300000, guid: e77cd9ca59fac92e9a7e53e91f674fce, type: 3}
+  GettingHitClips:
+  - {fileID: 8300000, guid: c783c1651b08753a594a9bf16a855589, type: 3}
+  - {fileID: 8300000, guid: f1927051a426d55aea1fa5bafa94ef08, type: 3}
   DeathEffects: []
   GettingHitAnimations:
   - damage1
@@ -25259,6 +25262,102 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
+--- !u!82 &2410524311449619838
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193048}
+  m_Enabled: 0
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 2
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &5156814286090142292
 GameObject:
   m_ObjectHideFlags: 0
@@ -25521,11 +25620,6 @@ PrefabInstance:
       propertyPath: hide
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1340967017757294267, guid: 3287ae9a64dad4d13873eb316c76b54b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 912884014310069028, guid: 3287ae9a64dad4d13873eb316c76b54b,
         type: 3}
       propertyPath: hideBar
@@ -25550,6 +25644,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RenderMode
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1340967017757294267, guid: 3287ae9a64dad4d13873eb316c76b54b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7396821182237698973, guid: 3287ae9a64dad4d13873eb316c76b54b,
         type: 3}

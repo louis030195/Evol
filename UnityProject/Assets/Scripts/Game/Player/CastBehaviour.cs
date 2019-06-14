@@ -94,7 +94,7 @@ namespace Evol.Game.Player
 				return;
 			
 			// Rotate toward the point we're aiming at before animating
-			Rotating();
+			// Rotating();
 			
 			// Check if a spell key has been pressed
 			for (var i = 0; i < playerManager.characterData.abilities.Length; i++)
@@ -145,6 +145,7 @@ namespace Evol.Game.Player
 			// Start casting.
 			else
 			{		
+				Rotating();
 				// Trigger the animation
 				behaviourManager.GetAnim.SetTrigger(attacksTrigger[currentSpell]);
 				// Spells with bool anim ?

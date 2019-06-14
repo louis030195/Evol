@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Evol.Game.Ability;
@@ -8,6 +9,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
 using Debug = System.Diagnostics.Debug;
+using Random = UnityEngine.Random;
 
 namespace Evol.Heuristic
 {
@@ -22,7 +24,6 @@ namespace Evol.Heuristic
 		[Tooltip("Whether to turn toward the target on attack")] public bool rotateTowardTarget = true;
 		
 		[Header("Audio")]
-		public AudioSource attackingAudio;         // Reference to the audio source used to play the shooting audio. NB: different to the movement audio source.
 		[Tooltip("I guess it's for grunt noise (not for ability audio)")] public AudioClip[] attackClip;                // Audio that plays when each attack is fired.
 
 		[Header("Abilities")] 
@@ -34,9 +35,11 @@ namespace Evol.Heuristic
 		private int currentAbility = -1;
 		private bool isCasting;
 		private Vector3 currentTarget;
+		private AudioSource audioSource;
 
 		private void Start()
 		{
+			audioSource = GetComponent<AudioSource>();
 			animator = GetComponent<Animator>();
 			Debug.Assert(abilities.Length > 0, "No ability set");
 			elapsedTime = new float[abilities.Length];
@@ -87,15 +90,6 @@ namespace Evol.Heuristic
 		public void AttackNow(Vector3 target)
 		{
 			currentTarget = target; // Maybe not so clean
-			// When do we reset to null this target ?
-			if (attackingAudio && attackingAudio.isActiveAndEnabled)
-			{
-				attackingAudio.clip = attackClip.PickRandom();
-				if (!attackingAudio.isPlaying) // To avoid overlapping sound
-				{
-					attackingAudio.Play();
-				}
-			}
 			
 			// TODO: slow movement when attacking
 			
@@ -105,7 +99,19 @@ namespace Evol.Heuristic
 			{
 				return; // TODO: handle mana also ?
 			}
-		
+			
+			// When do we reset to null this target ?
+			if (audioSource && audioSource.isActiveAndEnabled && attackClip.Length > 0)
+			{
+				audioSource.clip = attackClip.PickRandom();
+				if (!audioSource.isPlaying) // To avoid overlapping sound
+				{
+					audioSource.spatialBlend = 0.3f;
+					audioSource.pitch = Random.Range(0.8f, 1.2f);
+					audioSource.Play();
+				}
+			}
+			
 			elapsedTime[currentAbility] = Time.time + abilities[currentAbility].stat.cooldown;
 			
 			// Trigger the animation

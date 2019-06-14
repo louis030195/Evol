@@ -13,6 +13,7 @@ namespace Evol.Game.UI
         public GameObject nameBar;
         public GameObject overheadInformations;
         [Tooltip("Reference to the text above the head")] public TextMeshProUGUI name;
+        public string defaultName = "Creep";
 
         private Camera cam;
         private PhotonView photonView;
@@ -30,7 +31,7 @@ namespace Evol.Game.UI
             overheadInformations.SetActive(!photonView.IsMine || photonView.IsSceneView);
             
             // If our parent is not scene view (scene view = not a player)
-            name.text = !photonView.IsSceneView ? $"{PhotonNetwork.LocalPlayer.NickName}" : $"Creep";
+            name.text = !photonView.IsSceneView ? $"{PhotonNetwork.LocalPlayer.NickName}" : $"{defaultName}";
             
             nameBar.SetActive(!hide);
         }
@@ -46,7 +47,14 @@ namespace Evol.Game.UI
             //if (!photonView.IsMine) // Only needed to rotate on others since we don't see our own bar
             //{
                 // Make the canvas always look to the camera
-                if (!cam) cam = Camera.main;
+                if (!cam)
+                {
+                    cam = Camera.main;
+                    var canvas = nameBar.GetComponentInParent<Canvas>();
+                    canvas.renderMode = RenderMode.WorldSpace;
+                    canvas.worldCamera = cam;
+
+                }
                 if (cam)
                 {
                     var rotation = cam.transform.rotation;

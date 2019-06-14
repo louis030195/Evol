@@ -25,7 +25,7 @@ namespace Evol.ML
         private Rigidbody targetRigidBody;
         private KillerAcademy academy;
 
-        private void Start()
+        private void Awake()
         {
             attack = GetComponent<Attack>();
             attack.offline = true;
@@ -120,11 +120,11 @@ namespace Evol.ML
                 //print($"{vectorAction[1] * academy.agentPrecision}\n{vectorAction[1]}\n{academy.agentPrecision}\n{Mathf.Clamp(vectorAction[1] * academy.agentPrecision, -academy.agentPrecision,academy.agentPrecision)}");
                 attack.AttackNow(vec);
             }
-
         }
 
         public override void AgentReset()
         {
+            // print($"Cumulative reward {GetCumulativeReward()} - Reward {GetReward()}");
             //if (transform.position.y < 0)
             //{
             // If the Agent fell, reset his position

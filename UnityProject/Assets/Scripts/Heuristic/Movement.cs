@@ -19,8 +19,7 @@ namespace Evol.Heuristic
 		[Tooltip("Whether to use NavMeshAgent or Rigidbody")] public bool useNavMeshAgent = true;
 		
 		[Header("Audio")]
-		public AudioSource MovingAudio;         // Reference to the audio source used to play the movement audio.
-		public AudioClip MoveClip;                // Audio that plays when each movement is fired.
+		public AudioClip[] MoveClip;                // Audio that plays when each movement is fired.
 		
 		[Header("Animations")]
 		public string[] WalkingAnimations;
@@ -33,7 +32,7 @@ namespace Evol.Heuristic
 		private List<Vector3> path;
 		private LineRenderer lr;
 		private int speedFloat; // Speed parameter on the Animator.
-
+		private AudioSource audioSource;
 
 		// Broadcasting navmesh params
 		public float? RemainingDistance
@@ -62,6 +61,7 @@ namespace Evol.Heuristic
 			animator = GetComponent<Animator>();
 			navMeshAgent = GetComponent<NavMeshAgent>();
 			rbody = GetComponent<Rigidbody>();
+			audioSource = GetComponent<AudioSource>();
 			if (DebugPath)
 			{
 				path = new List<Vector3>();

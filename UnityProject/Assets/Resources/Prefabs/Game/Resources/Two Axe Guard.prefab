@@ -776,7 +776,6 @@ MonoBehaviour:
   enemiesTag: []
   offline: 0
   rotateTowardTarget: 1
-  attackingAudio: {fileID: 0}
   attackClip: []
   abilities:
   - {fileID: 11400000, guid: ccfbbebbac84a75daa526cad3c2831ff, type: 2}
@@ -794,8 +793,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DebugPath: 0
   useNavMeshAgent: 1
-  MovingAudio: {fileID: 0}
-  MoveClip: {fileID: 0}
+  MoveClip: []
   WalkingAnimations:
   - walk
   RunningAnimations: []
@@ -1747,10 +1745,30 @@ PrefabInstance:
       propertyPath: hide
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1340967017757294267, guid: 3287ae9a64dad4d13873eb316c76b54b,
+    - target: {fileID: 4978171461647050145, guid: 3287ae9a64dad4d13873eb316c76b54b,
         type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      propertyPath: m_havePropertiesChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2135925469318857875, guid: 3287ae9a64dad4d13873eb316c76b54b,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2135925469318857875, guid: 3287ae9a64dad4d13873eb316c76b54b,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 482926857877175744, guid: 3287ae9a64dad4d13873eb316c76b54b,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 482926857877175744, guid: 3287ae9a64dad4d13873eb316c76b54b,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 912884014310069028, guid: 3287ae9a64dad4d13873eb316c76b54b,
         type: 3}
@@ -1777,6 +1795,11 @@ PrefabInstance:
       propertyPath: m_RenderMode
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1340967017757294267, guid: 3287ae9a64dad4d13873eb316c76b54b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7396821182237698973, guid: 3287ae9a64dad4d13873eb316c76b54b,
         type: 3}
       propertyPath: m_CellSize.x
@@ -1788,31 +1811,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: c0da967659202b1da8e4a20ba38453c3,
         type: 3}
-    - target: {fileID: 2135925469318857875, guid: 3287ae9a64dad4d13873eb316c76b54b,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2135925469318857875, guid: 3287ae9a64dad4d13873eb316c76b54b,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 482926857877175744, guid: 3287ae9a64dad4d13873eb316c76b54b,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 482926857877175744, guid: 3287ae9a64dad4d13873eb316c76b54b,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4978171461647050145, guid: 3287ae9a64dad4d13873eb316c76b54b,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3287ae9a64dad4d13873eb316c76b54b, type: 3}
 --- !u!1 &5563810204303917498 stripped

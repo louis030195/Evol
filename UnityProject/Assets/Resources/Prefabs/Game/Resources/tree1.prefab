@@ -293,7 +293,7 @@ MonoBehaviour:
   - Player
   - Guard
   MaxSize: 1
-  GrowRate: 0.03
+  GrowRate: 0.02
   MinRandomness: 0.5
   MaxRandomness: 3
 --- !u!136 &2460308565894110667
@@ -349,7 +349,6 @@ MonoBehaviour:
   enemiesTag: []
   offline: 0
   rotateTowardTarget: 0
-  attackingAudio: {fileID: 0}
   attackClip: []
   abilities:
   - {fileID: 11400000, guid: a8fcc628d05bc9f11b8a901da394b9dd, type: 2}
@@ -428,7 +427,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.5
+      value: 0.2
       inSlope: 0
       outSlope: 0
       tangentMode: 0

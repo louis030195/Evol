@@ -12,12 +12,13 @@ namespace Evol.Game.UI
         // Start is called before the first frame update
         private void Start()
         {
-            if (GetComponentInParent<Mana>() == null)
+            var mana = target.GetComponent<Mana>();
+            if (mana == null)
             {
-                throw new UnityException($"Update should be in a child of a mana component");
+                throw new UnityException($"ManaUi - target has no Mana component");
             }
-            GetComponentInParent<Mana>().OnManaChanged.AddListener(UpdateUI);
-            GetComponentInParent<PhotonView>().ObservedComponents.Add(this);
+            mana.OnManaChanged.AddListener(UpdateUI);
+            target.GetComponent<PhotonView>().ObservedComponents.Add(this);
         }
     }
 }

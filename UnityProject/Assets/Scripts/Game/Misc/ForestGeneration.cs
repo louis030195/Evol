@@ -20,7 +20,7 @@ namespace Evol.Game.Misc
 		[Tooltip("Where to propagate")]
 		public GameObject target;
 
-		[Tooltip("Size of the area (exponential)(around 100 - 200 is nice)")]
+		[Tooltip("Size of the area")]
 		public int size = 100;
 		
 		[Range(0.0f, 1.0f)]
@@ -30,7 +30,7 @@ namespace Evol.Game.Misc
 		public float areaSizeGrowth = 0.1f;
 		
 		[Header("Forest area parameters")]
-		[Tooltip("Space between trees")] 
+		[Tooltip("Space between trees (For example area size 100, spacing = 5, = 20 trees)")] 
 		public int spacingBetweenTrees = 5;
 
 		[Tooltip("Delay to spawn tree in seconds")]

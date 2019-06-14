@@ -12,12 +12,13 @@ namespace Evol.Game.UI
         // Start is called before the first frame update
         private void Start()
         {
-            if (GetComponentInParent<Health>() == null)
+            var health = target.GetComponent<Health>();
+            if (health == null)
             {
-                throw new UnityException($"Update should be in a child of a health component");
+                throw new UnityException($"HealthUi - target has no Health component");
             }
-            GetComponentInParent<Health>().OnHealthChanged.AddListener(UpdateUI);
-            GetComponentInParent<PhotonView>()?.ObservedComponents.Add(this);
+            health.OnHealthChanged.AddListener(UpdateUI);
+            target.GetComponent<PhotonView>()?.ObservedComponents.Add(this);
         }
     }
 }

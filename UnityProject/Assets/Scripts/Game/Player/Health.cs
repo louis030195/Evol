@@ -68,18 +68,12 @@ namespace Evol.Game.Player
         {
             if (audioSource && audioSource.isActiveAndEnabled)
             {
-                try
-                {
-                    audioSource.clip = !dead ? GettingHitClips.PickRandom() : DyingClips.PickRandom();
-                }
-                catch (InvalidOperationException e)
-                {
-                    print($"Health - {gameObject.name} have audio source but no clips !");
-                    return;
-                }
+                audioSource.clip = !dead ? GettingHitClips.PickRandom() : DyingClips.PickRandom();
 
-                if (!audioSource.isPlaying)
+                if (!audioSource.isPlaying && audioSource.clip != null)
                 {
+                    audioSource.spatialBlend = 0.3f;
+                    audioSource.pitch = Random.Range(0.8f, 1.2f);
                     audioSource.Play();
                 }
             }

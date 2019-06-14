@@ -1220,8 +1220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DebugPath: 0
   useNavMeshAgent: 1
-  MovingAudio: {fileID: 0}
-  MoveClip: {fileID: 0}
+  MoveClip: []
   WalkingAnimations:
   - walk1
   RunningAnimations: []
@@ -1252,7 +1251,6 @@ MonoBehaviour:
   enemiesTag: []
   offline: 0
   rotateTowardTarget: 1
-  attackingAudio: {fileID: 0}
   attackClip: []
   abilities:
   - {fileID: 11400000, guid: 35c35a39a263c1a73bc189c44fe27823, type: 2}
@@ -2116,6 +2114,16 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8082754063851226344, guid: 3287ae9a64dad4d13873eb316c76b54b,
+        type: 3}
+      propertyPath: m_RenderMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7396821182237698973, guid: 3287ae9a64dad4d13873eb316c76b54b,
+        type: 3}
+      propertyPath: m_CellSize.x
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 2798605675173166774, guid: 3287ae9a64dad4d13873eb316c76b54b,
         type: 3}
       propertyPath: m_Enabled
@@ -2151,15 +2159,10 @@ PrefabInstance:
       propertyPath: hide
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8082754063851226344, guid: 3287ae9a64dad4d13873eb316c76b54b,
+    - target: {fileID: 4978171461647050145, guid: 3287ae9a64dad4d13873eb316c76b54b,
         type: 3}
-      propertyPath: m_RenderMode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7396821182237698973, guid: 3287ae9a64dad4d13873eb316c76b54b,
-        type: 3}
-      propertyPath: m_CellSize.x
-      value: 30
+      propertyPath: m_havePropertiesChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3493808115848571098, guid: 3287ae9a64dad4d13873eb316c76b54b,
         type: 3}
@@ -2185,11 +2188,6 @@ PrefabInstance:
     - target: {fileID: 482926857877175744, guid: 3287ae9a64dad4d13873eb316c76b54b,
         type: 3}
       propertyPath: m_isInputParsingRequired
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4978171461647050145, guid: 3287ae9a64dad4d13873eb316c76b54b,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

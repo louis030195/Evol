@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Evol.Game.Player;
 using Evol.Heuristic;
@@ -9,7 +10,7 @@ using UnityEngine;
 
 namespace Evol.Game.Misc
 {
-    public class Tree : MonoBehaviour
+    public class TreeManager : MonoBehaviour
     {
         [Tooltip("Tags considered as allies")] public string[] allies;
         [Tooltip("Tags considered as enemies")] public string[] enemies;
@@ -22,8 +23,8 @@ namespace Evol.Game.Misc
         private float growRate;
         private float scale;
         private bool aboveGround;
-
         private Attack attack;
+        
         
         public void Awake()
         {
@@ -55,10 +56,12 @@ namespace Evol.Game.Misc
             }
         }
 
+
         private void OnTriggerStay(Collider other)
         {
             // TODO: spawn the spell from the top of the tree or something like that (compare with renderer stuff)
             // var pos = new Vector3(other.transform.position.x, 20, other.transform.position.z);
+            // if (Time.frameCount % 60 != 0) return; // Reduce lag, TODO: find better thing
             if(enemies.Any(other.CompareTag)) attack.AttackNow(other.transform.position);
         }
     }
