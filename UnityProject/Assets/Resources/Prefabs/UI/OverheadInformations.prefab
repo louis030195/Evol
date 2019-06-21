@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2778533636282759341}
   - component: {fileID: 6099623325201083929}
   - component: {fileID: 482926857877175744}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ValueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 2222080326575832001}
   - component: {fileID: 453641619709306699}
   - component: {fileID: 7147917301936889598}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Foreground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -250,7 +250,7 @@ GameObject:
   - component: {fileID: 8082754063851226344}
   - component: {fileID: 8820960007304834060}
   - component: {fileID: 6613059237514853922}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: OverheadInformations
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -295,6 +295,7 @@ MonoBehaviour:
   nameBar: {fileID: 1340967017757294267}
   overheadInformations: {fileID: 473705318705515589}
   name: {fileID: 4978171461647050145}
+  defaultName: Creep
 --- !u!114 &1368137373983436039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -466,7 +467,7 @@ GameObject:
   - component: {fileID: 4071604072718125197}
   - component: {fileID: 8003089192919667205}
   - component: {fileID: 3493808115848571098}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Foreground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -615,7 +616,7 @@ GameObject:
   - component: {fileID: 3252781310338087625}
   - component: {fileID: 950165347812012473}
   - component: {fileID: 1047681076741804553}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -690,7 +691,7 @@ GameObject:
   - component: {fileID: 2545695587799905866}
   - component: {fileID: 3426181775497255872}
   - component: {fileID: 1350262381701515648}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -925,7 +926,7 @@ GameObject:
   - component: {fileID: 1412690902752163657}
   - component: {fileID: 2487584887279234684}
   - component: {fileID: 3900661568357538613}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -999,7 +1000,7 @@ GameObject:
   - component: {fileID: 788172827343711820}
   - component: {fileID: 9066543769589365004}
   - component: {fileID: 2135925469318857875}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ValueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1159,7 +1160,7 @@ GameObject:
   - component: {fileID: 459782426914512042}
   - component: {fileID: 7712548741879769486}
   - component: {fileID: 5008166877102457003}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Mana
   m_TagString: Untagged
   m_Icon: {fileID: 0}
