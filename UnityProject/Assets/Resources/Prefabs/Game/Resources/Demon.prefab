@@ -1310,7 +1310,7 @@ Transform:
   - {fileID: 3922392251785653201}
   - {fileID: 3922392251785653203}
   - {fileID: 3922392251785653197}
-  - {fileID: 4835740070371706179}
+  - {fileID: 8697673850071041267}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1568,7 +1568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  playerCamera: {fileID: 4835740070371706179}
+  playerCamera: {fileID: 8697673850071041267}
   turnSmoothing: 0.06
   sprintFOV: 100
   sprintButton: Sprint
@@ -4382,7 +4382,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca1b63a9d245a1582a0c647c3fd42b33, type: 3}
---- !u!4 &4835740070371706179 stripped
+--- !u!4 &8697673850071041267 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4300840551790467908, guid: ca1b63a9d245a1582a0c647c3fd42b33,
     type: 3}
